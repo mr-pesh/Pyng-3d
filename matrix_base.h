@@ -2,20 +2,21 @@
 
 #include <array>
 
-template <typename T, size_t rows, size_t columns>
+template <typename T, uint_fast16_t rows, uint_fast16_t columns>
 struct Matrix :
     std::array <T, rows * columns>
 {
-    typedef Matrix<T, rows, columns> Type;
+    using Type = Matrix<T, rows, columns>;
 
-    Type transpose()
+    template <typename ResultType = Matrix<T, columns, rows> >
+    ResultType transpose()
     {
-        Type result;
+        ResultType result;
         #pragma omp parallel for
-        for (int n = 0; n < rows * columns; ++n) {
+        for (uint_fast16_t n = 0; n < rows * columns; ++n) {
             const auto i = n / rows;
             const auto j = n % rows;
-            result[n] = *this[columns * j + i];
+            result[n] = (*this)[columns * j + i];
         }
 
         return result;
