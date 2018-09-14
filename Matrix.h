@@ -13,7 +13,7 @@ class Matrix : public std::array <T, rows_V * columns_V>
 {
     static_assert(rows_V > 0 && columns_V > 0, "Matrix can't be of zero or negative size");
     
-    typedef array<T, rows_V * columns_V> Base;
+    typedef std::array<T, rows_V * columns_V> Base;
     typedef Matrix<T, rows_V, columns_V> Type;
     typedef Matrix<T, columns_V, rows_V> Transposed;
 
