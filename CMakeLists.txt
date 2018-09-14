@@ -6,6 +6,13 @@ project(Pyng VERSION 0.0.0.1 LANGUAGES CXX)
 # Activating C++17
 set(CMAKE_CXX_STANDARD 17)
 
+# Specify this flag to use DirectXMath SIMD-friendly types
+if (USE_DX_MATH)
+    add_definitions(-D__DX_MATH_LIBRARY)
+elseif(USE_GL_MATH)
+	add_definitions(-D__GL_MATH_LIBRARY)
+endif()
+
 # Specify this flag to use Microsoft AMP for parallel calculations
 if (USE_CPP_AMP)
     add_definitions(-D__CPP_AMP_ACCELERATION)
@@ -19,7 +26,7 @@ find_package(OpenMP)
     endif()
 endif()
 
-set(HEADERS Matrix3d.h Vector3d.h Matrix.h MatrixView.h property.h)
+set(HEADERS Vector.h Matrix.h MatrixView.h property.h)
 set(SOURCES main.cpp)
 
 add_executable(Pyng ${HEADERS} ${SOURCES})
