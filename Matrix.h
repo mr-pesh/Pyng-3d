@@ -4,6 +4,8 @@
 
 #ifdef __GL_MATH_LIBRARY
 
+#include <glm/matrix.hpp>
+
 template <typename T, int rows, int columns>
 using Matrix = glm::mat<columns, rows, T, glm::defaultp>;
 
