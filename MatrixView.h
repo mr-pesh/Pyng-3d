@@ -6,20 +6,20 @@ template <typename T>
 class MatrixView : public MatrixView_Base
 {
     using Base = MatrixView_Base;
-    using Type = MatrixView < T >;
+    using Type = MatrixView< T >;
 
 public:
-    template <class = std::enable_if_t< std::is_same_v < decltype(T::columns), decltype(T::rows) > >>
+    template <class = std::enable_if_t< std::is_same< decltype(T::columns), decltype(T::rows) >::value >>
     explicit MatrixView(T &matrix)
         : MatrixView_Base(T::rows, T::columns, matrix.size()), data(matrix)
     { }
 
-    template <class = std::enable_if_t< std::is_array_v < T > >>
+    template <class = std::enable_if_t< std::is_array<T>::value >>
     explicit MatrixView(T &array, int_fast16_t rows, int_fast16_t columns)
         : MatrixView_Base(rows, columns, std::size(array)), data(array)
     { }
 
-    template <bool = std::is_class_v< T::iterator >>
+    template <bool = std::is_class<T::iterator>::value>
     explicit MatrixView(T &container, int_fast16_t rows, int_fast16_t columns)
         : MatrixView_Base(rows, columns, container.size()), data(container)
     { }

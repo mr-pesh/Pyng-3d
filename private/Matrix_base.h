@@ -75,7 +75,7 @@ public:
         return result;
     }
 
-    template <typename Number, typename = typename std::enable_if_t< std::is_arithmetic_v<Number> >>
+    template <typename Number, typename = typename std::enable_if_t< std::is_arithmetic<Number>::value >>
     auto operator*(const Number scalar) const
     {
         using ResultType = Matrix<decltype(Base::front() * scalar), rows, columns>;
@@ -108,7 +108,7 @@ public:
         return result;
     }
 
-    template <class Multiplier, class = typename std::enable_if_t< std::is_class_v<Multiplier> >>
+    template <class Multiplier, class = typename std::enable_if_t< std::is_class<Multiplier>::value >>
     auto operator*(const Multiplier &other)
     {
         static_assert(Type::columns == Multiplier::rows, "Two matrices are not consistant for multiplying");
@@ -150,7 +150,7 @@ public:
         return result;
     }
 
-    template <typename Number, typename = typename std::enable_if_t< std::is_arithmetic_v<Number> >>
+    template <typename Number, typename = typename std::enable_if_t< std::is_arithmetic<Number>::value >>
     Type& operator*=(const Number scalar)
     {
     #ifdef __CPP_AMP_ACCELERATION
