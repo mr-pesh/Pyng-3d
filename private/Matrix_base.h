@@ -3,9 +3,12 @@
 #include <array>
 
 #if defined(__CPP_AMP_ACCELERATION)
-# include <amp.h>
-#elif defined(__cpp_lib_execution)
-# include <execution>
+#  include <amp.h>
+#elif __has_include(<execution>)
+#  include <execution>
+#  ifndef __cpp_lib_execution
+#    define __cpp_lib_execution
+#  endif
 #endif
 
 template <typename T, int_fast16_t rows_V, int_fast16_t columns_V>
@@ -78,7 +81,7 @@ public:
     template <typename Number, typename = typename std::enable_if_t< std::is_arithmetic<Number>::value >>
     auto operator*(const Number scalar) const
     {
-        using ResultType = Matrix<decltype(Base::front() * scalar), rows, columns>;
+        using ResultType = Matrix_Base<decltype(Base::front() * scalar), rows, columns>;
 
         ResultType result;
 
@@ -113,7 +116,7 @@ public:
     {
         static_assert(Type::columns == Multiplier::rows, "Two matrices are not consistant for multiplying");
         
-        using ResultType = Matrix<decltype(Base::front() * other.front()), Type::rows, Multiplier::columns>;
+        using ResultType = Matrix_Base<decltype(Base::front() * other.front()), Type::rows, Multiplier::columns>;
 
         ResultType result = { 0 };
 
