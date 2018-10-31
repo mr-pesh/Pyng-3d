@@ -6,27 +6,30 @@ project(Pyng VERSION 0.0.0.1 LANGUAGES CXX)
 # Activating C++17
 set(CMAKE_CXX_STANDARD 17)
 
-# Specify this flag to use DirectXMath SIMD-friendly types
-if (USE_DX_MATH)
-    add_definitions(-D__DX_MATH_LIBRARY)
-elseif(USE_GL_MATH)
-	add_definitions(-D__GL_MATH_LIBRARY)
+# Specify this flag to use OpenGL Mathematics SIMD-friendly types mapping
+if (USE_GL_MATH)
+    find_package(GLM)
+        if(GLM_FOUND)
+         # Set a preprocessor macro to use GLM implementation for mathematics
+            add_definitions(-D__GL_MATH_LIBRARY)
+            include_directories(${GLM_INCLUDE_DIRS})
+	    endif()
 endif()
 
 # Specify this flag to use Microsoft AMP for parallel calculations
-if (USE_CPP_AMP)
+if(USE_CPP_AMP)
     add_definitions(-D__CPP_AMP_ACCELERATION)
-else()
-# Try to find and use OpenMP to for parallel calculations
-find_package(OpenMP)
-    if (OPENMP_FOUND)
-        set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-        set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-        set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
-    endif()
 endif()
 
-set(HEADERS Vector.h Matrix.h MatrixView.h property.h)
+# Try to find and use OpenMP to for parallel calculations
+find_package(OpenMP)
+    if(OPENMP_FOUND)
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+    endif()
+
+set(HEADERS ArrayView.h Matrix.h MatrixView.h Vector.h property.h)
 set(SOURCES main.cpp)
 
 add_executable(Pyng ${HEADERS} ${SOURCES})
