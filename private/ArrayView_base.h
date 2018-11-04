@@ -8,6 +8,7 @@ protected:
     ArrayView_Base(size_t size) : m_size(size)
     { }
 
+public:
     size_t size() const { return m_size; }
 
 private:
