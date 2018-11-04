@@ -5,7 +5,7 @@
 #define PROPERTY(TYPE, NAME)                                                                    \
 public:                                                                                         \
   template <class T,                                                                            \
-            class = std::enable_if_t <std::is_same_v < std::decay_t<T>, TYPE >>                 \
+            class = std::enable_if_t< std::is_same< std::decay_t<T>, TYPE >::value >            \
             >                                                                                   \
   inline void Set##NAME(T&& name) noexcept(std::is_nothrow_assignable<TYPE&, T>::value)         \
   {                                                                                             \
