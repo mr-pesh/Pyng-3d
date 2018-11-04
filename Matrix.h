@@ -6,8 +6,7 @@
 
 #include <glm/matrix.hpp>
 
-template <typename T, int rows, int columns,
-           glm::qualifier precision = glm::defaultp>
+template <typename T, int rows, int columns, glm::qualifier precision = glm::defaultp>
 using Matrix = glm::mat<columns, rows, T, precision>;
 
 #else
