@@ -6,8 +6,8 @@
 
 #include <glm/matrix.hpp>
 
-template <typename T, int length>
-using Vector = glm::vec<length, T, glm::defaultp>;
+template <typename T, int length, glm::qualifier precision = glm::defaultp>
+using Vector = glm::vec<length, T, precision>;
 
 #else
 
