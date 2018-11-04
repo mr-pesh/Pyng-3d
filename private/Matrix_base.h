@@ -11,19 +11,17 @@
 #  endif
 #endif
 
-template <typename T, int_fast16_t rows_V, int_fast16_t columns_V>
-class Matrix_Base
-    : public std::array <T, rows_V * columns_V>
+template <typename T, int_fast16_t Rows, int_fast16_t Columns>
+class Matrix_Base : public std::array<T, Rows * Columns>
 {
-    static_assert(rows_V > 0 && columns_V > 0, "Matrix can't be of zero or negative size");
+    static_assert(Rows > 0 && Columns > 0, "Matrix can't be of zero or negative size");
     
-    typedef std::array<T, rows_V * columns_V> Base;
-    typedef Matrix_Base<T, rows_V, columns_V> Type;
-    typedef Matrix_Base<T, columns_V, rows_V> Transposed;
+    typedef std::array<T, Rows * Columns> Base;
+    typedef Matrix_Base<T, Rows, Columns> Type;
+    typedef Matrix_Base<T, Columns, Rows> Transposed;
 
 public:
-    static constexpr auto rows = rows_V;
-    static constexpr auto columns = columns_V;
+    static constexpr auto rows = Rows, columns = Columns;
 
     constexpr size_t size() const noexcept
     {
