@@ -13,7 +13,7 @@ if (USE_GL_MATH)
          # Set a preprocessor macro to use GLM implementation for mathematics
             add_definitions(-D__GL_MATH_LIBRARY)
             include_directories(${GLM_INCLUDE_DIRS})
-	    endif()
+	 endif()
 endif()
 
 # Specify this flag to use Microsoft AMP for parallel calculations
