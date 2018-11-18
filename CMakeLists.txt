@@ -1,10 +1,7 @@
-cmake_minimum_required(VERSION 3.6.0)
+cmake_minimum_required(VERSION 3.10.0)
 
 # Set project name and version
 project(Pyng VERSION 0.0.0.1 LANGUAGES CXX)
-
-# Activating C++17
-set(CMAKE_CXX_STANDARD 17)
 
 # Specify this flag to use OpenGL Mathematics SIMD-friendly types mapping
 if (USE_GL_MATH)
@@ -29,7 +26,20 @@ find_package(OpenMP)
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
     endif()
 
+find_package(GTest)
+
 set(HEADERS ArrayView.h Matrix.h MatrixView.h Vector.h property.h)
 set(SOURCES main.cpp)
 
 add_executable(Pyng ${HEADERS} ${SOURCES})
+set_property(TARGET Pyng PROPERTY CXX_STANDARD 17)
+set_property(TARGET Pyng PROPERTY CXX_STANDART_REQUIRED ON)
+
+add_executable(MatrixIterator MatrixIteratorUnitTest.cpp)
+target_compile_features(MatrixIterator PRIVATE cxx_std_17)
+
+add_executable(MatrixTest MatrixUnitTest.cpp)
+target_compile_features(MatrixTest PRIVATE cxx_std_17)
+
+gtest_add_tests(TARGET MatrixIterator)
+gtest_add_tests(TARGET MatrixTest)
