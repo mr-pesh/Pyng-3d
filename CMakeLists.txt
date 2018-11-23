@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10.0)
+cmake_minimum_required(VERSION 3.1.3)
 
 # Set project name and version
 project(Pyng VERSION 0.0.0.1 LANGUAGES CXX)
@@ -6,7 +6,7 @@ project(Pyng VERSION 0.0.0.1 LANGUAGES CXX)
 # Specify this flag to use OpenGL Mathematics SIMD-friendly types mapping
 if (USE_GL_MATH)
     find_package(GLM)
-        if(GLM_FOUND)
+        if (GLM_FOUND)
          # Set a preprocessor macro to use GLM implementation for mathematics
             add_definitions(-D__GL_MATH_LIBRARY)
             include_directories(${GLM_INCLUDE_DIRS})
@@ -14,32 +14,63 @@ if (USE_GL_MATH)
 endif()
 
 # Specify this flag to use Microsoft AMP for parallel calculations
-if(USE_CPP_AMP)
+if (USE_CPP_AMP)
     add_definitions(-D__CPP_AMP_ACCELERATION)
 endif()
 
 # Try to find and use OpenMP to for parallel calculations
 find_package(OpenMP)
-    if(OPENMP_FOUND)
+    if (OPENMP_FOUND)
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
     endif()
 
-find_package(GTest)
+# Build-in GoogleTest to the project
+configure_file(CMakeLists.txt.in googletest/CMakeLists.txt)
 
-set(HEADERS ArrayView.h Matrix.h MatrixView.h Vector.h property.h)
-set(SOURCES main.cpp)
+execute_process(
+    COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+    RESULT_VARIABLE result
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/googletest"
+)
 
-add_executable(Pyng ${HEADERS} ${SOURCES})
-set_property(TARGET Pyng PROPERTY CXX_STANDARD 17)
-set_property(TARGET Pyng PROPERTY CXX_STANDART_REQUIRED ON)
+if (result)
+    message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+endif()
+
+execute_process(
+    COMMAND ${CMAKE_COMMAND} --build .
+    RESULT_VARIABLE result
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/googletest"
+)
+
+if (result)
+    message(FATAL_ERROR "Build step for googletest failed: ${result}")
+endif()
+
+# Prevent overriding the parent project's compiler/linker
+# settings on Windows
+if (MSVC)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+endif()
+
+# Add googletest directly to our build. This defines
+# the gtest and gtest_main targets.
+add_subdirectory(
+    ${CMAKE_CURRENT_BINARY_DIR}/googletest-src
+    ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
+    EXCLUDE_FROM_ALL
+)
 
 add_executable(MatrixIterator MatrixIteratorUnitTest.cpp)
+target_link_libraries(MatrixIterator gtest gtest_main)
 target_compile_features(MatrixIterator PRIVATE cxx_std_17)
 
 add_executable(MatrixTest MatrixUnitTest.cpp)
+target_link_libraries(MatrixTest gtest gtest_main)
 target_compile_features(MatrixTest PRIVATE cxx_std_17)
 
-gtest_add_tests(TARGET MatrixIterator)
-gtest_add_tests(TARGET MatrixTest)
+enable_testing()
+add_test(NAME MatrixTest COMMAND MatrixTest)
+add_test(NAME MatrixIterator COMMAND MatrixIterator)
