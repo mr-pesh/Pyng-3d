@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "Matrix.h"
-#include "Vector.h"
+#include <Math/Matrix.h>
+#include <Math/Vector.h>
 
 class MatrixUnitTest : public testing::Test {
 };

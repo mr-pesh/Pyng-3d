@@ -1,12 +1,14 @@
 #include <gtest/gtest.h>
+
 #include <vector>
 #include <string>
-#include "MatrixIterator.h"
+
+#include <Utils/MatrixIterator.h>
 
 class MatrixIteratorUnitTest : public testing::Test {
 };
 
-TEST_F(MatrixIteratorUnitTest, CreationTest)
+TEST_F(MatrixIteratorUnitTest, 2D_STL_iterator)
 {
     std::vector<std::string> m1 =
     {
