@@ -39,4 +39,9 @@ find_package(OpenMP)
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
     endif()
 
-add_subdirectory(testing)
+option(BUILD_TESTS "Include unit tests to build scenario" ON)
+
+if (BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(testing)
+endif()

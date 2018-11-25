@@ -1,5 +1,3 @@
-enable_testing()
-
 macro(list_subdirectories result_list current_dir)
     file(GLOB children RELATIVE ${current_dir} ${current_dir}/*)
     set(dir_list "")
