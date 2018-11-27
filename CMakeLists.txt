@@ -13,6 +13,7 @@ endif()
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${DISABLE_RTTI_FLAG}")
 
 
+# Check if DirectX backend selected to be used for graphics acceleration
 if(WIN32)
     option(USE_DX_MATH "Use DirectX backend for hardware acceleration (Recommended)" OFF)
 
@@ -29,9 +30,9 @@ if(WIN32)
 endif()
 
 
+# Check if OpenGL backend selected to be used for graphics acceleration
 option(USE_GL_MATH "Use OpenGL backend for hardware acceleration (Recommended)" ON)
 
-# Specify this flag to use OpenGL Mathematics SIMD-friendly types mapping
 if(USE_GL_MATH)
     find_package(GLM)
         if(GLM_FOUND)
@@ -49,6 +50,8 @@ find_package(OpenMP)
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
     endif()
 
+
+# Check if building unit tests required
 option(BUILD_TESTS "Include unit tests to build scenario" ON)
 
 if (BUILD_TESTS)
