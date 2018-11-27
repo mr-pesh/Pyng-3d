@@ -3,6 +3,16 @@ cmake_minimum_required(VERSION 3.1.3)
 # Set project name and version
 project(Pyng VERSION 0.0.0.1 LANGUAGES CXX)
 
+# Disable RTTI
+if(MSVC)
+    set(DISABLE_RTTI_FLAG "/GR-")
+else()
+    set(DISABLE_RTTI_FLAG "-fno-rtti")
+endif()
+
+set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${DISABLE_RTTI_FLAG}")
+
+
 if(WIN32)
     option(USE_DX_MATH "Use DirectX backend for hardware acceleration (Recommended)" OFF)
 
