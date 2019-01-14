@@ -26,6 +26,13 @@ namespace std
     }
 }
 
+#elif defined(__DX_MATH_LIBRARY)
+
+#include "private/DXMapper.h"
+
+template <class T, int rows, int columns>
+using Matrix = Matrix_Helper_T <T, rows, columns>;
+
 #else
 
 template <typename T, int rows, int columns>
