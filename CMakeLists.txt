@@ -1,17 +1,14 @@
 cmake_minimum_required(VERSION 3.1.3)
 
 # Set project name and version
-project(Pyng VERSION 0.0.0.1 LANGUAGES CXX)
+project(Pyng VERSION 0.0.1 LANGUAGES CXX)
 
 # Disable RTTI
 if(MSVC)
-    set(DISABLE_RTTI_FLAG "/GR-")
+    string(REPLACE "/GR" "/GR-" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
 else()
-    set(DISABLE_RTTI_FLAG "-fno-rtti")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 endif()
-
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${DISABLE_RTTI_FLAG}")
-
 
 # Check if DirectX backend selected to be used for graphics acceleration
 if(WIN32)
@@ -29,7 +26,6 @@ if(WIN32)
 
 endif()
 
-
 # Check if OpenGL backend selected to be used for graphics acceleration
 option(USE_GL_MATH "Use OpenGL backend for hardware acceleration (Recommended)" ON)
 
@@ -41,7 +37,6 @@ if(USE_GL_MATH)
 	 endif()
 endif()
 
-
 # Try to find and use OpenMP to for parallel calculations
 find_package(OpenMP)
     if(OPENMP_FOUND)
@@ -50,9 +45,10 @@ find_package(OpenMP)
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
     endif()
 
-
 # Check if building unit tests required
 option(BUILD_TESTS "Include unit tests to build scenario" ON)
+
+add_subdirectory(source)
 
 if (BUILD_TESTS)
     enable_testing()
