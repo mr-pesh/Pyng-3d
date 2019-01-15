@@ -19,7 +19,7 @@ function(create_test TEST_DIR DEPENDENCIES)
 endfunction(create_test)
 
 # Build-in GoogleTest to the project
-configure_file(CMakeLists.txt.in googletest/CMakeLists.txt)
+configure_file(include-googletest.cmake.in googletest/CMakeLists.txt)
 
 # Prevent overriding the parent project's compiler/linker
 # settings on Windows

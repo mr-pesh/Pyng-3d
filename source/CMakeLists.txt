@@ -9,7 +9,7 @@ endif()
 
 if(USE_GL_MATH)
     # Embed glm into the project
-    configure_file(CMakeLists.txt.in glm/CMakeLists.txt)
+    configure_file(include-glm.cmake.in glm/CMakeLists.txt)
     # Defines 'glm' target
     add_subdirectory(${CMAKE_SOURCE_DIR}/glm ${CMAKE_BINARY_DIR}/glm EXCLUDE_FROM_ALL)
 endif()
