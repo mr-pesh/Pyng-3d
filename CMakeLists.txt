@@ -3,11 +3,12 @@ cmake_minimum_required(VERSION 3.1.3)
 # Set project name and version
 project(Pyng VERSION 0.0.1 LANGUAGES CXX)
 
-# Disable RTTI
+# Disable RTTI and exceptions
 if(MSVC)
     string(REPLACE "/GR" "/GR-" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+	string(REGEX REPLACE "/EH[s|a]?[cr]*" "/EH-" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
 else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti -fno-exceptions")
 endif()
 
 if(WIN32)
