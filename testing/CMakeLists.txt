@@ -28,7 +28,7 @@ if(MSVC)
 endif()
 
 # Defines 'gtest' and 'gtest_main' targets
-add_subdirectory(${CMAKE_SOURCE_DIR}/googletest ${CMAKE_BINARY_DIR}/googletest EXCLUDE_FROM_ALL)
+add_subdirectory(${CMAKE_SOURCE_DIR}/third-party/googletest ${CMAKE_BINARY_DIR}/googletest EXCLUDE_FROM_ALL)
 
 list_subdirectories(TESTING_DIRECTORIES ${CMAKE_SOURCE_DIR}/testing)
 
