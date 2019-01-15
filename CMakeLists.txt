@@ -6,9 +6,8 @@ project(Pyng VERSION 0.0.1 LANGUAGES CXX)
 # Disable RTTI and exceptions
 if(MSVC)
     string(REPLACE "/GR" "/GR-" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-	string(REGEX REPLACE "/EH[s|a]?[cr]*" "/EH-" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
 else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti -fno-exceptions")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 endif()
 
 if(WIN32)
