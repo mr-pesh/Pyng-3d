@@ -1498,7 +1498,7 @@ namespace
     struct Vector_Geometry<XMINT2>
     {
         template <class L>
-        static inline auto ClampLength(const XMINT2 &v1, L&& v2, L&& v3)
+        static inline auto ClampLength(const XMINT2 &v1, const L &v2, const L &v3)
         {
             return Vector_Helper<int32_t,2>::ClampLength<L>(v1,v2,v3);
         }
@@ -1523,9 +1523,9 @@ namespace
     struct Vector_Geometry<XMINT3>
     {
         template <class L>
-        static inline auto ClampLength(const XMINT3 &v1, L&& v2, L&& v3)
+        static inline auto ClampLength(const XMINT3 &v1, const L &v2, const L &v3)
         {
-            return Vector_Helper<int32_t,3>::ClampLength(v1, std::forward<L>(v2), std::forward<L>(v3));
+            return Vector_Helper<int32_t,3>::ClampLength(v1,v2,v3);
         }
 
         static inline auto CrossProduct(const XMINT3 &v1, const XMINT3 &v2)
@@ -1548,9 +1548,9 @@ namespace
     struct Vector_Geometry<XMINT4>
     {
         template <class L>
-        static inline auto ClampLength(const XMINT4 &v1, L&& v2, L&& v3)
+        static inline auto ClampLength(const XMINT4 &v1, const L &v2, const L &v3)
         {
-            return Vector_Helper<int32_t,4>::ClampLength(v1, std::forward<L>(v2), std::forward<L>(v3));
+            return Vector_Helper<int32_t,4>::ClampLength(v1,v2,v3);
         }
 
         static inline auto CrossProduct(const XMINT4 &v1, const XMINT4 &v2, const XMINT4 &v3)
@@ -1573,9 +1573,9 @@ namespace
     struct Vector_Geometry<XMFLOAT2>
     {
         template <class L>
-        static inline auto ClampLength(const XMFLOAT2 &v1, L&& v2, L&& v3)
+        static inline auto ClampLength(const XMFLOAT2 &v1, const L &v2, const L &v3)
         {
-            return Vector_Helper<float_t,2>::ClampLength(v1, std::forward(v2), std::forward(v3));;
+            return Vector_Helper<float_t,2>::ClampLength(v1,v2,v3);;
         }
 
         static inline auto CrossProduct(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
@@ -1598,9 +1598,9 @@ namespace
     struct Vector_Geometry<XMFLOAT3>
     {
         template <class L>
-        static inline auto ClampLength(const XMFLOAT3 &v1, L&& v2, L&& v3)
+        static inline auto ClampLength(const XMFLOAT3 &v1, const L &v2, const L &v3)
         {
-            return Vector_Helper<float_t,3>::ClampLength(v1, std::forward(v2), std::forward(v3));;
+            return Vector_Helper<float_t,3>::ClampLength(v1,v2,v3);
         }
 
         static inline auto CrossProduct(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
@@ -1623,9 +1623,9 @@ namespace
     struct Vector_Geometry<XMFLOAT4>
     {
         template <class L>
-        static inline auto ClampLength(const XMFLOAT4 &v1, L&& v2, L&& v3)
+        static inline auto ClampLength(const XMFLOAT4 &v1, const L &v2, const L &v3)
         {
-            return Vector_Helper<float_t,4>::ClampLength(v1, std::forward(v2), std::forward(v3));
+            return Vector_Helper<float_t,4>::ClampLength(v1,v2,v3);
         }
 
         static inline auto CrossProduct(const XMFLOAT4 &v1, const XMFLOAT4 &v2, const XMFLOAT4 &v3)
@@ -1648,9 +1648,9 @@ namespace
     struct Vector_Geometry<XMUINT2>
     {
         template <class L>
-        static inline auto ClampLength(const XMUINT2 &v1, L&& v2, L&& v3)
+        static inline auto ClampLength(const XMUINT2 &v1, const L &v2, const L &v3)
         {
-            return Vector_Helper<uint32_t,2>::ClampLength(v1, std::forward(v2), std::forward(v3));
+            return Vector_Helper<uint32_t,2>::ClampLength(v1,v2,v3);
         }
 
         static inline auto CrossProduct(const XMUINT2 &v1, const XMUINT2 &v2)
@@ -1673,9 +1673,9 @@ namespace
     struct Vector_Geometry<XMUINT3>
     {
         template <class L>
-        static inline auto ClampLength(const XMUINT3 &v1, L&& v2, L&& v3)
+        static inline auto ClampLength(const XMUINT3 &v1, const L &v2, const L &v3)
         {
-            return Vector_Helper<uint32_t,3>::ClampLength(v1, std::forward(v2), std::forward(v3));
+            return Vector_Helper<uint32_t,3>::ClampLength(v1,v2,v3);
         }
 
         static inline auto CrossProduct(const XMUINT3 &v1, const XMUINT3 &v2)
@@ -1698,9 +1698,9 @@ namespace
     struct Vector_Geometry<XMUINT4>
     {
         template <class L>
-        static inline auto ClampLength(const XMUINT4 &v1, L&& v2, L&& v3)
+        static inline auto ClampLength(const XMUINT4 &v1, const L &v2, const L &v3)
         {
-            return Vector_Helper<uint32_t,4>::ClampLength(v1, std::forward(v2), std::forward(v3));
+            return Vector_Helper<uint32_t,4>::ClampLength(v1,v2,v3);
         }
 
         static inline auto CrossProduct(const XMUINT4 &v1, const XMUINT4 &v2, const XMUINT4 &v3)
@@ -1757,9 +1757,9 @@ inline bool operator!=(const V &vector1, const V &vector2)
 }
 
 template <class V, class L>
-inline auto clampLength(const V &vector, L&& lengthMin, L&& lengthMax)
+inline auto clampLength(const V &vector, const L &lengthMin, const L &lengthMax)
 {
-    return Vector_Geometry<V>::ClampLength(vector, std::forward<L>(lengthMin), std::forward<L>(lengthMax));
+    return Vector_Geometry<V>::ClampLength(vector, lengthMin, lengthMax);
 }
 
 template <class V>
