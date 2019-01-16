@@ -4,31 +4,137 @@
 
 namespace
 {
+    using namespace DirectX;
+
     template <class T, int rows, int columns>
     struct Matrix_Helper;
 
     template <class T>
     struct Matrix_Helper<T, 3, 3>
     {
-        typedef DirectX::XMFLOAT3X3 Type;
+        typedef ::DirectX::XMFLOAT3X3 Type;
+
+        template <class M>
+        static inline auto Multiply(const Type &lhs, const M &rhs);
+
+        template <>
+        static inline auto Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat3x3(&lhs), rhs);
+        }
+
+        template <>
+        static inline auto Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat3x3(&lhs), XMLoadFloat3x3(&rhs));
+        }
+
+        template <>
+        static inline auto Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat3x3(&lhs), XMLoadFloat3x4(&rhs));
+        }
+
+        static inline auto Transpose(const Type &matrix)
+        {
+            return XMMatrixTranspose(XMLoadFloat3x3(&matrix));
+        }
     };
 
     template <class T>
     struct Matrix_Helper<T, 3, 4>
     {
-        typedef DirectX::XMFLOAT3X4 Type;
+        typedef ::DirectX::XMFLOAT3X4 Type;
+
+        template <class M>
+        static inline auto Multiply(const Type &lhs, const M &rhs);
+
+        template <>
+        static inline auto Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat3x4(&lhs), rhs);
+        }
+
+        template <>
+        static inline auto Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat3x4(&lhs), XMLoadFloat4x3(&rhs));
+        }
+
+        template <>
+        static inline auto Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat3x4(&lhs), XMLoadFloat4x4(&rhs));
+        }
+
+        static inline auto Transpose(const Type &matrix)
+        {
+            return XMMatrixTranspose(XMLoadFloat3x4(&matrix));
+        }
     };
 
     template <class T>
     struct Matrix_Helper<T, 4, 3>
     {
-        typedef DirectX::XMFLOAT4X3 Type;
+        typedef ::DirectX::XMFLOAT4X3 Type;
+
+        template <class M>
+        static inline auto Multiply(const Type &lhs, const M &rhs);
+
+        template <>
+        static inline auto Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat4x3(&lhs), rhs);
+        }
+
+        template <>
+        static inline auto Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat4x3(&lhs), XMLoadFloat3x3(&rhs));
+        }
+
+        template <>
+        static inline auto Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat4x3(&lhs), XMLoadFloat3x4(&rhs));
+        }
+
+        static inline auto Transpose(const Type &matrix)
+        {
+            return XMMatrixTranspose(XMLoadFloat4x3(&matrix));
+        }
     };
 
     template <class T>
     struct Matrix_Helper<T, 4, 4>
     {
-        typedef DirectX::XMFLOAT4X4 Type;
+        typedef ::DirectX::XMFLOAT4X4 Type;
+
+        template <class M>
+        static inline auto Multiply(const Type &lhs, const M &rhs);
+
+        template <>
+        static inline auto Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat4x4(&lhs), rhs);
+        }
+
+        template <>
+        static inline auto Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat4x4(&lhs), XMLoadFloat4x3(&rhs));
+        }
+
+        template <>
+        static inline auto Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
+        {
+            return XMMatrixMultiply(XMLoadFloat4x4(&lhs), XMLoadFloat4x4(&rhs));
+        }
+
+        static inline auto Transpose(const Type &matrix)
+        {
+            return XMMatrixTranspose(XMLoadFloat4x4(&matrix));
+        }
     };
 }
 
@@ -45,7 +151,28 @@ namespace
     template <>
     struct Vector_Helper<int32_t, 2>
     {
-        using Type = ::DirectX::XMINT2;
+        typedef ::DirectX::XMINT2 Type;
+
+        template <class L>
+        static inline auto ClampLength(const Type &vec, L min, L max);
+
+        template <>
+        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+        {
+            return XMVector2ClampLength(XMLoadSInt2(&vec), min, max);
+        }
+
+        template <>
+        static inline auto ClampLength<XMINT2>(const Type &vec, XMINT2 min, XMINT2 max)
+        {
+            return XMVector2ClampLengthV(XMLoadSInt2(&vec), XMLoadSInt2(&min), XMLoadSInt2(&max));
+        }
+
+        template <>
+        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
+        {
+            return XMVector2ClampLengthV(XMLoadSInt2(&vec), min, max);
+        }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
         {
@@ -70,6 +197,11 @@ namespace
         static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2GreaterOrEqual(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+        }
+
+        static inline auto Length(const Type &vec)
+        {
+            return XMVector2Length(XMLoadSInt2(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -124,7 +256,28 @@ namespace
     template <>
     struct Vector_Helper<int32_t, 3>
     {
-        using Type = ::DirectX::XMINT3;
+        typedef ::DirectX::XMINT3 Type;
+
+        template <class L>
+        static inline auto ClampLength(const Type &vec, L min, L max);
+
+        template <>
+        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+        {
+            return XMVector3ClampLength(XMLoadSInt3(&vec), min, max);
+        }
+
+        template <>
+        static inline auto ClampLength<XMINT3>(const Type &vec, XMINT3 min, XMINT3 max)
+        {
+            return XMVector3ClampLengthV(XMLoadSInt3(&vec), XMLoadSInt3(&min), XMLoadSInt3(&max));
+        }
+
+        template <>
+        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
+        {
+            return XMVector3ClampLengthV(XMLoadSInt3(&vec), min, max);
+        }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
         {
@@ -149,6 +302,11 @@ namespace
         static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3GreaterOrEqual(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+        }
+
+        static inline auto Length(const Type &vec)
+        {
+            return XMVector3Length(XMLoadSInt3(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -205,7 +363,28 @@ namespace
     template <>
     struct Vector_Helper<int32_t, 4>
     {
-        using Type = ::DirectX::XMINT4;
+        typedef ::DirectX::XMINT4 Type;
+
+        template <class L>
+        static inline auto ClampLength(const Type &vec, L min, L max);
+
+        template <>
+        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+        {
+            return XMVector4ClampLength(XMLoadSInt4(&vec), min, max);
+        }
+
+        template <>
+        static inline auto ClampLength<XMINT4>(const Type &vec, XMINT4 min, XMINT4 max)
+        {
+            return XMVector4ClampLengthV(XMLoadSInt4(&vec), XMLoadSInt4(&min), XMLoadSInt4(&max));
+        }
+
+        template <>
+        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
+        {
+            return XMVector4ClampLengthV(XMLoadSInt4(&vec), min, max);
+        }
 
         template <class ... T>
         static inline auto CrossProduct(const Type &lhs, T&&... rhs)
@@ -231,6 +410,11 @@ namespace
         static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4GreaterOrEqual(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+        }
+
+        static inline auto Length(const Type &vec)
+        {
+            return XMVector4Length(XMLoadSInt4(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -273,7 +457,28 @@ namespace
     template <>
     struct Vector_Helper<float_t, 2>
     {
-        using Type = ::DirectX::XMFLOAT2;
+        typedef ::DirectX::XMFLOAT2 Type;
+
+        template <class L>
+        static inline auto ClampLength(const Type &vec, L min, L max);
+
+        template <>
+        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+        {
+            return XMVector2ClampLength(XMLoadFloat2(&vec), min, max);
+        }
+
+        template <>
+        static inline auto ClampLength<XMFLOAT2>(const Type &vec, XMFLOAT2 min, XMFLOAT2 max)
+        {
+            return XMVector2ClampLengthV(XMLoadFloat2(&vec), XMLoadFloat2(&min), XMLoadFloat2(&max));
+        }
+
+        template <>
+        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
+        {
+            return XMVector2ClampLengthV(XMLoadFloat2(&vec), min, max);
+        }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
         {
@@ -298,6 +503,11 @@ namespace
         static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2GreaterOrEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+        }
+
+        static inline auto Length(const Type &vec)
+        {
+            return XMVector2Length(XMLoadFloat2(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -352,7 +562,28 @@ namespace
     template <>
     struct Vector_Helper<float_t, 3>
     {
-        using Type = ::DirectX::XMFLOAT3;
+        typedef ::DirectX::XMFLOAT3 Type;
+
+        template <class L>
+        static inline auto ClampLength(const Type &vec, L min, L max);
+
+        template <>
+        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+        {
+            return XMVector3ClampLength(XMLoadFloat3(&vec), min, max);
+        }
+
+        template <>
+        static inline auto ClampLength<XMFLOAT3>(const Type &vec, XMFLOAT3 min, XMFLOAT3 max)
+        {
+            return XMVector3ClampLengthV(XMLoadFloat3(&vec), XMLoadFloat3(&min), XMLoadFloat3(&max));
+        }
+
+        template <>
+        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
+        {
+            return XMVector3ClampLengthV(XMLoadFloat3(&vec), min, max);
+        }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
         {
@@ -379,6 +610,11 @@ namespace
             return XMVector3GreaterOrEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
         }
 
+        static inline auto Length(const Type &vec)
+        {
+            return XMVector3Length(XMLoadFloat3(&vec));
+        }
+
         static inline bool Less(const Type &lhs, const Type &rhs)
         {
             return XMVector3Less(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
@@ -400,7 +636,7 @@ namespace
         template <>
         static inline auto Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
-            return XMVector4Transform(XMLoadFloat3(&vec), mat);
+            return XMVector3Transform(XMLoadFloat3(&vec), mat);
         }
 
         template <>
@@ -431,7 +667,28 @@ namespace
     template <>
     struct Vector_Helper<float, 4>
     {
-        using Type = ::DirectX::XMFLOAT4;
+        typedef ::DirectX::XMFLOAT4 Type;
+
+        template <class L>
+        static inline auto ClampLength(const Type &vec, L min, L max);
+
+        template <>
+        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+        {
+            return XMVector4ClampLength(XMLoadFloat4(&vec), min, max);
+        }
+
+        template <>
+        static inline auto ClampLength<XMFLOAT4>(const Type &vec, XMFLOAT4 min, XMFLOAT4 max)
+        {
+            return XMVector4ClampLengthV(XMLoadFloat4(&vec), XMLoadFloat4(&min), XMLoadFloat4(&max));
+        }
+
+        template <>
+        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
+        {
+            return XMVector4ClampLengthV(XMLoadFloat4(&vec), min, max);
+        }
 
         template <class ... T>
         static inline auto CrossProduct(const Type &lhs, T&&... rhs)
@@ -457,6 +714,11 @@ namespace
         static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4GreaterOrEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+        }
+
+        static inline auto Length(const Type &vec)
+        {
+            return XMVector4Length(XMLoadFloat4(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -499,7 +761,28 @@ namespace
     template <>
     struct Vector_Helper<uint32_t, 2>
     {
-        using Type = ::DirectX::XMUINT2;
+        typedef ::DirectX::XMUINT2 Type;
+
+        template <class L>
+        static inline auto ClampLength(const Type &vec, L min, L max);
+
+        template <>
+        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+        {
+            return XMVector2ClampLength(XMLoadUInt2(&vec), min, max);
+        }
+
+        template <>
+        static inline auto ClampLength<XMUINT2>(const Type &vec, XMUINT2 min, XMUINT2 max)
+        {
+            return XMVector2ClampLengthV(XMLoadUInt2(&vec), XMLoadUInt2(&min), XMLoadUInt2(&max));
+        }
+
+        template <>
+        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
+        {
+            return XMVector2ClampLengthV(XMLoadUInt2(&vec), min, max);
+        }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
         {
@@ -524,6 +807,11 @@ namespace
         static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2GreaterOrEqual(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+        }
+
+        static inline auto Length(const Type &vec)
+        {
+            return XMVector2Length(XMLoadUInt2(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -578,7 +866,28 @@ namespace
     template <>
     struct Vector_Helper<uint32_t, 3>
     {
-        using Type = ::DirectX::XMUINT3;
+        typedef ::DirectX::XMUINT3 Type;
+
+        template <class L>
+        static inline auto ClampLength(const Type &vec, L min, L max);
+
+        template <>
+        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+        {
+            return XMVector3ClampLength(XMLoadUInt3(&vec), min, max);
+        }
+
+        template <>
+        static inline auto ClampLength<XMUINT3>(const Type &vec, XMUINT3 min, XMUINT3 max)
+        {
+            return XMVector3ClampLengthV(XMLoadUInt3(&vec), XMLoadUInt3(&min), XMLoadUInt3(&max));
+        }
+
+        template <>
+        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
+        {
+            return XMVector3ClampLengthV(XMLoadUInt3(&vec), min, max);
+        }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
         {
@@ -603,6 +912,11 @@ namespace
         static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3GreaterOrEqual(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+        }
+
+        static inline auto Length(const Type &vec)
+        {
+            return XMVector3Length(XMLoadUInt3(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -657,7 +971,28 @@ namespace
     template <>
     struct Vector_Helper<uint32_t, 4>
     {
-        using Type = ::DirectX::XMUINT4;
+        typedef ::DirectX::XMUINT4 Type;
+
+        template <class L>
+        static inline auto ClampLength(const Type &vec, L min, L max);
+
+        template <>
+        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+        {
+            return XMVector4ClampLength(XMLoadUInt4(&vec), min, max);
+        }
+
+        template <>
+        static inline auto ClampLength<XMUINT4>(const Type &vec, XMUINT4 min, XMUINT4 max)
+        {
+            return XMVector4ClampLengthV(XMLoadUInt4(&vec), XMLoadUInt4(&min), XMLoadUInt4(&max));
+        }
+
+        template <>
+        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
+        {
+            return XMVector4ClampLengthV(XMLoadUInt4(&vec), min, max);
+        }
 
         template <class ... T>
         static inline auto CrossProduct(const Type &lhs, T&&... rhs)
@@ -683,6 +1018,11 @@ namespace
         static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4GreaterOrEqual(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+        }
+
+        static inline auto Length(const Type &vec)
+        {
+            return XMVector4Length(XMLoadUInt4(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -1155,112 +1495,225 @@ namespace
     template <>
     struct Vector_Geometry<XMINT2>
     {
-        static inline auto DotProduct(const XMINT2 &v1, const XMINT2 &v2)
+        template <class L>
+        static inline auto ClampLength(const XMINT2 &v1, L&& v2, L&& v3)
         {
-            return Vector_Helper<int32_t,2>::DotProduct(v1,v2);
+            return Vector_Helper<int32_t,2>::ClampLength<L>(v1,v2,v3);
         }
 
         static inline auto CrossProduct(const XMINT2 &v1, const XMINT2 &v2)
         {
             return Vector_Helper<int32_t,2>::CrossProduct(v1,v2);
         }
+
+        static inline auto DotProduct(const XMINT2 &v1, const XMINT2 &v2)
+        {
+            return Vector_Helper<int32_t,2>::DotProduct(v1,v2);
+        }
+
+        static inline auto Length(const XMINT2 &v)
+        {
+            return Vector_Helper<int32_t,2>::Length(v);
+        }
     };
 
     template <>
     struct Vector_Geometry<XMINT3>
     {
-        static inline auto DotProduct(const XMINT3 &v1, const XMINT3 &v2)
+        template <class L>
+        static inline auto ClampLength(const XMINT3 &v1, L&& v2, L&& v3)
         {
-            return Vector_Helper<int32_t,3>::DotProduct(v1,v2);
+            return Vector_Helper<int32_t,3>::ClampLength(v1, std::forward<L>(v2), std::forward<L>(v3));
         }
 
         static inline auto CrossProduct(const XMINT3 &v1, const XMINT3 &v2)
         {
             return Vector_Helper<int32_t,3>::CrossProduct(v1,v2);
         }
+
+        static inline auto DotProduct(const XMINT3 &v1, const XMINT3 &v2)
+        {
+            return Vector_Helper<int32_t,3>::DotProduct(v1,v2);
+        }
+
+        static inline auto Length(const XMINT3 &v)
+        {
+            return Vector_Helper<int32_t,3>::Length(v);
+        }
     };
 
     template <>
     struct Vector_Geometry<XMINT4>
     {
-        static inline auto DotProduct(const XMINT4 &v1, const XMINT4 &v2)
+        template <class L>
+        static inline auto ClampLength(const XMINT4 &v1, L&& v2, L&& v3)
         {
-            return Vector_Helper<int32_t,4>::DotProduct(v1,v2);
+            return Vector_Helper<int32_t,4>::ClampLength(v1, std::forward<L>(v2), std::forward<L>(v3));
         }
 
         static inline auto CrossProduct(const XMINT4 &v1, const XMINT4 &v2, const XMINT4 &v3)
         {
             return Vector_Helper<int32_t,4>::CrossProduct(v1,v2,v3);
         }
+
+        static inline auto DotProduct(const XMINT4 &v1, const XMINT4 &v2)
+        {
+            return Vector_Helper<int32_t,4>::DotProduct(v1,v2);
+        }
+
+        static inline auto Length(const XMINT4 &v)
+        {
+            return Vector_Helper<int32_t,4>::Length(v);
+        }
+    };
+
+    template <>
+    struct Vector_Geometry<XMFLOAT2>
+    {
+        template <class L>
+        static inline auto ClampLength(const XMFLOAT2 &v1, L&& v2, L&& v3)
+        {
+            return Vector_Helper<float_t,2>::ClampLength(v1, std::forward(v2), std::forward(v3));;
+        }
+
+        static inline auto CrossProduct(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        {
+            return Vector_Helper<float_t,2>::CrossProduct(v1,v2);
+        }
+
+        static inline auto DotProduct(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        {
+            return Vector_Helper<float_t,2>::DotProduct(v1, v2);
+        }
+
+        static inline auto Length(const XMFLOAT2 &v)
+        {
+            return Vector_Helper<float_t,2>::Length(v);
+        }
     };
 
     template <>
     struct Vector_Geometry<XMFLOAT3>
     {
-        static inline auto DotProduct(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        template <class L>
+        static inline auto ClampLength(const XMFLOAT3 &v1, L&& v2, L&& v3)
         {
-            return Vector_Helper<float_t,3>::DotProduct(v1,v2);
+            return Vector_Helper<float_t,3>::ClampLength(v1, std::forward(v2), std::forward(v3));;
         }
 
         static inline auto CrossProduct(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
             return Vector_Helper<float_t,3>::CrossProduct(v1,v2);
         }
+
+        static inline auto DotProduct(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        {
+            return Vector_Helper<float_t,3>::DotProduct(v1,v2);
+        }
+
+        static inline auto Length(const XMFLOAT3 &v)
+        {
+            return Vector_Helper<float_t,3>::Length(v);
+        }
     };
 
     template <>
     struct Vector_Geometry<XMFLOAT4>
     {
-        static inline auto DotProduct(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        template <class L>
+        static inline auto ClampLength(const XMFLOAT4 &v1, L&& v2, L&& v3)
         {
-            return Vector_Helper<float_t,4>::DotProduct(v1,v2);
+            return Vector_Helper<float_t,4>::ClampLength(v1, std::forward(v2), std::forward(v3));
         }
 
         static inline auto CrossProduct(const XMFLOAT4 &v1, const XMFLOAT4 &v2, const XMFLOAT4 &v3)
         {
             return Vector_Helper<float_t,4>::CrossProduct(v1,v2,v3);
         }
+
+        static inline auto DotProduct(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        {
+            return Vector_Helper<float_t,4>::DotProduct(v1,v2);
+        }
+
+        static inline auto Length(const XMFLOAT4 &v)
+        {
+            return Vector_Helper<float_t,4>::Length(v);
+        }
     };
 
     template <>
     struct Vector_Geometry<XMUINT2>
     {
-        static inline auto DotProduct(const XMUINT2 &v1, const XMUINT2 &v2)
+        template <class L>
+        static inline auto ClampLength(const XMUINT2 &v1, L&& v2, L&& v3)
         {
-            return Vector_Helper<uint32_t,2>::DotProduct(v1,v2);
+            return Vector_Helper<uint32_t,2>::ClampLength(v1, std::forward(v2), std::forward(v3));
         }
 
         static inline auto CrossProduct(const XMUINT2 &v1, const XMUINT2 &v2)
         {
             return Vector_Helper<uint32_t,2>::CrossProduct(v1,v2);
         }
+
+        static inline auto DotProduct(const XMUINT2 &v1, const XMUINT2 &v2)
+        {
+            return Vector_Helper<uint32_t,2>::DotProduct(v1,v2);
+        }
+
+        static inline auto Length(const XMUINT2 &v)
+        {
+            return Vector_Helper<uint32_t,2>::Length(v);
+        }
     };
 
     template <>
     struct Vector_Geometry<XMUINT3>
     {
-        static inline auto DotProduct(const XMUINT3 &v1, const XMUINT3 &v2)
+        template <class L>
+        static inline auto ClampLength(const XMUINT3 &v1, L&& v2, L&& v3)
         {
-            return Vector_Helper<uint32_t,3>::DotProduct(v1,v2);
+            return Vector_Helper<uint32_t,3>::ClampLength(v1, std::forward(v2), std::forward(v3));
         }
 
         static inline auto CrossProduct(const XMUINT3 &v1, const XMUINT3 &v2)
         {
             return Vector_Helper<uint32_t,3>::CrossProduct(v1,v2);
         }
+
+        static inline auto DotProduct(const XMUINT3 &v1, const XMUINT3 &v2)
+        {
+            return Vector_Helper<uint32_t,3>::DotProduct(v1,v2);
+        }
+
+        static inline auto Length(const XMUINT3 &v)
+        {
+            return Vector_Helper<uint32_t,3>::Length(v);
+        }
     };
 
     template <>
     struct Vector_Geometry<XMUINT4>
     {
-        static inline auto DotProduct(const XMUINT4 &v1, const XMUINT4 &v2)
+        template <class L>
+        static inline auto ClampLength(const XMUINT4 &v1, L&& v2, L&& v3)
         {
-            return Vector_Helper<uint32_t,4>::DotProduct(v1,v2);
+            return Vector_Helper<uint32_t,4>::ClampLength(v1, std::forward(v2), std::forward(v3));
         }
 
         static inline auto CrossProduct(const XMUINT4 &v1, const XMUINT4 &v2, const XMUINT4 &v3)
         {
             return Vector_Helper<uint32_t,4>::CrossProduct(v1,v2,v3);
+        }
+
+        static inline auto DotProduct(const XMUINT4 &v1, const XMUINT4 &v2)
+        {
+            return Vector_Helper<uint32_t,4>::DotProduct(v1,v2);
+        }
+
+        static inline auto Length(const XMUINT4 &v)
+        {
+            return Vector_Helper<uint32_t,4>::Length(v);
         }
     };
 }
@@ -1301,6 +1754,18 @@ inline bool operator!=(const V &vector1, const V &vector2)
     return Vector_Comparator<V>::NotEqual(vector1, vector2);
 }
 
+template <class V, class L>
+inline auto clampLength(const V &vector, L&& lengthMin, L&& lengthMax)
+{
+    return Vector_Geometry<V>::ClampLength(vector, std::forward<L>(lengthMin), std::forward<L>(lengthMax));
+}
+
+template <class V>
+inline auto crossProduct(const V &vector1, const V &vector2)
+{
+    return Vector_Geometry<V>::CrossProduct(vector1, vector2);
+}
+
 template <class V>
 inline auto dotProduct(const V &vector1, const V &vector2)
 {
@@ -1308,9 +1773,15 @@ inline auto dotProduct(const V &vector1, const V &vector2)
 }
 
 template <class V>
-inline auto crossProduct(const V &vector1, const V &vector2)
+inline auto length(const V &vector)
 {
-    return Vector_Geometry<V>::CrossProduct(vector1, vector2);
+    return Vector_Geometry<V>::Length(v);
+}
+
+template <class V>
+inline auto magnitude(const V &vector)
+{
+    return Vector_Geometry<V>::Length(v);
 }
 
 template <class V, class M>

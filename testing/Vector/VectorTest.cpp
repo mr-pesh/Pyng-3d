@@ -5,10 +5,17 @@
 
 #include <variant>
 
-class MatrixUnitTest : public testing::Test {
+namespace std {
+    auto begin(const Matrix<float_t, 3, 3> &m) { return (float*)(&m); }
+    auto end(const Matrix<float_t, 3, 3> &m) { return (float*)(&m); }
+    auto begin(const XMMATRIX &m) { return (float*)(&m); }
+    auto end(const XMMATRIX &m) { return (float*)(&m + 1); }
+}
+
+class VectorUnitTest : public testing::Test {
 };
 
-TEST_F(MatrixUnitTest, MultiplicationTest)
+TEST_F(VectorUnitTest, MultiplicationTest)
 {
     using VectorVariant = std::variant<Vector<int32_t,3>, Vector<float_t,3>, Vector<uint32_t,3>>;
 
@@ -46,6 +53,10 @@ TEST_F(MatrixUnitTest, MultiplicationTest)
             ASSERT_TRUE(std::equal(
                             std::begin(result), std::end(result), std::begin(expect), std::end(expect)
                         ));
+
+            clampLength(result, -1.f, 1.f);
+            clampLength(result, vector, expect);
+            clampLength(result, vector, expect);
         },
         vectors[i], matrices[i], expected[i]);
     };
