@@ -51,6 +51,35 @@ TEST_F(VectorUnitTest, MultiplicationTest)
     };
 }
 
+TEST_F(VectorUnitTest, AngleEvaluationTest)
+{
+    const auto vec1 = Vector<uint32_t, 3>{ 7u, 9u, 5u };
+    const auto vec2 = Vector<uint32_t, 3>{ 1u, 2u, 3u };
+    
+    const auto lvalueCallResult   = VectorAngle::Angle(vec1, vec2);
+    const auto lvalueXMCallResult = VectorAngle::Angle(vec2, crossProduct(vec1, vec2));
+    const auto rvalueCallResult   = VectorAngle::Angle(Vector<float_t, 3>{ 7u, 9u, 5u }, Vector<float_t, 3>{ 1u, 2u, 3u });
+    const auto rvalueXMCallResult = VectorAngle::Angle(Vector<float_t, 3>{ 7u, 9u, 5u }, crossProduct(vec1, vec2));
+
+    ASSERT_NEAR(XMVectorGetX(lvalueCallResult), 0.53811252, 0.0001);
+    ASSERT_NEAR(XMVectorGetX(rvalueCallResult), 0.53811252, 0.0001);
+    ASSERT_NEAR(XMVectorGetX(lvalueXMCallResult), 1.57079625, 0.0001);
+    ASSERT_NEAR(XMVectorGetX(rvalueXMCallResult), 1.57079625, 0.0001);
+
+    const auto vec3 = Vector<float_t, 3>{ 0.7f, 0.9f, 0.5f };
+    const auto vec4 = Vector<float_t, 3>{ 0.1f, 0.2f, 0.3f };
+
+    const auto lvalueCallResultN = VectorAngle::OrientedAngle(vec3, vec4);
+    const auto lvalueXMCallResultN = VectorAngle::OrientedAngle(vec3, crossProduct(vec3, vec4));
+    const auto rvalueCallResultN = VectorAngle::OrientedAngle(Vector<float_t, 3>{ 0.7f, 0.9f, 0.5f }, Vector<float_t, 3>{ 0.1f, 0.2f, 0.3f });
+    const auto rvalueXMCallResultN = VectorAngle::OrientedAngle(Vector<float_t, 3>{ 0.7f, 0.9f, 0.5f }, crossProduct(vec3, vec4));
+
+    ASSERT_NEAR(XMVectorGetX(lvalueCallResultN), 1.15927947, 0.0001);
+    ASSERT_NEAR(XMVectorGetX(rvalueCallResultN), 1.15927947, 0.0001);
+    ASSERT_NEAR(XMVectorGetX(lvalueXMCallResultN), 1.57079625, 0.0001);
+    ASSERT_NEAR(XMVectorGetX(rvalueXMCallResultN), 1.57079625, 0.0001);
+}
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
