@@ -187,25 +187,27 @@ namespace
             );
         }
 
-        template <class L>
-        static inline auto ClampLength(const Type &vec, L min, L max);
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        {
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
 
-        template <>
-        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+            if constexpr (isXMVEctor) {
+                return XMVector2ClampLengthV(XMLoadSInt2(&vec), std::forward<V2>(min), std::forward<V3>(max));
+            }
+            else if (isSameType) {
+                return XMVector2ClampLengthV(XMLoadSInt2(&vec), XMLoadSInt2(&min), XMLoadSInt2(&max));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<int32_t,2>::ClampLength<>() to call DirectX::XMVector2ClampLengthV()"
+            );
+        }
+
+        template <class V>
+        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
         {
             return XMVector2ClampLength(XMLoadSInt2(&vec), min, max);
-        }
-
-        template <>
-        static inline auto ClampLength<XMINT2>(const Type &vec, XMINT2 min, XMINT2 max)
-        {
-            return XMVector2ClampLengthV(XMLoadSInt2(&vec), XMLoadSInt2(&min), XMLoadSInt2(&max));
-        }
-
-        template <>
-        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
-        {
-            return XMVector2ClampLengthV(XMLoadSInt2(&vec), min, max);
         }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
@@ -326,25 +328,27 @@ namespace
             );
         }
 
-        template <class L>
-        static inline auto ClampLength(const Type &vec, L min, L max);
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        {
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
 
-        template <>
-        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+            if constexpr (isXMVEctor) {
+                return XMVector3ClampLengthV(XMLoadSInt3(&vec), std::forward<V2>(min), std::forward<V3>(max));
+            }
+            else if (isSameType) {
+                return XMVector3ClampLengthV(XMLoadSInt3(&vec), XMLoadSInt3(&min), XMLoadSInt3(&max));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<int32_t,3>::ClampLength<>() to call DirectX::XMVector3ClampLengthV()"
+            );
+        }
+
+        template <class V>
+        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
         {
             return XMVector3ClampLength(XMLoadSInt3(&vec), min, max);
-        }
-
-        template <>
-        static inline auto ClampLength<XMINT3>(const Type &vec, XMINT3 min, XMINT3 max)
-        {
-            return XMVector3ClampLengthV(XMLoadSInt3(&vec), XMLoadSInt3(&min), XMLoadSInt3(&max));
-        }
-
-        template <>
-        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
-        {
-            return XMVector3ClampLengthV(XMLoadSInt3(&vec), min, max);
         }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
@@ -467,25 +471,27 @@ namespace
             );
         }
 
-        template <class L>
-        static inline auto ClampLength(const Type &vec, L min, L max);
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        {
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
 
-        template <>
-        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+            if constexpr (isXMVEctor) {
+                return XMVector4ClampLengthV(XMLoadSInt4(&vec), std::forward<V2>(min), std::forward<V3>(max));
+            }
+            else if (isSameType) {
+                return XMVector4ClampLengthV(XMLoadSInt4(&vec), XMLoadSInt4(&min), XMLoadSInt4(&max));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<int32_t,4>::ClampLength<>() to call DirectX::XMVector4ClampLengthV()"
+            );
+        }
+
+        template <class V>
+        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
         {
             return XMVector4ClampLength(XMLoadSInt4(&vec), min, max);
-        }
-
-        template <>
-        static inline auto ClampLength<XMINT4>(const Type &vec, XMINT4 min, XMINT4 max)
-        {
-            return XMVector4ClampLengthV(XMLoadSInt4(&vec), XMLoadSInt4(&min), XMLoadSInt4(&max));
-        }
-
-        template <>
-        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
-        {
-            return XMVector4ClampLengthV(XMLoadSInt4(&vec), min, max);
         }
 
         template <class ... T>
@@ -595,25 +601,27 @@ namespace
             );
         }
 
-        template <class L>
-        static inline auto ClampLength(const Type &vec, L min, L max);
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        {
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
 
-        template <>
-        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+            if constexpr (isXMVEctor) {
+                return XMVector2ClampLengthV(XMLoadFloat2(&vec), std::forward<V2>(min), std::forward<V3>(max));
+            }
+            else if (isSameType) {
+                return XMVector2ClampLengthV(XMLoadFloat2(&vec), XMLoadFloat2(&min), XMLoadFloat2(&max));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<float_t,2>::ClampLength<>() to call DirectX::XMVector2ClampLengthV()"
+            );
+        }
+
+        template <class V>
+        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
         {
             return XMVector2ClampLength(XMLoadFloat2(&vec), min, max);
-        }
-
-        template <>
-        static inline auto ClampLength<XMFLOAT2>(const Type &vec, XMFLOAT2 min, XMFLOAT2 max)
-        {
-            return XMVector2ClampLengthV(XMLoadFloat2(&vec), XMLoadFloat2(&min), XMLoadFloat2(&max));
-        }
-
-        template <>
-        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
-        {
-            return XMVector2ClampLengthV(XMLoadFloat2(&vec), min, max);
         }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
@@ -734,25 +742,27 @@ namespace
             );
         }
 
-        template <class L>
-        static inline auto ClampLength(const Type &vec, L min, L max);
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        {
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            
+            if constexpr (isXMVEctor) {
+                return XMVector3ClampLengthV(XMLoadFloat3(&vec), std::forward<V2>(min), std::forward<V3>(max));
+            }
+            else if (isSameType) {
+                return XMVector3ClampLengthV(XMLoadFloat3(&vec), XMLoadFloat3(&min), XMLoadFloat3(&max));
+            }
 
-        template <>
-        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<float_t,3>::ClampLength<>() to call DirectX::XMVector3ClampLengthV()"
+            );
+        }
+
+        template <class V>
+        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
         {
             return XMVector3ClampLength(XMLoadFloat3(&vec), min, max);
-        }
-
-        template <>
-        static inline auto ClampLength<XMFLOAT3>(const Type &vec, XMFLOAT3 min, XMFLOAT3 max)
-        {
-            return XMVector3ClampLengthV(XMLoadFloat3(&vec), XMLoadFloat3(&min), XMLoadFloat3(&max));
-        }
-
-        template <>
-        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
-        {
-            return XMVector3ClampLengthV(XMLoadFloat3(&vec), min, max);
         }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
@@ -873,25 +883,27 @@ namespace
             );
         }
 
-        template <class L>
-        static inline auto ClampLength(const Type &vec, L min, L max);
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        {
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
 
-        template <>
-        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+            if constexpr (isXMVEctor) {
+                return XMVector4ClampLengthV(XMLoadFloat4(&vec), std::forward<V2>(min), std::forward<V3>(max));
+            }
+            else if (isSameType) {
+                return XMVector4ClampLengthV(XMLoadFloat4(&vec), XMLoadFloat4(&min), XMLoadFloat4(&max));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<float_t,4>::ClampLength<>() to call DirectX::XMVector4ClampLengthV()"
+            );
+        }
+
+        template <class V>
+        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
         {
             return XMVector4ClampLength(XMLoadFloat4(&vec), min, max);
-        }
-
-        template <>
-        static inline auto ClampLength<XMFLOAT4>(const Type &vec, XMFLOAT4 min, XMFLOAT4 max)
-        {
-            return XMVector4ClampLengthV(XMLoadFloat4(&vec), XMLoadFloat4(&min), XMLoadFloat4(&max));
-        }
-
-        template <>
-        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
-        {
-            return XMVector4ClampLengthV(XMLoadFloat4(&vec), min, max);
         }
 
         template <class ... T>
@@ -1001,25 +1013,27 @@ namespace
             );
         }
 
-        template <class L>
-        static inline auto ClampLength(const Type &vec, L min, L max);
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        {
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
 
-        template <>
-        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+            if constexpr (isXMVEctor) {
+                return XMVector2ClampLengthV(XMLoadUInt2(&vec), std::forward<V2>(min), std::forward<V3>(max));
+            }
+            else if (isSameType) {
+                return XMVector2ClampLengthV(XMLoadUInt2(&vec), XMLoadUInt2(&min), XMLoadUInt2(&max));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<uint32_t,2>::ClampLength<>() to call DirectX::XMVector2ClampLengthV()"
+            );
+        }
+
+        template <class V>
+        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
         {
             return XMVector2ClampLength(XMLoadUInt2(&vec), min, max);
-        }
-
-        template <>
-        static inline auto ClampLength<XMUINT2>(const Type &vec, XMUINT2 min, XMUINT2 max)
-        {
-            return XMVector2ClampLengthV(XMLoadUInt2(&vec), XMLoadUInt2(&min), XMLoadUInt2(&max));
-        }
-
-        template <>
-        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
-        {
-            return XMVector2ClampLengthV(XMLoadUInt2(&vec), min, max);
         }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
@@ -1140,25 +1154,27 @@ namespace
             );
         }
 
-        template <class L>
-        static inline auto ClampLength(const Type &vec, L min, L max);
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        {
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
 
-        template <>
-        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+            if constexpr (isXMVEctor) {
+                return XMVector3ClampLengthV(XMLoadUInt3(&vec), std::forward<V2>(min), std::forward<V3>(max));
+            }
+            else if (isSameType) {
+                return XMVector3ClampLengthV(XMLoadUInt3(&vec), XMLoadUInt3(&min), XMLoadUInt3(&max));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<uint32_t,3>::ClampLength<>() to call DirectX::XMVector3ClampLengthV()"
+            );
+        }
+
+        template <class V>
+        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
         {
             return XMVector3ClampLength(XMLoadUInt3(&vec), min, max);
-        }
-
-        template <>
-        static inline auto ClampLength<XMUINT3>(const Type &vec, XMUINT3 min, XMUINT3 max)
-        {
-            return XMVector3ClampLengthV(XMLoadUInt3(&vec), XMLoadUInt3(&min), XMLoadUInt3(&max));
-        }
-
-        template <>
-        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
-        {
-            return XMVector3ClampLengthV(XMLoadUInt3(&vec), min, max);
         }
 
         static inline auto CrossProduct(const Type &lhs, const Type &rhs)
@@ -1279,25 +1295,27 @@ namespace
             );
         }
 
-        template <class L>
-        static inline auto ClampLength(const Type &vec, L min, L max);
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        {
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
 
-        template <>
-        static inline auto ClampLength<float>(const Type &vec, float min, float max)
+            if constexpr (isXMVEctor) {
+                return XMVector4ClampLengthV(XMLoadUInt4(&vec), std::forward<V2>(min), std::forward<V3>(max));
+            }
+            else if (isSameType) {
+                return XMVector4ClampLengthV(XMLoadUInt4(&vec), XMLoadUInt4(&min), XMLoadUInt4(&max));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<uint32_t,4>::ClampLength<>() to call DirectX::XMVector4ClampLengthV()"
+            );
+        }
+
+        template <class V>
+        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
         {
             return XMVector4ClampLength(XMLoadUInt4(&vec), min, max);
-        }
-
-        template <>
-        static inline auto ClampLength<XMUINT4>(const Type &vec, XMUINT4 min, XMUINT4 max)
-        {
-            return XMVector4ClampLengthV(XMLoadUInt4(&vec), XMLoadUInt4(&min), XMLoadUInt4(&max));
-        }
-
-        template <>
-        static inline auto ClampLength<XMVECTOR>(const Type &vec, XMVECTOR min, XMVECTOR max)
-        {
-            return XMVector4ClampLengthV(XMLoadUInt4(&vec), min, max);
         }
 
         template <class ... T>
@@ -1813,10 +1831,12 @@ namespace
             return Vector_Helper<int32_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class L>
-        static inline auto ClampLength(const XMINT2 &v1, const L &v2, const L &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,2>::ClampLength<L>(v1,v2,v3);
+            return Vector_Helper<int32_t,2>::ClampLength(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto CrossProduct(const XMINT2 &v1, const XMINT2 &v2)
@@ -1850,10 +1870,12 @@ namespace
             return Vector_Helper<int32_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class L>
-        static inline auto ClampLength(const XMINT3 &v1, const L &v2, const L &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,3>::ClampLength(v1,v2,v3);
+            return Vector_Helper<int32_t,3>::ClampLength(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto CrossProduct(const XMINT3 &v1, const XMINT3 &v2)
@@ -1887,10 +1909,12 @@ namespace
             return Vector_Helper<int32_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class L>
-        static inline auto ClampLength(const XMINT4 &v1, const L &v2, const L &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,4>::ClampLength(v1,v2,v3);
+            return Vector_Helper<int32_t,4>::ClampLength(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto CrossProduct(const XMINT4 &v1, const XMINT4 &v2, const XMINT4 &v3)
@@ -1924,10 +1948,12 @@ namespace
             return Vector_Helper<float_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class L>
-        static inline auto ClampLength(const XMFLOAT2 &v1, const L &v2, const L &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,2>::ClampLength(v1,v2,v3);;
+            return Vector_Helper<float_t,2>::ClampLength(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto CrossProduct(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
@@ -1961,10 +1987,12 @@ namespace
             return Vector_Helper<float_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class L>
-        static inline auto ClampLength(const XMFLOAT3 &v1, const L &v2, const L &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,3>::ClampLength(v1,v2,v3);
+            return Vector_Helper<float_t,3>::ClampLength(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto CrossProduct(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
@@ -1998,10 +2026,12 @@ namespace
             return Vector_Helper<float_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class L>
-        static inline auto ClampLength(const XMFLOAT4 &v1, const L &v2, const L &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,4>::ClampLength(v1,v2,v3);
+            return Vector_Helper<float_t,4>::ClampLength(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto CrossProduct(const XMFLOAT4 &v1, const XMFLOAT4 &v2, const XMFLOAT4 &v3)
@@ -2035,10 +2065,12 @@ namespace
             return Vector_Helper<uint32_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class L>
-        static inline auto ClampLength(const XMUINT2 &v1, const L &v2, const L &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,2>::ClampLength(v1,v2,v3);
+            return Vector_Helper<uint32_t,2>::ClampLength(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto CrossProduct(const XMUINT2 &v1, const XMUINT2 &v2)
@@ -2072,10 +2104,12 @@ namespace
             return Vector_Helper<uint32_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class L>
-        static inline auto ClampLength(const XMUINT3 &v1, const L &v2, const L &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,3>::ClampLength(v1,v2,v3);
+            return Vector_Helper<uint32_t,3>::ClampLength(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto CrossProduct(const XMUINT3 &v1, const XMUINT3 &v2)
@@ -2109,10 +2143,12 @@ namespace
             return Vector_Helper<uint32_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class L>
-        static inline auto ClampLength(const XMUINT4 &v1, const L &v2, const L &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR ClampLength(V1 &&v1, V3 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,4>::ClampLength(v1,v2,v3);
+            return Vector_Helper<uint32_t,4>::ClampLength(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto CrossProduct(const XMUINT4 &v1, const XMUINT4 &v2, const XMUINT4 &v3)
@@ -2183,10 +2219,12 @@ namespace VectorAngle
     }
 }
 
-template <class V, class L>
-inline auto clampLength(const V &vector, const L &lengthMin, const L &lengthMax)
+template <class V1, class V2, class V3>
+inline XMVECTOR ClampLength(V1 &&vector, V2 &&lengthMin, V3 &&lengthMax) noexcept
 {
-    return Vector_Geometry<V>::ClampLength(vector, lengthMin, lengthMax);
+    return Vector_Geometry<std::decay_t<V1>>::ClampLength(
+        std::forward<V1>(vector), std::forward<V2>(lengthMin), std::forward<V3>(lengthMax)
+    );
 }
 
 template <class V>
