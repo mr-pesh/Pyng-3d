@@ -212,9 +212,21 @@ namespace
             return XMVector2ClampLength(XMLoadSInt2(&vec), min, max);
         }
 
-        static inline auto CrossProduct(const Type &lhs, const Type &rhs)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            return XMVector2Cross(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+
+            if constexpr (isXMVEctor) {
+                return XMVector2Cross(XMLoadSInt2(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector2Cross(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<int32_t,2>::CrossProduct<>() to call DirectX::XMVector2Cross()"
+            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -353,9 +365,21 @@ namespace
             return XMVector3ClampLength(XMLoadSInt3(&vec), min, max);
         }
 
-        static inline auto CrossProduct(const Type &lhs, const Type &rhs)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            return XMVector3Cross(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+
+            if constexpr (isXMVEctor) {
+                return XMVector3Cross(XMLoadSInt3(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector3Cross(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<int32_t,3>::CrossProduct<>() to call DirectX::XMVector3Cross()"
+            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -496,10 +520,21 @@ namespace
             return XMVector4ClampLength(XMLoadSInt4(&vec), min, max);
         }
 
-        template <class ... T>
-        static inline auto CrossProduct(const Type &lhs, T&&... rhs)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            return XMVector4Cross(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs)...);
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+
+            if constexpr (isXMVEctor) {
+                return XMVector4Cross(XMLoadSInt4(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector4Cross(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2), XMLoadSInt4(&vec3));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<int32_t,4>::CrossProduct<>() to call DirectX::XMVector4Cross()"
+            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -626,9 +661,21 @@ namespace
             return XMVector2ClampLength(XMLoadFloat2(&vec), min, max);
         }
 
-        static inline auto CrossProduct(const Type &lhs, const Type &rhs)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            return XMVector2Cross(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+
+            if constexpr (isXMVEctor) {
+                return XMVector2Cross(XMLoadFloat2(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector2Cross(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<float_t,2>::CrossProduct<>() to call DirectX::XMVector2Cross()"
+            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -767,9 +814,21 @@ namespace
             return XMVector3ClampLength(XMLoadFloat3(&vec), min, max);
         }
 
-        static inline auto CrossProduct(const Type &lhs, const Type &rhs)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            return XMVector3Cross(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+
+            if constexpr (isXMVEctor) {
+                return XMVector3Cross(XMLoadFloat3(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector3Cross(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<float_t,3>::CrossProduct<>() to call DirectX::XMVector3Cross()"
+            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -908,10 +967,21 @@ namespace
             return XMVector4ClampLength(XMLoadFloat4(&vec), min, max);
         }
 
-        template <class ... T>
-        static inline auto CrossProduct(const Type &lhs, T&&... rhs)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            return XMVector4Cross(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs)...);
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+
+            if constexpr (isXMVEctor) {
+                return XMVector4Cross(XMLoadFloat4(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector4Cross(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2), XMLoadFloat4(&vec3));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<float_t,4>::CrossProduct<>() to call DirectX::XMVector4Cross()"
+            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -1038,9 +1108,21 @@ namespace
             return XMVector2ClampLength(XMLoadUInt2(&vec), min, max);
         }
 
-        static inline auto CrossProduct(const Type &lhs, const Type &rhs)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            return XMVector2Cross(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+
+            if constexpr (isXMVEctor) {
+                return XMVector2Cross(XMLoadUInt2(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector2Cross(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<uint32_t,2>::CrossProduct<>() to call DirectX::XMVector2Cross()"
+            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -1179,9 +1261,21 @@ namespace
             return XMVector3ClampLength(XMLoadUInt3(&vec), min, max);
         }
 
-        static inline auto CrossProduct(const Type &lhs, const Type &rhs)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            return XMVector3Cross(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+
+            if constexpr (isXMVEctor) {
+                return XMVector3Cross(XMLoadUInt3(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector3Cross(XMLoadUInt3(&vec1), XMLoadUInt3(&vec1));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<uint32_t,3>::CrossProduct<>() to call DirectX::XMVector3Cross()"
+            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -1320,10 +1414,21 @@ namespace
             return XMVector4ClampLength(XMLoadUInt4(&vec), min, max);
         }
 
-        template <class ... T>
-        static inline auto CrossProduct(const Type &lhs, T&&... rhs)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            return XMVector4Cross(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs)...);
+            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+
+            if constexpr (isXMVEctor) {
+                return XMVector4Cross(XMLoadUInt4(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector4Cross(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2), XMLoadUInt4(&vec3));
+            }
+
+            static_assert(isSameType || isXMVEctor,
+                "No matching overload for XMVectorAdapter<uint32_t,4>::CrossProduct<>() to call DirectX::XMVector4Cross()"
+            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -1841,9 +1946,10 @@ namespace
             );
         }
 
-        static inline auto CrossProduct(const XMINT2 &v1, const XMINT2 &v2)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2)
         {
-            return Vector_Helper<int32_t,2>::CrossProduct(v1,v2);
+            return Vector_Helper<int32_t,2>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         static inline auto DotProduct(const XMINT2 &v1, const XMINT2 &v2)
@@ -1880,9 +1986,10 @@ namespace
             );
         }
 
-        static inline auto CrossProduct(const XMINT3 &v1, const XMINT3 &v2)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2) noexcept
         {
-            return Vector_Helper<int32_t,3>::CrossProduct(v1,v2);
+            return Vector_Helper<int32_t,3>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         static inline auto DotProduct(const XMINT3 &v1, const XMINT3 &v2)
@@ -1919,9 +2026,12 @@ namespace
             );
         }
 
-        static inline auto CrossProduct(const XMINT4 &v1, const XMINT4 &v2, const XMINT4 &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,4>::CrossProduct(v1,v2,v3);
+            return Vector_Helper<int32_t,4>::CrossProduct(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto DotProduct(const XMINT4 &v1, const XMINT4 &v2)
@@ -1958,9 +2068,10 @@ namespace
             );
         }
 
-        static inline auto CrossProduct(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&v1, V1 &&v2) noexcept
         {
-            return Vector_Helper<float_t,2>::CrossProduct(v1,v2);
+            return Vector_Helper<float_t,2>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         static inline auto DotProduct(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
@@ -1997,9 +2108,10 @@ namespace
             );
         }
 
-        static inline auto CrossProduct(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2) noexcept
         {
-            return Vector_Helper<float_t,3>::CrossProduct(v1,v2);
+            return Vector_Helper<float_t,3>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         static inline auto DotProduct(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
@@ -2036,9 +2148,12 @@ namespace
             );
         }
 
-        static inline auto CrossProduct(const XMFLOAT4 &v1, const XMFLOAT4 &v2, const XMFLOAT4 &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,4>::CrossProduct(v1,v2,v3);
+            return Vector_Helper<float_t,4>::CrossProduct(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto DotProduct(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
@@ -2075,9 +2190,10 @@ namespace
             );
         }
 
-        static inline auto CrossProduct(const XMUINT2 &v1, const XMUINT2 &v2)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,2>::CrossProduct(v1,v2);
+            return Vector_Helper<uint32_t,2>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         static inline auto DotProduct(const XMUINT2 &v1, const XMUINT2 &v2)
@@ -2114,9 +2230,10 @@ namespace
             );
         }
 
-        static inline auto CrossProduct(const XMUINT3 &v1, const XMUINT3 &v2)
+        template <class V1, class V2>
+        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,3>::CrossProduct(v1,v2);
+            return Vector_Helper<uint32_t,3>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         static inline auto DotProduct(const XMUINT3 &v1, const XMUINT3 &v2)
@@ -2153,9 +2270,12 @@ namespace
             );
         }
 
-        static inline auto CrossProduct(const XMUINT4 &v1, const XMUINT4 &v2, const XMUINT4 &v3)
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,4>::CrossProduct(v1,v2,v3);
+            return Vector_Helper<uint32_t,4>::CrossProduct(
+                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
+            );
         }
 
         static inline auto DotProduct(const XMUINT4 &v1, const XMUINT4 &v2)
@@ -2229,10 +2349,10 @@ inline XMVECTOR ClampLength(V1 &&vector, V2 &&lengthMin, V3 &&lengthMax) noexcep
     );
 }
 
-template <class V>
-inline auto crossProduct(const V &vector1, const V &vector2)
+template <class V1, class ... V2>
+inline XMVECTOR CrossProduct(V1&& vector1, V2&& ...vector2) noexcept
 {
-    return Vector_Geometry<V>::CrossProduct(vector1, vector2);
+    return Vector_Geometry<std::decay_t<V1>>::CrossProduct(std::forward<V1>(vector1), std::forward<V2>(vector2)...);
 }
 
 template <class V>
