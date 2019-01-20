@@ -143,6 +143,27 @@ namespace
 template <class T, int rows, int columns>
 using Matrix_Helper_T = typename Matrix_Helper<T, rows, columns>::Type;
 
+#define CHECK_ARGUMENT_TYPE(CompType, Result, Type)                                           \
+    constexpr bool Result = std::is_same_v<std::decay_t<##CompType>, ##Type>;                 \
+    static_assert(std::bool_constant<Result>::value, "No matching overload for " __FUNCTION__ )
+
+#define CHECK_ARGUMENT_TYPE_2(CompType, Result1, Type1, Result2, Type2)        \
+    using BaseType = std::decay_t<##CompType>;                                 \
+                                                                               \
+    constexpr bool Result1 = std::is_same_v<BaseType, ##Type1>;                \
+    constexpr bool Result2 = std::is_same_v<BaseType, ##Type2>;                \
+                                                                               \
+    static_assert(Result1 || Result2, "No matching overload for " __FUNCTION__ )
+
+#define CHECK_ARGUMENT_TYPE_3(CompType, Result1, Type1, Result2, Type2, Type3, Result3)   \
+    using BaseType = std::decay_t<##CompType>;                                            \
+                                                                                          \
+    constexpr bool Result1 = std::is_same_v<BaseType, ##Type1>;                           \
+    constexpr bool Result2 = std::is_same_v<BaseType, ##Type2>;                           \
+    constexpr bool Result3 = std::is_same_v<BaseType, ##Type3>;                           \
+                                                                                          \
+    static_assert(Result1 || Result2 || Result3, "No matching overload for " __FUNCTION__ )
+
 namespace
 {
     using namespace DirectX;
@@ -156,9 +177,9 @@ namespace
         typedef ::DirectX::XMINT2 Type;
 
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector2AngleBetweenNormals(XMLoadSInt2(&vec1), std::forward<V2>(vec2));
@@ -166,16 +187,12 @@ namespace
             else if (isSameType) {
                 return XMVector2AngleBetweenNormals(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<int32_t,2>::AngleBetweenNormals<>() to call DirectX::XMVector2AngleBetweenNormals()"
-            );
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector2AngleBetweenVectors(XMLoadSInt2(&vec1), std::forward<V2>(vec2));
@@ -183,27 +200,19 @@ namespace
             else if (isSameType) {
                 return XMVector2AngleBetweenVectors(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<int32_t,2>::AngleBetweenVectors<>() to call DirectX::XMVector2AngleBetweenVectors()"
-            );
         }
 
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector2ClampLengthV(XMLoadSInt2(&vec), std::forward<V2>(min), std::forward<V3>(max));
             }
             else if (isSameType) {
                 return XMVector2ClampLengthV(XMLoadSInt2(&vec), XMLoadSInt2(&min), XMLoadSInt2(&max));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<int32_t,2>::ClampLength<>() to call DirectX::XMVector2ClampLengthV()"
-            );
         }
 
         template <class V>
@@ -215,18 +224,14 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector2Cross(XMLoadSInt2(&vec1), std::forward<V2>(vec2));
             }
             else if (isSameType) {
                 return XMVector2Cross(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<int32_t,2>::CrossProduct<>() to call DirectX::XMVector2Cross()"
-            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -311,7 +316,7 @@ namespace
         template <class V1, class V2>
         static inline auto AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector3AngleBetweenNormals(XMLoadSInt3(&vec1), std::forward<V2>(vec2));
@@ -319,16 +324,12 @@ namespace
             else if (isSameType) {
                 return XMVector3AngleBetweenNormals(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<int32_t,3>::AngleBetweenNormals<>() to call DirectX::XMVector3AngleBetweenNormals()"
-            );
         }
 
         template <class V1, class V2>
         static inline auto AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector3AngleBetweenVectors(XMLoadSInt3(&vec1), std::forward<V2>(vec2));
@@ -336,27 +337,19 @@ namespace
             else if (isSameType) {
                 return XMVector3AngleBetweenVectors(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<int32_t,3>::AngleBetweenVectors<>() to call DirectX::XMVector3AngleBetweenVectors()"
-            );
         }
 
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector3ClampLengthV(XMLoadSInt3(&vec), std::forward<V2>(min), std::forward<V3>(max));
             }
             else if (isSameType) {
                 return XMVector3ClampLengthV(XMLoadSInt3(&vec), XMLoadSInt3(&min), XMLoadSInt3(&max));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<int32_t,3>::ClampLength<>() to call DirectX::XMVector3ClampLengthV()"
-            );
         }
 
         template <class V>
@@ -368,18 +361,14 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector3Cross(XMLoadSInt3(&vec1), std::forward<V2>(vec2));
             }
             else if (isSameType) {
                 return XMVector3Cross(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<int32_t,3>::CrossProduct<>() to call DirectX::XMVector3Cross()"
-            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -464,9 +453,9 @@ namespace
         typedef ::DirectX::XMINT4 Type;
 
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector4AngleBetweenNormals(XMLoadSInt4(&vec1), std::forward<V2>(vec2));
@@ -474,16 +463,12 @@ namespace
             else if (isSameType) {
                 return XMVector4AngleBetweenNormals(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<int32_t,4>::AngleBetweenNormals<>() to call DirectX::XMVector4AngleBetweenNormals()"
-            );
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector4AngleBetweenVectors(XMLoadSInt4(&vec1), std::forward<V2>(vec2));
@@ -491,27 +476,19 @@ namespace
             else if (isSameType) {
                 return XMVector4AngleBetweenVectors(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<int32_t,4>::AngleBetweenVectors<>() to call DirectX::XMVector4AngleBetweenVectors()"
-            );
         }
 
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector4ClampLengthV(XMLoadSInt4(&vec), std::forward<V2>(min), std::forward<V3>(max));
             }
             else if (isSameType) {
                 return XMVector4ClampLengthV(XMLoadSInt4(&vec), XMLoadSInt4(&min), XMLoadSInt4(&max));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<int32_t,4>::ClampLength<>() to call DirectX::XMVector4ClampLengthV()"
-            );
         }
 
         template <class V>
@@ -523,18 +500,14 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector4Cross(XMLoadSInt4(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
             }
             else if (isSameType) {
                 return XMVector4Cross(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2), XMLoadSInt4(&vec3));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<int32_t,4>::CrossProduct<>() to call DirectX::XMVector4Cross()"
-            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -605,9 +578,9 @@ namespace
         typedef ::DirectX::XMFLOAT2 Type;
 
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector2AngleBetweenNormals(XMLoadFloat2(&vec1), std::forward<V2>(vec2));
@@ -615,16 +588,12 @@ namespace
             else if (isSameType) {
                 return XMVector2AngleBetweenNormals(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<float_t,2>::AngleBetweenNormals<>() to call DirectX::XMVector2AngleBetweenNormals()"
-            );
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector2AngleBetweenVectors(XMLoadFloat2(&vec1), std::forward<V2>(vec2));
@@ -632,27 +601,19 @@ namespace
             else if (isSameType) {
                 return XMVector2AngleBetweenVectors(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<float_t,2>::AngleBetweenVectors<>() to call DirectX::XMVector2AngleBetweenVectors()"
-            );
         }
 
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector2ClampLengthV(XMLoadFloat2(&vec), std::forward<V2>(min), std::forward<V3>(max));
             }
             else if (isSameType) {
                 return XMVector2ClampLengthV(XMLoadFloat2(&vec), XMLoadFloat2(&min), XMLoadFloat2(&max));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<float_t,2>::ClampLength<>() to call DirectX::XMVector2ClampLengthV()"
-            );
         }
 
         template <class V>
@@ -664,18 +625,14 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector2Cross(XMLoadFloat2(&vec1), std::forward<V2>(vec2));
             }
             else if (isSameType) {
                 return XMVector2Cross(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<float_t,2>::CrossProduct<>() to call DirectX::XMVector2Cross()"
-            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -758,9 +715,9 @@ namespace
         typedef ::DirectX::XMFLOAT3 Type;
 
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector3AngleBetweenNormals(XMLoadFloat3(&vec1), std::forward<V2>(vec2));
@@ -768,16 +725,12 @@ namespace
             else if (isSameType) {
                 return XMVector3AngleBetweenNormals(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<float_t,3>::AngleBetweenNormals<>() to call DirectX::XMVector3AngleBetweenNormals()"
-            );
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector3AngleBetweenVectors(XMLoadFloat3(&vec1), std::forward<V2>(vec2));
@@ -785,27 +738,19 @@ namespace
             else if (isSameType) {
                 return XMVector3AngleBetweenVectors(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<float_t,3>::AngleBetweenVectors<>() to call DirectX::XMVector3AngleBetweenVectors()"
-            );
         }
 
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
             
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector3ClampLengthV(XMLoadFloat3(&vec), std::forward<V2>(min), std::forward<V3>(max));
             }
             else if (isSameType) {
                 return XMVector3ClampLengthV(XMLoadFloat3(&vec), XMLoadFloat3(&min), XMLoadFloat3(&max));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<float_t,3>::ClampLength<>() to call DirectX::XMVector3ClampLengthV()"
-            );
         }
 
         template <class V>
@@ -817,18 +762,14 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector3Cross(XMLoadFloat3(&vec1), std::forward<V2>(vec2));
             }
             else if (isSameType) {
                 return XMVector3Cross(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<float_t,3>::CrossProduct<>() to call DirectX::XMVector3Cross()"
-            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -911,9 +852,9 @@ namespace
         typedef ::DirectX::XMFLOAT4 Type;
 
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector4AngleBetweenNormals(XMLoadFloat4(&vec1), std::forward<V2>(vec2));
@@ -921,16 +862,12 @@ namespace
             else if (isSameType) {
                 return XMVector4AngleBetweenNormals(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<float_t,4>::AngleBetweenNormals<>() to call DirectX::XMVector4AngleBetweenNormals()"
-            );
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector4AngleBetweenVectors(XMLoadFloat4(&vec1), std::forward<V2>(vec2));
@@ -938,27 +875,19 @@ namespace
             else if (isSameType) {
                 return XMVector4AngleBetweenVectors(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<float_t,4>::AngleBetweenVectors<>() to call DirectX::XMVector4AngleBetweenVectors()"
-            );
         }
 
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector4ClampLengthV(XMLoadFloat4(&vec), std::forward<V2>(min), std::forward<V3>(max));
             }
             else if (isSameType) {
                 return XMVector4ClampLengthV(XMLoadFloat4(&vec), XMLoadFloat4(&min), XMLoadFloat4(&max));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<float_t,4>::ClampLength<>() to call DirectX::XMVector4ClampLengthV()"
-            );
         }
 
         template <class V>
@@ -970,18 +899,14 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector4Cross(XMLoadFloat4(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
             }
             else if (isSameType) {
                 return XMVector4Cross(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2), XMLoadFloat4(&vec3));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<float_t,4>::CrossProduct<>() to call DirectX::XMVector4Cross()"
-            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -1052,9 +977,9 @@ namespace
         typedef ::DirectX::XMUINT2 Type;
 
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector2AngleBetweenNormals(XMLoadUInt2(&vec1), std::forward<V2>(vec2));
@@ -1062,16 +987,12 @@ namespace
             else if (isSameType) {
                 return XMVector2AngleBetweenNormals(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<uint32_t,2>::AngleBetweenNormals<>() to call DirectX::XMVector2AngleBetweenNormals()"
-            );
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector2AngleBetweenVectors(XMLoadUInt2(&vec1), std::forward<V2>(vec2));
@@ -1079,27 +1000,19 @@ namespace
             else if (isSameType) {
                 return XMVector2AngleBetweenVectors(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<uint32_t,2>::AngleBetweenVectors<>() to call DirectX::XMVector2AngleBetweenVectors()"
-            );
         }
 
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector2ClampLengthV(XMLoadUInt2(&vec), std::forward<V2>(min), std::forward<V3>(max));
             }
             else if (isSameType) {
                 return XMVector2ClampLengthV(XMLoadUInt2(&vec), XMLoadUInt2(&min), XMLoadUInt2(&max));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<uint32_t,2>::ClampLength<>() to call DirectX::XMVector2ClampLengthV()"
-            );
         }
 
         template <class V>
@@ -1111,18 +1024,14 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector2Cross(XMLoadUInt2(&vec1), std::forward<V2>(vec2));
             }
             else if (isSameType) {
                 return XMVector2Cross(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<uint32_t,2>::CrossProduct<>() to call DirectX::XMVector2Cross()"
-            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -1205,9 +1114,9 @@ namespace
         typedef ::DirectX::XMUINT3 Type;
 
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector3AngleBetweenNormals(XMLoadUInt3(&vec1), std::forward<V2>(vec2));
@@ -1215,16 +1124,12 @@ namespace
             else if (isSameType) {
                 return XMVector3AngleBetweenNormals(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<uint32_t,3>::AngleBetweenNormals<>() to call DirectX::XMVector3AngleBetweenNormals()"
-            );
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector3AngleBetweenVectors(XMLoadUInt3(&vec1), std::forward<V2>(vec2));
@@ -1232,27 +1137,19 @@ namespace
             else if (isSameType) {
                 return XMVector3AngleBetweenVectors(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<uint32_t,3>::AngleBetweenVectors<>() to call DirectX::XMVector3AngleBetweenVectors()"
-            );
         }
 
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector3ClampLengthV(XMLoadUInt3(&vec), std::forward<V2>(min), std::forward<V3>(max));
             }
             else if (isSameType) {
                 return XMVector3ClampLengthV(XMLoadUInt3(&vec), XMLoadUInt3(&min), XMLoadUInt3(&max));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<uint32_t,3>::ClampLength<>() to call DirectX::XMVector3ClampLengthV()"
-            );
         }
 
         template <class V>
@@ -1264,18 +1161,14 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector3Cross(XMLoadUInt3(&vec1), std::forward<V2>(vec2));
             }
             else if (isSameType) {
                 return XMVector3Cross(XMLoadUInt3(&vec1), XMLoadUInt3(&vec1));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<uint32_t,3>::CrossProduct<>() to call DirectX::XMVector3Cross()"
-            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
@@ -1358,9 +1251,9 @@ namespace
         typedef ::DirectX::XMUINT4 Type;
 
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector4AngleBetweenNormals(XMLoadUInt4(&vec1), std::forward<V2>(vec2));
@@ -1368,16 +1261,12 @@ namespace
             else if (isSameType) {
                 return XMVector4AngleBetweenNormals(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<uint32_t,4>::AngleBetweenNormals<>() to call DirectX::XMVector4AngleBetweenNormals()"
-            );
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVector = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
                 return XMVector4AngleBetweenVectors(XMLoadUInt4(&vec1), std::forward<V2>(vec2));
@@ -1385,27 +1274,19 @@ namespace
             else if (isSameType) {
                 return XMVector4AngleBetweenVectors(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
             }
-
-            static_assert(isSameType || isXMVector,
-                "No matching overload for XMVectorAdapter<uint32_t,4>::AngleBetweenVectors<>() to call DirectX::XMVector4AngleBetweenVectors()"
-            );
         }
 
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector4ClampLengthV(XMLoadUInt4(&vec), std::forward<V2>(min), std::forward<V3>(max));
             }
             else if (isSameType) {
                 return XMVector4ClampLengthV(XMLoadUInt4(&vec), XMLoadUInt4(&min), XMLoadUInt4(&max));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<uint32_t,4>::ClampLength<>() to call DirectX::XMVector4ClampLengthV()"
-            );
         }
 
         template <class V>
@@ -1417,18 +1298,14 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            constexpr bool isSameType = std::is_same_v<std::decay_t<V2>, Type>, isXMVEctor = std::is_same_v<std::decay_t<V2>, XMVECTOR>;
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
-            if constexpr (isXMVEctor) {
+            if constexpr (isXMVector) {
                 return XMVector4Cross(XMLoadUInt4(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
             }
             else if (isSameType) {
                 return XMVector4Cross(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2), XMLoadUInt4(&vec3));
             }
-
-            static_assert(isSameType || isXMVEctor,
-                "No matching overload for XMVectorAdapter<uint32_t,4>::CrossProduct<>() to call DirectX::XMVector4Cross()"
-            );
         }
 
         static inline auto DotProduct(const Type &lhs, const Type &rhs)
