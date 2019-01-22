@@ -267,9 +267,61 @@ namespace
             return XMVector2LessOrEqual(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2LinePointDistance(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2) std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector2LinePointDistance(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2) XMLoadSInt2(&vec3));
+            }
+        }
+
         static inline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2NotEqualInt(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Normalize(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector2Normalize(XMLoadSInt2(&vec));
+            }
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Orthogonal(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector2Orthogonal(XMLoadSInt2(&vec));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Reflect(XMLoadSInt2(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector2Reflect(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
         }
 
         template <class M>
@@ -404,9 +456,61 @@ namespace
             return XMVector3LessOrEqual(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3LinePointDistance(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2) std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector3LinePointDistance(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2) XMLoadSInt3(&vec3));
+            }
+        }
+
         static inline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3NotEqualInt(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Normalize(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector3Normalize(XMLoadSInt3(&vec));
+            }
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Orthogonal(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector3Orthogonal(XMLoadSInt3(&vec));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Reflect(XMLoadSInt3(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector3Reflect(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
         }
 
         template <class M>
@@ -541,9 +645,61 @@ namespace
             return XMVector4LessOrEqual(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4LinePointDistance(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2) std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector4LinePointDistance(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2) XMLoadSInt4(&vec3));
+            }
+        }
+
         static inline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4NotEqualInt(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Normalize(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector4Normalize(XMLoadSInt4(&vec));
+            }
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Orthogonal(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector4Orthogonal(XMLoadSInt4(&vec));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Reflect(XMLoadSInt4(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector4Reflect(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
         }
 
         template <class M>
@@ -666,9 +822,61 @@ namespace
             return XMVector2LessOrEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2LinePointDistance(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2) std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector2LinePointDistance(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2) XMLoadFloat2(&vec3));
+            }
+        }
+
         static inline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2NotEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Normalize(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector2Normalize(XMLoadFloat2(&vec));
+            }
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Orthogonal(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector2Orthogonal(XMLoadFloat2(&vec));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Reflect(XMLoadFloat2(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector2Reflect(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
         }
 
         template <class M>
@@ -803,9 +1011,61 @@ namespace
             return XMVector3LessOrEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3LinePointDistance(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2) std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector3LinePointDistance(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2) XMLoadFloat3(&vec3));
+            }
+        }
+
         static inline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3NotEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Normalize(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector3Normalize(XMLoadFloat3(&vec));
+            }
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Orthogonal(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector3Orthogonal(XMLoadFloat3(&vec));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Reflect(XMLoadFloat3(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector3Reflect(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
         }
 
         template <class M>
@@ -940,9 +1200,61 @@ namespace
             return XMVector4LessOrEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4LinePointDistance(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2) std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector4LinePointDistance(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2) XMLoadFloat4(&vec3));
+            }
+        }
+
         static inline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4NotEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Normalize(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector4Normalize(XMLoadFloat4(&vec));
+            }
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Orthogonal(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector4Orthogonal(XMLoadFloat4(&vec));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Reflect(XMLoadFloat4(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector4Reflect(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
         }
 
         template <class M>
@@ -1065,9 +1377,61 @@ namespace
             return XMVector2LessOrEqual(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2LinePointDistance(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2) std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector2LinePointDistance(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2) XMLoadUInt3(&vec3));
+            }
+        }
+
         static inline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2NotEqualInt(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Normalize(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector2Normalize(XMLoadUInt2(&vec));
+            }
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Orthogonal(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector2Orthogonal(XMLoadUInt2(&vec));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Reflect(XMLoadUInt2(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector2Reflect(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
+            }
         }
 
         template <class M>
@@ -1202,9 +1566,61 @@ namespace
             return XMVector3LessOrEqual(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3LinePointDistance(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2) std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector3LinePointDistance(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2) XMLoadUInt3(&vec3));
+            }
+        }
+
         static inline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3NotEqualInt(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Normalize(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector3Normalize(XMLoadUInt3(&vec));
+            }
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Orthogonal(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector3Orthogonal(XMLoadUInt3(&vec));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Reflect(XMLoadUInt3(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector3Reflect(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
+            }
         }
 
         template <class M>
@@ -1339,9 +1755,61 @@ namespace
             return XMVector4LessOrEqual(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4LinePointDistance(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2) std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector4LinePointDistance(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2) XMLoadUInt4(&vec3));
+            }
+        }
+
         static inline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4NotEqualInt(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Normalize(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector4Normalize(XMLoadUInt4(&vec));
+            }
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Orthogonal(std::forward<V>(vec));
+            }
+            else if (isSameType) {
+                return XMVector4Orthogonal(XMLoadUInt4(&vec));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Reflect(XMLoadUInt4(&vec1), std::forward<V2>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector4Reflect(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
         }
 
         template <class M>
@@ -1830,9 +2298,34 @@ namespace
             return Vector_Helper<int32_t,2>::DotProduct(v1,v2);
         }
 
-        static inline auto Length(const XMINT2 &v)
+        template <class V>
+        static inline XMVECTOR Length(V &&v) noexcept
         {
-            return Vector_Helper<int32_t,2>::Length(v);
+            return Vector_Helper<int32_t,2>::Length(std::forward<V>(v));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<int32_t,2>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&v) noexcept
+        {
+            return Vector_Helper<int32_t,2>::Normalize(std::forward<V>(v));
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        {
+            return Vector_Helper<int32_t,2>::Orthogonal(std::forward<V>(v));
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        {
+            return Vector_Helper<int32_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
     };
 
@@ -1870,9 +2363,34 @@ namespace
             return Vector_Helper<int32_t,3>::DotProduct(v1,v2);
         }
 
-        static inline auto Length(const XMINT3 &v)
+        template <class V>
+        static inline XMVECTOR Length(V &&v) noexcept
         {
-            return Vector_Helper<int32_t,3>::Length(v);
+            return Vector_Helper<int32_t,3>::Length(std::forward<V>(v));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<int32_t,3>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&v) noexcept
+        {
+            return Vector_Helper<int32_t,3>::Normalize(std::forward<V>(v));
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        {
+            return Vector_Helper<int32_t,3>::Orthogonal(std::forward<V>(v));
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        {
+            return Vector_Helper<int32_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
     };
 
@@ -1912,9 +2430,34 @@ namespace
             return Vector_Helper<int32_t,4>::DotProduct(v1,v2);
         }
 
-        static inline auto Length(const XMINT4 &v)
+        template <class V>
+        static inline XMVECTOR Length(V &&v) noexcept
         {
-            return Vector_Helper<int32_t,4>::Length(v);
+            return Vector_Helper<int32_t,4>::Length(std::forward<V>(v));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<int32_t,4>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&v) noexcept
+        {
+            return Vector_Helper<int32_t,4>::Normalize(std::forward<V>(v));
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        {
+            return Vector_Helper<int32_t,4>::Orthogonal(std::forward<V>(v));
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        {
+            return Vector_Helper<int32_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
     };
 
@@ -1952,9 +2495,34 @@ namespace
             return Vector_Helper<float_t,2>::DotProduct(v1, v2);
         }
 
-        static inline auto Length(const XMFLOAT2 &v)
+        template <class V>
+        static inline XMVECTOR Length(V &&v) noexcept
         {
-            return Vector_Helper<float_t,2>::Length(v);
+            return Vector_Helper<float_t,2>::Length(std::forward<V>(v));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<float_t,2>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&v) noexcept
+        {
+            return Vector_Helper<float_t,2>::Normalize(std::forward<V>(v));
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        {
+            return Vector_Helper<float_t,2>::Orthogonal(std::forward<V>(v));
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        {
+            return Vector_Helper<float_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
     };
 
@@ -1992,9 +2560,34 @@ namespace
             return Vector_Helper<float_t,3>::DotProduct(v1,v2);
         }
 
-        static inline auto Length(const XMFLOAT3 &v)
+        template <class V>
+        static inline XMVECTOR Length(V &&v) noexcept
         {
-            return Vector_Helper<float_t,3>::Length(v);
+            return Vector_Helper<float_t,3>::Length(std::forward<V>(v));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<float_t,3>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&v) noexcept
+        {
+            return Vector_Helper<float_t,3>::Normalize(std::forward<V>(v));
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        {
+            return Vector_Helper<float_t,3>::Orthogonal(std::forward<V>(v));
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        {
+            return Vector_Helper<float_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
     };
 
@@ -2034,9 +2627,34 @@ namespace
             return Vector_Helper<float_t,4>::DotProduct(v1,v2);
         }
 
-        static inline auto Length(const XMFLOAT4 &v)
+        template <class V>
+        static inline XMVECTOR Length(V &&v) noexcept
         {
-            return Vector_Helper<float_t,4>::Length(v);
+            return Vector_Helper<float_t,4>::Length(std::forward<V>(v));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<float_t,4>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&v) noexcept
+        {
+            return Vector_Helper<float_t,4>::Normalize(std::forward<V>(v));
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        {
+            return Vector_Helper<float_t,4>::Orthogonal(std::forward<V>(v));
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        {
+            return Vector_Helper<float_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
     };
 
@@ -2074,9 +2692,34 @@ namespace
             return Vector_Helper<uint32_t,2>::DotProduct(v1,v2);
         }
 
-        static inline auto Length(const XMUINT2 &v)
+        template <class V>
+        static inline XMVECTOR Length(V &&v) noexcept
         {
-            return Vector_Helper<uint32_t,2>::Length(v);
+            return Vector_Helper<uint32_t,2>::Length(std::forward<V>(v));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<uint32_t,2>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&v) noexcept
+        {
+            return Vector_Helper<uint32_t,2>::Normalize(std::forward<V>(v));
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V &&v) noexcept
+        {
+            return Vector_Helper<uint32_t,2>::Orthogonal(std::forward<V>(v));
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        {
+            return Vector_Helper<uint32_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
     };
 
@@ -2114,9 +2757,34 @@ namespace
             return Vector_Helper<uint32_t,3>::DotProduct(v1,v2);
         }
 
-        static inline auto Length(const XMUINT3 &v)
+        template <class V>
+        static inline XMVECTOR Length(V &&v) noexcept
         {
-            return Vector_Helper<uint32_t,3>::Length(v);
+            return Vector_Helper<uint32_t,3>::Length(std::forward<V>(v));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<uint32_t,3>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&v) noexcept
+        {
+            return Vector_Helper<uint32_t,3>::Normalize(std::forward<V>(v));
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        {
+            return Vector_Helper<uint32_t,3>::Orthogonal(std::forward<V>(v));
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        {
+            return Vector_Helper<uint32_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
     };
 
@@ -2156,9 +2824,34 @@ namespace
             return Vector_Helper<uint32_t,4>::DotProduct(v1,v2);
         }
 
-        static inline auto Length(const XMUINT4 &v)
+        template <class V>
+        static inline XMVECTOR Length(V &&v) noexcept
         {
-            return Vector_Helper<uint32_t,4>::Length(v);
+            return Vector_Helper<uint32_t,4>::Length(std::forward<V>(v));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<uint32_t,4>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
+
+        template <class V>
+        static inline XMVECTOR Normalize(V &&v) noexcept
+        {
+            return Vector_Helper<uint32_t,4>::Normalize(std::forward<V>(v));
+        }
+
+        template <class V>
+        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        {
+            return Vector_Helper<uint32_t,4>::Orthogonal(std::forward<V>(v));
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        {
+            return Vector_Helper<uint32_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
     };
 }
@@ -2201,12 +2894,14 @@ inline bool operator!=(const V &vector1, const V &vector2)
 
 namespace VectorAngle
 {
+    /// <summary>Computes the radian angle between two 2-, 3- or 4D vectors.</summary>
     template <class V1, class V2>
     inline auto Angle(V1 &&vector1, V2 &&vector2) noexcept
     {
         return Vector_Geometry<std::decay_t<V1>>::AngleBetweenVectors(std::forward<V1>(vector1), std::forward<V2>(vector2));
     }
 
+    /// <summary>Computes the radian angle between two normalized 2-, 3- or 4D vectors.</summary>
     template <class V1, class V2>
     inline auto OrientedAngle(V1 &&vector1, V2 &&vector2) noexcept
     {
@@ -2214,6 +2909,7 @@ namespace VectorAngle
     }
 }
 
+/// <summary> Clamps the length of a 2-, 3- or 4D vector to a given range.</summary>
 template <class V1, class V2, class V3>
 inline XMVECTOR ClampLength(V1 &&vector, V2 &&lengthMin, V3 &&lengthMax) noexcept
 {
@@ -2222,28 +2918,68 @@ inline XMVECTOR ClampLength(V1 &&vector, V2 &&lengthMin, V3 &&lengthMax) noexcep
     );
 }
 
+/// <summary>
+/// Depending on the argument type computes:
+/// <para/>• the 2D cross product (for XMINT2, XMFLOAT2 or XMUINT2);
+/// <para/>• the cross product between two 3D vectors (for XMINT3, XMFLOAT3 or XMUINT3);
+/// <para/>• the cross product between three 4D vectors (for XMINT4, XMFLOAT4 or XMUINT4);
+/// </summary>
 template <class V1, class ... V2>
 inline XMVECTOR CrossProduct(V1&& vector1, V2&& ...vector2) noexcept
 {
     return Vector_Geometry<std::decay_t<V1>>::CrossProduct(std::forward<V1>(vector1), std::forward<V2>(vector2)...);
 }
 
+/// <summary>Computes the dot product between a 2-, 3- or 4D vector.</summary>
 template <class V>
-inline auto dotProduct(const V &vector1, const V &vector2)
+inline XMVECTOR DotProduct(const V &vector1, const V &vector2)
 {
     return Vector_Geometry<V>::DotProduct(vector1, vector2);
 }
 
+/// <summary>Computes the length of a 2-, 3- or 4D vector.</summary>
 template <class V>
-inline auto length(const V &vector)
+inline XMVECTOR Length(V&& vector) noexcept
 {
-    return Vector_Geometry<V>::Length(v);
+    return Vector_Geometry<std::decay_t<V>>::Length(std::forward<V>(vector));
 }
 
+/// <summary>Computes the length of a 2-, 3- or 4D vector (same as Length).</summary>
 template <class V>
-inline auto magnitude(const V &vector)
+inline XMVECTOR Magnitude(V&& vector) noexcept
 {
-    return Vector_Geometry<V>::Length(v);
+    return Vector_Geometry<std::decay_t<V>>::Length(std::forward<V>(vector));
+}
+
+/// <summary>Returns the normalized version of a 2-, 3- or 4D vector.</summary>
+template <class V>
+inline XMVECTOR Normalize(V&& vector) noexcept
+{
+    return Vector_Geometry<std::decay_t<V>>::Normalize(std::forward<V>(vector));
+}
+
+ /// <summary>Computes the minimum distance between a line and a point.</summary>
+template <class V1, class V2, class V3>
+inline XMVECTOR LinePointDistance(V1 &&linePoint1, V2 &&linePoint2, V3 &&point) noexcept
+{
+    return Vector_Geometry<std::decay_t<V1>>::LinePointDistance(
+        std::forward<V1>(linePoint1), std::forward<V2>(linePoint2), std::forward<V3>(point)
+    );
+}
+
+/// <summary>Computes a vector perpendicular to a 2-, 3- or 4D vector.</summary>
+template <class V>
+inline XMVECTOR OrthogonalVector(V&& vector) noexcept
+{
+    return Vector_Geometry<std::decay_t<V>>::Orthogonal(std::forward<V>(v));
+}
+
+
+/// <summary> Reflects an incident 2-, 3- or 4D vector across a corresponding 2-, 3- or 4D normal vector.</summary>
+template <class V1, class V2>
+inline XMVECTOR Reflect(V1 &&vector, V2 &&normal) noexcept
+{
+    return Vector_Geometry<std::decay_t<V1>>::Reflect(std::forward<V1>(vector), std::forward<V2>(normal));
 }
 
 template <class V, class M>
