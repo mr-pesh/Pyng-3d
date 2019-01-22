@@ -273,34 +273,34 @@ namespace
         }
 
         template <class M>
-        static inline auto Transform(const Type &vec, const M &mat);
+        static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline auto Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector2Transform(XMLoadSInt2(&vec), mat);
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat4x4(&mat));
         }
@@ -312,7 +312,7 @@ namespace
         typedef ::DirectX::XMINT3 Type;
 
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -325,7 +325,7 @@ namespace
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -410,37 +410,35 @@ namespace
         }
 
         template <class M>
-        static inline auto Transform(const Type &vec, const M &mat);
+        static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline auto Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector3Transform(XMLoadSInt3(&vec), mat);
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
-            using namespace DirectX;
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
-            using namespace DirectX;
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat4x4(&mat));
         }
     };
@@ -549,22 +547,22 @@ namespace
         }
 
         template <class M>
-        static inline auto Transform(const Type &vec, const M &mat);
+        static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline auto Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector4Transform(XMLoadSInt4(&vec), mat);
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector4Transform(XMLoadSInt4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector4Transform(XMLoadSInt4(&vec), XMLoadFloat4x4(&mat));
         }
@@ -674,34 +672,34 @@ namespace
         }
 
         template <class M>
-        static inline auto Transform(const Type &vec, const M &mat);
+        static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline auto Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector2Transform(XMLoadFloat2(&vec), mat);
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat4x4(&mat));
         }
@@ -811,34 +809,34 @@ namespace
         }
 
         template <class M>
-        static inline auto Transform(const Type &vec, const M &mat);
+        static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline auto Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector3Transform(XMLoadFloat3(&vec), mat);
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat4x4(&mat));
         }
@@ -948,22 +946,22 @@ namespace
         }
 
         template <class M>
-        static inline auto Transform(const Type &vec, const M &mat);
+        static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline auto Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector4Transform(XMLoadFloat4(&vec), mat);
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector4Transform(XMLoadFloat4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector4Transform(XMLoadFloat4(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1073,34 +1071,34 @@ namespace
         }
 
         template <class M>
-        static inline auto Transform(const Type &vec, const M &mat);
+        static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline auto Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector2Transform(XMLoadUInt2(&vec), mat);
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1210,34 +1208,34 @@ namespace
         }
 
         template <class M>
-        static inline auto Transform(const Type &vec, const M &mat);
+        static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline auto Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector3Transform(XMLoadUInt3(&vec), mat);
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1347,22 +1345,22 @@ namespace
         }
 
         template <class M>
-        static inline auto Transform(const Type &vec, const M &mat);
+        static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline auto Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector4Transform(XMLoadUInt4(&vec), mat);
         }
 
         template <>
-        static inline auto Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector4Transform(XMLoadUInt4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline auto Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector4Transform(XMLoadUInt4(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1382,7 +1380,7 @@ namespace
     template <class Matrix>
     struct TransformMapper<XMINT2, Matrix>
     {
-        static auto Transform(const XMINT2 &v, const Matrix &m)
+        static XMINT2 Transform(const XMINT2 &v, const Matrix &m)
         {
             XMINT2 result;
             XMStoreSInt2(&result, Vector_Helper<int32_t, 2>::Transform(v,m));
@@ -1393,7 +1391,7 @@ namespace
     template <class Matrix>
     struct TransformMapper<XMINT3, Matrix>
     {
-        static auto Transform(const XMINT3 &v, const Matrix &m)
+        static XMINT3 Transform(const XMINT3 &v, const Matrix &m)
         {
             XMINT3 result;
             XMStoreSInt3(&result, Vector_Helper<int32_t, 3>::Transform(v,m));
@@ -1404,7 +1402,7 @@ namespace
     template <class Matrix>
     struct TransformMapper<XMINT4, Matrix>
     {
-        static auto Transform(const XMINT4 &v, const Matrix &m)
+        static XMINT4 Transform(const XMINT4 &v, const Matrix &m)
         {
             XMINT4 result;
             XMStoreSInt4(&result, Vector_Helper<int32_t, 4>::Transform(v,m));
@@ -1415,7 +1413,7 @@ namespace
     template <class Matrix>
     struct TransformMapper<XMFLOAT2, Matrix>
     {
-        static auto Transform(const XMFLOAT2 &v, const Matrix &m)
+        static XMFLOAT2 Transform(const XMFLOAT2 &v, const Matrix &m)
         {
             XMFLOAT2 result;
             XMStoreFloat2(&result, Vector_Helper<float_t, 2>::Transform(v,m));
@@ -1426,7 +1424,7 @@ namespace
     template <class Matrix>
     struct TransformMapper<XMFLOAT3, Matrix>
     {
-        static auto Transform(const XMFLOAT3 &v, const Matrix &m)
+        static XMFLOAT3 Transform(const XMFLOAT3 &v, const Matrix &m)
         {
             XMFLOAT3 result;
             XMStoreFloat3(&result, Vector_Helper<float_t, 3>::Transform(v,m));
@@ -1437,7 +1435,7 @@ namespace
     template <class Matrix>
     struct TransformMapper<XMFLOAT4, Matrix>
     {
-        static auto Transform(const XMFLOAT4 &v, const Matrix &m)
+        static XMFLOAT4 Transform(const XMFLOAT4 &v, const Matrix &m)
         {
             XMFLOAT4 result;
             XMStoreFloat4(&result, Vector_Helper<float_t, 4>::Transform(v,m));
@@ -1448,7 +1446,7 @@ namespace
     template <class Matrix>
     struct TransformMapper<XMUINT2, Matrix>
     {
-        static auto Transform(const XMUINT2 &v, const Matrix &m)
+        static XMUINT2 Transform(const XMUINT2 &v, const Matrix &m)
         {
             XMUINT2 result;
             XMStoreUInt2(&result, Vector_Helper<uint32_t, 2>::Transform(v,m));
@@ -1459,7 +1457,7 @@ namespace
     template <class Matrix>
     struct TransformMapper<XMUINT3, Matrix>
     {
-        static auto Transform(const XMUINT3 &v, const Matrix &m)
+        static XMUINT3 Transform(const XMUINT3 &v, const Matrix &m)
         {
             XMUINT3 result;
             XMStoreUInt3(&result, Vector_Helper<uint32_t, 3>::Transform(v,m));
