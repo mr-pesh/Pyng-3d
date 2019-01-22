@@ -8,7 +8,7 @@
 class VectorUnitTest : public testing::Test {
 };
 
-TEST_F(VectorUnitTest, MultiplicationTest)
+TEST_F(VectorUnitTest, TransformTest)
 {
     using VectorVariant = std::variant<Vector<int32_t,3>, Vector<float_t,3>, Vector<uint32_t,3>>;
 
@@ -53,39 +53,27 @@ TEST_F(VectorUnitTest, MultiplicationTest)
 
 TEST_F(VectorUnitTest, AngleEvaluationTest)
 {
-    using VectorVariant = std::variant<Vector<int32_t, 3>, Vector<float_t, 3>, Vector<uint32_t, 3>>;
-
-    const VectorVariant vectors1[] = {
-        Vector<float_t,3>{ 7.f, 9.f, 5.f },
-        Vector<uint32_t,3>{ 7u, 9u, 5u },
-    };
-
-    const VectorVariant vectors2[] = {
-        Vector<float_t,3>{ 1.f, 2.f, 3.f },
-        Vector<uint32_t,3>{ 1u, 2u, 3u }
-    };
-
-    for (unsigned i = 0; i < 3; ++i)
     {
-        std::visit([](const auto &vec1, const auto &vec2)
-        {
-            const auto angle = VectorAngle::Angle(vec1, vec2);
-            const auto pi_2_ = VectorAngle::Angle(vec1, CrossProduct(vec1, vec2));
+        const auto vec1 = Vector<uint32_t, 3>{ 7u, 9u, 5u };
+        const auto vec2 = Vector<uint32_t, 3>{ 1u, 2u, 3u };
 
-            ASSERT_NEAR(XMVectorGetX(angle), 0.53811252, 0.0001);
-            ASSERT_NEAR(XMVectorGetX(pi_2_), 1.57079625, 0.0001);
+        const auto angle = VectorAngle::Angle(vec1, vec2);
+        const auto pi_2_ = VectorAngle::Angle(vec1, CrossProduct(vec1, vec2));
 
-        }, vectors1[i], vectors2[i]);
+        ASSERT_NEAR(XMVectorGetX(angle), 0.53811252, 0.0001);
+        ASSERT_NEAR(XMVectorGetX(pi_2_), 1.57079625, 0.0001);
     }
 
-    const auto vec3 = Vector<float_t, 3>{ 0.7f, 0.9f, 0.5f };
-    const auto vec4 = Vector<float_t, 3>{ 0.1f, 0.2f, 0.3f };
+    {
+        const auto vec1 = Vector<float_t, 3>{ 0.7f, 0.9f, 0.5f };
+        const auto vec2 = Vector<float_t, 3>{ 0.1f, 0.2f, 0.3f };
 
-    const auto angle = VectorAngle::OrientedAngle(vec3, vec4);
-    const auto pi_2_ = VectorAngle::OrientedAngle(vec3, CrossProduct(vec3, vec4));
+        const auto angle = VectorAngle::OrientedAngle(vec1, vec2);
+        const auto pi_2_ = VectorAngle::OrientedAngle(vec1, CrossProduct(vec1, vec2));
 
-    ASSERT_NEAR(XMVectorGetX(angle), 1.15927947, 0.0001);
-    ASSERT_NEAR(XMVectorGetX(pi_2_), 1.57079625, 0.0001);
+        ASSERT_NEAR(XMVectorGetX(angle), 1.15927947, 0.0001);
+        ASSERT_NEAR(XMVectorGetX(pi_2_), 1.57079625, 0.0001);
+    }
 }
 
 int main(int argc, char **argv) {
