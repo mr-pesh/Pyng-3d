@@ -324,6 +324,32 @@ namespace
             }
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2RefractV(XMLoadSInt2(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector2RefractV(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2), XMLoadSInt2(&vec3));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Refract(XMLoadSInt2(&vec1), std::forward<V2>(vec2), index);
+            }
+            else if (isSameType) {
+                return XMVector2Refract(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2), index);
+            }
+        }
+
         template <class M>
         static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
@@ -510,6 +536,32 @@ namespace
             }
             else if (isSameType) {
                 return XMVector3Reflect(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3RefractV(XMLoadSInt3(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector3RefractV(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2), XMLoadSInt3(&vec3));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Refract(XMLoadSInt3(&vec1), std::forward<V2>(vec2), index);
+            }
+            else if (isSameType) {
+                return XMVector3Refract(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2), index);
             }
         }
 
@@ -702,6 +754,32 @@ namespace
             }
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4RefractV(XMLoadSInt4(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector4RefractV(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2), XMLoadSInt4(&vec3));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Refract(XMLoadSInt4(&vec1), std::forward<V2>(vec2), index);
+            }
+            else if (isSameType) {
+                return XMVector4Refract(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2), index);
+            }
+        }
+
         template <class M>
         static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
@@ -876,6 +954,32 @@ namespace
             }
             else if (isSameType) {
                 return XMVector2Reflect(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2RefractV(XMLoadFloat2(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector2RefractV(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2), XMLoadFloat2(&vec3));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Refract(XMLoadFloat2(&vec1), std::forward<V2>(vec2), index);
+            }
+            else if (isSameType) {
+                return XMVector2Refract(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2), index);
             }
         }
 
@@ -1068,6 +1172,32 @@ namespace
             }
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3RefractV(XMLoadFloat3(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector3RefractV(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2), XMLoadFloat3(&vec3));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Refract(XMLoadFloat3(&vec1), std::forward<V2>(vec2), index);
+            }
+            else if (isSameType) {
+                return XMVector3Refract(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2), index);
+            }
+        }
+
         template <class M>
         static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
@@ -1257,6 +1387,32 @@ namespace
             }
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4RefractV(XMLoadFloat4(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector4RefractV(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2), XMLoadFloat4(&vec3));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Refract(XMLoadFloat4(&vec1), std::forward<V2>(vec2), index);
+            }
+            else if (isSameType) {
+                return XMVector4Refract(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2), index);
+            }
+        }
+
         template <class M>
         static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
@@ -1431,6 +1587,32 @@ namespace
             }
             else if (isSameType) {
                 return XMVector2Reflect(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
+            }
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2RefractV(XMLoadUInt2(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector2RefractV(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2), XMLoadUInt2(&vec3));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Refract(XMLoadUInt2(&vec1), std::forward<V2>(vec2), index);
+            }
+            else if (isSameType) {
+                return XMVector2Refract(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2), index);
             }
         }
 
@@ -1623,6 +1805,32 @@ namespace
             }
         }
 
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3RefractV(XMLoadUInt3(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector3RefractV(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2), XMLoadUInt3(&vec3));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Refract(XMLoadUInt3(&vec1), std::forward<V2>(vec2), index);
+            }
+            else if (isSameType) {
+                return XMVector3Refract(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2), index);
+            }
+        }
+
         template <class M>
         static inline XMVECTOR Transform(const Type &vec, const M &mat);
 
@@ -1809,6 +2017,32 @@ namespace
             }
             else if (isSameType) {
                 return XMVector4Reflect(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4RefractV(XMLoadUInt4(&vec1), std::forward<V2>(vec2), std::forward<V3>(vec3));
+            }
+            else if (isSameType) {
+                return XMVector4RefractV(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2), XMLoadUInt4(&vec3));
+            }
+        }
+
+        template <class V1, class V2>
+        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        {
+            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Refract(XMLoadUInt4(&vec1), std::forward<V2>(vec2), index);
+            }
+            else if (isSameType) {
+                return XMVector4Refract(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2), index);
             }
         }
 
@@ -2327,6 +2561,12 @@ namespace
         {
             return Vector_Helper<int32_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<int32_t,2>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
     };
 
     template <>
@@ -2391,6 +2631,12 @@ namespace
         static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<int32_t,3>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2459,6 +2705,12 @@ namespace
         {
             return Vector_Helper<int32_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<int32_t,4>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
     };
 
     template <>
@@ -2524,6 +2776,12 @@ namespace
         {
             return Vector_Helper<float_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<float_t,2>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
     };
 
     template <>
@@ -2588,6 +2846,12 @@ namespace
         static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<float_t,3>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2656,6 +2920,12 @@ namespace
         {
             return Vector_Helper<float_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<float_t,4>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
     };
 
     template <>
@@ -2720,6 +2990,11 @@ namespace
         static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+        }
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<uint32_t,2>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2786,6 +3061,12 @@ namespace
         {
             return Vector_Helper<uint32_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<uint32_t,3>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+        }
     };
 
     template <>
@@ -2804,7 +3085,7 @@ namespace
         }
 
         template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&v1, V3 &&v2, V3 &&v3) noexcept
+        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,4>::ClampLength(
                 std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
@@ -2852,6 +3133,12 @@ namespace
         static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+        }
+
+        template <class V1, class V2, class V3>
+        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        {
+            return Vector_Helper<uint32_t,4>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 }
@@ -2920,9 +3207,9 @@ inline XMVECTOR ClampLength(V1 &&vector, V2 &&lengthMin, V3 &&lengthMax) noexcep
 
 /// <summary>
 /// Depending on the argument type computes:
-/// <para/>• the 2D cross product (for XMINT2, XMFLOAT2 or XMUINT2);
-/// <para/>• the cross product between two 3D vectors (for XMINT3, XMFLOAT3 or XMUINT3);
-/// <para/>• the cross product between three 4D vectors (for XMINT4, XMFLOAT4 or XMUINT4);
+/// <para/>• the 2D cross product;
+/// <para/>• the cross product between two 3D vectors;
+/// <para/>• the cross product between three 4D vectors;
 /// </summary>
 template <class V1, class ... V2>
 inline XMVECTOR CrossProduct(V1&& vector1, V2&& ...vector2) noexcept
@@ -2980,6 +3267,15 @@ template <class V1, class V2>
 inline XMVECTOR Reflect(V1 &&vector, V2 &&normal) noexcept
 {
     return Vector_Geometry<std::decay_t<V1>>::Reflect(std::forward<V1>(vector), std::forward<V2>(normal));
+}
+
+/// <summary> Refracts an incident 2-, 3- or 4D vector across a corresponding 2-, 3- or 4D normal vector.</summary>
+template <class V1, class V2, class V3>
+inline XMVECTOR Refract(V1 &&vector, V2 &&normal, V3 &&refractionIndex) noexcept
+{
+    return Vector_Geometry<std::decay_t<V1>>::Refract(
+        std::forward<V1>(vector), std::forward<V2>(normal), std::forward<V3>(refractionIndex)
+    );
 }
 
 template <class V, class M>
