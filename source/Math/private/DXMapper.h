@@ -2,6 +2,8 @@
 
 #include <DirectXMath.h>
 
+typedef unsigned int uint;
+
 namespace
 {
     template <class T, int rows, int columns>
