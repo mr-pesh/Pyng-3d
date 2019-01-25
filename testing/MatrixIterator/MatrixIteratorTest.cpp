@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-#include <Utils/MatrixIterator.h>
+#include <Utility/MatrixIterator.h>
 
 class MatrixIteratorUnitTest : public testing::Test {
 };
