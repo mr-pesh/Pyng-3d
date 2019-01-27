@@ -51,7 +51,7 @@ TEST_F(VectorUnitTest, TransformTest)
     };
 }
 
-TEST_F(VectorUnitTest, AngleEvaluationTest)
+TEST_F(VectorUnitTest, AngleFunctionsTest)
 {
     {
         const auto vec1 = Vector<uint32_t, 3>{ 7u, 9u, 5u };
@@ -74,6 +74,13 @@ TEST_F(VectorUnitTest, AngleEvaluationTest)
         ASSERT_NEAR(XMVectorGetX(angle), 1.15927947, 0.0001);
         ASSERT_NEAR(XMVectorGetX(pi_2_), 1.57079625, 0.0001);
     }
+}
+
+TEST_F(VectorUnitTest, VectorGeometricFunctions)
+{
+    const Vector<float, 3> vec1{ 4.f, 3.f, 5.f };
+
+    ASSERT_NEAR(XMVectorGetX(ReciprocalLength(vec1)), 1.f / XMVectorGetX(Length(vec1)), 0.000001);
 }
 
 int main(int argc, char **argv) {

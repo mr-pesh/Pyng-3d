@@ -299,7 +299,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        static inline XMVECTOR Orthogonal(V &&vec) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -309,6 +309,11 @@ namespace
             else if (isSameType) {
                 return XMVector2Orthogonal(XMLoadSInt2(&vec));
             }
+        }
+
+        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        {
+            return XMVector2ReciprocalLength(XMLoadSInt2(&vec));
         }
 
         template <class V1, class V2>
@@ -514,7 +519,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        static inline XMVECTOR Orthogonal(V &&vec) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -524,6 +529,11 @@ namespace
             else if (isSameType) {
                 return XMVector3Orthogonal(XMLoadSInt3(&vec));
             }
+        }
+
+        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        {
+            return XMVector3ReciprocalLength(XMLoadSInt3(&vec));
         }
 
         template <class V1, class V2>
@@ -729,7 +739,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        static inline XMVECTOR Orthogonal(V &&vec) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -739,6 +749,11 @@ namespace
             else if (isSameType) {
                 return XMVector4Orthogonal(XMLoadSInt4(&vec));
             }
+        }
+
+        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        {
+            return XMVector4ReciprocalLength(XMLoadSInt4(&vec));
         }
 
         template <class V1, class V2>
@@ -932,7 +947,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        static inline XMVECTOR Orthogonal(V &&vec) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -942,6 +957,11 @@ namespace
             else if (isSameType) {
                 return XMVector2Orthogonal(XMLoadFloat2(&vec));
             }
+        }
+
+        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        {
+            return XMVector2ReciprocalLength(XMLoadFloat2(&vec));
         }
 
         template <class V1, class V2>
@@ -1147,7 +1167,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        static inline XMVECTOR Orthogonal(V &&vec) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1157,6 +1177,11 @@ namespace
             else if (isSameType) {
                 return XMVector3Orthogonal(XMLoadFloat3(&vec));
             }
+        }
+
+        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        {
+            return XMVector3ReciprocalLength(XMLoadFloat3(&vec));
         }
 
         template <class V1, class V2>
@@ -1362,7 +1387,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        static inline XMVECTOR Orthogonal(V &&vec) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1372,6 +1397,11 @@ namespace
             else if (isSameType) {
                 return XMVector4Orthogonal(XMLoadFloat4(&vec));
             }
+        }
+
+        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        {
+            return XMVector4ReciprocalLength(XMLoadFloat4(&vec));
         }
 
         template <class V1, class V2>
@@ -1565,7 +1595,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        static inline XMVECTOR Orthogonal(V &&vec) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1575,6 +1605,11 @@ namespace
             else if (isSameType) {
                 return XMVector2Orthogonal(XMLoadUInt2(&vec));
             }
+        }
+
+        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        {
+            return XMVector2ReciprocalLength(XMLoadUInt2(&vec));
         }
 
         template <class V1, class V2>
@@ -1780,7 +1815,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        static inline XMVECTOR Orthogonal(V &&vec) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1790,6 +1825,11 @@ namespace
             else if (isSameType) {
                 return XMVector3Orthogonal(XMLoadUInt3(&vec));
             }
+        }
+
+        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        {
+            return XMVector3ReciprocalLength(XMLoadUInt3(&vec));
         }
 
         template <class V1, class V2>
@@ -1995,7 +2035,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& vec) noexcept
+        static inline XMVECTOR Orthogonal(V &&vec) noexcept
         {
             CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2005,6 +2045,11 @@ namespace
             else if (isSameType) {
                 return XMVector4Orthogonal(XMLoadUInt4(&vec));
             }
+        }
+
+        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        {
+            return XMVector4ReciprocalLength(XMLoadUInt4(&vec));
         }
 
         template <class V1, class V2>
@@ -2551,9 +2596,14 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        static inline XMVECTOR Orthogonal(V &&v) noexcept
         {
             return Vector_Helper<int32_t,2>::Orthogonal(std::forward<V>(v));
+        }
+
+        static inline XMVECTOR ReciprocalLength(const XMINT2 &v) noexcept
+        {
+            return Vector_Helper<int32_t,2>::ReciprocalLength(v);
         }
 
         template <class V1, class V2>
@@ -2622,9 +2672,14 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        static inline XMVECTOR Orthogonal(V &&v) noexcept
         {
             return Vector_Helper<int32_t,3>::Orthogonal(std::forward<V>(v));
+        }
+
+        static inline XMVECTOR ReciprocalLength(const XMINT3 &v) noexcept
+        {
+            return Vector_Helper<int32_t,3>::ReciprocalLength(v);
         }
 
         template <class V1, class V2>
@@ -2695,9 +2750,14 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        static inline XMVECTOR Orthogonal(V &&v) noexcept
         {
             return Vector_Helper<int32_t,4>::Orthogonal(std::forward<V>(v));
+        }
+
+        static inline XMVECTOR ReciprocalLength(const XMINT4 &v) noexcept
+        {
+            return Vector_Helper<int32_t,4>::ReciprocalLength(v);
         }
 
         template <class V1, class V2>
@@ -2766,9 +2826,14 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        static inline XMVECTOR Orthogonal(V &&v) noexcept
         {
             return Vector_Helper<float_t,2>::Orthogonal(std::forward<V>(v));
+        }
+
+        static inline XMVECTOR ReciprocalLength(const XMFLOAT2 &v) noexcept
+        {
+            return Vector_Helper<float_t,2>::ReciprocalLength(v);
         }
 
         template <class V1, class V2>
@@ -2837,9 +2902,14 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        static inline XMVECTOR Orthogonal(V &&v) noexcept
         {
             return Vector_Helper<float_t,3>::Orthogonal(std::forward<V>(v));
+        }
+
+        static inline XMVECTOR ReciprocalLength(const XMFLOAT3 &v) noexcept
+        {
+            return Vector_Helper<float_t,3>::ReciprocalLength(v);
         }
 
         template <class V1, class V2>
@@ -2910,9 +2980,14 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        static inline XMVECTOR Orthogonal(V &&v) noexcept
         {
             return Vector_Helper<float_t,4>::Orthogonal(std::forward<V>(v));
+        }
+
+        static inline XMVECTOR ReciprocalLength(const XMFLOAT4 &v) noexcept
+        {
+            return Vector_Helper<float_t,4>::ReciprocalLength(v);
         }
 
         template <class V1, class V2>
@@ -2986,11 +3061,17 @@ namespace
             return Vector_Helper<uint32_t,2>::Orthogonal(std::forward<V>(v));
         }
 
+        static inline XMVECTOR ReciprocalLength(const XMUINT2 &v) noexcept
+        {
+            return Vector_Helper<uint32_t,2>::ReciprocalLength(v);
+        }
+
         template <class V1, class V2>
         static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
+
         template <class V1, class V2, class V3>
         static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
         {
@@ -3051,9 +3132,14 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        static inline XMVECTOR Orthogonal(V &&v) noexcept
         {
             return Vector_Helper<uint32_t,3>::Orthogonal(std::forward<V>(v));
+        }
+
+        static inline XMVECTOR ReciprocalLength(const XMUINT3 &v) noexcept
+        {
+            return Vector_Helper<uint32_t,3>::ReciprocalLength(v);
         }
 
         template <class V1, class V2>
@@ -3124,9 +3210,14 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(V&& v) noexcept
+        static inline XMVECTOR Orthogonal(V &&v) noexcept
         {
             return Vector_Helper<uint32_t,4>::Orthogonal(std::forward<V>(v));
+        }
+
+        static inline XMVECTOR ReciprocalLength(const XMUINT4 &v) noexcept
+        {
+            return Vector_Helper<uint32_t,4>::ReciprocalLength(v);
         }
 
         template <class V1, class V2>
@@ -3261,6 +3352,12 @@ inline XMVECTOR OrthogonalVector(V&& vector) noexcept
     return Vector_Geometry<std::decay_t<V>>::Orthogonal(std::forward<V>(v));
 }
 
+/// <summary>Computes the reciprocal of the length of a 2-, 3- or 4D vector.</summary>
+template <class V>
+inline XMVECTOR ReciprocalLength(V&& vector) noexcept
+{
+    return Vector_Geometry<std::decay_t<V>>::ReciprocalLength(std::forward<V>(vector));
+}
 
 /// <summary> Reflects an incident 2-, 3- or 4D vector across a corresponding 2-, 3- or 4D normal vector.</summary>
 template <class V1, class V2>
