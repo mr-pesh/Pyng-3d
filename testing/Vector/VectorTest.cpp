@@ -80,7 +80,12 @@ TEST_F(VectorUnitTest, VectorGeometricFunctions)
 {
     const Vector<float, 3> vec1{ 4.f, 3.f, 5.f };
 
+    // ReciprocalLength
     ASSERT_NEAR(XMVectorGetX(ReciprocalLength(vec1)), 1.f / XMVectorGetX(Length(vec1)), 0.000001);
+
+    // InBounds
+    ASSERT_TRUE(InBounds(vec1, Vector<float, 3> { 5.f, 10.f, 6.f }));
+    ASSERT_FALSE(InBounds(vec1, Vector<float, 3> { 1.f, 1.f, 1.f }));
 }
 
 int main(int argc, char **argv) {
