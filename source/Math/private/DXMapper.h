@@ -232,9 +232,17 @@ namespace
             }
         }
 
-        static inline XMVECTOR DotProduct(const Type &lhs, const Type &rhs) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Dot(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Dot(XMLoadSInt2(&vec1), std::forward<V>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector2Dot(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
         }
 
         template <class V>
@@ -454,9 +462,17 @@ namespace
             }
         }
 
-        static inline XMVECTOR DotProduct(const Type &lhs, const Type &rhs) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3Dot(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Dot(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector3Dot(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
         }
 
         template <class V>
@@ -676,9 +692,17 @@ namespace
             }
         }
 
-        static inline XMVECTOR DotProduct(const Type &lhs, const Type &rhs) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4Dot(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Dot(XMLoadSInt4(&vec1), std::forward<V>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector4Dot(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
         }
 
         template <class V>
@@ -886,9 +910,17 @@ namespace
             }
         }
 
-        static inline XMVECTOR DotProduct(const Type &lhs, const Type &rhs) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Dot(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Dot(XMLoadFloat2(&vec1), std::forward<V>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector2Dot(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
         }
 
         template <class V>
@@ -1108,9 +1140,17 @@ namespace
             }
         }
 
-        static inline XMVECTOR DotProduct(const Type &lhs, const Type &rhs) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3Dot(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Dot(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector3Dot(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
         }
 
         template <class V>
@@ -1330,9 +1370,17 @@ namespace
             }
         }
 
-        static inline XMVECTOR DotProduct(const Type &lhs, const Type &rhs) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4Dot(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Dot(XMLoadFloat4(&vec1), std::forward<V>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector4Dot(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
         }
 
         template <class V>
@@ -1540,9 +1588,17 @@ namespace
             }
         }
 
-        static inline XMVECTOR DotProduct(const Type &lhs, const Type &rhs) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Dot(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector2Dot(XMLoadUInt2(&vec1), std::forward<V>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector2Dot(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
+            }
         }
 
         template <class V>
@@ -1762,9 +1818,17 @@ namespace
             }
         }
 
-        static inline XMVECTOR DotProduct(const Type &lhs, const Type &rhs) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3Dot(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector3Dot(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector3Dot(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
+            }
         }
 
         template <class V>
@@ -1984,9 +2048,17 @@ namespace
             }
         }
 
-        static inline XMVECTOR DotProduct(const Type &lhs, const Type &rhs) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4Dot(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isXMVector) {
+                return XMVector4Dot(XMLoadUInt4(&vec1), std::forward<V>(vec2));
+            }
+            else if (isSameType) {
+                return XMVector4Dot(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
         }
 
         template <class V>
@@ -2590,9 +2662,10 @@ namespace
             return Vector_Helper<int32_t,2>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        static inline XMVECTOR DotProduct(const XMINT2 &v1, const XMINT2 &v2) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const XMINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,2>::DotProduct(v1,v2);
+            return Vector_Helper<int32_t,2>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -2674,9 +2747,10 @@ namespace
             return Vector_Helper<int32_t,3>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        static inline XMVECTOR DotProduct(const XMINT3 &v1, const XMINT3 &v2) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const XMINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,3>::DotProduct(v1,v2);
+            return Vector_Helper<int32_t,3>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -2760,9 +2834,10 @@ namespace
             );
         }
 
-        static inline XMVECTOR DotProduct(const XMINT4 &v1, const XMINT4 &v2) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const XMINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,4>::DotProduct(v1,v2);
+            return Vector_Helper<int32_t,4>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -2844,9 +2919,10 @@ namespace
             return Vector_Helper<float_t,2>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        static inline XMVECTOR DotProduct(const XMFLOAT2 &v1, const XMFLOAT2 &v2) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,2>::DotProduct(v1, v2);
+            return Vector_Helper<float_t,2>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -2928,9 +3004,10 @@ namespace
             return Vector_Helper<float_t,3>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        static inline XMVECTOR DotProduct(const XMFLOAT3 &v1, const XMFLOAT3 &v2) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,3>::DotProduct(v1,v2);
+            return Vector_Helper<float_t,3>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -3014,9 +3091,10 @@ namespace
             );
         }
 
-        static inline XMVECTOR DotProduct(const XMFLOAT4 &v1, const XMFLOAT4 &v2) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,4>::DotProduct(v1,v2);
+            return Vector_Helper<float_t,4>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -3100,9 +3178,10 @@ namespace
             return Vector_Helper<uint32_t,2>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        static inline XMVECTOR DotProduct(const XMUINT2 &v1, const XMUINT2 &v2) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,2>::DotProduct(v1,v2);
+            return Vector_Helper<uint32_t,2>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -3184,9 +3263,10 @@ namespace
             return Vector_Helper<uint32_t,3>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        static inline XMVECTOR DotProduct(const XMUINT3 &v1, const XMUINT3 &v2) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,3>::DotProduct(v1,v2);
+            return Vector_Helper<uint32_t,3>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -3270,9 +3350,10 @@ namespace
             );
         }
 
-        static inline XMVECTOR DotProduct(const XMUINT4 &v1, const XMUINT4 &v2) noexcept
+        template <class V>
+        static inline XMVECTOR DotProduct(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,4>::DotProduct(v1,v2);
+            return Vector_Helper<uint32_t,4>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -3401,10 +3482,10 @@ inline XMVECTOR CrossProduct(V1&& vector1, V2&& ...vector2) noexcept
 }
 
 /// <summary>Computes the dot product between two vectors.</summary>
-template <class V>
-inline XMVECTOR DotProduct(const V &vector1, const V &vector2) noexcept
+template <class V1, class V2>
+inline XMVECTOR DotProduct(V1&& vector1, V2&& vector2) noexcept
 {
-    return Vector_Geometry<V>::DotProduct(vector1, vector2);
+    return Vector_Geometry<std::decay_t<V1>>::DotProduct(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 /// <summary>Tests whether the components of a 2-, 3- or 4D vector are within set bounds.</summary>

@@ -80,6 +80,10 @@ TEST_F(VectorUnitTest, VectorGeometricFunctions)
 {
     const Vector<float, 3> vec1{ 4.f, 3.f, 5.f };
 
+    // DotProduct
+    DotProduct(vec1, XMLoadFloat3(&vec1));
+    DotProduct(vec1, vec1);
+
     // ReciprocalLength
     ASSERT_NEAR(XMVectorGetX(ReciprocalLength(vec1)), 1.f / XMVectorGetX(Length(vec1)), 0.000001);
 
