@@ -252,9 +252,14 @@ namespace
             return XMVector2GreaterOrEqual(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
         }
 
-        static inline auto Length(const Type &vec)
+        static inline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector2Length(XMLoadSInt2(&vec));
+        }
+
+        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        {
+            return XMVector2LengthSq(XMLoadSInt2(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -456,9 +461,14 @@ namespace
             return XMVector3GreaterOrEqual(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
         }
 
-        static inline auto Length(const Type &vec)
+        static inline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector3Length(XMLoadSInt3(&vec));
+        }
+
+        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        {
+            return XMVector3LengthSq(XMLoadSInt3(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -660,9 +670,14 @@ namespace
             return XMVector4GreaterOrEqual(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
         }
 
-        static inline auto Length(const Type &vec)
+        static inline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector4Length(XMLoadSInt4(&vec));
+        }
+
+        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        {
+            return XMVector4LengthSq(XMLoadSInt4(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -852,9 +867,14 @@ namespace
             return XMVector2GreaterOrEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
         }
 
-        static inline auto Length(const Type &vec)
+        static inline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector2Length(XMLoadFloat2(&vec));
+        }
+
+        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        {
+            return XMVector2LengthSq(XMLoadFloat2(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -1056,9 +1076,14 @@ namespace
             return XMVector3GreaterOrEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
         }
 
-        static inline auto Length(const Type &vec)
+        static inline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector3Length(XMLoadFloat3(&vec));
+        }
+
+        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        {
+            return XMVector3LengthSq(XMLoadFloat3(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -1260,9 +1285,14 @@ namespace
             return XMVector4GreaterOrEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
         }
 
-        static inline auto Length(const Type &vec)
+        static inline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector4Length(XMLoadFloat4(&vec));
+        }
+
+        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        {
+            return XMVector4LengthSq(XMLoadFloat4(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -1452,9 +1482,14 @@ namespace
             return XMVector2GreaterOrEqual(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
         }
 
-        static inline auto Length(const Type &vec)
+        static inline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector2Length(XMLoadUInt2(&vec));
+        }
+
+        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        {
+            return XMVector2LengthSq(XMLoadUInt2(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -1656,9 +1691,14 @@ namespace
             return XMVector3GreaterOrEqual(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
         }
 
-        static inline auto Length(const Type &vec)
+        static inline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector3Length(XMLoadUInt3(&vec));
+        }
+
+        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        {
+            return XMVector3LengthSq(XMLoadUInt3(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -1860,9 +1900,14 @@ namespace
             return XMVector4GreaterOrEqual(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
         }
 
-        static inline auto Length(const Type &vec)
+        static inline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector4Length(XMLoadUInt4(&vec));
+        }
+
+        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        {
+            return XMVector4LengthSq(XMLoadUInt4(&vec));
         }
 
         static inline bool Less(const Type &lhs, const Type &rhs)
@@ -2433,10 +2478,14 @@ namespace
             return Vector_Helper<int32_t,2>::DotProduct(v1,v2);
         }
 
-        template <class V>
-        static inline XMVECTOR Length(V &&v) noexcept
+        static inline XMVECTOR Length(const XMINT2 &v) noexcept
         {
-            return Vector_Helper<int32_t,2>::Length(std::forward<V>(v));
+            return Vector_Helper<int32_t,2>::Length(v);
+        }
+
+        static inline XMVECTOR LengthSq(const XMINT2 &v) noexcept
+        {
+            return Vector_Helper<int32_t,2>::LengthSq(v);
         }
 
         template <class V1, class V2, class V3>
@@ -2507,10 +2556,14 @@ namespace
             return Vector_Helper<int32_t,3>::DotProduct(v1,v2);
         }
 
-        template <class V>
-        static inline XMVECTOR Length(V &&v) noexcept
+        static inline XMVECTOR Length(const XMINT3 &v) noexcept
         {
-            return Vector_Helper<int32_t,3>::Length(std::forward<V>(v));
+            return Vector_Helper<int32_t,3>::Length(v);
+        }
+
+        static inline XMVECTOR LengthSq(const XMINT3 &v) noexcept
+        {
+            return Vector_Helper<int32_t,3>::LengthSq(v);
         }
 
         template <class V1, class V2, class V3>
@@ -2583,10 +2636,14 @@ namespace
             return Vector_Helper<int32_t,4>::DotProduct(v1,v2);
         }
 
-        template <class V>
-        static inline XMVECTOR Length(V &&v) noexcept
+        static inline XMVECTOR Length(const XMINT4 &v) noexcept
         {
-            return Vector_Helper<int32_t,4>::Length(std::forward<V>(v));
+            return Vector_Helper<int32_t,4>::Length(v);
+        }
+
+        static inline XMVECTOR LengthSq(const XMINT4 &v) noexcept
+        {
+            return Vector_Helper<int32_t,4>::LengthSq(v);
         }
 
         template <class V1, class V2, class V3>
@@ -2657,10 +2714,14 @@ namespace
             return Vector_Helper<float_t,2>::DotProduct(v1, v2);
         }
 
-        template <class V>
-        static inline XMVECTOR Length(V &&v) noexcept
+        static inline XMVECTOR Length(const XMFLOAT2 &v) noexcept
         {
-            return Vector_Helper<float_t,2>::Length(std::forward<V>(v));
+            return Vector_Helper<float_t,2>::Length(v);
+        }
+
+        static inline XMVECTOR LengthSq(const XMFLOAT2 &v) noexcept
+        {
+            return Vector_Helper<float_t,2>::LengthSq(v);
         }
 
         template <class V1, class V2, class V3>
@@ -2731,10 +2792,14 @@ namespace
             return Vector_Helper<float_t,3>::DotProduct(v1,v2);
         }
 
-        template <class V>
-        static inline XMVECTOR Length(V &&v) noexcept
+        static inline XMVECTOR Length(const XMFLOAT3 &v) noexcept
         {
-            return Vector_Helper<float_t,3>::Length(std::forward<V>(v));
+            return Vector_Helper<float_t,3>::Length(v);
+        }
+
+        static inline XMVECTOR LengthSq(const XMFLOAT3 &v) noexcept
+        {
+            return Vector_Helper<float_t,3>::LengthSq(v);
         }
 
         template <class V1, class V2, class V3>
@@ -2807,10 +2872,14 @@ namespace
             return Vector_Helper<float_t,4>::DotProduct(v1,v2);
         }
 
-        template <class V>
-        static inline XMVECTOR Length(V &&v) noexcept
+        static inline XMVECTOR Length(const XMFLOAT4 &v) noexcept
         {
-            return Vector_Helper<float_t,4>::Length(std::forward<V>(v));
+            return Vector_Helper<float_t,4>::Length(v);
+        }
+
+        static inline XMVECTOR LengthSq(const XMFLOAT4 &v) noexcept
+        {
+            return Vector_Helper<float_t,4>::LengthSq(v);
         }
 
         template <class V1, class V2, class V3>
@@ -2883,10 +2952,14 @@ namespace
             return Vector_Helper<uint32_t,2>::DotProduct(v1,v2);
         }
 
-        template <class V>
-        static inline XMVECTOR Length(V &&v) noexcept
+        static inline XMVECTOR Length(const XMUINT2 &v) noexcept
         {
-            return Vector_Helper<uint32_t,2>::Length(std::forward<V>(v));
+            return Vector_Helper<uint32_t,2>::Length(v);
+        }
+
+        static inline XMVECTOR LengthSq(const XMUINT2 &v) noexcept
+        {
+            return Vector_Helper<uint32_t,2>::LengthSq(v);
         }
 
         template <class V1, class V2, class V3>
@@ -2957,10 +3030,14 @@ namespace
             return Vector_Helper<uint32_t,3>::DotProduct(v1,v2);
         }
 
-        template <class V>
-        static inline XMVECTOR Length(V &&v) noexcept
+        static inline XMVECTOR Length(const XMUINT3 &v) noexcept
         {
-            return Vector_Helper<uint32_t,3>::Length(std::forward<V>(v));
+            return Vector_Helper<uint32_t,3>::Length(v);
+        }
+
+        static inline XMVECTOR LengthSq(const XMUINT3 &v) noexcept
+        {
+            return Vector_Helper<uint32_t,3>::LengthSq(v);
         }
 
         template <class V1, class V2, class V3>
@@ -3033,10 +3110,14 @@ namespace
             return Vector_Helper<uint32_t,4>::DotProduct(v1,v2);
         }
 
-        template <class V>
-        static inline XMVECTOR Length(V &&v) noexcept
+        static inline XMVECTOR Length(const XMUINT4 &v) noexcept
         {
-            return Vector_Helper<uint32_t,4>::Length(std::forward<V>(v));
+            return Vector_Helper<uint32_t,4>::Length(v);
+        }
+
+        static inline XMVECTOR LengthSq(const XMUINT4 &v) noexcept
+        {
+            return Vector_Helper<uint32_t,4>::LengthSq(v);
         }
 
         template <class V1, class V2, class V3>
@@ -3160,6 +3241,13 @@ template <class V>
 inline XMVECTOR Length(V&& vector) noexcept
 {
     return Vector_Geometry<std::decay_t<V>>::Length(std::forward<V>(vector));
+}
+
+/// <summary>Computes the square of the length of a 2-, 3- or 4D vector.</summary>
+template <class V>
+inline XMVECTOR LengthSq(V&& vector) noexcept
+{
+    return Vector_Geometry<std::decay_t<V>>::LengthSq(std::forward<V>(vector));
 }
 
 /// <summary>Computes the length of a 2-, 3- or 4D vector (same as Length).</summary>
