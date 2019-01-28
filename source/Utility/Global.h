@@ -1,0 +1,65 @@
+#pragma once
+
+#define DISABLE_COPY(Class)                \
+    Class (const Class&) = delete;         \
+    Class &operator=(const Class&) = delete;
+
+#define DECLARE_SINGLETON_CLASS(Type) \
+    static Type *instance();
+
+#define DEFINE_SINGLETON_CLASS(Type) \
+    static Type *Type::instance()    \
+    {                                \
+        static Type p;               \
+        return &p;                   \
+    }
+
+#ifdef _MSC_VER
+# define FORCE_INLINE_EXP(...) __VA_ARGS__ __forceinline
+#else
+# define FORCE_INLINE_EXP(...) [[gnu::always_inline]] __VA_ARGS__ inline
+#endif
+
+#define FORCE_INLINE   FORCE_INLINE_EXP()
+#define FORCE_INLINE_S FORCE_INLINE_EXP(static)
+
+
+#define FORWARD_DECLARE_EXP(name, ...) __VA_ARGS__ name;
+
+#define FORWARD_DECLARE_CLASS (name) FORWARD_DECLARE_EXP(name, class)
+#define FORWARD_DECLARE_STRUCT(name) FORWARD_DECLARE_EXP(name, struct)
+
+
+#ifdef __GNUC__
+#  define UNUSED      __attribute__((__unused__))
+#  define NODISCARD   [[gnu::warn_unused_result]]
+#  define DEPRECATED  __attribute__((__deprecated__))
+#else
+#  define UNUSED [[maybe_unused]]
+#  define NODISCARD [[nodiscard]]
+#  define DEPRECATED [[deprecated]]
+#endif
+
+#ifdef _MSC_VER
+#  define LIKELY(expr)
+#  define UNLIKELY(expr)
+#elif defined (__GNUC__)
+#  define LIKELY(expr)    __builtin_expect(!!(expr), true)
+#  define UNLIKELY(expr)  __builtin_expect(!!(expr), false)
+#endif
+
+#ifdef _MSC_VER
+#  define LINK_LIBRARY_EXP(...) __declspec(__VA_ARGS__)
+#else
+#  define LINK_LIBRARY_EXP(...) __attribute__((visibility(#__VA_ARGS__)))
+#endif
+
+#ifdef _WIN32
+#    define LIBRARY_EXPORT LINK_LIBRARY_EXP(dllexport)
+#    define LIBRARY_IMPORT LINK_LIBRARY_EXP(dllimport)
+#else
+#    define LIBRARY_EXPORT LINK_LIBRARY_EXP(default)
+#    define LIBRARY_IMPORT LINK_LIBRARY_EXP(default)
+#endif
+
+#define UNUSED(v) (void)v;
