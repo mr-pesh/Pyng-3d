@@ -15,27 +15,27 @@ namespace
         typedef ::DirectX::XMFLOAT3X3 Type;
 
         template <class M>
-        static inline auto Multiply(const Type &lhs, const M &rhs);
+        static inline XMMATRIX Multiply(const Type &lhs, const M &rhs);
 
         template <>
-        static inline auto Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        static inline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x3(&lhs), rhs);
         }
 
         template <>
-        static inline auto Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
+        static inline XMMATRIX Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x3(&lhs), XMLoadFloat3x3(&rhs));
         }
 
         template <>
-        static inline auto Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
+        static inline XMMATRIX Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x3(&lhs), XMLoadFloat3x4(&rhs));
         }
 
-        static inline auto Transpose(const Type &matrix)
+        static inline XMMATRIX Transpose(const Type &matrix)
         {
             return XMMatrixTranspose(XMLoadFloat3x3(&matrix));
         }
@@ -47,27 +47,27 @@ namespace
         typedef ::DirectX::XMFLOAT3X4 Type;
 
         template <class M>
-        static inline auto Multiply(const Type &lhs, const M &rhs);
+        static inline XMMATRIX Multiply(const Type &lhs, const M &rhs);
 
         template <>
-        static inline auto Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        static inline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x4(&lhs), rhs);
         }
 
         template <>
-        static inline auto Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
+        static inline XMMATRIX Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x4(&lhs), XMLoadFloat4x3(&rhs));
         }
 
         template <>
-        static inline auto Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
+        static inline XMMATRIX Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x4(&lhs), XMLoadFloat4x4(&rhs));
         }
 
-        static inline auto Transpose(const Type &matrix)
+        static inline XMMATRIX Transpose(const Type &matrix)
         {
             return XMMatrixTranspose(XMLoadFloat3x4(&matrix));
         }
@@ -79,27 +79,27 @@ namespace
         typedef ::DirectX::XMFLOAT4X3 Type;
 
         template <class M>
-        static inline auto Multiply(const Type &lhs, const M &rhs);
+        static inline XMMATRIX Multiply(const Type &lhs, const M &rhs);
 
         template <>
-        static inline auto Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        static inline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x3(&lhs), rhs);
         }
 
         template <>
-        static inline auto Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
+        static inline XMMATRIX Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x3(&lhs), XMLoadFloat3x3(&rhs));
         }
 
         template <>
-        static inline auto Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
+        static inline XMMATRIX Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x3(&lhs), XMLoadFloat3x4(&rhs));
         }
 
-        static inline auto Transpose(const Type &matrix)
+        static inline XMMATRIX Transpose(const Type &matrix)
         {
             return XMMatrixTranspose(XMLoadFloat4x3(&matrix));
         }
@@ -111,27 +111,27 @@ namespace
         typedef ::DirectX::XMFLOAT4X4 Type;
 
         template <class M>
-        static inline auto Multiply(const Type &lhs, const M &rhs);
+        static inline XMMATRIX Multiply(const Type &lhs, const M &rhs);
 
         template <>
-        static inline auto Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        static inline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x4(&lhs), rhs);
         }
 
         template <>
-        static inline auto Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
+        static inline XMMATRIX Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x4(&lhs), XMLoadFloat4x3(&rhs));
         }
 
         template <>
-        static inline auto Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
+        static inline XMMATRIX Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x4(&lhs), XMLoadFloat4x4(&rhs));
         }
 
-        static inline auto Transpose(const Type &matrix)
+        static inline XMMATRIX Transpose(const Type &matrix)
         {
             return XMMatrixTranspose(XMLoadFloat4x4(&matrix));
         }
@@ -2305,7 +2305,7 @@ namespace
     template <class Matrix>
     struct TransformMapper<XMUINT4, Matrix>
     {
-        static auto Transform(const XMUINT4 &v, const Matrix &m)
+        static XMUINT4 Transform(const XMUINT4 &v, const Matrix &m)
         {
             XMUINT4 result;
             XMStoreUInt4(&result, Vector_Helper<uint32_t, 4>::Transform(v,m));
@@ -2637,13 +2637,13 @@ namespace
     struct Vector_Geometry<XMINT2>
     {
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,2>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
@@ -2722,13 +2722,13 @@ namespace
     struct Vector_Geometry<XMINT3>
     {
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,3>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
@@ -2807,13 +2807,13 @@ namespace
     struct Vector_Geometry<XMINT4>
     {
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,4>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
@@ -2894,13 +2894,13 @@ namespace
     struct Vector_Geometry<XMFLOAT2>
     {
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,2>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
@@ -2979,13 +2979,13 @@ namespace
     struct Vector_Geometry<XMFLOAT3>
     {
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,3>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
@@ -3064,13 +3064,13 @@ namespace
     struct Vector_Geometry<XMFLOAT4>
     {
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,4>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
@@ -3153,13 +3153,13 @@ namespace
     struct Vector_Geometry<XMUINT2>
     {
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,2>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
@@ -3238,13 +3238,13 @@ namespace
     struct Vector_Geometry<XMUINT3>
     {
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,3>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
@@ -3323,13 +3323,13 @@ namespace
     struct Vector_Geometry<XMUINT4>
     {
         template <class V1, class V2>
-        static inline auto AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,4>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline auto AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
@@ -3447,14 +3447,14 @@ namespace VectorAngle
 {
     /// <summary>Computes the radian angle between two 2-, 3- or 4D vectors.</summary>
     template <class V1, class V2>
-    inline auto Angle(V1 &&vector1, V2 &&vector2) noexcept
+    inline XMVECTOR Angle(V1 &&vector1, V2 &&vector2) noexcept
     {
         return Vector_Geometry<std::decay_t<V1>>::AngleBetweenVectors(std::forward<V1>(vector1), std::forward<V2>(vector2));
     }
 
     /// <summary>Computes the radian angle between two normalized 2-, 3- or 4D vectors.</summary>
     template <class V1, class V2>
-    inline auto OrientedAngle(V1 &&vector1, V2 &&vector2) noexcept
+    inline XMVECTOR OrientedAngle(V1 &&vector1, V2 &&vector2) noexcept
     {
         return Vector_Geometry<std::decay_t<V1>>::AngleBetweenNormals(std::forward<V1>(vector1), std::forward<V2>(vector2));
     }
