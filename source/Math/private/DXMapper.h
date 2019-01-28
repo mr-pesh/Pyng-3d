@@ -293,13 +293,13 @@ namespace
             return XMVector2LessOrEqual(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V>
+        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
-                return XMVector2LinePointDistance(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2) std::forward<V3>(vec3));
+                return XMVector2LinePointDistance(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2) std::forward<V>(vec3));
             }
             else if (isSameType) {
                 return XMVector2LinePointDistance(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2) XMLoadSInt2(&vec3));
@@ -523,13 +523,13 @@ namespace
             return XMVector3LessOrEqual(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V>
+        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
-                return XMVector3LinePointDistance(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2) std::forward<V3>(vec3));
+                return XMVector3LinePointDistance(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2) std::forward<V>(vec3));
             }
             else if (isSameType) {
                 return XMVector3LinePointDistance(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2) XMLoadSInt3(&vec3));
@@ -753,13 +753,13 @@ namespace
             return XMVector4LessOrEqual(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V>
+        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
-                return XMVector4LinePointDistance(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2) std::forward<V3>(vec3));
+                return XMVector4LinePointDistance(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2) std::forward<V>(vec3));
             }
             else if (isSameType) {
                 return XMVector4LinePointDistance(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2) XMLoadSInt4(&vec3));
@@ -971,13 +971,13 @@ namespace
             return XMVector2LessOrEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V>
+        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
-                return XMVector2LinePointDistance(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2) std::forward<V3>(vec3));
+                return XMVector2LinePointDistance(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2) std::forward<V>(vec3));
             }
             else if (isSameType) {
                 return XMVector2LinePointDistance(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2) XMLoadFloat2(&vec3));
@@ -1201,13 +1201,13 @@ namespace
             return XMVector3LessOrEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V>
+        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
-                return XMVector3LinePointDistance(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2) std::forward<V3>(vec3));
+                return XMVector3LinePointDistance(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2) std::forward<V>(vec3));
             }
             else if (isSameType) {
                 return XMVector3LinePointDistance(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2) XMLoadFloat3(&vec3));
@@ -1431,13 +1431,13 @@ namespace
             return XMVector4LessOrEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V>
+        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
-                return XMVector4LinePointDistance(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2) std::forward<V3>(vec3));
+                return XMVector4LinePointDistance(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2) std::forward<V>(vec3));
             }
             else if (isSameType) {
                 return XMVector4LinePointDistance(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2) XMLoadFloat4(&vec3));
@@ -1649,16 +1649,16 @@ namespace
             return XMVector2LessOrEqual(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V>
+        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
-                return XMVector2LinePointDistance(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2) std::forward<V3>(vec3));
+                return XMVector2LinePointDistance(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2) std::forward<V>(vec3));
             }
             else if (isSameType) {
-                return XMVector2LinePointDistance(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2) XMLoadUInt3(&vec3));
+                return XMVector2LinePointDistance(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2) XMLoadUInt2(&vec3));
             }
         }
 
@@ -1879,13 +1879,13 @@ namespace
             return XMVector3LessOrEqual(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V>
+        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
-                return XMVector3LinePointDistance(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2) std::forward<V3>(vec3));
+                return XMVector3LinePointDistance(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2) std::forward<V>(vec3));
             }
             else if (isSameType) {
                 return XMVector3LinePointDistance(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2) XMLoadUInt3(&vec3));
@@ -2109,13 +2109,13 @@ namespace
             return XMVector4LessOrEqual(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V>
+        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V3, isSameType, Type, isXMVector, XMVECTOR);
+            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isXMVector) {
-                return XMVector4LinePointDistance(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2) std::forward<V3>(vec3));
+                return XMVector4LinePointDistance(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2) std::forward<V>(vec3));
             }
             else if (isSameType) {
                 return XMVector4LinePointDistance(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2) XMLoadUInt4(&vec3));
@@ -2684,10 +2684,10 @@ namespace
             return Vector_Helper<int32_t,2>::LengthSq(v);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR LinePointDistance(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,2>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<int32_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static inline XMVECTOR Normalize(const XMINT2 &v) noexcept
@@ -2769,10 +2769,10 @@ namespace
             return Vector_Helper<int32_t,3>::LengthSq(v);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR LinePointDistance(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,3>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<int32_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static inline XMVECTOR Normalize(const XMINT3 &v) noexcept
@@ -2856,10 +2856,10 @@ namespace
             return Vector_Helper<int32_t,4>::LengthSq(v);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR LinePointDistance(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,4>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<int32_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static inline XMVECTOR Normalize(const XMINT4 &v) noexcept
@@ -2941,10 +2941,10 @@ namespace
             return Vector_Helper<float_t,2>::LengthSq(v);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR LinePointDistance(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,2>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<float_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static inline XMVECTOR Normalize(const XMFLOAT2 &v) noexcept
@@ -3026,10 +3026,10 @@ namespace
             return Vector_Helper<float_t,3>::LengthSq(v);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR LinePointDistance(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,3>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<float_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static inline XMVECTOR Normalize(const XMFLOAT3 &v) noexcept
@@ -3113,10 +3113,10 @@ namespace
             return Vector_Helper<float_t,4>::LengthSq(v);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR LinePointDistance(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,4>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<float_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
@@ -3200,10 +3200,10 @@ namespace
             return Vector_Helper<uint32_t,2>::LengthSq(v);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR LinePointDistance(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,2>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<uint32_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static inline XMVECTOR Normalize(const XMUINT2 &v) noexcept
@@ -3285,10 +3285,10 @@ namespace
             return Vector_Helper<uint32_t,3>::LengthSq(v);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR LinePointDistance(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,3>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<uint32_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static inline XMVECTOR Normalize(const XMUINT3 &v) noexcept
@@ -3372,10 +3372,10 @@ namespace
             return Vector_Helper<uint32_t,4>::LengthSq(v);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR LinePointDistance(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR LinePointDistance(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,4>::LinePointDistance(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<uint32_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static inline XMVECTOR Normalize(const XMUINT4 &v) noexcept
