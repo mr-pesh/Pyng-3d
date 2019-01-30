@@ -200,8 +200,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -213,8 +213,7 @@ namespace
             }
         }
 
-        template <class V>
-        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
+        static inline XMVECTOR ClampLength(const Type &vec, float_t min, float_t max) noexcept
         {
             return XMVector2ClampLength(XMLoadSInt2(&vec), min, max);
         }
@@ -430,8 +429,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -443,8 +442,7 @@ namespace
             }
         }
 
-        template <class V>
-        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
+        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector3ClampLength(XMLoadSInt3(&vec), min, max);
         }
@@ -660,8 +658,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -673,8 +671,7 @@ namespace
             }
         }
 
-        template <class V>
-        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
+        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector4ClampLength(XMLoadSInt4(&vec), min, max);
         }
@@ -878,8 +875,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -891,8 +888,7 @@ namespace
             }
         }
 
-        template <class V>
-        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
+        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector2ClampLength(XMLoadFloat2(&vec), min, max);
         }
@@ -1108,8 +1104,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
             
@@ -1121,8 +1117,7 @@ namespace
             }
         }
 
-        template <class V>
-        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
+        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector3ClampLength(XMLoadFloat3(&vec), min, max);
         }
@@ -1338,8 +1333,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1351,8 +1346,7 @@ namespace
             }
         }
 
-        template <class V>
-        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
+        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector4ClampLength(XMLoadFloat4(&vec), min, max);
         }
@@ -1556,8 +1550,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1569,8 +1563,7 @@ namespace
             }
         }
 
-        template <class V>
-        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
+        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector2ClampLength(XMLoadUInt2(&vec), min, max);
         }
@@ -1786,8 +1779,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1799,8 +1792,7 @@ namespace
             }
         }
 
-        template <class V>
-        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
+        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector3ClampLength(XMLoadUInt3(&vec), min, max);
         }
@@ -2016,8 +2008,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2029,8 +2021,7 @@ namespace
             }
         }
 
-        template <class V>
-        static inline XMVECTOR ClampLength(V &&vec, float_t min, float_t max) noexcept
+        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector4ClampLength(XMLoadUInt4(&vec), min, max);
         }
@@ -2648,12 +2639,10 @@ namespace
             return Vector_Helper<int32_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,2>::ClampLength(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<int32_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
@@ -2733,12 +2722,10 @@ namespace
             return Vector_Helper<int32_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,3>::ClampLength(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<int32_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
@@ -2818,12 +2805,10 @@ namespace
             return Vector_Helper<int32_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,4>::ClampLength(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<int32_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V2, class V3>
@@ -2903,12 +2888,10 @@ namespace
             return Vector_Helper<float_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,2>::ClampLength(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<float_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
@@ -2988,12 +2971,10 @@ namespace
             return Vector_Helper<float_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,3>::ClampLength(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<float_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
@@ -3073,12 +3054,10 @@ namespace
             return Vector_Helper<float_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,4>::ClampLength(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<float_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V2, class V3>
@@ -3160,12 +3139,10 @@ namespace
             return Vector_Helper<uint32_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,2>::ClampLength(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<uint32_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
@@ -3245,12 +3222,10 @@ namespace
             return Vector_Helper<uint32_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,3>::ClampLength(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<uint32_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
@@ -3330,12 +3305,10 @@ namespace
             return Vector_Helper<uint32_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR ClampLength(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR ClampLength(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,4>::ClampLength(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<uint32_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V2, class V3>
@@ -3458,9 +3431,7 @@ namespace VectorAngle
 template <class V1, class V2, class V3>
 inline XMVECTOR ClampLength(V1 &&vector, V2 &&lengthMin, V3 &&lengthMax) noexcept
 {
-    return Vector_Geometry<std::decay_t<V1>>::ClampLength(
-        std::forward<V1>(vector), std::forward<V2>(lengthMin), std::forward<V3>(lengthMax)
-    );
+    return Vector_Geometry<std::decay_t<V1>>::ClampLength(std::forward<V1>(vector), std::forward<V2>(lengthMin), std::forward<V3>(lengthMax));
 }
 
 /// <summary>
