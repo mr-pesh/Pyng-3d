@@ -246,15 +246,15 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &v1, V &&v2) noexcept
+        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
-                return XMVector2InBounds(XMLoadSInt2(&v1), XMLoadSInt2(&v2));
+                return XMVector2InBounds(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2InBounds(XMLoadSInt2(&v1), std::forward<V>(v2));
+                return XMVector2InBounds(XMLoadSInt2(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -476,15 +476,15 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &v1, V &&v2) noexcept
+        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
-                return XMVector3InBounds(XMLoadSInt3(&v1), XMLoadSInt3(&v2));
+                return XMVector3InBounds(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3InBounds(XMLoadSInt3(&v1), std::forward<V>(v2));
+                return XMVector3InBounds(XMLoadSInt3(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -706,15 +706,15 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &v1, V &&v2) noexcept
+        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
-                return XMVector4InBounds(XMLoadSInt4(&v1), XMLoadSInt4(&v2));
+                return XMVector4InBounds(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4InBounds(XMLoadSInt4(&v1), std::forward<V>(v2));
+                return XMVector4InBounds(XMLoadSInt4(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -924,15 +924,15 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &v1, V &&v2) noexcept
+        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
-                return XMVector2InBounds(XMLoadFloat2(&v1), XMLoadFloat2(&v2));
+                return XMVector2InBounds(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2InBounds(XMLoadFloat2(&v1), std::forward<V>(v2));
+                return XMVector2InBounds(XMLoadFloat2(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1154,15 +1154,15 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &v1, V &&v2) noexcept
+        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
-                return XMVector3InBounds(XMLoadFloat3(&v1), XMLoadFloat3(&v2));
+                return XMVector3InBounds(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3InBounds(XMLoadFloat3(&v1), std::forward<V>(v2));
+                return XMVector3InBounds(XMLoadFloat3(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1384,15 +1384,15 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &v1, V &&v2) noexcept
+        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
-                return XMVector4InBounds(XMLoadFloat4(&v1), XMLoadFloat4(&v2));
+                return XMVector4InBounds(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4InBounds(XMLoadFloat4(&v1), std::forward<V>(v2));
+                return XMVector4InBounds(XMLoadFloat4(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1602,15 +1602,15 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &v1, V &&v2) noexcept
+        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
-                return XMVector2InBounds(XMLoadUInt2(&v1), XMLoadUInt2(&v2));
+                return XMVector2InBounds(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2InBounds(XMLoadUInt2(&v1), std::forward<V>(v2));
+                return XMVector2InBounds(XMLoadUInt2(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1832,15 +1832,15 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &v1, V &&v2) noexcept
+        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
-                return XMVector3InBounds(XMLoadUInt3(&v1), XMLoadUInt3(&v2));
+                return XMVector3InBounds(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3InBounds(XMLoadUInt3(&v1), std::forward<V>(v2));
+                return XMVector3InBounds(XMLoadUInt3(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -2062,15 +2062,15 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &v1, V &&v2) noexcept
+        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
-                return XMVector4InBounds(XMLoadUInt4(&v1), XMLoadUInt4(&v2));
+                return XMVector4InBounds(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4InBounds(XMLoadUInt4(&v1), std::forward<V>(v2));
+                return XMVector4InBounds(XMLoadUInt4(&vec1), std::forward<V>(vec2));
             }
         }
 
