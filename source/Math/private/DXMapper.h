@@ -219,16 +219,16 @@ namespace
             return XMVector2ClampLength(XMLoadSInt2(&vec), min, max);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Cross(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2Cross(XMLoadSInt2(&vec1), std::forward<V2>(vec2));
+                return XMVector2Cross(XMLoadSInt2(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -449,16 +449,16 @@ namespace
             return XMVector3ClampLength(XMLoadSInt3(&vec), min, max);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Cross(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3Cross(XMLoadSInt3(&vec1), std::forward<V2>(vec2));
+                return XMVector3Cross(XMLoadSInt3(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -679,8 +679,8 @@ namespace
             return XMVector4ClampLength(XMLoadSInt4(&vec), min, max);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR CrossProduct(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -897,16 +897,16 @@ namespace
             return XMVector2ClampLength(XMLoadFloat2(&vec), min, max);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Cross(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2Cross(XMLoadFloat2(&vec1), std::forward<V2>(vec2));
+                return XMVector2Cross(XMLoadFloat2(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1127,16 +1127,16 @@ namespace
             return XMVector3ClampLength(XMLoadFloat3(&vec), min, max);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Cross(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3Cross(XMLoadFloat3(&vec1), std::forward<V2>(vec2));
+                return XMVector3Cross(XMLoadFloat3(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1357,8 +1357,8 @@ namespace
             return XMVector4ClampLength(XMLoadFloat4(&vec), min, max);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR CrossProduct(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1575,16 +1575,16 @@ namespace
             return XMVector2ClampLength(XMLoadUInt2(&vec), min, max);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Cross(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2Cross(XMLoadUInt2(&vec1), std::forward<V2>(vec2));
+                return XMVector2Cross(XMLoadUInt2(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1805,16 +1805,16 @@ namespace
             return XMVector3ClampLength(XMLoadUInt3(&vec), min, max);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Cross(XMLoadUInt3(&vec1), XMLoadUInt3(&vec1));
             }
             else if (isXMVector) {
-                return XMVector3Cross(XMLoadUInt3(&vec1), std::forward<V2>(vec2));
+                return XMVector3Cross(XMLoadUInt3(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -2035,8 +2035,8 @@ namespace
             return XMVector4ClampLength(XMLoadUInt4(&vec), min, max);
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR CrossProduct(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2656,10 +2656,10 @@ namespace
             );
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2)
+        template <class V>
+        static inline XMVECTOR CrossProduct(const XMINT2 &v1, V &&v2)
         {
-            return Vector_Helper<int32_t,2>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,2>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -2711,10 +2711,10 @@ namespace
             return Vector_Helper<int32_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,2>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<int32_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2741,10 +2741,10 @@ namespace
             );
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const XMINT3 &v1, V &&v2)
         {
-            return Vector_Helper<int32_t,3>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,3>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -2796,10 +2796,10 @@ namespace
             return Vector_Helper<int32_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,3>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<int32_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2826,12 +2826,10 @@ namespace
             );
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR CrossProduct(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,4>::CrossProduct(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<int32_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
@@ -2883,10 +2881,10 @@ namespace
             return Vector_Helper<int32_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,4>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<int32_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2913,10 +2911,10 @@ namespace
             );
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&v1, V1 &&v2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const XMFLOAT2 &v1, V &&v2)
         {
-            return Vector_Helper<float_t,2>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,2>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -2968,10 +2966,10 @@ namespace
             return Vector_Helper<float_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,2>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<float_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2998,10 +2996,10 @@ namespace
             );
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const XMFLOAT3 &v1, V &&v2)
         {
-            return Vector_Helper<float_t,3>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,3>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -3053,10 +3051,10 @@ namespace
             return Vector_Helper<float_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,3>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<float_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -3083,12 +3081,10 @@ namespace
             );
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR CrossProduct(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,4>::CrossProduct(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<float_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
@@ -3142,10 +3138,10 @@ namespace
             return Vector_Helper<float_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,4>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<float_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -3172,10 +3168,10 @@ namespace
             );
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const XMUINT2 &v1, V &&v2)
         {
-            return Vector_Helper<uint32_t,2>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,2>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -3227,10 +3223,10 @@ namespace
             return Vector_Helper<uint32_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,2>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<uint32_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -3257,10 +3253,10 @@ namespace
             );
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static inline XMVECTOR CrossProduct(const XMUINT3 &v1, V &&v2)
         {
-            return Vector_Helper<uint32_t,3>::CrossProduct(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,3>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
@@ -3312,10 +3308,10 @@ namespace
             return Vector_Helper<uint32_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,3>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<uint32_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -3342,12 +3338,10 @@ namespace
             );
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR CrossProduct(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR CrossProduct(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,4>::CrossProduct(
-                std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3)
-            );
+            return Vector_Helper<uint32_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
@@ -3399,10 +3393,10 @@ namespace
             return Vector_Helper<uint32_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&v1, V2 &&v2, V3 &&v3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,4>::Refract(std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3));
+            return Vector_Helper<uint32_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 }
