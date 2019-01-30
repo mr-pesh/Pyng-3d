@@ -339,8 +339,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -352,16 +352,16 @@ namespace
             }
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        template <class V>
+        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Refract(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2), index);
             }
             else if (isXMVector) {
-                return XMVector2Refract(XMLoadSInt2(&vec1), std::forward<V2>(vec2), index);
+                return XMVector2Refract(XMLoadSInt2(&vec1), std::forward<V>(vec2), index);
             }
         }
 
@@ -569,8 +569,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -582,16 +582,16 @@ namespace
             }
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        template <class V>
+        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Refract(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2), index);
             }
             else if (isXMVector) {
-                return XMVector3Refract(XMLoadSInt3(&vec1), std::forward<V2>(vec2), index);
+                return XMVector3Refract(XMLoadSInt3(&vec1), std::forward<V>(vec2), index);
             }
         }
 
@@ -799,8 +799,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -812,16 +812,16 @@ namespace
             }
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        template <class V>
+        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Refract(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2), index);
             }
             else if (isXMVector) {
-                return XMVector4Refract(XMLoadSInt4(&vec1), std::forward<V2>(vec2), index);
+                return XMVector4Refract(XMLoadSInt4(&vec1), std::forward<V>(vec2), index);
             }
         }
 
@@ -1017,8 +1017,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1030,16 +1030,16 @@ namespace
             }
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        template <class V>
+        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Refract(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2), index);
             }
             else if (isXMVector) {
-                return XMVector2Refract(XMLoadFloat2(&vec1), std::forward<V2>(vec2), index);
+                return XMVector2Refract(XMLoadFloat2(&vec1), std::forward<V>(vec2), index);
             }
         }
 
@@ -1247,8 +1247,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1260,16 +1260,16 @@ namespace
             }
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        template <class V>
+        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Refract(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2), index);
             }
             else if (isXMVector) {
-                return XMVector3Refract(XMLoadFloat3(&vec1), std::forward<V2>(vec2), index);
+                return XMVector3Refract(XMLoadFloat3(&vec1), std::forward<V>(vec2), index);
             }
         }
 
@@ -1477,8 +1477,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1490,16 +1490,16 @@ namespace
             }
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        template <class V>
+        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Refract(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2), index);
             }
             else if (isXMVector) {
-                return XMVector4Refract(XMLoadFloat4(&vec1), std::forward<V2>(vec2), index);
+                return XMVector4Refract(XMLoadFloat4(&vec1), std::forward<V>(vec2), index);
             }
         }
 
@@ -1695,8 +1695,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1708,16 +1708,16 @@ namespace
             }
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        template <class V>
+        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Refract(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2), index);
             }
             else if (isXMVector) {
-                return XMVector2Refract(XMLoadUInt2(&vec1), std::forward<V2>(vec2), index);
+                return XMVector2Refract(XMLoadUInt2(&vec1), std::forward<V>(vec2), index);
             }
         }
 
@@ -1925,8 +1925,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1938,16 +1938,16 @@ namespace
             }
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        template <class V>
+        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Refract(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2), index);
             }
             else if (isXMVector) {
-                return XMVector3Refract(XMLoadUInt3(&vec1), std::forward<V2>(vec2), index);
+                return XMVector3Refract(XMLoadUInt3(&vec1), std::forward<V>(vec2), index);
             }
         }
 
@@ -2155,8 +2155,8 @@ namespace
             }
         }
 
-        template <class V1, class V2, class V3>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
+        template <class V2, class V3>
+        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2168,16 +2168,16 @@ namespace
             }
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
+        template <class V>
+        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Refract(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2), index);
             }
             else if (isXMVector) {
-                return XMVector4Refract(XMLoadUInt4(&vec1), std::forward<V2>(vec2), index);
+                return XMVector4Refract(XMLoadUInt4(&vec1), std::forward<V>(vec2), index);
             }
         }
 
