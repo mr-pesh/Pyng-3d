@@ -174,29 +174,29 @@ namespace
     {
         typedef ::DirectX::XMINT2 Type;
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenNormals(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2AngleBetweenNormals(XMLoadSInt2(&vec1), std::forward<V2>(vec2));
+                return XMVector2AngleBetweenNormals(XMLoadSInt2(&vec1), std::forward<V>(vec2));
             }
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenVectors(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2AngleBetweenVectors(XMLoadSInt2(&vec1), std::forward<V2>(vec2));
+                return XMVector2AngleBetweenVectors(XMLoadSInt2(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -403,29 +403,29 @@ namespace
     {
         typedef ::DirectX::XMINT3 Type;
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenNormals(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3AngleBetweenNormals(XMLoadSInt3(&vec1), std::forward<V2>(vec2));
+                return XMVector3AngleBetweenNormals(XMLoadSInt3(&vec1), std::forward<V>(vec2));
             }
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenVectors(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3AngleBetweenVectors(XMLoadSInt3(&vec1), std::forward<V2>(vec2));
+                return XMVector3AngleBetweenVectors(XMLoadSInt3(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -632,29 +632,29 @@ namespace
     {
         typedef ::DirectX::XMINT4 Type;
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenNormals(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4AngleBetweenNormals(XMLoadSInt4(&vec1), std::forward<V2>(vec2));
+                return XMVector4AngleBetweenNormals(XMLoadSInt4(&vec1), std::forward<V>(vec2));
             }
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenVectors(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4AngleBetweenVectors(XMLoadSInt4(&vec1), std::forward<V2>(vec2));
+                return XMVector4AngleBetweenVectors(XMLoadSInt4(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -849,29 +849,29 @@ namespace
     {
         typedef ::DirectX::XMFLOAT2 Type;
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenNormals(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2AngleBetweenNormals(XMLoadFloat2(&vec1), std::forward<V2>(vec2));
+                return XMVector2AngleBetweenNormals(XMLoadFloat2(&vec1), std::forward<V>(vec2));
             }
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenVectors(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2AngleBetweenVectors(XMLoadFloat2(&vec1), std::forward<V2>(vec2));
+                return XMVector2AngleBetweenVectors(XMLoadFloat2(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1078,29 +1078,29 @@ namespace
     {
         typedef ::DirectX::XMFLOAT3 Type;
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenNormals(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3AngleBetweenNormals(XMLoadFloat3(&vec1), std::forward<V2>(vec2));
+                return XMVector3AngleBetweenNormals(XMLoadFloat3(&vec1), std::forward<V>(vec2));
             }
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenVectors(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3AngleBetweenVectors(XMLoadFloat3(&vec1), std::forward<V2>(vec2));
+                return XMVector3AngleBetweenVectors(XMLoadFloat3(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1307,29 +1307,29 @@ namespace
     {
         typedef ::DirectX::XMFLOAT4 Type;
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenNormals(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4AngleBetweenNormals(XMLoadFloat4(&vec1), std::forward<V2>(vec2));
+                return XMVector4AngleBetweenNormals(XMLoadFloat4(&vec1), std::forward<V>(vec2));
             }
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenVectors(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4AngleBetweenVectors(XMLoadFloat4(&vec1), std::forward<V2>(vec2));
+                return XMVector4AngleBetweenVectors(XMLoadFloat4(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1524,29 +1524,29 @@ namespace
     {
         typedef ::DirectX::XMUINT2 Type;
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenNormals(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2AngleBetweenNormals(XMLoadUInt2(&vec1), std::forward<V2>(vec2));
+                return XMVector2AngleBetweenNormals(XMLoadUInt2(&vec1), std::forward<V>(vec2));
             }
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenVectors(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2AngleBetweenVectors(XMLoadUInt2(&vec1), std::forward<V2>(vec2));
+                return XMVector2AngleBetweenVectors(XMLoadUInt2(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1753,29 +1753,29 @@ namespace
     {
         typedef ::DirectX::XMUINT3 Type;
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenNormals(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3AngleBetweenNormals(XMLoadUInt3(&vec1), std::forward<V2>(vec2));
+                return XMVector3AngleBetweenNormals(XMLoadUInt3(&vec1), std::forward<V>(vec2));
             }
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenVectors(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3AngleBetweenVectors(XMLoadUInt3(&vec1), std::forward<V2>(vec2));
+                return XMVector3AngleBetweenVectors(XMLoadUInt3(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -1982,29 +1982,29 @@ namespace
     {
         typedef ::DirectX::XMUINT4 Type;
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenNormals(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4AngleBetweenNormals(XMLoadUInt4(&vec1), std::forward<V2>(vec2));
+                return XMVector4AngleBetweenNormals(XMLoadUInt4(&vec1), std::forward<V>(vec2));
             }
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenVectors(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4AngleBetweenVectors(XMLoadUInt4(&vec1), std::forward<V2>(vec2));
+                return XMVector4AngleBetweenVectors(XMLoadUInt4(&vec1), std::forward<V>(vec2));
             }
         }
 
@@ -2627,16 +2627,16 @@ namespace
     template <>
     struct Vector_Geometry<XMINT2>
     {
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const XMINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,2>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,2>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const XMINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,2>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
@@ -2710,16 +2710,16 @@ namespace
     template <>
     struct Vector_Geometry<XMINT3>
     {
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const XMINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,3>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,3>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const XMINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,3>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
@@ -2793,16 +2793,16 @@ namespace
     template <>
     struct Vector_Geometry<XMINT4>
     {
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const XMINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,4>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,4>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const XMINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,4>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
@@ -2876,16 +2876,16 @@ namespace
     template <>
     struct Vector_Geometry<XMFLOAT2>
     {
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,2>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,2>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,2>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
@@ -2959,16 +2959,16 @@ namespace
     template <>
     struct Vector_Geometry<XMFLOAT3>
     {
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,3>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,3>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,3>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
@@ -3042,16 +3042,16 @@ namespace
     template <>
     struct Vector_Geometry<XMFLOAT4>
     {
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,4>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,4>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,4>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
@@ -3127,16 +3127,16 @@ namespace
     template <>
     struct Vector_Geometry<XMUINT2>
     {
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,2>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,2>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,2>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
@@ -3210,16 +3210,16 @@ namespace
     template <>
     struct Vector_Geometry<XMUINT3>
     {
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,3>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,3>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,3>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
@@ -3293,16 +3293,16 @@ namespace
     template <>
     struct Vector_Geometry<XMUINT4>
     {
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenNormals(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,4>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,4>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
-        template <class V1, class V2>
-        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR AngleBetweenVectors(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,4>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
