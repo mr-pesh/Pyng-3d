@@ -141,26 +141,26 @@ namespace
 template <class T, int rows, int columns>
 using Matrix_Helper_T = typename Matrix_Helper<T, rows, columns>::Type;
 
-#define CHECK_ARGUMENT_TYPE(CompType, Result, Type)                                           \
+#define MATCH_TYPE(CompType, Result, Type)                                                    \
     constexpr bool Result = std::is_same_v<std::decay_t<##CompType>, ##Type>;                 \
     static_assert(std::bool_constant<Result>::value, "No matching overload for " __FUNCTION__ )
 
-#define CHECK_ARGUMENT_TYPE_2(CompType, Result1, Type1, Result2, Type2)        \
-    using BaseType = std::decay_t<##CompType>;                                 \
-                                                                               \
-    constexpr bool Result1 = std::is_same_v<BaseType, ##Type1>;                \
-    constexpr bool Result2 = std::is_same_v<BaseType, ##Type2>;                \
-                                                                               \
-    static_assert(Result1 || Result2, "No matching overload for " __FUNCTION__ )
+#define MATCH_TYPE_2(CompType, Result1, Type1, Result2, Type2)                                        \
+    using BaseType = std::decay_t<##CompType>;                                                        \
+                                                                                                      \
+    constexpr bool Result1 = std::is_same_v<BaseType, ##Type1>;                                       \
+    constexpr bool Result2 = std::is_same_v<BaseType, ##Type2>;                                       \
+                                                                                                      \
+    static_assert(std::_Is_any_of_v<BaseType, Type1, Type2>, "No matching overload for " __FUNCTION__ )
 
-#define CHECK_ARGUMENT_TYPE_3(CompType, Result1, Type1, Result2, Type2, Type3, Result3)   \
-    using BaseType = std::decay_t<##CompType>;                                            \
-                                                                                          \
-    constexpr bool Result1 = std::is_same_v<BaseType, ##Type1>;                           \
-    constexpr bool Result2 = std::is_same_v<BaseType, ##Type2>;                           \
-    constexpr bool Result3 = std::is_same_v<BaseType, ##Type3>;                           \
-                                                                                          \
-    static_assert(Result1 || Result2 || Result3, "No matching overload for " __FUNCTION__ )
+#define MATCH_TYPE_3(CompType, Result1, Type1, Result2, Type2, Type3, Result3)                               \
+    using BaseType = std::decay_t<##CompType>;                                                               \
+                                                                                                             \
+    constexpr bool Result1 = std::is_same_v<BaseType, ##Type1>;                                              \
+    constexpr bool Result2 = std::is_same_v<BaseType, ##Type2>;                                              \
+    constexpr bool Result3 = std::is_same_v<BaseType, ##Type3>;                                              \
+                                                                                                             \
+    static_assert(std::_Is_any_of_v<BaseType, Type1, Type2, Type3>, "No matching overload for " __FUNCTION__ )
 
 namespace
 {
@@ -177,7 +177,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenNormals(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
@@ -190,7 +190,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenVectors(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
@@ -203,7 +203,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2ClampLengthV(XMLoadSInt2(&vec), XMLoadSInt2(&min), XMLoadSInt2(&max));
@@ -222,7 +222,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Cross(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
@@ -235,7 +235,7 @@ namespace
         template <class V>
         static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Dot(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
@@ -248,7 +248,7 @@ namespace
         template <class V>
         static inline bool InBounds(const Type &v1, V &&v2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2InBounds(XMLoadSInt2(&v1), XMLoadSInt2(&v2));
@@ -296,7 +296,7 @@ namespace
         template <class V>
         static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2LinePointDistance(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2), XMLoadSInt2(&vec3));
@@ -329,7 +329,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Reflect(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
@@ -342,7 +342,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2RefractV(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2), XMLoadSInt2(&vec3));
@@ -355,7 +355,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Refract(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2), index);
@@ -407,7 +407,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenNormals(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
@@ -420,7 +420,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenVectors(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
@@ -433,7 +433,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3ClampLengthV(XMLoadSInt3(&vec), XMLoadSInt3(&min), XMLoadSInt3(&max));
@@ -452,7 +452,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Cross(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
@@ -465,7 +465,7 @@ namespace
         template <class V>
         static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Dot(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
@@ -478,7 +478,7 @@ namespace
         template <class V>
         static inline bool InBounds(const Type &v1, V &&v2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3InBounds(XMLoadSInt3(&v1), XMLoadSInt3(&v2));
@@ -526,7 +526,7 @@ namespace
         template <class V>
         static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3LinePointDistance(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2), XMLoadSInt3(&vec3));
@@ -559,7 +559,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Reflect(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
@@ -572,7 +572,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3RefractV(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2), XMLoadSInt3(&vec3));
@@ -585,7 +585,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Refract(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2), index);
@@ -637,7 +637,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenNormals(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
@@ -650,7 +650,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenVectors(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
@@ -663,7 +663,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4ClampLengthV(XMLoadSInt4(&vec), XMLoadSInt4(&min), XMLoadSInt4(&max));
@@ -682,7 +682,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Cross(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2), XMLoadSInt4(&vec3));
@@ -695,7 +695,7 @@ namespace
         template <class V>
         static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Dot(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
@@ -708,7 +708,7 @@ namespace
         template <class V>
         static inline bool InBounds(const Type &v1, V &&v2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4InBounds(XMLoadSInt4(&v1), XMLoadSInt4(&v2));
@@ -756,7 +756,7 @@ namespace
         template <class V>
         static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4LinePointDistance(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2), XMLoadSInt4(&vec3));
@@ -789,7 +789,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Reflect(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
@@ -802,7 +802,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4RefractV(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2), XMLoadSInt4(&vec3));
@@ -815,7 +815,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Refract(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2), index);
@@ -855,7 +855,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenNormals(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
@@ -868,7 +868,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenVectors(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
@@ -881,7 +881,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2ClampLengthV(XMLoadFloat2(&vec), XMLoadFloat2(&min), XMLoadFloat2(&max));
@@ -900,7 +900,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Cross(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
@@ -913,7 +913,7 @@ namespace
         template <class V>
         static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Dot(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
@@ -926,7 +926,7 @@ namespace
         template <class V>
         static inline bool InBounds(const Type &v1, V &&v2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2InBounds(XMLoadFloat2(&v1), XMLoadFloat2(&v2));
@@ -974,7 +974,7 @@ namespace
         template <class V>
         static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2LinePointDistance(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2), XMLoadFloat2(&vec3));
@@ -1007,7 +1007,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Reflect(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
@@ -1020,7 +1020,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2RefractV(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2), XMLoadFloat2(&vec3));
@@ -1033,7 +1033,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Refract(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2), index);
@@ -1085,7 +1085,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenNormals(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
@@ -1098,7 +1098,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenVectors(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
@@ -1111,7 +1111,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
             
             if constexpr (isSameType) {
                 return XMVector3ClampLengthV(XMLoadFloat3(&vec), XMLoadFloat3(&min), XMLoadFloat3(&max));
@@ -1130,7 +1130,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Cross(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
@@ -1143,7 +1143,7 @@ namespace
         template <class V>
         static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Dot(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
@@ -1156,7 +1156,7 @@ namespace
         template <class V>
         static inline bool InBounds(const Type &v1, V &&v2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3InBounds(XMLoadFloat3(&v1), XMLoadFloat3(&v2));
@@ -1204,7 +1204,7 @@ namespace
         template <class V>
         static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3LinePointDistance(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2), XMLoadFloat3(&vec3));
@@ -1237,7 +1237,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Reflect(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
@@ -1250,7 +1250,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3RefractV(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2), XMLoadFloat3(&vec3));
@@ -1263,7 +1263,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Refract(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2), index);
@@ -1315,7 +1315,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenNormals(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
@@ -1328,7 +1328,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenVectors(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
@@ -1341,7 +1341,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4ClampLengthV(XMLoadFloat4(&vec), XMLoadFloat4(&min), XMLoadFloat4(&max));
@@ -1360,7 +1360,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Cross(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2), XMLoadFloat4(&vec3));
@@ -1373,7 +1373,7 @@ namespace
         template <class V>
         static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Dot(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
@@ -1386,7 +1386,7 @@ namespace
         template <class V>
         static inline bool InBounds(const Type &v1, V &&v2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4InBounds(XMLoadFloat4(&v1), XMLoadFloat4(&v2));
@@ -1434,7 +1434,7 @@ namespace
         template <class V>
         static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4LinePointDistance(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2), XMLoadFloat4(&vec3));
@@ -1467,7 +1467,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Reflect(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
@@ -1480,7 +1480,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4RefractV(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2), XMLoadFloat4(&vec3));
@@ -1493,7 +1493,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Refract(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2), index);
@@ -1533,7 +1533,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenNormals(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
@@ -1546,7 +1546,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2AngleBetweenVectors(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
@@ -1559,7 +1559,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2ClampLengthV(XMLoadUInt2(&vec), XMLoadUInt2(&min), XMLoadUInt2(&max));
@@ -1578,7 +1578,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Cross(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
@@ -1591,7 +1591,7 @@ namespace
         template <class V>
         static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Dot(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
@@ -1604,7 +1604,7 @@ namespace
         template <class V>
         static inline bool InBounds(const Type &v1, V &&v2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2InBounds(XMLoadUInt2(&v1), XMLoadUInt2(&v2));
@@ -1652,7 +1652,7 @@ namespace
         template <class V>
         static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2LinePointDistance(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2), XMLoadUInt2(&vec3));
@@ -1685,7 +1685,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Reflect(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
@@ -1698,7 +1698,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2RefractV(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2), XMLoadUInt2(&vec3));
@@ -1711,7 +1711,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Refract(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2), index);
@@ -1763,7 +1763,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenNormals(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
@@ -1776,7 +1776,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3AngleBetweenVectors(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
@@ -1789,7 +1789,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3ClampLengthV(XMLoadUInt3(&vec), XMLoadUInt3(&min), XMLoadUInt3(&max));
@@ -1808,7 +1808,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Cross(XMLoadUInt3(&vec1), XMLoadUInt3(&vec1));
@@ -1821,7 +1821,7 @@ namespace
         template <class V>
         static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Dot(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
@@ -1834,7 +1834,7 @@ namespace
         template <class V>
         static inline bool InBounds(const Type &v1, V &&v2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3InBounds(XMLoadUInt3(&v1), XMLoadUInt3(&v2));
@@ -1882,7 +1882,7 @@ namespace
         template <class V>
         static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3LinePointDistance(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2), XMLoadUInt3(&vec3));
@@ -1915,7 +1915,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Reflect(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
@@ -1928,7 +1928,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3RefractV(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2), XMLoadUInt3(&vec3));
@@ -1941,7 +1941,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Refract(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2), index);
@@ -1993,7 +1993,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenNormals(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
@@ -2006,7 +2006,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4AngleBetweenVectors(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
@@ -2019,7 +2019,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR ClampLength(V1 &&vec, V2 &&min, V3 &&max) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4ClampLengthV(XMLoadUInt4(&vec), XMLoadUInt4(&min), XMLoadUInt4(&max));
@@ -2038,7 +2038,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR CrossProduct(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Cross(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2), XMLoadUInt4(&vec3));
@@ -2051,7 +2051,7 @@ namespace
         template <class V>
         static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Dot(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
@@ -2064,7 +2064,7 @@ namespace
         template <class V>
         static inline bool InBounds(const Type &v1, V &&v2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4InBounds(XMLoadUInt4(&v1), XMLoadUInt4(&v2));
@@ -2112,7 +2112,7 @@ namespace
         template <class V>
         static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4LinePointDistance(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2), XMLoadUInt4(&vec3));
@@ -2145,7 +2145,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Reflect(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
@@ -2158,7 +2158,7 @@ namespace
         template <class V1, class V2, class V3>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4RefractV(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2), XMLoadUInt4(&vec3));
@@ -2171,7 +2171,7 @@ namespace
         template <class V1, class V2>
         static inline XMVECTOR Refract(V1 &&vec1, V2 &&vec2, float index) noexcept
         {
-            CHECK_ARGUMENT_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Refract(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2), index);
