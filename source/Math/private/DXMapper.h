@@ -3414,14 +3414,14 @@ namespace VectorAngle
 {
     /// <summary>Computes the radian angle between two 2-, 3- or 4D vectors.</summary>
     template <class V1, class V2>
-    inline XMVECTOR Angle(V1 &&vector1, V2 &&vector2) noexcept
+    inline XMVECTOR AngleBetweenVectors(V1 &&vector1, V2 &&vector2) noexcept
     {
         return Vector_Geometry<std::decay_t<V1>>::AngleBetweenVectors(std::forward<V1>(vector1), std::forward<V2>(vector2));
     }
 
     /// <summary>Computes the radian angle between two normalized 2-, 3- or 4D vectors.</summary>
     template <class V1, class V2>
-    inline XMVECTOR OrientedAngle(V1 &&vector1, V2 &&vector2) noexcept
+    inline XMVECTOR AngleBetweenNormals(V1 &&vector1, V2 &&vector2) noexcept
     {
         return Vector_Geometry<std::decay_t<V1>>::AngleBetweenNormals(std::forward<V1>(vector1), std::forward<V2>(vector2));
     }
