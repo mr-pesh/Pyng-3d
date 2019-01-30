@@ -15,27 +15,27 @@ namespace
         typedef ::DirectX::XMFLOAT3X3 Type;
 
         template <class M>
-        static inline XMMATRIX Multiply(const Type &lhs, const M &rhs);
+        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
 
         template <>
-        static inline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x3(&lhs), rhs);
         }
 
         template <>
-        static inline XMMATRIX Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
+        static __forceinline XMMATRIX Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x3(&lhs), XMLoadFloat3x3(&rhs));
         }
 
         template <>
-        static inline XMMATRIX Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
+        static __forceinline XMMATRIX Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x3(&lhs), XMLoadFloat3x4(&rhs));
         }
 
-        static inline XMMATRIX Transpose(const Type &matrix)
+        static __forceinline XMMATRIX Transpose(const Type &matrix)
         {
             return XMMatrixTranspose(XMLoadFloat3x3(&matrix));
         }
@@ -47,27 +47,27 @@ namespace
         typedef ::DirectX::XMFLOAT3X4 Type;
 
         template <class M>
-        static inline XMMATRIX Multiply(const Type &lhs, const M &rhs);
+        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
 
         template <>
-        static inline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x4(&lhs), rhs);
         }
 
         template <>
-        static inline XMMATRIX Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
+        static __forceinline XMMATRIX Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x4(&lhs), XMLoadFloat4x3(&rhs));
         }
 
         template <>
-        static inline XMMATRIX Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
+        static __forceinline XMMATRIX Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat3x4(&lhs), XMLoadFloat4x4(&rhs));
         }
 
-        static inline XMMATRIX Transpose(const Type &matrix)
+        static __forceinline XMMATRIX Transpose(const Type &matrix)
         {
             return XMMatrixTranspose(XMLoadFloat3x4(&matrix));
         }
@@ -79,27 +79,27 @@ namespace
         typedef ::DirectX::XMFLOAT4X3 Type;
 
         template <class M>
-        static inline XMMATRIX Multiply(const Type &lhs, const M &rhs);
+        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
 
         template <>
-        static inline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x3(&lhs), rhs);
         }
 
         template <>
-        static inline XMMATRIX Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
+        static __forceinline XMMATRIX Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x3(&lhs), XMLoadFloat3x3(&rhs));
         }
 
         template <>
-        static inline XMMATRIX Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
+        static __forceinline XMMATRIX Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x3(&lhs), XMLoadFloat3x4(&rhs));
         }
 
-        static inline XMMATRIX Transpose(const Type &matrix)
+        static __forceinline XMMATRIX Transpose(const Type &matrix)
         {
             return XMMatrixTranspose(XMLoadFloat4x3(&matrix));
         }
@@ -111,27 +111,27 @@ namespace
         typedef ::DirectX::XMFLOAT4X4 Type;
 
         template <class M>
-        static inline XMMATRIX Multiply(const Type &lhs, const M &rhs);
+        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
 
         template <>
-        static inline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
+        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x4(&lhs), rhs);
         }
 
         template <>
-        static inline XMMATRIX Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
+        static __forceinline XMMATRIX Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x4(&lhs), XMLoadFloat4x3(&rhs));
         }
 
         template <>
-        static inline XMMATRIX Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
+        static __forceinline XMMATRIX Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
         {
             return XMMatrixMultiply(XMLoadFloat4x4(&lhs), XMLoadFloat4x4(&rhs));
         }
 
-        static inline XMMATRIX Transpose(const Type &matrix)
+        static __forceinline XMMATRIX Transpose(const Type &matrix)
         {
             return XMMatrixTranspose(XMLoadFloat4x4(&matrix));
         }
@@ -175,7 +175,7 @@ namespace
         typedef ::DirectX::XMINT2 Type;
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -188,7 +188,7 @@ namespace
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -201,7 +201,7 @@ namespace
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -213,13 +213,13 @@ namespace
             }
         }
 
-        static inline XMVECTOR ClampLength(const Type &vec, float_t min, float_t max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, float_t min, float_t max) noexcept
         {
             return XMVector2ClampLength(XMLoadSInt2(&vec), min, max);
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -232,7 +232,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -245,7 +245,7 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
+        static __forceinline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -257,43 +257,43 @@ namespace
             }
         }
 
-        static inline bool Equal(const Type &lhs, const Type &rhs)
+        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
         {
             return XMVector2EqualInt(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
         }
 
-        static inline bool Greater(const Type &lhs, const Type &rhs)
+        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
             return XMVector2Greater(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
         }
 
-        static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2GreaterOrEqual(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
         }
 
-        static inline XMVECTOR Length(const Type &vec) noexcept
+        static __forceinline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector2Length(XMLoadSInt2(&vec));
         }
 
-        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        static __forceinline XMVECTOR LengthSq(const Type &vec) noexcept
         {
             return XMVector2LengthSq(XMLoadSInt2(&vec));
         }
 
-        static inline bool Less(const Type &lhs, const Type &rhs)
+        static __forceinline bool Less(const Type &lhs, const Type &rhs)
         {
             return XMVector2Less(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
         }
 
-        static inline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2LessOrEqual(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
         }
 
         template <class V>
-        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -305,41 +305,41 @@ namespace
             }
         }
 
-        static inline bool NotEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2NotEqualInt(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
         }
 
-        static inline XMVECTOR Normalize(const Type &vec) noexcept
+        static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
         {
             return XMVector2Normalize(XMLoadSInt2(&vec));
         }
 
-        static inline XMVECTOR Orthogonal(const Type &vec) noexcept
+        static __forceinline XMVECTOR Orthogonal(const Type &vec) noexcept
         {
             return XMVector2Orthogonal(XMLoadSInt2(&vec));
         }
 
-        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const Type &vec) noexcept
         {
             return XMVector2ReciprocalLength(XMLoadSInt2(&vec));
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Reflect(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2Reflect(XMLoadSInt2(&vec1), std::forward<V2>(vec2));
+                return XMVector2Reflect(XMLoadSInt2(&vec1), std::forward<V>(vec2));
             }
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -352,7 +352,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -365,34 +365,34 @@ namespace
         }
 
         template <class M>
-        static inline XMVECTOR Transform(const Type &vec, const M &mat);
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector2Transform(XMLoadSInt2(&vec), mat);
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat4x4(&mat));
         }
@@ -404,7 +404,7 @@ namespace
         typedef ::DirectX::XMINT3 Type;
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -417,7 +417,7 @@ namespace
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -430,7 +430,7 @@ namespace
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -442,13 +442,13 @@ namespace
             }
         }
 
-        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector3ClampLength(XMLoadSInt3(&vec), min, max);
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -461,7 +461,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -474,7 +474,7 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
+        static __forceinline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -486,43 +486,43 @@ namespace
             }
         }
 
-        static inline bool Equal(const Type &lhs, const Type &rhs)
+        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
         {
             return XMVector3EqualInt(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
         }
 
-        static inline bool Greater(const Type &lhs, const Type &rhs)
+        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
             return XMVector3Greater(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
         }
 
-        static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3GreaterOrEqual(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
         }
 
-        static inline XMVECTOR Length(const Type &vec) noexcept
+        static __forceinline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector3Length(XMLoadSInt3(&vec));
         }
 
-        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        static __forceinline XMVECTOR LengthSq(const Type &vec) noexcept
         {
             return XMVector3LengthSq(XMLoadSInt3(&vec));
         }
 
-        static inline bool Less(const Type &lhs, const Type &rhs)
+        static __forceinline bool Less(const Type &lhs, const Type &rhs)
         {
             return XMVector3Less(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
         }
 
-        static inline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3LessOrEqual(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
         }
 
         template <class V>
-        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -534,41 +534,41 @@ namespace
             }
         }
 
-        static inline bool NotEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3NotEqualInt(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
         }
 
-        static inline XMVECTOR Normalize(const Type &vec) noexcept
+        static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
         {
             return XMVector3Normalize(XMLoadSInt3(&vec));
         }
 
-        static inline XMVECTOR Orthogonal(const Type &vec) noexcept
+        static __forceinline XMVECTOR Orthogonal(const Type &vec) noexcept
         {
             return XMVector3Orthogonal(XMLoadSInt3(&vec));
         }
 
-        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const Type &vec) noexcept
         {
             return XMVector3ReciprocalLength(XMLoadSInt3(&vec));
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Reflect(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3Reflect(XMLoadSInt3(&vec1), std::forward<V2>(vec2));
+                return XMVector3Reflect(XMLoadSInt3(&vec1), std::forward<V>(vec2));
             }
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -581,7 +581,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -594,34 +594,34 @@ namespace
         }
 
         template <class M>
-        static inline XMVECTOR Transform(const Type &vec, const M &mat);
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector3Transform(XMLoadSInt3(&vec), mat);
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat4x4(&mat));
         }
@@ -633,7 +633,7 @@ namespace
         typedef ::DirectX::XMINT4 Type;
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -646,7 +646,7 @@ namespace
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -659,7 +659,7 @@ namespace
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -671,13 +671,13 @@ namespace
             }
         }
 
-        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector4ClampLength(XMLoadSInt4(&vec), min, max);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR CrossProduct(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR CrossProduct(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -690,7 +690,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -703,7 +703,7 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
+        static __forceinline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -715,43 +715,43 @@ namespace
             }
         }
 
-        static inline bool Equal(const Type &lhs, const Type &rhs)
+        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
         {
             return XMVector2EqualInt(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
         }
 
-        static inline bool Greater(const Type &lhs, const Type &rhs)
+        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
             return XMVector2Greater(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
         }
 
-        static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4GreaterOrEqual(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
         }
 
-        static inline XMVECTOR Length(const Type &vec) noexcept
+        static __forceinline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector4Length(XMLoadSInt4(&vec));
         }
 
-        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        static __forceinline XMVECTOR LengthSq(const Type &vec) noexcept
         {
             return XMVector4LengthSq(XMLoadSInt4(&vec));
         }
 
-        static inline bool Less(const Type &lhs, const Type &rhs)
+        static __forceinline bool Less(const Type &lhs, const Type &rhs)
         {
             return XMVector4Less(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
         }
 
-        static inline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4LessOrEqual(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
         }
 
         template <class V>
-        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -763,41 +763,41 @@ namespace
             }
         }
 
-        static inline bool NotEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4NotEqualInt(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
         }
 
-        static inline XMVECTOR Normalize(const Type &vec) noexcept
+        static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
         {
             return XMVector4Normalize(XMLoadSInt4(&vec));
         }
 
-        static inline XMVECTOR Orthogonal(const Type &vec) noexcept
+        static __forceinline XMVECTOR Orthogonal(const Type &vec) noexcept
         {
             return XMVector4Orthogonal(XMLoadSInt4(&vec));
         }
 
-        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const Type &vec) noexcept
         {
             return XMVector4ReciprocalLength(XMLoadSInt4(&vec));
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Reflect(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4Reflect(XMLoadSInt4(&vec1), std::forward<V2>(vec2));
+                return XMVector4Reflect(XMLoadSInt4(&vec1), std::forward<V>(vec2));
             }
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -810,7 +810,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -823,22 +823,22 @@ namespace
         }
 
         template <class M>
-        static inline XMVECTOR Transform(const Type &vec, const M &mat);
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector4Transform(XMLoadSInt4(&vec), mat);
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector4Transform(XMLoadSInt4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector4Transform(XMLoadSInt4(&vec), XMLoadFloat4x4(&mat));
         }
@@ -850,7 +850,7 @@ namespace
         typedef ::DirectX::XMFLOAT2 Type;
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -863,7 +863,7 @@ namespace
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -876,7 +876,7 @@ namespace
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -888,13 +888,13 @@ namespace
             }
         }
 
-        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector2ClampLength(XMLoadFloat2(&vec), min, max);
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -907,7 +907,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -920,7 +920,7 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
+        static __forceinline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -932,43 +932,43 @@ namespace
             }
         }
 
-        static inline bool Equal(const Type &lhs, const Type &rhs)
+        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
         {
             return XMVector2Equal(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
         }
 
-        static inline bool Greater(const Type &lhs, const Type &rhs)
+        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
             return XMVector2Greater(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
         }
 
-        static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2GreaterOrEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
         }
 
-        static inline XMVECTOR Length(const Type &vec) noexcept
+        static __forceinline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector2Length(XMLoadFloat2(&vec));
         }
 
-        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        static __forceinline XMVECTOR LengthSq(const Type &vec) noexcept
         {
             return XMVector2LengthSq(XMLoadFloat2(&vec));
         }
 
-        static inline bool Less(const Type &lhs, const Type &rhs)
+        static __forceinline bool Less(const Type &lhs, const Type &rhs)
         {
             return XMVector2Less(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
         }
 
-        static inline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2LessOrEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
         }
 
         template <class V>
-        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -980,41 +980,41 @@ namespace
             }
         }
 
-        static inline bool NotEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2NotEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
         }
 
-        static inline XMVECTOR Normalize(const Type &vec) noexcept
+        static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
         {
             return XMVector2Normalize(XMLoadFloat2(&vec));
         }
 
-        static inline XMVECTOR Orthogonal(const Type &vec) noexcept
+        static __forceinline XMVECTOR Orthogonal(const Type &vec) noexcept
         {
             return XMVector2Orthogonal(XMLoadFloat2(&vec));
         }
 
-        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const Type &vec) noexcept
         {
             return XMVector2ReciprocalLength(XMLoadFloat2(&vec));
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Reflect(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2Reflect(XMLoadFloat2(&vec1), std::forward<V2>(vec2));
+                return XMVector2Reflect(XMLoadFloat2(&vec1), std::forward<V>(vec2));
             }
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1027,7 +1027,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1040,34 +1040,34 @@ namespace
         }
 
         template <class M>
-        static inline XMVECTOR Transform(const Type &vec, const M &mat);
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector2Transform(XMLoadFloat2(&vec), mat);
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1079,7 +1079,7 @@ namespace
         typedef ::DirectX::XMFLOAT3 Type;
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1092,7 +1092,7 @@ namespace
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1105,7 +1105,7 @@ namespace
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
             
@@ -1117,13 +1117,13 @@ namespace
             }
         }
 
-        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector3ClampLength(XMLoadFloat3(&vec), min, max);
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1136,7 +1136,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1149,7 +1149,7 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
+        static __forceinline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1161,43 +1161,43 @@ namespace
             }
         }
 
-        static inline bool Equal(const Type &lhs, const Type &rhs)
+        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
         {
             return XMVector3Equal(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
         }
 
-        static inline bool Greater(const Type &lhs, const Type &rhs)
+        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
             return XMVector3Greater(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
         }
 
-        static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3GreaterOrEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
         }
 
-        static inline XMVECTOR Length(const Type &vec) noexcept
+        static __forceinline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector3Length(XMLoadFloat3(&vec));
         }
 
-        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        static __forceinline XMVECTOR LengthSq(const Type &vec) noexcept
         {
             return XMVector3LengthSq(XMLoadFloat3(&vec));
         }
 
-        static inline bool Less(const Type &lhs, const Type &rhs)
+        static __forceinline bool Less(const Type &lhs, const Type &rhs)
         {
             return XMVector3Less(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
         }
 
-        static inline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3LessOrEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
         }
 
         template <class V>
-        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1209,41 +1209,41 @@ namespace
             }
         }
 
-        static inline bool NotEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3NotEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
         }
 
-        static inline XMVECTOR Normalize(const Type &vec) noexcept
+        static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
         {
             return XMVector3Normalize(XMLoadFloat3(&vec));
         }
 
-        static inline XMVECTOR Orthogonal(const Type &vec) noexcept
+        static __forceinline XMVECTOR Orthogonal(const Type &vec) noexcept
         {
             return XMVector3Orthogonal(XMLoadFloat3(&vec));
         }
 
-        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const Type &vec) noexcept
         {
             return XMVector3ReciprocalLength(XMLoadFloat3(&vec));
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Reflect(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3Reflect(XMLoadFloat3(&vec1), std::forward<V2>(vec2));
+                return XMVector3Reflect(XMLoadFloat3(&vec1), std::forward<V>(vec2));
             }
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1256,7 +1256,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1269,34 +1269,34 @@ namespace
         }
 
         template <class M>
-        static inline XMVECTOR Transform(const Type &vec, const M &mat);
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector3Transform(XMLoadFloat3(&vec), mat);
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1308,7 +1308,7 @@ namespace
         typedef ::DirectX::XMFLOAT4 Type;
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1321,7 +1321,7 @@ namespace
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1334,7 +1334,7 @@ namespace
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1346,13 +1346,13 @@ namespace
             }
         }
 
-        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector4ClampLength(XMLoadFloat4(&vec), min, max);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR CrossProduct(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR CrossProduct(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1365,7 +1365,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1378,7 +1378,7 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
+        static __forceinline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1390,43 +1390,43 @@ namespace
             }
         }
 
-        static inline bool Equal(const Type &lhs, const Type &rhs)
+        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
         {
             return XMVector4Equal(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
         }
 
-        static inline bool Greater(const Type &lhs, const Type &rhs)
+        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
             return XMVector4Greater(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
         }
 
-        static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4GreaterOrEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
         }
 
-        static inline XMVECTOR Length(const Type &vec) noexcept
+        static __forceinline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector4Length(XMLoadFloat4(&vec));
         }
 
-        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        static __forceinline XMVECTOR LengthSq(const Type &vec) noexcept
         {
             return XMVector4LengthSq(XMLoadFloat4(&vec));
         }
 
-        static inline bool Less(const Type &lhs, const Type &rhs)
+        static __forceinline bool Less(const Type &lhs, const Type &rhs)
         {
             return XMVector4Less(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
         }
 
-        static inline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4LessOrEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
         }
 
         template <class V>
-        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1438,41 +1438,41 @@ namespace
             }
         }
 
-        static inline bool NotEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4NotEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
         }
 
-        static inline XMVECTOR Normalize(const Type &vec) noexcept
+        static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
         {
             return XMVector4Normalize(XMLoadFloat4(&vec));
         }
 
-        static inline XMVECTOR Orthogonal(const Type &vec) noexcept
+        static __forceinline XMVECTOR Orthogonal(const Type &vec) noexcept
         {
             return XMVector4Orthogonal(XMLoadFloat4(&vec));
         }
 
-        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const Type &vec) noexcept
         {
             return XMVector4ReciprocalLength(XMLoadFloat4(&vec));
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Reflect(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4Reflect(XMLoadFloat4(&vec1), std::forward<V2>(vec2));
+                return XMVector4Reflect(XMLoadFloat4(&vec1), std::forward<V>(vec2));
             }
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1485,7 +1485,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1498,22 +1498,22 @@ namespace
         }
 
         template <class M>
-        static inline XMVECTOR Transform(const Type &vec, const M &mat);
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector4Transform(XMLoadFloat4(&vec), mat);
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector4Transform(XMLoadFloat4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector4Transform(XMLoadFloat4(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1525,7 +1525,7 @@ namespace
         typedef ::DirectX::XMUINT2 Type;
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1538,7 +1538,7 @@ namespace
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1551,7 +1551,7 @@ namespace
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1563,13 +1563,13 @@ namespace
             }
         }
 
-        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector2ClampLength(XMLoadUInt2(&vec), min, max);
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1582,7 +1582,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1595,7 +1595,7 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
+        static __forceinline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1607,43 +1607,43 @@ namespace
             }
         }
 
-        static inline bool Equal(const Type &lhs, const Type &rhs)
+        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
         {
             return XMVector2EqualInt(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
         }
 
-        static inline bool Greater(const Type &lhs, const Type &rhs)
+        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
             return XMVector2Greater(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
         }
 
-        static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2GreaterOrEqual(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
         }
 
-        static inline XMVECTOR Length(const Type &vec) noexcept
+        static __forceinline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector2Length(XMLoadUInt2(&vec));
         }
 
-        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        static __forceinline XMVECTOR LengthSq(const Type &vec) noexcept
         {
             return XMVector2LengthSq(XMLoadUInt2(&vec));
         }
 
-        static inline bool Less(const Type &lhs, const Type &rhs)
+        static __forceinline bool Less(const Type &lhs, const Type &rhs)
         {
             return XMVector2Less(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
         }
 
-        static inline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2LessOrEqual(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
         }
 
         template <class V>
-        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1655,41 +1655,41 @@ namespace
             }
         }
 
-        static inline bool NotEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector2NotEqualInt(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
         }
 
-        static inline XMVECTOR Normalize(const Type &vec) noexcept
+        static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
         {
             return XMVector2Normalize(XMLoadUInt2(&vec));
         }
 
-        static inline XMVECTOR Orthogonal(const Type &vec) noexcept
+        static __forceinline XMVECTOR Orthogonal(const Type &vec) noexcept
         {
             return XMVector2Orthogonal(XMLoadUInt2(&vec));
         }
 
-        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const Type &vec) noexcept
         {
             return XMVector2ReciprocalLength(XMLoadUInt2(&vec));
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector2Reflect(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
             }
             else if (isXMVector) {
-                return XMVector2Reflect(XMLoadUInt2(&vec1), std::forward<V2>(vec2));
+                return XMVector2Reflect(XMLoadUInt2(&vec1), std::forward<V>(vec2));
             }
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1702,7 +1702,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1715,34 +1715,34 @@ namespace
         }
 
         template <class M>
-        static inline XMVECTOR Transform(const Type &vec, const M &mat);
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector2Transform(XMLoadUInt2(&vec), mat);
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1754,7 +1754,7 @@ namespace
         typedef ::DirectX::XMUINT3 Type;
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1767,7 +1767,7 @@ namespace
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1780,7 +1780,7 @@ namespace
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1792,13 +1792,13 @@ namespace
             }
         }
 
-        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector3ClampLength(XMLoadUInt3(&vec), min, max);
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR CrossProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1811,7 +1811,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1824,7 +1824,7 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
+        static __forceinline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1836,43 +1836,43 @@ namespace
             }
         }
 
-        static inline bool Equal(const Type &lhs, const Type &rhs)
+        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
         {
             return XMVector3EqualInt(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
         }
 
-        static inline bool Greater(const Type &lhs, const Type &rhs)
+        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
             return XMVector3Greater(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
         }
 
-        static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3GreaterOrEqual(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
         }
 
-        static inline XMVECTOR Length(const Type &vec) noexcept
+        static __forceinline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector3Length(XMLoadUInt3(&vec));
         }
 
-        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        static __forceinline XMVECTOR LengthSq(const Type &vec) noexcept
         {
             return XMVector3LengthSq(XMLoadUInt3(&vec));
         }
 
-        static inline bool Less(const Type &lhs, const Type &rhs)
+        static __forceinline bool Less(const Type &lhs, const Type &rhs)
         {
             return XMVector3Less(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
         }
 
-        static inline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3LessOrEqual(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
         }
 
         template <class V>
-        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1884,41 +1884,41 @@ namespace
             }
         }
 
-        static inline bool NotEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector3NotEqualInt(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
         }
 
-        static inline XMVECTOR Normalize(const Type &vec) noexcept
+        static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
         {
             return XMVector3Normalize(XMLoadUInt3(&vec));
         }
 
-        static inline XMVECTOR Orthogonal(const Type &vec) noexcept
+        static __forceinline XMVECTOR Orthogonal(const Type &vec) noexcept
         {
             return XMVector3Orthogonal(XMLoadUInt3(&vec));
         }
 
-        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const Type &vec) noexcept
         {
             return XMVector3ReciprocalLength(XMLoadUInt3(&vec));
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector3Reflect(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
             }
             else if (isXMVector) {
-                return XMVector3Reflect(XMLoadUInt3(&vec1), std::forward<V2>(vec2));
+                return XMVector3Reflect(XMLoadUInt3(&vec1), std::forward<V>(vec2));
             }
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1931,7 +1931,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1944,34 +1944,34 @@ namespace
         }
 
         template <class M>
-        static inline XMVECTOR Transform(const Type &vec, const M &mat);
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector3Transform(XMLoadUInt3(&vec), mat);
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1983,7 +1983,7 @@ namespace
         typedef ::DirectX::XMUINT4 Type;
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1996,7 +1996,7 @@ namespace
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&vec1, V2 &&vec2) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2009,7 +2009,7 @@ namespace
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, V2 &&min, V3 &&max) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2021,13 +2021,13 @@ namespace
             }
         }
 
-        static inline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
+        static __forceinline XMVECTOR ClampLength(const Type &vec, float min, float max) noexcept
         {
             return XMVector4ClampLength(XMLoadUInt4(&vec), min, max);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR CrossProduct(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR CrossProduct(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2040,7 +2040,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR DotProduct(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2053,7 +2053,7 @@ namespace
         }
 
         template <class V>
-        static inline bool InBounds(const Type &vec1, V &&vec2) noexcept
+        static __forceinline bool InBounds(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2065,43 +2065,43 @@ namespace
             }
         }
 
-        static inline bool Equal(const Type &lhs, const Type &rhs)
+        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
         {
             return XMVector2EqualInt(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
         }
 
-        static inline bool Greater(const Type &lhs, const Type &rhs)
+        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
             return XMVector2Greater(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
         }
 
-        static inline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4GreaterOrEqual(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
         }
 
-        static inline XMVECTOR Length(const Type &vec) noexcept
+        static __forceinline XMVECTOR Length(const Type &vec) noexcept
         {
             return XMVector4Length(XMLoadUInt4(&vec));
         }
 
-        static inline XMVECTOR LengthSq(const Type &vec) noexcept
+        static __forceinline XMVECTOR LengthSq(const Type &vec) noexcept
         {
             return XMVector4LengthSq(XMLoadUInt4(&vec));
         }
 
-        static inline bool Less(const Type &lhs, const Type &rhs)
+        static __forceinline bool Less(const Type &lhs, const Type &rhs)
         {
             return XMVector4Less(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
         }
 
-        static inline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4LessOrEqual(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
         }
 
         template <class V>
-        static inline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const Type &vec1, const Type &vec2, V &&vec3) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2113,41 +2113,41 @@ namespace
             }
         }
 
-        static inline bool NotEqual(const Type &lhs, const Type &rhs)
+        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
         {
             return XMVector4NotEqualInt(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
         }
 
-        static inline XMVECTOR Normalize(const Type &vec) noexcept
+        static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
         {
             return XMVector4Normalize(XMLoadUInt4(&vec));
         }
 
-        static inline XMVECTOR Orthogonal(const Type &vec) noexcept
+        static __forceinline XMVECTOR Orthogonal(const Type &vec) noexcept
         {
             return XMVector4Orthogonal(XMLoadUInt4(&vec));
         }
 
-        static inline XMVECTOR ReciprocalLength(const Type &vec) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const Type &vec) noexcept
         {
             return XMVector4ReciprocalLength(XMLoadUInt4(&vec));
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&vec1, V2 &&vec2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const Type &vec1, V &&vec2) noexcept
         {
-            MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
             if constexpr (isSameType) {
                 return XMVector4Reflect(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
             }
             else if (isXMVector) {
-                return XMVector4Reflect(XMLoadUInt4(&vec1), std::forward<V2>(vec2));
+                return XMVector4Reflect(XMLoadUInt4(&vec1), std::forward<V>(vec2));
             }
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V2 &&vec2, V3 &&vec3) noexcept
         {
             MATCH_TYPE_2(V2, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2160,7 +2160,7 @@ namespace
         }
 
         template <class V>
-        static inline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
+        static __forceinline XMVECTOR Refract(const Type &vec1, V &&vec2, float index) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2173,22 +2173,22 @@ namespace
         }
 
         template <class M>
-        static inline XMVECTOR Transform(const Type &vec, const M &mat);
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
 
         template <>
-        static inline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
         {
             return XMVector4Transform(XMLoadUInt4(&vec), mat);
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
         {
             return XMVector4Transform(XMLoadUInt4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static inline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector4Transform(XMLoadUInt4(&vec), XMLoadFloat4x4(&mat));
         }
@@ -2315,32 +2315,32 @@ namespace
     template <>
     struct Vector_Comparator<XMINT2>
     {
-        static inline bool Less(const XMINT2 &v1, const XMINT2 &v2)
+        static __forceinline bool Less(const XMINT2 &v1, const XMINT2 &v2)
         {
             return Vector_Helper<int32_t,2>::Less(v1,v2);
         }
 
-        static inline bool LessOrEqual(const XMINT2 &v1, const XMINT2 &v2)
+        static __forceinline bool LessOrEqual(const XMINT2 &v1, const XMINT2 &v2)
         {
             return Vector_Helper<int32_t,2>::LessOrEqual(v1,v2);
         }
 
-        static inline bool Greater(const XMINT2 &v1, const XMINT2 &v2)
+        static __forceinline bool Greater(const XMINT2 &v1, const XMINT2 &v2)
         {
             return Vector_Helper<int32_t,2>::Greater(v1,v2);
         }
 
-        static inline bool GreaterOrEqual(const XMINT2 &v1, const XMINT2 &v2)
+        static __forceinline bool GreaterOrEqual(const XMINT2 &v1, const XMINT2 &v2)
         {
             return Vector_Helper<int32_t,2>::GreaterOrEqual(v1,v2);
         }
 
-        static inline bool Equal(const XMINT2 &v1, const XMINT2 &v2)
+        static __forceinline bool Equal(const XMINT2 &v1, const XMINT2 &v2)
         {
             return Vector_Helper<int32_t,2>::Equal(v1,v2);
         }
 
-        static inline bool NotEqual(const XMINT2 &v1, const XMINT2 &v2)
+        static __forceinline bool NotEqual(const XMINT2 &v1, const XMINT2 &v2)
         {
             return Vector_Helper<int32_t,2>::NotEqual(v1,v2);
         }
@@ -2349,32 +2349,32 @@ namespace
     template <>
     struct Vector_Comparator<XMINT3>
     {
-        static inline bool Less(const XMINT3 &v1, const XMINT3 &v2)
+        static __forceinline bool Less(const XMINT3 &v1, const XMINT3 &v2)
         {
             return Vector_Helper<int32_t,3>::Less(v1,v2);
         }
 
-        static inline bool LessOrEqual(const XMINT3 &v1, const XMINT3 &v2)
+        static __forceinline bool LessOrEqual(const XMINT3 &v1, const XMINT3 &v2)
         {
             return Vector_Helper<int32_t,3>::LessOrEqual(v1,v2);
         }
 
-        static inline bool Greater(const XMINT3 &v1, const XMINT3 &v2)
+        static __forceinline bool Greater(const XMINT3 &v1, const XMINT3 &v2)
         {
             return Vector_Helper<int32_t,3>::Greater(v1,v2);
         }
 
-        static inline bool GreaterOrEqual(const XMINT3 &v1, const XMINT3 &v2)
+        static __forceinline bool GreaterOrEqual(const XMINT3 &v1, const XMINT3 &v2)
         {
             return Vector_Helper<int32_t,3>::GreaterOrEqual(v1,v2);
         }
 
-        static inline bool Equal(const XMINT3 &v1, const XMINT3 &v2)
+        static __forceinline bool Equal(const XMINT3 &v1, const XMINT3 &v2)
         {
             return Vector_Helper<int32_t,3>::Equal(v1,v2);
         }
 
-        static inline bool NotEqual(const XMINT3 &v1, const XMINT3 &v2)
+        static __forceinline bool NotEqual(const XMINT3 &v1, const XMINT3 &v2)
         {
             return Vector_Helper<int32_t,3>::NotEqual(v1,v2);
         }
@@ -2383,32 +2383,32 @@ namespace
     template <>
     struct Vector_Comparator<XMINT4>
     {
-        static inline bool Less(const XMINT4 &v1, const XMINT4 &v2)
+        static __forceinline bool Less(const XMINT4 &v1, const XMINT4 &v2)
         {
             return Vector_Helper<int32_t,4>::Less(v1,v2);
         }
 
-        static inline bool LessOrEqual(const XMINT4 &v1, const XMINT4 &v2)
+        static __forceinline bool LessOrEqual(const XMINT4 &v1, const XMINT4 &v2)
         {
             return Vector_Helper<int32_t,4>::LessOrEqual(v1,v2);
         }
 
-        static inline bool Greater(const XMINT4 &v1, const XMINT4 &v2)
+        static __forceinline bool Greater(const XMINT4 &v1, const XMINT4 &v2)
         {
             return Vector_Helper<int32_t,4>::Greater(v1,v2);
         }
 
-        static inline bool GreaterOrEqual(const XMINT4 &v1, const XMINT4 &v2)
+        static __forceinline bool GreaterOrEqual(const XMINT4 &v1, const XMINT4 &v2)
         {
             return Vector_Helper<int32_t,4>::GreaterOrEqual(v1,v2);
         }
 
-        static inline bool Equal(const XMINT4 &v1, const XMINT4 &v2)
+        static __forceinline bool Equal(const XMINT4 &v1, const XMINT4 &v2)
         {
             return Vector_Helper<int32_t,4>::Equal(v1,v2);
         }
 
-        static inline bool NotEqual(const XMINT4 &v1, const XMINT4 &v2)
+        static __forceinline bool NotEqual(const XMINT4 &v1, const XMINT4 &v2)
         {
             return Vector_Helper<int32_t,4>::NotEqual(v1,v2);
         }
@@ -2417,32 +2417,32 @@ namespace
     template <>
     struct Vector_Comparator<XMFLOAT2>
     {
-        static inline bool Less(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        static __forceinline bool Less(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
             return Vector_Helper<float_t,2>::Less(v1,v2);
         }
 
-        static inline bool LessOrEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        static __forceinline bool LessOrEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
             return Vector_Helper<float_t,2>::LessOrEqual(v1,v2);
         }
 
-        static inline bool Greater(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        static __forceinline bool Greater(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
             return Vector_Helper<float_t,2>::Greater(v1,v2);
         }
 
-        static inline bool GreaterOrEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        static __forceinline bool GreaterOrEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
             return Vector_Helper<float_t,2>::GreaterOrEqual(v1,v2);
         }
 
-        static inline bool Equal(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        static __forceinline bool Equal(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
             return Vector_Helper<float_t,2>::Equal(v1,v2);
         }
 
-        static inline bool NotEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        static __forceinline bool NotEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
             return Vector_Helper<float_t,2>::NotEqual(v1,v2);
         }
@@ -2451,32 +2451,32 @@ namespace
     template <>
     struct Vector_Comparator<XMFLOAT3>
     {
-        static inline bool Less(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        static __forceinline bool Less(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
             return Vector_Helper<float_t,3>::Less(v1,v2);
         }
 
-        static inline bool LessOrEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        static __forceinline bool LessOrEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
             return Vector_Helper<float_t,3>::LessOrEqual(v1,v2);
         }
 
-        static inline bool Greater(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        static __forceinline bool Greater(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
             return Vector_Helper<float_t,3>::Greater(v1,v2);
         }
 
-        static inline bool GreaterOrEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        static __forceinline bool GreaterOrEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
             return Vector_Helper<float_t,3>::GreaterOrEqual(v1,v2);
         }
 
-        static inline bool Equal(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        static __forceinline bool Equal(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
             return Vector_Helper<float_t,3>::Equal(v1,v2);
         }
 
-        static inline bool NotEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        static __forceinline bool NotEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
             return Vector_Helper<float_t,3>::NotEqual(v1,v2);
         }
@@ -2485,32 +2485,32 @@ namespace
     template <>
     struct Vector_Comparator<XMFLOAT4>
     {
-        static inline bool Less(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        static __forceinline bool Less(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
             return Vector_Helper<float_t,4>::Less(v1,v2);
         }
 
-        static inline bool LessOrEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        static __forceinline bool LessOrEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
             return Vector_Helper<float_t,4>::LessOrEqual(v1,v2);
         }
 
-        static inline bool Greater(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        static __forceinline bool Greater(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
             return Vector_Helper<float_t,4>::Greater(v1,v2);
         }
 
-        static inline bool GreaterOrEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        static __forceinline bool GreaterOrEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
             return Vector_Helper<float_t,4>::GreaterOrEqual(v1,v2);
         }
 
-        static inline bool Equal(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        static __forceinline bool Equal(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
             return Vector_Helper<float_t,4>::Equal(v1,v2);
         }
 
-        static inline bool NotEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        static __forceinline bool NotEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
             return Vector_Helper<float_t,4>::NotEqual(v1,v2);
         }
@@ -2519,32 +2519,32 @@ namespace
     template <>
     struct Vector_Comparator<XMUINT2>
     {
-        static inline bool Less(const XMUINT2 &v1, const XMUINT2 &v2)
+        static __forceinline bool Less(const XMUINT2 &v1, const XMUINT2 &v2)
         {
             return Vector_Helper<uint32_t,2>::Less(v1,v2);
         }
 
-        static inline bool LessOrEqual(const XMUINT2 &v1, const XMUINT2 &v2)
+        static __forceinline bool LessOrEqual(const XMUINT2 &v1, const XMUINT2 &v2)
         {
             return Vector_Helper<uint32_t,2>::LessOrEqual(v1,v2);
         }
 
-        static inline bool Greater(const XMUINT2 &v1, const XMUINT2 &v2)
+        static __forceinline bool Greater(const XMUINT2 &v1, const XMUINT2 &v2)
         {
             return Vector_Helper<uint32_t,2>::Greater(v1,v2);
         }
 
-        static inline bool GreaterOrEqual(const XMUINT2 &v1, const XMUINT2 &v2)
+        static __forceinline bool GreaterOrEqual(const XMUINT2 &v1, const XMUINT2 &v2)
         {
             return Vector_Helper<uint32_t,2>::GreaterOrEqual(v1,v2);
         }
 
-        static inline bool Equal(const XMUINT2 &v1, const XMUINT2 &v2)
+        static __forceinline bool Equal(const XMUINT2 &v1, const XMUINT2 &v2)
         {
             return Vector_Helper<uint32_t,2>::Equal(v1,v2);
         }
 
-        static inline bool NotEqual(const XMUINT2 &v1, const XMUINT2 &v2)
+        static __forceinline bool NotEqual(const XMUINT2 &v1, const XMUINT2 &v2)
         {
             return Vector_Helper<uint32_t,2>::NotEqual(v1,v2);
         }
@@ -2553,32 +2553,32 @@ namespace
     template <>
     struct Vector_Comparator<XMUINT3>
     {
-        static inline bool Less(const XMUINT3 &v1, const XMUINT3 &v2)
+        static __forceinline bool Less(const XMUINT3 &v1, const XMUINT3 &v2)
         {
             return Vector_Helper<uint32_t,3>::Less(v1,v2);
         }
 
-        static inline bool LessOrEqual(const XMUINT3 &v1, const XMUINT3 &v2)
+        static __forceinline bool LessOrEqual(const XMUINT3 &v1, const XMUINT3 &v2)
         {
             return Vector_Helper<uint32_t,3>::LessOrEqual(v1,v2);
         }
 
-        static inline bool Greater(const XMUINT3 &v1, const XMUINT3 &v2)
+        static __forceinline bool Greater(const XMUINT3 &v1, const XMUINT3 &v2)
         {
             return Vector_Helper<uint32_t,3>::Greater(v1,v2);
         }
 
-        static inline bool GreaterOrEqual(const XMUINT3 &v1, const XMUINT3 &v2)
+        static __forceinline bool GreaterOrEqual(const XMUINT3 &v1, const XMUINT3 &v2)
         {
             return Vector_Helper<uint32_t,3>::GreaterOrEqual(v1,v2);
         }
 
-        static inline bool Equal(const XMUINT3 &v1, const XMUINT3 &v2)
+        static __forceinline bool Equal(const XMUINT3 &v1, const XMUINT3 &v2)
         {
             return Vector_Helper<uint32_t,3>::Equal(v1,v2);
         }
 
-        static inline bool NotEqual(const XMUINT3 &v1, const XMUINT3 &v2)
+        static __forceinline bool NotEqual(const XMUINT3 &v1, const XMUINT3 &v2)
         {
             return Vector_Helper<uint32_t,3>::NotEqual(v1,v2);
         }
@@ -2587,32 +2587,32 @@ namespace
     template <>
     struct Vector_Comparator<XMUINT4>
     {
-        static inline bool Less(const XMUINT4 &v1, const XMUINT4 &v2)
+        static __forceinline bool Less(const XMUINT4 &v1, const XMUINT4 &v2)
         {
             return Vector_Helper<uint32_t,4>::Less(v1,v2);
         }
 
-        static inline bool LessOrEqual(const XMUINT4 &v1, const XMUINT4 &v2)
+        static __forceinline bool LessOrEqual(const XMUINT4 &v1, const XMUINT4 &v2)
         {
             return Vector_Helper<uint32_t,4>::LessOrEqual(v1,v2);
         }
 
-        static inline bool Greater(const XMUINT4 &v1, const XMUINT4 &v2)
+        static __forceinline bool Greater(const XMUINT4 &v1, const XMUINT4 &v2)
         {
             return Vector_Helper<uint32_t,4>::Greater(v1,v2);
         }
 
-        static inline bool GreaterOrEqual(const XMUINT4 &v1, const XMUINT4 &v2)
+        static __forceinline bool GreaterOrEqual(const XMUINT4 &v1, const XMUINT4 &v2)
         {
             return Vector_Helper<uint32_t,4>::GreaterOrEqual(v1,v2);
         }
 
-        static inline bool Equal(const XMUINT4 &v1, const XMUINT4 &v2)
+        static __forceinline bool Equal(const XMUINT4 &v1, const XMUINT4 &v2)
         {
             return Vector_Helper<uint32_t,4>::Equal(v1,v2);
         }
 
-        static inline bool NotEqual(const XMUINT4 &v1, const XMUINT4 &v2)
+        static __forceinline bool NotEqual(const XMUINT4 &v1, const XMUINT4 &v2)
         {
             return Vector_Helper<uint32_t,4>::NotEqual(v1,v2);
         }
@@ -2628,80 +2628,80 @@ namespace
     struct Vector_Geometry<XMINT2>
     {
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,2>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR ClampLength(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<int32_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const XMINT2 &v1, V &&v2)
+        static __forceinline XMVECTOR CrossProduct(const XMINT2 &v1, V &&v2)
         {
             return Vector_Helper<int32_t,2>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const XMINT2 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR DotProduct(const XMINT2 &v1, V &&v2) noexcept
         {
             return Vector_Helper<int32_t,2>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline bool InBounds(const XMINT2 &v1, V &&v2) noexcept
+        static __forceinline bool InBounds(const XMINT2 &v1, V &&v2) noexcept
         {
             return Vector_Helper<int32_t,2>::InBounds(v1, std::forward<V>(v2));
         }
 
-        static inline XMVECTOR Length(const XMINT2 &v) noexcept
+        static __forceinline XMVECTOR Length(const XMINT2 &v) noexcept
         {
             return Vector_Helper<int32_t,2>::Length(v);
         }
 
-        static inline XMVECTOR LengthSq(const XMINT2 &v) noexcept
+        static __forceinline XMVECTOR LengthSq(const XMINT2 &v) noexcept
         {
             return Vector_Helper<int32_t,2>::LengthSq(v);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR LinePointDistance(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<int32_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
-        static inline XMVECTOR Normalize(const XMINT2 &v) noexcept
+        static __forceinline XMVECTOR Normalize(const XMINT2 &v) noexcept
         {
             return Vector_Helper<int32_t,2>::Normalize(v);
         }
 
-        static inline XMVECTOR Orthogonal(const XMINT2 &v) noexcept
+        static __forceinline XMVECTOR Orthogonal(const XMINT2 &v) noexcept
         {
             return Vector_Helper<int32_t,2>::Orthogonal(v);
         }
 
-        static inline XMVECTOR ReciprocalLength(const XMINT2 &v) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const XMINT2 &v) noexcept
         {
             return Vector_Helper<int32_t,2>::ReciprocalLength(v);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const XMINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,2>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR Refract(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<int32_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
@@ -2711,80 +2711,80 @@ namespace
     struct Vector_Geometry<XMINT3>
     {
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,3>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR ClampLength(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<int32_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const XMINT3 &v1, V &&v2)
+        static __forceinline XMVECTOR CrossProduct(const XMINT3 &v1, V &&v2)
         {
             return Vector_Helper<int32_t,3>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const XMINT3 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR DotProduct(const XMINT3 &v1, V &&v2) noexcept
         {
             return Vector_Helper<int32_t,3>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline bool InBounds(const XMINT3 &v1, V &&v2) noexcept
+        static __forceinline bool InBounds(const XMINT3 &v1, V &&v2) noexcept
         {
             return Vector_Helper<int32_t,3>::InBounds(v1, std::forward<V>(v2));
         }
 
-        static inline XMVECTOR Length(const XMINT3 &v) noexcept
+        static __forceinline XMVECTOR Length(const XMINT3 &v) noexcept
         {
             return Vector_Helper<int32_t,3>::Length(v);
         }
 
-        static inline XMVECTOR LengthSq(const XMINT3 &v) noexcept
+        static __forceinline XMVECTOR LengthSq(const XMINT3 &v) noexcept
         {
             return Vector_Helper<int32_t,3>::LengthSq(v);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR LinePointDistance(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<int32_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
-        static inline XMVECTOR Normalize(const XMINT3 &v) noexcept
+        static __forceinline XMVECTOR Normalize(const XMINT3 &v) noexcept
         {
             return Vector_Helper<int32_t,3>::Normalize(v);
         }
 
-        static inline XMVECTOR Orthogonal(const XMINT3 &v) noexcept
+        static __forceinline XMVECTOR Orthogonal(const XMINT3 &v) noexcept
         {
             return Vector_Helper<int32_t,3>::Orthogonal(v);
         }
 
-        static inline XMVECTOR ReciprocalLength(const XMINT3 &v) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const XMINT3 &v) noexcept
         {
             return Vector_Helper<int32_t,3>::ReciprocalLength(v);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const XMINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,3>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR Refract(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<int32_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
@@ -2794,80 +2794,80 @@ namespace
     struct Vector_Geometry<XMINT4>
     {
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,4>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<int32_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR ClampLength(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<int32_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR CrossProduct(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR CrossProduct(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<int32_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const XMINT4 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR DotProduct(const XMINT4 &v1, V &&v2) noexcept
         {
             return Vector_Helper<int32_t,4>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline bool InBounds(const XMINT4 &v1, V &&v2) noexcept
+        static __forceinline bool InBounds(const XMINT4 &v1, V &&v2) noexcept
         {
             return Vector_Helper<int32_t,4>::InBounds(v1, std::forward<V>(v2));
         }
 
-        static inline XMVECTOR Length(const XMINT4 &v) noexcept
+        static __forceinline XMVECTOR Length(const XMINT4 &v) noexcept
         {
             return Vector_Helper<int32_t,4>::Length(v);
         }
 
-        static inline XMVECTOR LengthSq(const XMINT4 &v) noexcept
+        static __forceinline XMVECTOR LengthSq(const XMINT4 &v) noexcept
         {
             return Vector_Helper<int32_t,4>::LengthSq(v);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR LinePointDistance(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<int32_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
-        static inline XMVECTOR Normalize(const XMINT4 &v) noexcept
+        static __forceinline XMVECTOR Normalize(const XMINT4 &v) noexcept
         {
             return Vector_Helper<int32_t,4>::Normalize(v);
         }
 
-        static inline XMVECTOR Orthogonal(const XMINT4 &v) noexcept
+        static __forceinline XMVECTOR Orthogonal(const XMINT4 &v) noexcept
         {
             return Vector_Helper<int32_t,4>::Orthogonal(v);
         }
 
-        static inline XMVECTOR ReciprocalLength(const XMINT4 &v) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const XMINT4 &v) noexcept
         {
             return Vector_Helper<int32_t,4>::ReciprocalLength(v);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const XMINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<int32_t,4>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR Refract(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<int32_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
@@ -2877,80 +2877,80 @@ namespace
     struct Vector_Geometry<XMFLOAT2>
     {
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,2>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR ClampLength(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<float_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const XMFLOAT2 &v1, V &&v2)
+        static __forceinline XMVECTOR CrossProduct(const XMFLOAT2 &v1, V &&v2)
         {
             return Vector_Helper<float_t,2>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const XMFLOAT2 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR DotProduct(const XMFLOAT2 &v1, V &&v2) noexcept
         {
             return Vector_Helper<float_t,2>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline bool InBounds(const XMFLOAT2 &v1, V &&v2) noexcept
+        static __forceinline bool InBounds(const XMFLOAT2 &v1, V &&v2) noexcept
         {
             return Vector_Helper<float_t,2>::InBounds(v1, std::forward<V>(v2));
         }
 
-        static inline XMVECTOR Length(const XMFLOAT2 &v) noexcept
+        static __forceinline XMVECTOR Length(const XMFLOAT2 &v) noexcept
         {
             return Vector_Helper<float_t,2>::Length(v);
         }
 
-        static inline XMVECTOR LengthSq(const XMFLOAT2 &v) noexcept
+        static __forceinline XMVECTOR LengthSq(const XMFLOAT2 &v) noexcept
         {
             return Vector_Helper<float_t,2>::LengthSq(v);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR LinePointDistance(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<float_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
-        static inline XMVECTOR Normalize(const XMFLOAT2 &v) noexcept
+        static __forceinline XMVECTOR Normalize(const XMFLOAT2 &v) noexcept
         {
             return Vector_Helper<float_t,2>::Normalize(v);
         }
 
-        static inline XMVECTOR Orthogonal(const XMFLOAT2 &v) noexcept
+        static __forceinline XMVECTOR Orthogonal(const XMFLOAT2 &v) noexcept
         {
             return Vector_Helper<float_t,2>::Orthogonal(v);
         }
 
-        static inline XMVECTOR ReciprocalLength(const XMFLOAT2 &v) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const XMFLOAT2 &v) noexcept
         {
             return Vector_Helper<float_t,2>::ReciprocalLength(v);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,2>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR Refract(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<float_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
@@ -2960,80 +2960,80 @@ namespace
     struct Vector_Geometry<XMFLOAT3>
     {
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,3>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR ClampLength(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<float_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const XMFLOAT3 &v1, V &&v2)
+        static __forceinline XMVECTOR CrossProduct(const XMFLOAT3 &v1, V &&v2)
         {
             return Vector_Helper<float_t,3>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const XMFLOAT3 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR DotProduct(const XMFLOAT3 &v1, V &&v2) noexcept
         {
             return Vector_Helper<float_t,3>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline bool InBounds(const XMFLOAT3 &v1, V &&v2) noexcept
+        static __forceinline bool InBounds(const XMFLOAT3 &v1, V &&v2) noexcept
         {
             return Vector_Helper<float_t,3>::InBounds(v1, std::forward<V>(v2));
         }
 
-        static inline XMVECTOR Length(const XMFLOAT3 &v) noexcept
+        static __forceinline XMVECTOR Length(const XMFLOAT3 &v) noexcept
         {
             return Vector_Helper<float_t,3>::Length(v);
         }
 
-        static inline XMVECTOR LengthSq(const XMFLOAT3 &v) noexcept
+        static __forceinline XMVECTOR LengthSq(const XMFLOAT3 &v) noexcept
         {
             return Vector_Helper<float_t,3>::LengthSq(v);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR LinePointDistance(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<float_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
-        static inline XMVECTOR Normalize(const XMFLOAT3 &v) noexcept
+        static __forceinline XMVECTOR Normalize(const XMFLOAT3 &v) noexcept
         {
             return Vector_Helper<float_t,3>::Normalize(v);
         }
 
-        static inline XMVECTOR Orthogonal(const XMFLOAT3 &v) noexcept
+        static __forceinline XMVECTOR Orthogonal(const XMFLOAT3 &v) noexcept
         {
             return Vector_Helper<float_t,3>::Orthogonal(v);
         }
 
-        static inline XMVECTOR ReciprocalLength(const XMFLOAT3 &v) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const XMFLOAT3 &v) noexcept
         {
             return Vector_Helper<float_t,3>::ReciprocalLength(v);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,3>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR Refract(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<float_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
@@ -3043,82 +3043,82 @@ namespace
     struct Vector_Geometry<XMFLOAT4>
     {
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,4>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<float_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR ClampLength(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<float_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR CrossProduct(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR CrossProduct(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<float_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const XMFLOAT4 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR DotProduct(const XMFLOAT4 &v1, V &&v2) noexcept
         {
             return Vector_Helper<float_t,4>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline bool InBounds(const XMFLOAT4 &v1, V &&v2) noexcept
+        static __forceinline bool InBounds(const XMFLOAT4 &v1, V &&v2) noexcept
         {
             return Vector_Helper<float_t,4>::InBounds(v1, std::forward<V>(v2));
         }
 
-        static inline XMVECTOR Length(const XMFLOAT4 &v) noexcept
+        static __forceinline XMVECTOR Length(const XMFLOAT4 &v) noexcept
         {
             return Vector_Helper<float_t,4>::Length(v);
         }
 
-        static inline XMVECTOR LengthSq(const XMFLOAT4 &v) noexcept
+        static __forceinline XMVECTOR LengthSq(const XMFLOAT4 &v) noexcept
         {
             return Vector_Helper<float_t,4>::LengthSq(v);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR LinePointDistance(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<float_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
-        static inline XMVECTOR Normalize(const XMFLOAT4 &v) noexcept
+        static __forceinline XMVECTOR Normalize(const XMFLOAT4 &v) noexcept
         {
             return Vector_Helper<float_t,4>::Normalize(v);
         }
 
         template <class V>
-        static inline XMVECTOR Orthogonal(const XMFLOAT4 &v) noexcept
+        static __forceinline XMVECTOR Orthogonal(const XMFLOAT4 &v) noexcept
         {
             return Vector_Helper<float_t,4>::Orthogonal(v);
         }
 
-        static inline XMVECTOR ReciprocalLength(const XMFLOAT4 &v) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const XMFLOAT4 &v) noexcept
         {
             return Vector_Helper<float_t,4>::ReciprocalLength(v);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<float_t,4>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR Refract(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<float_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
@@ -3128,80 +3128,80 @@ namespace
     struct Vector_Geometry<XMUINT2>
     {
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,2>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,2>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR ClampLength(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const XMUINT2 &v1, V &&v2)
+        static __forceinline XMVECTOR CrossProduct(const XMUINT2 &v1, V &&v2)
         {
             return Vector_Helper<uint32_t,2>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const XMUINT2 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR DotProduct(const XMUINT2 &v1, V &&v2) noexcept
         {
             return Vector_Helper<uint32_t,2>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline bool InBounds(const XMUINT2 &v1, V &&v2) noexcept
+        static __forceinline bool InBounds(const XMUINT2 &v1, V &&v2) noexcept
         {
             return Vector_Helper<uint32_t,2>::InBounds(v1, std::forward<V>(v2));
         }
 
-        static inline XMVECTOR Length(const XMUINT2 &v) noexcept
+        static __forceinline XMVECTOR Length(const XMUINT2 &v) noexcept
         {
             return Vector_Helper<uint32_t,2>::Length(v);
         }
 
-        static inline XMVECTOR LengthSq(const XMUINT2 &v) noexcept
+        static __forceinline XMVECTOR LengthSq(const XMUINT2 &v) noexcept
         {
             return Vector_Helper<uint32_t,2>::LengthSq(v);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR LinePointDistance(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
-        static inline XMVECTOR Normalize(const XMUINT2 &v) noexcept
+        static __forceinline XMVECTOR Normalize(const XMUINT2 &v) noexcept
         {
             return Vector_Helper<uint32_t,2>::Normalize(v);
         }
 
-        static inline XMVECTOR Orthogonal(const XMUINT2 &v) noexcept
+        static __forceinline XMVECTOR Orthogonal(const XMUINT2 &v) noexcept
         {
             return Vector_Helper<uint32_t,2>::Orthogonal(v);
         }
 
-        static inline XMVECTOR ReciprocalLength(const XMUINT2 &v) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const XMUINT2 &v) noexcept
         {
             return Vector_Helper<uint32_t,2>::ReciprocalLength(v);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,2>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,2>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR Refract(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
@@ -3211,80 +3211,80 @@ namespace
     struct Vector_Geometry<XMUINT3>
     {
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,3>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,3>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR ClampLength(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
-        static inline XMVECTOR CrossProduct(const XMUINT3 &v1, V &&v2)
+        static __forceinline XMVECTOR CrossProduct(const XMUINT3 &v1, V &&v2)
         {
             return Vector_Helper<uint32_t,3>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const XMUINT3 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR DotProduct(const XMUINT3 &v1, V &&v2) noexcept
         {
             return Vector_Helper<uint32_t,3>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline bool InBounds(const XMUINT3 &v1, V &&v2) noexcept
+        static __forceinline bool InBounds(const XMUINT3 &v1, V &&v2) noexcept
         {
             return Vector_Helper<uint32_t,3>::InBounds(v1, std::forward<V>(v2));
         }
 
-        static inline XMVECTOR Length(const XMUINT3 &v) noexcept
+        static __forceinline XMVECTOR Length(const XMUINT3 &v) noexcept
         {
             return Vector_Helper<uint32_t,3>::Length(v);
         }
 
-        static inline XMVECTOR LengthSq(const XMUINT3 &v) noexcept
+        static __forceinline XMVECTOR LengthSq(const XMUINT3 &v) noexcept
         {
             return Vector_Helper<uint32_t,3>::LengthSq(v);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR LinePointDistance(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
-        static inline XMVECTOR Normalize(const XMUINT3 &v) noexcept
+        static __forceinline XMVECTOR Normalize(const XMUINT3 &v) noexcept
         {
             return Vector_Helper<uint32_t,3>::Normalize(v);
         }
 
-        static inline XMVECTOR Orthogonal(const XMUINT3 &v) noexcept
+        static __forceinline XMVECTOR Orthogonal(const XMUINT3 &v) noexcept
         {
             return Vector_Helper<uint32_t,3>::Orthogonal(v);
         }
 
-        static inline XMVECTOR ReciprocalLength(const XMUINT3 &v) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const XMUINT3 &v) noexcept
         {
             return Vector_Helper<uint32_t,3>::ReciprocalLength(v);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,3>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,3>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR Refract(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
@@ -3294,80 +3294,80 @@ namespace
     struct Vector_Geometry<XMUINT4>
     {
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenNormals(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,4>::AngleBetweenNormals(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V1, class V2>
-        static inline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
+        static __forceinline XMVECTOR AngleBetweenVectors(V1 &&v1, V2 &&v2) noexcept
         {
             return Vector_Helper<uint32_t,4>::AngleBetweenVectors(std::forward<V1>(v1), std::forward<V2>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR ClampLength(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR ClampLength(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR CrossProduct(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR CrossProduct(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
-        static inline XMVECTOR DotProduct(const XMUINT4 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR DotProduct(const XMUINT4 &v1, V &&v2) noexcept
         {
             return Vector_Helper<uint32_t,4>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static inline bool InBounds(const XMUINT4 &v1, V &&v2) noexcept
+        static __forceinline bool InBounds(const XMUINT4 &v1, V &&v2) noexcept
         {
             return Vector_Helper<uint32_t,4>::InBounds(v1, std::forward<V>(v2));
         }
 
-        static inline XMVECTOR Length(const XMUINT4 &v) noexcept
+        static __forceinline XMVECTOR Length(const XMUINT4 &v) noexcept
         {
             return Vector_Helper<uint32_t,4>::Length(v);
         }
 
-        static inline XMVECTOR LengthSq(const XMUINT4 &v) noexcept
+        static __forceinline XMVECTOR LengthSq(const XMUINT4 &v) noexcept
         {
             return Vector_Helper<uint32_t,4>::LengthSq(v);
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR LinePointDistance(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR LinePointDistance(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
-        static inline XMVECTOR Normalize(const XMUINT4 &v) noexcept
+        static __forceinline XMVECTOR Normalize(const XMUINT4 &v) noexcept
         {
             return Vector_Helper<uint32_t,4>::Normalize(v);
         }
 
-        static inline XMVECTOR Orthogonal(const XMUINT4 &v) noexcept
+        static __forceinline XMVECTOR Orthogonal(const XMUINT4 &v) noexcept
         {
             return Vector_Helper<uint32_t,4>::Orthogonal(v);
         }
 
-        static inline XMVECTOR ReciprocalLength(const XMUINT4 &v) noexcept
+        static __forceinline XMVECTOR ReciprocalLength(const XMUINT4 &v) noexcept
         {
             return Vector_Helper<uint32_t,4>::ReciprocalLength(v);
         }
 
-        template <class V1, class V2>
-        static inline XMVECTOR Reflect(V1 &&v1, V2 &&v2) noexcept
+        template <class V>
+        static __forceinline XMVECTOR Reflect(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,4>::Reflect(std::forward<V1>(v1), std::forward<V2>(v2));
+            return Vector_Helper<uint32_t,4>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
-        static inline XMVECTOR Refract(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
+        static __forceinline XMVECTOR Refract(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
             return Vector_Helper<uint32_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
