@@ -8,47 +8,60 @@
 class VectorUnitTest : public testing::Test {
 };
 
+template <size_t length>
+using VectorVariants = std::variant<Vector<int32_t, length>, Vector<float_t, length>, Vector<uint32_t, length>>;
+
+
 TEST_F(VectorUnitTest, TransformTest)
 {
-    using VectorVariant = std::variant<Vector<int32_t,3>, Vector<float_t,3>, Vector<uint32_t,3>>;
-
-    const VectorVariant vectors[] = {
-        Vector<int32_t,3>{ 7, 9, 5 },
-        Vector<float_t,3>{ 1.f, 2.f, 3.f },
-        Vector<uint32_t,3>{ 89u, 46u, 101u },
-    };
-
-    #ifndef __GL_MATH_LIBRARY
-    const std::variant<Matrix<float_t,3,3>> matrices[] = {
-        Matrix<int32_t,3,3>{ 21, -76, -8, 1, 0, 31, 91, 6, 4 },
-        Matrix<float_t,3,3>{ 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f },
-        Matrix<uint32_t,3,3>{ 53u, 20u, 99u, 35u, 3u, 41u, 90u, 33u, 222u }
-    #else
-    const std::variant<Matrix<int32_t,3,3>, Matrix<float_t,3,3>, Matrix<uint32_t,3,3>> matrices[] = {
-        Matrix<int32_t,3,3>{ 21, 1, 91, -76, 0, 6, -8, 31, 4 },
-        Matrix<float_t,3,3>{ 1.f, 4.f, 7.f, 2.f, 5.f, 8.f, 3.f, 6.f, 9.f },
-        Matrix<uint32_t,3,3>{ 53u, 35u, 90u, 20u, 3u, 33u, 99u, 41u, 222u }
-    #endif
-    };
-
-    const VectorVariant expected[] = {
-        Vector<int32_t,3>{ 611, -502, 243 },
-        Vector<float_t,3>{ 30.f, 36.f, 42.f },
-        Vector<uint32_t,3>{ 15417u, 5251u, 33119u }
-    };
-
-    for (unsigned i = 0; i < std::size(vectors); ++i)
     {
-        std::visit([](auto &&vector, auto &&matrix, auto &&expect)
-        {
-            const auto result = vector * matrix;
+        const auto vector = Vector<int32_t, 3>{ 7, 9, 5 };
+        const auto matrix =
+#ifndef __GL_MATH_LIBRARY
+            Matrix<int32_t, 3, 3>{ 21, -76, -8, 1, 0, 31, 91, 6, 4 };
+#else
+            Matrix<int32_t, 3, 3>{ 21, 1, 91, -76, 0, 6, -8, 31, 4 };
+#endif
+        const auto expected = Vector<int32_t, 3>{ 611, -502, 243 };
 
-            ASSERT_TRUE(std::equal(
-                            std::begin(result), std::end(result), std::begin(expect), std::end(expect)
-                        ));
-        },
-        vectors[i], matrices[i], expected[i]);
-    };
+        const auto result = vector * matrix;
+
+        ASSERT_TRUE(std::equal(
+            std::begin(result), std::end(result), std::begin(expected), std::end(expected)
+        ));
+    }
+    {
+        const auto vector = Vector<float_t, 3>{ 1.f, 2.f, 3.f };
+        const auto matrix =
+#ifndef __GL_MATH_LIBRARY
+            Matrix<float_t, 3, 3>{ 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f };
+#else
+            Matrix<float_t, 3, 3>{ 1.f, 4.f, 7.f, 2.f, 5.f, 8.f, 3.f, 6.f, 9.f };
+#endif
+        const auto expected = Vector<float_t, 3>{ 30.f, 36.f, 42.f };
+
+        const auto result = vector * matrix;
+
+        ASSERT_TRUE(std::equal(
+            std::begin(result), std::end(result), std::begin(expected), std::end(expected)
+        ));
+    }
+    {
+        const auto vector = Vector<uint32_t, 3>{ 89u, 46u, 101u };
+        const auto matrix =
+#ifndef __GL_MATH_LIBRARY
+            Matrix<uint32_t, 3, 3>{ 53u, 20u, 99u, 35u, 3u, 41u, 90u, 33u, 222u };
+#else
+            Matrix<uint32_t, 3, 3>{ 53u, 35u, 90u, 20u, 3u, 33u, 99u, 41u, 222u }
+#endif
+        const auto expected = Vector<uint32_t, 3>{ 15417u, 5251u, 33119u };
+
+        const auto result = vector * matrix;
+
+        ASSERT_TRUE(std::equal(
+            std::begin(result), std::end(result), std::begin(expected), std::end(expected)
+        ));
+    }
 }
 
 TEST_F(VectorUnitTest, AngleFunctionsTest)
@@ -63,7 +76,6 @@ TEST_F(VectorUnitTest, AngleFunctionsTest)
         ASSERT_NEAR(XMVectorGetX(angle), 0.53811252, 0.0001);
         ASSERT_NEAR(XMVectorGetX(pi_2_), 1.57079625, 0.0001);
     }
-
     {
         const auto vec1 = Vector<float_t, 3>{ 0.7f, 0.9f, 0.5f };
         const auto vec2 = Vector<float_t, 3>{ 0.1f, 0.2f, 0.3f };
@@ -78,18 +90,30 @@ TEST_F(VectorUnitTest, AngleFunctionsTest)
 
 TEST_F(VectorUnitTest, VectorGeometricFunctions)
 {
-    const Vector<float, 3> vec1{ 4.f, 3.f, 5.f };
+    const VectorVariants<3> args[] =
+    {
+        Vector<int32_t,3>{ 4, 3, 5 }, Vector<float_t,3>{ 4.f, 3.f, 5.f }, Vector<uint32_t,3>{ 4u, 3u, 5u }
+    };
 
-    // DotProduct
-    DotProduct(vec1, XMLoadFloat3(&vec1));
-    DotProduct(vec1, vec1);
+    for (auto &&variant : args)
+    {
+        std::visit([](auto &&vec1)
+        {
+            using VectorType = std::decay_t<decltype(vec1)>;
 
-    // ReciprocalLength
-    ASSERT_NEAR(XMVectorGetX(ReciprocalLength(vec1)), 1.f / XMVectorGetX(Length(vec1)), 0.000001);
+            // DotProduct
+            DotProduct(vec1, Normalize(vec1));
+            DotProduct(vec1, vec1);
 
-    // InBounds
-    ASSERT_TRUE(InBounds(vec1, Vector<float, 3> { 5.f, 10.f, 6.f }));
-    ASSERT_FALSE(InBounds(vec1, Vector<float, 3> { 1.f, 1.f, 1.f }));
+            // ReciprocalLength
+            ASSERT_NEAR(XMVectorGetX(ReciprocalLength(vec1)), 1.f / XMVectorGetX(Length(vec1)), 0.000001);
+
+            // InBounds
+            ASSERT_TRUE(InBounds(vec1, VectorType{ 5, 10, 6 }));
+            ASSERT_FALSE(InBounds(vec1, VectorType{ 1, 1, 1 }));
+        },
+        variant);
+    }
 }
 
 int main(int argc, char **argv) {
