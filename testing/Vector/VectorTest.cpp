@@ -88,7 +88,7 @@ TEST_F(VectorUnitTest, AngleFunctionsTest)
     }
 }
 
-TEST_F(VectorUnitTest, VectorGeometricFunctions)
+TEST_F(VectorUnitTest, VectorGeometryFunctions)
 {
     const VectorVariants<3> args[] =
     {
@@ -105,12 +105,23 @@ TEST_F(VectorUnitTest, VectorGeometricFunctions)
             DotProduct(vec1, Normalize(vec1));
             DotProduct(vec1, vec1);
 
+            // Length
+            ASSERT_NEAR(*std::begin(Length(vec1)),
+                // manually count the square root of each component of the vector in power of 2
+                std::sqrt(std::accumulate(std::begin(vec1), std::end(vec1), 0., [](auto &&acc, auto &&value) {
+                    return acc + std::pow(value, 2);
+                }))
+            , 0.00001);
+
             // ReciprocalLength
-            ASSERT_NEAR(XMVectorGetX(ReciprocalLength(vec1)), 1.f / XMVectorGetX(Length(vec1)), 0.000001);
+            ASSERT_NEAR(
+                // dirty hack to obtain the x component of the vector
+                *std::begin(ReciprocalLength(vec1)), 1.f / *std::begin(Length(vec1))
+            , 0.00001);
 
             // InBounds
-            ASSERT_TRUE(InBounds(vec1, VectorType{ 5, 10, 6 }));
-            ASSERT_FALSE(InBounds(vec1, VectorType{ 1, 1, 1 }));
+            ASSERT_TRUE(InBounds(vec1, VectorType{5, 10, 6}));
+            ASSERT_FALSE(InBounds(vec1, VectorType{1, 1, 1}));
         },
         variant);
     }
