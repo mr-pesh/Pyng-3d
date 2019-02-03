@@ -87,6 +87,16 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
         {
             using VectorType = std::decay_t<decltype(vec1)>;
 
+            // ClampLength
+            {
+                auto result = ClampLength(vec1, 1.f, 10.f);
+
+                ASSERT_TRUE(
+                    std::equal(std::begin(vec1), std::end(vec1), std::begin(result), [](auto &&lhs, auto &&rhs) {
+                        return std::abs(lhs - rhs) < 0.00001;
+                    })
+                );
+            }
             // CrossProduct
             {
                 VectorType vec2;
