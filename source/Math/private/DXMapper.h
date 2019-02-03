@@ -2,6 +2,27 @@
 
 #include <DirectXMath.h>
 
+#define MATCH_TYPE(CompType, Result, Type)                                                    \
+    constexpr bool Result = std::is_same_v<std::decay_t<##CompType>, ##Type>;                 \
+    static_assert(std::bool_constant<Result>::value, "No matching overload for " __FUNCTION__ )
+
+#define MATCH_TYPE_2(CompType, Result1, Type1, Result2, Type2)                                        \
+    using BaseType = std::decay_t<##CompType>;                                                        \
+                                                                                                      \
+    constexpr bool Result1 = std::is_same_v<BaseType, ##Type1>;                                       \
+    constexpr bool Result2 = std::is_same_v<BaseType, ##Type2>;                                       \
+                                                                                                      \
+    static_assert(std::_Is_any_of_v<BaseType, Type1, Type2>, "No matching overload for " __FUNCTION__ )
+
+#define MATCH_TYPE_3(CompType, Result1, Type1, Result2, Type2, Type3, Result3)                               \
+    using BaseType = std::decay_t<##CompType>;                                                               \
+                                                                                                             \
+    constexpr bool Result1 = std::is_same_v<BaseType, ##Type1>;                                              \
+    constexpr bool Result2 = std::is_same_v<BaseType, ##Type2>;                                              \
+    constexpr bool Result3 = std::is_same_v<BaseType, ##Type3>;                                              \
+                                                                                                             \
+    static_assert(std::_Is_any_of_v<BaseType, Type1, Type2, Type3>, "No matching overload for " __FUNCTION__ )
+
 #define IS_2D_VECTOR(T) std::_Is_any_of_v< T, Vector<int32_t,2>, Vector<float_t,2>, Vector<uint32_t,2> >
 #define IS_3D_VECTOR(T) std::_Is_any_of_v< T, Vector<int32_t,3>, Vector<float_t,3>, Vector<uint32_t,3> >
 #define IS_4D_VECTOR(T) std::_Is_any_of_v< T, Vector<int32_t,4>, Vector<float_t,4>, Vector<uint32_t,4> >
@@ -14,6 +35,7 @@
 #define IS_4X4_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,4,4>, Matrix<float_t,4,4>, Matrix<uint32_t,4,4> >
 
 #define IS_MATRIX_TYPE(T) IS_3X4_MATRIX(T) || IS_3X3_MATRIX(T) || IS_4X3_MATRIX(T) || IS_4X4_MATRIX(T)
+
 
 typedef unsigned int uint;
 
@@ -49,27 +71,6 @@ namespace
 
 template <class T, int rows, int columns>
 using Matrix_Helper_T = typename Matrix_Helper<T, rows, columns>::Type;
-
-#define MATCH_TYPE(CompType, Result, Type)                                                    \
-    constexpr bool Result = std::is_same_v<std::decay_t<##CompType>, ##Type>;                 \
-    static_assert(std::bool_constant<Result>::value, "No matching overload for " __FUNCTION__ )
-
-#define MATCH_TYPE_2(CompType, Result1, Type1, Result2, Type2)                                        \
-    using BaseType = std::decay_t<##CompType>;                                                        \
-                                                                                                      \
-    constexpr bool Result1 = std::is_same_v<BaseType, ##Type1>;                                       \
-    constexpr bool Result2 = std::is_same_v<BaseType, ##Type2>;                                       \
-                                                                                                      \
-    static_assert(std::_Is_any_of_v<BaseType, Type1, Type2>, "No matching overload for " __FUNCTION__ )
-
-#define MATCH_TYPE_3(CompType, Result1, Type1, Result2, Type2, Type3, Result3)                               \
-    using BaseType = std::decay_t<##CompType>;                                                               \
-                                                                                                             \
-    constexpr bool Result1 = std::is_same_v<BaseType, ##Type1>;                                              \
-    constexpr bool Result2 = std::is_same_v<BaseType, ##Type2>;                                              \
-    constexpr bool Result3 = std::is_same_v<BaseType, ##Type3>;                                              \
-                                                                                                             \
-    static_assert(std::_Is_any_of_v<BaseType, Type1, Type2, Type3>, "No matching overload for " __FUNCTION__ )
 
 namespace
 {
