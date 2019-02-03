@@ -180,7 +180,18 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             }
             // Reflect
             {
+                VectorType vec2;
+                std::fill(std::begin(vec2), std::end(vec2), std::decay_t<decltype(*std::end(vec2))>(1));
 
+                auto result = Reflect(vec1, VectorType{ 1, 1, 1 });
+                
+                float expect[] = { -20, -21, -19 };
+
+                ASSERT_TRUE(
+                    std::equal(std::begin(expect), std::end(expect), std::begin(result), [](auto &&lhs, auto &&rhs) {
+                        return std::abs(lhs - rhs) < 0.00001;
+                    })
+                );
             }
             //Refract
             {
