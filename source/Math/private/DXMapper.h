@@ -9,10 +9,10 @@
 
 #define IS_VECTOR_TYPE(T) IS_2D_VECTOR(T) || IS_3D_VECTOR(T) || IS_4D_VECTOR(T)
 
-#define IS_3X3_MATRIX(T) std::_Is_any_of_v< T, Vector<int32_t,2>, Vector<float_t,2>, Vector<uint32_t,2> >
-#define IS_3X4_MATRIX(T) std::_Is_any_of_v< T, Vector<int32_t,3>, Vector<float_t,3>, Vector<uint32_t,3> >
-#define IS_4X3_MATRIX(T) std::_Is_any_of_v< T, Vector<int32_t,4>, Vector<float_t,4>, Vector<uint32_t,4> >
-#define IS_4X4_MATRIX(T) std::_Is_any_of_v< T, Vector<int32_t,4>, Vector<float_t,4>, Vector<uint32_t,4> >
+#define IS_3X3_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,3,3>, Matrix<float_t,3,3>, Matrix<uint32_t,3,3> >
+#define IS_3X4_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,3,4>, Matrix<float_t,3,4>, Matrix<uint32_t,3,4> >
+#define IS_4X3_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,4,3>, Matrix<float_t,4,3>, Matrix<uint32_t,4,3> >
+#define IS_4X4_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,4,4>, Matrix<float_t,4,4>, Matrix<uint32_t,4,4> >
 
 #define IS_MATRIX_TYPE(T) IS_3X4_MATRIX(T) || IS_3X3_MATRIX(T) || IS_4X3_MATRIX(T) || IS_4X4_MATRIX(T)
 
