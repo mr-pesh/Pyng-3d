@@ -92,7 +92,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
 {
     const VectorVariants<3> args[] =
     {
-        Vector<int32_t,3>{ 4, 3, 5 }, Vector<float_t,3>{ 4.f, 3.f, 5.f }, Vector<uint32_t,3>{ 4u, 3u, 5u }
+        Vector<int32_t,3>{ 4, 3, 5 }, Vector<float_t,3>{ 4.f, 3.f, 5.f }, // Vector<uint32_t,3>{ 4u, 3u, 5u }
     };
 
     for (auto &&variant : args)
@@ -101,27 +101,73 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
         {
             using VectorType = std::decay_t<decltype(vec1)>;
 
+            // CrossProduct
+            {
+                VectorType vec2;
+                std::iota(std::begin(vec2), std::end(vec2), std::decay_t<decltype(*std::end(vec2))>(0));
+
+                auto result = CrossProduct(vec1, vec2);
+                
+                // manually calculate the cross-product of two vectors
+                VectorType expect = [](auto &&v1, auto &&v2)
+                {
+                    if constexpr (IS_2D_VECTOR(VectorType))
+                    {
+                        return VectorType{ (v1.x * v2.y) - (v1.y * v2.x), (v1.x * v2.y) - (v1.y * v2.x) };
+                    }
+                    else if (IS_3D_VECTOR(VectorType))
+                    {
+                        return VectorType{ (v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.z), (v1.x * v2.y) - (v1.y * v2.x) };
+                    }
+                } (vec1, vec2);
+
+                ASSERT_TRUE(
+                    std::equal(std::begin(expect), std::end(expect), std::begin(result), [](auto &&lhs, auto &&rhs) {
+                        return std::abs(lhs - rhs) < 0.0001;
+                    })
+                );
+            }
             // DotProduct
-            DotProduct(vec1, Normalize(vec1));
-            DotProduct(vec1, vec1);
-
-            // Length
-            ASSERT_NEAR(*std::begin(Length(vec1)),
-                // manually count the square root of each component of the vector in power of 2
-                std::sqrt(std::accumulate(std::begin(vec1), std::end(vec1), 0., [](auto &&acc, auto &&value) {
-                    return acc + std::pow(value, 2);
-                }))
-            , 0.00001);
-
-            // ReciprocalLength
-            ASSERT_NEAR(
-                // dirty hack to obtain the x component of the vector
-                *std::begin(ReciprocalLength(vec1)), 1.f / *std::begin(Length(vec1))
-            , 0.00001);
-
+            {
+                DotProduct(vec1, Normalize(vec1));
+                DotProduct(vec1, vec1);
+            }
             // InBounds
-            ASSERT_TRUE(InBounds(vec1, VectorType{5, 10, 6}));
-            ASSERT_FALSE(InBounds(vec1, VectorType{1, 1, 1}));
+            {
+                ASSERT_TRUE(InBounds(vec1, VectorType{ 5, 10, 6 }));
+                ASSERT_TRUE(!InBounds(vec1, VectorType{ 1, 1, 1 }));
+            }
+            // Length
+            {
+                ASSERT_NEAR(*std::begin(Length(vec1)),
+                    // manually count the square root of each component of the vector in power of 2
+                    std::sqrt(std::accumulate(std::begin(vec1), std::end(vec1), 0., [](auto &&acc, auto &&value) {
+                        return acc + std::pow(value, 2);
+                    }))
+                , 0.00001);
+            }
+            // LengthSq
+            {
+
+            }
+            // Normalize
+            {
+
+            }
+            // LinePointDistance
+            {
+
+            }
+            // OrthogonalVector
+            {
+
+            }
+            // ReciprocalLength
+            {
+                ASSERT_NEAR(
+                    *std::begin(ReciprocalLength(vec1)), 1.f / *std::begin(Length(vec1))
+                , 0.00001);
+            }
         },
         variant);
     }
