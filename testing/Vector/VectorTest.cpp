@@ -5,63 +5,49 @@
 
 #include <variant>
 
-class VectorUnitTest : public testing::Test {
-};
-
 template <size_t length>
 using VectorVariants = std::variant<Vector<int32_t, length>, Vector<float_t, length>, Vector<uint32_t, length>>;
 
+class VectorUnitTest : public testing::Test {
+};
 
 TEST_F(VectorUnitTest, TransformTest)
 {
+    const VectorVariants<3> vectors[] = {
+        Vector<int32_t,3>{ 7, 9, 5 },
+        Vector<float_t,3>{ 1.f, 2.f, 3.f },
+        Vector<uint32_t,3>{ 89u, 46u, 101u },
+    };
+
+    #ifndef __GL_MATH_LIBRARY
+    const std::variant<Matrix<float_t, 3, 3>> matrices[] = {
+        Matrix<int32_t,3,3>{ 21, -76, -8, 1, 0, 31, 91, 6, 4 },
+        Matrix<float_t,3,3>{ 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f },
+        Matrix<uint32_t,3,3>{ 53u, 20u, 99u, 35u, 3u, 41u, 90u, 33u, 222u }
+    #else
+    const std::variant<Matrix<int32_t,3,3>, Matrix<float_t,3,3>, Matrix<uint32_t,3,3>> matrices[] = {
+        Matrix<int32_t,3,3>{ 21, 1, 91, -76, 0, 6, -8, 31, 4 },
+        Matrix<float_t,3,3>{ 1.f, 4.f, 7.f, 2.f, 5.f, 8.f, 3.f, 6.f, 9.f },
+        Matrix<uint32_t,3,3>{ 53u, 35u, 90u, 20u, 3u, 33u, 99u, 41u, 222u }
+    #endif
+    };
+
+    const VectorVariants<3> expected[] = {
+        Vector<int32_t,3>{ 611, -502, 243 },
+        Vector<float_t,3>{ 30.f, 36.f, 42.f },
+        Vector<uint32_t,3>{ 15417u, 5251u, 33119u }
+    };
+
+    for (unsigned i = 0; i < std::size(vectors); ++i)
     {
-        const auto vector = Vector<int32_t, 3>{ 7, 9, 5 };
-        const auto matrix =
-#ifndef __GL_MATH_LIBRARY
-            Matrix<int32_t, 3, 3>{ 21, -76, -8, 1, 0, 31, 91, 6, 4 };
-#else
-            Matrix<int32_t, 3, 3>{ 21, 1, 91, -76, 0, 6, -8, 31, 4 };
-#endif
-        const auto expected = Vector<int32_t, 3>{ 611, -502, 243 };
+        std::visit([](auto &&vector, auto &&matrix, auto &&expect)
+        {
+            const auto result = vector * matrix;
 
-        const auto result = vector * matrix;
-
-        ASSERT_TRUE(std::equal(
-            std::begin(result), std::end(result), std::begin(expected), std::end(expected)
-        ));
-    }
-    {
-        const auto vector = Vector<float_t, 3>{ 1.f, 2.f, 3.f };
-        const auto matrix =
-#ifndef __GL_MATH_LIBRARY
-            Matrix<float_t, 3, 3>{ 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f };
-#else
-            Matrix<float_t, 3, 3>{ 1.f, 4.f, 7.f, 2.f, 5.f, 8.f, 3.f, 6.f, 9.f };
-#endif
-        const auto expected = Vector<float_t, 3>{ 30.f, 36.f, 42.f };
-
-        const auto result = vector * matrix;
-
-        ASSERT_TRUE(std::equal(
-            std::begin(result), std::end(result), std::begin(expected), std::end(expected)
-        ));
-    }
-    {
-        const auto vector = Vector<uint32_t, 3>{ 89u, 46u, 101u };
-        const auto matrix =
-#ifndef __GL_MATH_LIBRARY
-            Matrix<uint32_t, 3, 3>{ 53u, 20u, 99u, 35u, 3u, 41u, 90u, 33u, 222u };
-#else
-            Matrix<uint32_t, 3, 3>{ 53u, 35u, 90u, 20u, 3u, 33u, 99u, 41u, 222u }
-#endif
-        const auto expected = Vector<uint32_t, 3>{ 15417u, 5251u, 33119u };
-
-        const auto result = vector * matrix;
-
-        ASSERT_TRUE(std::equal(
-            std::begin(result), std::end(result), std::begin(expected), std::end(expected)
-        ));
-    }
+            ASSERT_TRUE(std::equal(std::begin(expect), std::end(expect), std::begin(result)));
+        },
+        vectors[i], matrices[i], expected[i]);
+    };
 }
 
 TEST_F(VectorUnitTest, AngleFunctionsTest)
