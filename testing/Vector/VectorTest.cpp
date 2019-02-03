@@ -195,7 +195,18 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             }
             //Refract
             {
+                VectorType vec2;
+                std::fill(std::begin(vec2), std::end(vec2), std::decay_t<decltype(*std::end(vec2))>(1));
 
+                auto result = Refract(vec1, vec2, 0.5f);
+
+                float expect[] = { -10.062f, -10.562f, -9.562f };
+
+                ASSERT_TRUE(
+                    std::equal(std::begin(expect), std::end(expect), std::begin(result), [](auto &&lhs, auto &&rhs) {
+                        return std::abs(lhs - rhs) < 0.001;
+                    })
+                );
             }
         },
         variant);
