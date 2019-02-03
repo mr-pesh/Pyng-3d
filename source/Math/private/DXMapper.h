@@ -19,137 +19,31 @@ typedef unsigned int uint;
 
 namespace
 {
-    using namespace DirectX;
-
     template <class T, int rows, int columns>
     struct Matrix_Helper;
 
     template <class T>
     struct Matrix_Helper<T, 3, 3>
     {
-        typedef ::DirectX::XMFLOAT3X3 Type;
-
-        template <class M>
-        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x3(&lhs), rhs);
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x3(&lhs), XMLoadFloat3x3(&rhs));
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x3(&lhs), XMLoadFloat3x4(&rhs));
-        }
-
-        static __forceinline XMMATRIX Transpose(const Type &matrix)
-        {
-            return XMMatrixTranspose(XMLoadFloat3x3(&matrix));
-        }
+        typedef DirectX::XMFLOAT3X3 Type;
     };
 
     template <class T>
     struct Matrix_Helper<T, 3, 4>
     {
-        typedef ::DirectX::XMFLOAT3X4 Type;
-
-        template <class M>
-        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x4(&lhs), rhs);
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x4(&lhs), XMLoadFloat4x3(&rhs));
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x4(&lhs), XMLoadFloat4x4(&rhs));
-        }
-
-        static __forceinline XMMATRIX Transpose(const Type &matrix)
-        {
-            return XMMatrixTranspose(XMLoadFloat3x4(&matrix));
-        }
+        typedef DirectX::XMFLOAT3X4 Type;
     };
 
     template <class T>
     struct Matrix_Helper<T, 4, 3>
     {
-        typedef ::DirectX::XMFLOAT4X3 Type;
-
-        template <class M>
-        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x3(&lhs), rhs);
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x3(&lhs), XMLoadFloat3x3(&rhs));
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x3(&lhs), XMLoadFloat3x4(&rhs));
-        }
-
-        static __forceinline XMMATRIX Transpose(const Type &matrix)
-        {
-            return XMMatrixTranspose(XMLoadFloat4x3(&matrix));
-        }
+        typedef DirectX::XMFLOAT4X3 Type;
     };
 
     template <class T>
     struct Matrix_Helper<T, 4, 4>
     {
-        typedef ::DirectX::XMFLOAT4X4 Type;
-
-        template <class M>
-        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x4(&lhs), rhs);
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x4(&lhs), XMLoadFloat4x3(&rhs));
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x4(&lhs), XMLoadFloat4x4(&rhs));
-        }
-
-        static __forceinline XMMATRIX Transpose(const Type &matrix)
-        {
-            return XMMatrixTranspose(XMLoadFloat4x4(&matrix));
-        }
+        typedef DirectX::XMFLOAT4X4 Type;
     };
 }
 
