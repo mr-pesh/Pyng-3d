@@ -13,17 +13,15 @@ using Vector = glm::vec<length, T, precision>;
 
 #include "private/DXMapper.h"
 
-template <class T, int length>
-using Vector = Vector_Helper_T <T, length>;
-
 namespace std
 {
     template <class V>
     constexpr auto begin(const V &vector) noexcept
     {
         if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
-            return reinterpret_cast<const float *>(&vector);
-        } else {
+            return reinterpret_cast<const float*>(&vector);
+        }
+        else {
             return reinterpret_cast<const decltype(vector.x)*>(&vector);
         }
     }
@@ -43,8 +41,9 @@ namespace std
     constexpr auto end(const V &vector) noexcept
     {
         if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
-            return reinterpret_cast<const float *>(&vector + 1);
-        } else {
+            return reinterpret_cast<const float*>(&vector + 1);
+        }
+        else {
             return reinterpret_cast<const decltype(vector.x)*>(&vector + 1);
         }
     }
@@ -54,11 +53,15 @@ namespace std
     {
         if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
             return reinterpret_cast<float*>(&vector + 1);
-        } else {
+        }
+        else {
             return reinterpret_cast<decltype(vector.x)*>(&vector + 1);
         }
     }
 }
+
+template <class T, int length>
+using Vector = Vector_Helper_T <T, length>;
 
 #else
 
