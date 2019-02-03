@@ -73,14 +73,14 @@ using Matrix = Matrix_Base<T, rows, columns>;
 typedef Matrix<float, 3, 3> Mat3x3;
 typedef Matrix<float, 3, 4> Mat3x4;
 typedef Matrix<float, 4, 3> Mat4x3;
-typedef Matrix<float, 4, 4> Mat4x3;
+typedef Matrix<float, 4, 4> Mat4x4;
 
 
 #ifdef __DX_MATH_LIBRARY
 
 // Since DirectXMath doesn't support double precision SSE types
 
-typedef Mat3x3 dMat3x4;
+typedef Mat3x3 dMat3x3;
 typedef Mat3x4 dMat3x4;
 typedef Mat4x3 dMat4x3;
 typedef Mat4x3 dMat4x4;
