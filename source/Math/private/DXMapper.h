@@ -3516,7 +3516,7 @@ inline XMVECTOR LinePointDistance(V1 &&linePoint1, V2 &&linePoint2, V3 &&point) 
 template <class V>
 inline XMVECTOR OrthogonalVector(V&& vector) noexcept
 {
-    return Vector_Geometry<std::decay_t<V>>::Orthogonal(std::forward<V>(v));
+    return Vector_Geometry<std::decay_t<V>>::Orthogonal(std::forward<V>(vector));
 }
 
 /// <summary>Computes the reciprocal of the length of a 2-, 3- or 4D vector.</summary>
