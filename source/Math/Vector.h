@@ -27,7 +27,7 @@ namespace std
     }
 
     template <class V>
-    constexpr auto begin(V &vector) noexcept
+    constexpr auto begin(V &&vector) noexcept
     {
         if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
             return reinterpret_cast<float*>(&vector);
@@ -49,7 +49,7 @@ namespace std
     }
 
     template <class V>
-    constexpr auto end(V &vector) noexcept
+    constexpr auto end(V &&vector) noexcept
     {
         if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
             return reinterpret_cast<float*>(&vector + 1);

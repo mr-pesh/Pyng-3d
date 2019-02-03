@@ -20,7 +20,7 @@ TEST_F(VectorUnitTest, TransformTest)
     };
 
     #ifndef __GL_MATH_LIBRARY
-    const std::variant<Matrix<float_t, 3, 3>> matrices[] = {
+    const std::variant<Matrix<float_t,3,3>> matrices[] = {
         Matrix<int32_t,3,3>{ 21, -76, -8, 1, 0, 31, 91, 6, 4 },
         Matrix<float_t,3,3>{ 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f },
         Matrix<uint32_t,3,3>{ 53u, 20u, 99u, 35u, 3u, 41u, 90u, 33u, 222u }
@@ -115,8 +115,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             }
             // DotProduct
             {
-                DotProduct(vec1, Normalize(vec1));
-                DotProduct(vec1, vec1);
+                ASSERT_FLOAT_EQ(*std::begin(DotProduct(vec1, OrthogonalVector(vec1))), 0.f);
             }
             // InBounds
             {
