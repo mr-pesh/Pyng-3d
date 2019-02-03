@@ -125,7 +125,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             // Length
             {
                 ASSERT_NEAR(*std::begin(Length(vec1)),
-                    // manually count the square root of each component of the vector in power of 2
+                    // manually count the square root of a sum of each component of the vector in power of 2
                     std::sqrt(std::accumulate(std::begin(vec1), std::end(vec1), 0., [](auto &&acc, auto &&value) {
                         return acc + std::pow(value, 2);
                     }))
@@ -133,7 +133,14 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             }
             // LengthSq
             {
+                ASSERT_NEAR(*std::begin(LengthSq(vec1)),
+                    // manually count the sum of all component of the vector in power of 2
+                    std::accumulate(std::begin(vec1), std::end(vec1), 0., [](auto &&acc, auto &&value) {
+                        return acc + std::pow(value, 2);
+                    })
+                , 0.00001);
 
+                ASSERT_FLOAT_EQ(std::pow(*std::begin(Length(vec1)), 2), *std::begin(LengthSq(vec1)));
             }
             // Normalize
             {
