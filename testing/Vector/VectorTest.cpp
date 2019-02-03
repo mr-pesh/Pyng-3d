@@ -152,7 +152,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             }
             // OrthogonalVector
             {
-
+                ASSERT_FLOAT_EQ(*std::begin(DotProduct(vec1, OrthogonalVector(vec1))), 0);
             }
             // ReciprocalLength
             {
