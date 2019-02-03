@@ -166,7 +166,11 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             }
             // LinePointDistance
             {
+                VectorType vec2, vec3;
+                std::fill(std::begin(vec2), std::end(vec2), std::decay_t<decltype(*std::end(vec2))>(0));
+                std::fill(std::begin(vec3), std::end(vec3), std::decay_t<decltype(*std::end(vec3))>(1));
 
+                ASSERT_FLOAT_EQ(*std::begin(LinePointDistance(vec1, vec2, vec3)), 0.346410155f);
             }
             // OrthogonalVector
             {
