@@ -67,8 +67,8 @@ TEST_F(VectorUnitTest, TransformTest)
 TEST_F(VectorUnitTest, AngleFunctionsTest)
 {
     {
-        const auto vec1 = Vector<uint32_t, 3>{ 7u, 9u, 5u };
-        const auto vec2 = Vector<uint32_t, 3>{ 1u, 2u, 3u };
+        const auto vec1 = Vector<int32_t, 3>{ 7, 9, 5 };
+        const auto vec2 = Vector<int32_t, 3>{ 1, 2, 3 };
 
         const auto angle = VectorAngle::AngleBetweenVectors(vec1, vec2);
         const auto pi_2_ = VectorAngle::AngleBetweenVectors(vec1, CrossProduct(vec1, vec2));
