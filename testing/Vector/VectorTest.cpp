@@ -59,8 +59,8 @@ TEST_F(VectorUnitTest, AngleFunctionsTest)
         const auto angle = VectorAngle::AngleBetweenVectors(vec1, vec2);
         const auto pi_2_ = VectorAngle::AngleBetweenVectors(vec1, CrossProduct(vec1, vec2));
 
-        ASSERT_NEAR(XMVectorGetX(angle), 0.53811252, 0.0001);
-        ASSERT_NEAR(XMVectorGetX(pi_2_), 1.57079625, 0.0001);
+        ASSERT_NEAR(*std::begin(angle), 0.53811252, 0.0001);
+        ASSERT_NEAR(*std::begin(pi_2_), 1.57079625, 0.0001);
     }
     {
         const auto vec1 = Vector<float_t, 3>{ 0.7f, 0.9f, 0.5f };
@@ -69,8 +69,8 @@ TEST_F(VectorUnitTest, AngleFunctionsTest)
         const auto angle = VectorAngle::AngleBetweenNormals(vec1, vec2);
         const auto pi_2_ = VectorAngle::AngleBetweenNormals(vec1, CrossProduct(vec1, vec2));
 
-        ASSERT_NEAR(XMVectorGetX(angle), 1.15927947, 0.0001);
-        ASSERT_NEAR(XMVectorGetX(pi_2_), 1.57079625, 0.0001);
+        ASSERT_NEAR(*std::begin(angle), 1.15927947, 0.0001);
+        ASSERT_NEAR(*std::begin(pi_2_), 1.57079625, 0.0001);
     }
 }
 
