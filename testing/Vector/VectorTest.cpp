@@ -109,7 +109,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
 
                 ASSERT_TRUE(
                     std::equal(std::begin(expect), std::end(expect), std::begin(result), [](auto &&lhs, auto &&rhs) {
-                        return std::abs(lhs - rhs) < 0.0001;
+                        return std::abs(lhs - rhs) < 0.00001;
                     })
                 );
             }
@@ -144,7 +144,25 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             }
             // Normalize
             {
+                VectorType zeroVector;
+                std::fill(std::begin(zeroVector), std::end(zeroVector), std::decay_t<decltype(*std::end(zeroVector))>(0));
 
+                ASSERT_FLOAT_EQ(*std::begin(Normalize(zeroVector)), 0);
+
+                const auto result = Normalize(vec1);
+                const auto length = Length(vec1);
+
+                float expect[sizeof(VectorType) / sizeof(float_t)];
+
+                std::transform(std::begin(vec1), std::end(vec1), std::begin(expect), [vLength = *std::begin(length)](auto &&comp) {
+                    return comp / vLength;
+                });
+
+                ASSERT_TRUE(
+                    std::equal(std::begin(expect), std::end(expect), std::begin(result), [](auto &&lhs, auto &&rhs) {
+                        return std::abs(lhs - rhs) < 0.00001;
+                    })
+                );
             }
             // LinePointDistance
             {
@@ -159,6 +177,14 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
                 ASSERT_NEAR(
                     *std::begin(ReciprocalLength(vec1)), 1.f / *std::begin(Length(vec1))
                 , 0.00001);
+            }
+            // Reflect
+            {
+
+            }
+            //Refract
+            {
+
             }
         },
         variant);
