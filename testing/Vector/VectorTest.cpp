@@ -3,6 +3,7 @@
 #include <Math/Matrix.h>
 #include <Math/Vector.h>
 
+#include <numeric>
 #include <variant>
 
 template <size_t length>
@@ -207,7 +208,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
                     })
                 );
             }
-            //Refract
+            // Refract
             {
                 VectorType vec2;
                 std::fill(std::begin(vec2), std::end(vec2), std::decay_t<decltype(*std::end(vec2))>(1));
