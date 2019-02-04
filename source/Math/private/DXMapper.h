@@ -2,145 +2,6 @@
 
 #include <DirectXMath.h>
 
-namespace
-{
-    using namespace DirectX;
-
-    template <class T, int rows, int columns>
-    struct Matrix_Helper;
-
-    template <class T>
-    struct Matrix_Helper<T, 3, 3>
-    {
-        typedef ::DirectX::XMFLOAT3X3 Type;
-
-        template <class M>
-        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x3(&lhs), rhs);
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x3(&lhs), XMLoadFloat3x3(&rhs));
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x3(&lhs), XMLoadFloat3x4(&rhs));
-        }
-
-        static __forceinline XMMATRIX Transpose(const Type &matrix)
-        {
-            return XMMatrixTranspose(XMLoadFloat3x3(&matrix));
-        }
-    };
-
-    template <class T>
-    struct Matrix_Helper<T, 3, 4>
-    {
-        typedef ::DirectX::XMFLOAT3X4 Type;
-
-        template <class M>
-        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x4(&lhs), rhs);
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x4(&lhs), XMLoadFloat4x3(&rhs));
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat3x4(&lhs), XMLoadFloat4x4(&rhs));
-        }
-
-        static __forceinline XMMATRIX Transpose(const Type &matrix)
-        {
-            return XMMatrixTranspose(XMLoadFloat3x4(&matrix));
-        }
-    };
-
-    template <class T>
-    struct Matrix_Helper<T, 4, 3>
-    {
-        typedef ::DirectX::XMFLOAT4X3 Type;
-
-        template <class M>
-        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x3(&lhs), rhs);
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT3X3>(const Type &lhs, const XMFLOAT3X3 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x3(&lhs), XMLoadFloat3x3(&rhs));
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT3X4>(const Type &lhs, const XMFLOAT3X4 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x3(&lhs), XMLoadFloat3x4(&rhs));
-        }
-
-        static __forceinline XMMATRIX Transpose(const Type &matrix)
-        {
-            return XMMatrixTranspose(XMLoadFloat4x3(&matrix));
-        }
-    };
-
-    template <class T>
-    struct Matrix_Helper<T, 4, 4>
-    {
-        typedef ::DirectX::XMFLOAT4X4 Type;
-
-        template <class M>
-        static __forceinline XMMATRIX Multiply(const Type &lhs, const M &rhs);
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMMATRIX>(const Type &lhs, const XMMATRIX &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x4(&lhs), rhs);
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT4X3>(const Type &lhs, const XMFLOAT4X3 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x4(&lhs), XMLoadFloat4x3(&rhs));
-        }
-
-        template <>
-        static __forceinline XMMATRIX Multiply<XMFLOAT4X4>(const Type &lhs, const XMFLOAT4X4 &rhs)
-        {
-            return XMMatrixMultiply(XMLoadFloat4x4(&lhs), XMLoadFloat4x4(&rhs));
-        }
-
-        static __forceinline XMMATRIX Transpose(const Type &matrix)
-        {
-            return XMMatrixTranspose(XMLoadFloat4x4(&matrix));
-        }
-    };
-}
-
-template <class T, int rows, int columns>
-using Matrix_Helper_T = typename Matrix_Helper<T, rows, columns>::Type;
-
 #define MATCH_TYPE(CompType, Result, Type)                                                    \
     constexpr bool Result = std::is_same_v<std::decay_t<##CompType>, ##Type>;                 \
     static_assert(std::bool_constant<Result>::value, "No matching overload for " __FUNCTION__ )
@@ -162,15 +23,64 @@ using Matrix_Helper_T = typename Matrix_Helper<T, rows, columns>::Type;
                                                                                                              \
     static_assert(std::_Is_any_of_v<BaseType, Type1, Type2, Type3>, "No matching overload for " __FUNCTION__ )
 
+#define IS_2D_VECTOR(T) std::_Is_any_of_v< T, Vector<int32_t,2>, Vector<float_t,2>, Vector<uint32_t,2> >
+#define IS_3D_VECTOR(T) std::_Is_any_of_v< T, Vector<int32_t,3>, Vector<float_t,3>, Vector<uint32_t,3> >
+#define IS_4D_VECTOR(T) std::_Is_any_of_v< T, Vector<int32_t,4>, Vector<float_t,4>, Vector<uint32_t,4> >
+
+#define IS_VECTOR_TYPE(T) IS_2D_VECTOR(T) || IS_3D_VECTOR(T) || IS_4D_VECTOR(T)
+
+#define IS_3X3_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,3,3>, Matrix<float_t,3,3>, Matrix<uint32_t,3,3> >
+#define IS_3X4_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,3,4>, Matrix<float_t,3,4>, Matrix<uint32_t,3,4> >
+#define IS_4X3_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,4,3>, Matrix<float_t,4,3>, Matrix<uint32_t,4,3> >
+#define IS_4X4_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,4,4>, Matrix<float_t,4,4>, Matrix<uint32_t,4,4> >
+
+#define IS_MATRIX_TYPE(T) IS_3X4_MATRIX(T) || IS_3X3_MATRIX(T) || IS_4X3_MATRIX(T) || IS_4X4_MATRIX(T)
+
+
+typedef unsigned int uint;
+
+namespace
+{
+    template <class T, int rows, int columns>
+    struct XMMatrixAdapter;
+
+    template <class T>
+    struct XMMatrixAdapter<T, 3, 3>
+    {
+        typedef DirectX::XMFLOAT3X3 Type;
+    };
+
+    template <class T>
+    struct XMMatrixAdapter<T, 3, 4>
+    {
+        typedef DirectX::XMFLOAT3X4 Type;
+    };
+
+    template <class T>
+    struct XMMatrixAdapter<T, 4, 3>
+    {
+        typedef DirectX::XMFLOAT4X3 Type;
+    };
+
+    template <class T>
+    struct XMMatrixAdapter<T, 4, 4>
+    {
+        typedef DirectX::XMFLOAT4X4 Type;
+    };
+}
+
+template <class T, int rows, int columns>
+using XMMatrixAdapterT = typename XMMatrixAdapter<T, rows, columns>::Type;
+
 namespace
 {
     using namespace DirectX;
 
     template <class T, int length>
-    struct Vector_Helper;
+    struct XMVectorAdapter;
 
     template <>
-    struct Vector_Helper<int32_t, 2>
+    struct XMVectorAdapter<int32_t, 2>
     {
         typedef ::DirectX::XMINT2 Type;
 
@@ -399,7 +309,7 @@ namespace
     };
 
     template <>
-    struct Vector_Helper<int32_t, 3>
+    struct XMVectorAdapter<int32_t, 3>
     {
         typedef ::DirectX::XMINT3 Type;
 
@@ -628,7 +538,7 @@ namespace
     };
 
     template <>
-    struct Vector_Helper<int32_t, 4>
+    struct XMVectorAdapter<int32_t, 4>
     {
         typedef ::DirectX::XMINT4 Type;
 
@@ -845,7 +755,7 @@ namespace
     };
 
     template <>
-    struct Vector_Helper<float_t, 2>
+    struct XMVectorAdapter<float_t, 2>
     {
         typedef ::DirectX::XMFLOAT2 Type;
 
@@ -1074,7 +984,7 @@ namespace
     };
 
     template <>
-    struct Vector_Helper<float_t, 3>
+    struct XMVectorAdapter<float_t, 3>
     {
         typedef ::DirectX::XMFLOAT3 Type;
 
@@ -1303,7 +1213,7 @@ namespace
     };
 
     template <>
-    struct Vector_Helper<float, 4>
+    struct XMVectorAdapter<float, 4>
     {
         typedef ::DirectX::XMFLOAT4 Type;
 
@@ -1520,7 +1430,7 @@ namespace
     };
 
     template <>
-    struct Vector_Helper<uint32_t, 2>
+    struct XMVectorAdapter<uint32_t, 2>
     {
         typedef ::DirectX::XMUINT2 Type;
 
@@ -1749,7 +1659,7 @@ namespace
     };
 
     template <>
-    struct Vector_Helper<uint32_t, 3>
+    struct XMVectorAdapter<uint32_t, 3>
     {
         typedef ::DirectX::XMUINT3 Type;
 
@@ -1978,7 +1888,7 @@ namespace
     };
 
     template <>
-    struct Vector_Helper<uint32_t, 4>
+    struct XMVectorAdapter<uint32_t, 4>
     {
         typedef ::DirectX::XMUINT4 Type;
 
@@ -2196,7 +2106,7 @@ namespace
 }
 
 template <class T, int length>
-using Vector_Helper_T = typename Vector_Helper<T, length>::Type;
+using XMVectorAdapterT = typename XMVectorAdapter<T, length>::Type;
 
 namespace
 {
@@ -2211,7 +2121,7 @@ namespace
         static XMINT2 Transform(const XMINT2 &v, const Matrix &m)
         {
             XMINT2 result;
-            XMStoreSInt2(&result, Vector_Helper<int32_t, 2>::Transform(v,m));
+            XMStoreSInt2(&result, XMVectorAdapter<int32_t, 2>::Transform(v,m));
             return result;
         }
     };
@@ -2222,7 +2132,7 @@ namespace
         static XMINT3 Transform(const XMINT3 &v, const Matrix &m)
         {
             XMINT3 result;
-            XMStoreSInt3(&result, Vector_Helper<int32_t, 3>::Transform(v,m));
+            XMStoreSInt3(&result, XMVectorAdapter<int32_t, 3>::Transform(v,m));
             return result;
         }
     };
@@ -2233,7 +2143,7 @@ namespace
         static XMINT4 Transform(const XMINT4 &v, const Matrix &m)
         {
             XMINT4 result;
-            XMStoreSInt4(&result, Vector_Helper<int32_t, 4>::Transform(v,m));
+            XMStoreSInt4(&result, XMVectorAdapter<int32_t, 4>::Transform(v,m));
             return result;
         }
     };
@@ -2244,7 +2154,7 @@ namespace
         static XMFLOAT2 Transform(const XMFLOAT2 &v, const Matrix &m)
         {
             XMFLOAT2 result;
-            XMStoreFloat2(&result, Vector_Helper<float_t, 2>::Transform(v,m));
+            XMStoreFloat2(&result, XMVectorAdapter<float_t, 2>::Transform(v,m));
             return result;
         }
     };
@@ -2255,7 +2165,7 @@ namespace
         static XMFLOAT3 Transform(const XMFLOAT3 &v, const Matrix &m)
         {
             XMFLOAT3 result;
-            XMStoreFloat3(&result, Vector_Helper<float_t, 3>::Transform(v,m));
+            XMStoreFloat3(&result, XMVectorAdapter<float_t, 3>::Transform(v,m));
             return result;
         }
     };
@@ -2266,7 +2176,7 @@ namespace
         static XMFLOAT4 Transform(const XMFLOAT4 &v, const Matrix &m)
         {
             XMFLOAT4 result;
-            XMStoreFloat4(&result, Vector_Helper<float_t, 4>::Transform(v,m));
+            XMStoreFloat4(&result, XMVectorAdapter<float_t, 4>::Transform(v,m));
             return result;
         }
     };
@@ -2277,7 +2187,7 @@ namespace
         static XMUINT2 Transform(const XMUINT2 &v, const Matrix &m)
         {
             XMUINT2 result;
-            XMStoreUInt2(&result, Vector_Helper<uint32_t, 2>::Transform(v,m));
+            XMStoreUInt2(&result, XMVectorAdapter<uint32_t, 2>::Transform(v,m));
             return result;
         }
     };
@@ -2288,7 +2198,7 @@ namespace
         static XMUINT3 Transform(const XMUINT3 &v, const Matrix &m)
         {
             XMUINT3 result;
-            XMStoreUInt3(&result, Vector_Helper<uint32_t, 3>::Transform(v,m));
+            XMStoreUInt3(&result, XMVectorAdapter<uint32_t, 3>::Transform(v,m));
             return result;
         }
     };
@@ -2299,7 +2209,7 @@ namespace
         static XMUINT4 Transform(const XMUINT4 &v, const Matrix &m)
         {
             XMUINT4 result;
-            XMStoreUInt4(&result, Vector_Helper<uint32_t, 4>::Transform(v,m));
+            XMStoreUInt4(&result, XMVectorAdapter<uint32_t, 4>::Transform(v,m));
             return result;
         }
     };
@@ -2317,32 +2227,32 @@ namespace
     {
         static __forceinline bool Less(const XMINT2 &v1, const XMINT2 &v2)
         {
-            return Vector_Helper<int32_t,2>::Less(v1,v2);
+            return XMVectorAdapter<int32_t,2>::Less(v1,v2);
         }
 
         static __forceinline bool LessOrEqual(const XMINT2 &v1, const XMINT2 &v2)
         {
-            return Vector_Helper<int32_t,2>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,2>::LessOrEqual(v1,v2);
         }
 
         static __forceinline bool Greater(const XMINT2 &v1, const XMINT2 &v2)
         {
-            return Vector_Helper<int32_t,2>::Greater(v1,v2);
+            return XMVectorAdapter<int32_t,2>::Greater(v1,v2);
         }
 
         static __forceinline bool GreaterOrEqual(const XMINT2 &v1, const XMINT2 &v2)
         {
-            return Vector_Helper<int32_t,2>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,2>::GreaterOrEqual(v1,v2);
         }
 
         static __forceinline bool Equal(const XMINT2 &v1, const XMINT2 &v2)
         {
-            return Vector_Helper<int32_t,2>::Equal(v1,v2);
+            return XMVectorAdapter<int32_t,2>::Equal(v1,v2);
         }
 
         static __forceinline bool NotEqual(const XMINT2 &v1, const XMINT2 &v2)
         {
-            return Vector_Helper<int32_t,2>::NotEqual(v1,v2);
+            return XMVectorAdapter<int32_t,2>::NotEqual(v1,v2);
         }
     };
 
@@ -2351,32 +2261,32 @@ namespace
     {
         static __forceinline bool Less(const XMINT3 &v1, const XMINT3 &v2)
         {
-            return Vector_Helper<int32_t,3>::Less(v1,v2);
+            return XMVectorAdapter<int32_t,3>::Less(v1,v2);
         }
 
         static __forceinline bool LessOrEqual(const XMINT3 &v1, const XMINT3 &v2)
         {
-            return Vector_Helper<int32_t,3>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,3>::LessOrEqual(v1,v2);
         }
 
         static __forceinline bool Greater(const XMINT3 &v1, const XMINT3 &v2)
         {
-            return Vector_Helper<int32_t,3>::Greater(v1,v2);
+            return XMVectorAdapter<int32_t,3>::Greater(v1,v2);
         }
 
         static __forceinline bool GreaterOrEqual(const XMINT3 &v1, const XMINT3 &v2)
         {
-            return Vector_Helper<int32_t,3>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,3>::GreaterOrEqual(v1,v2);
         }
 
         static __forceinline bool Equal(const XMINT3 &v1, const XMINT3 &v2)
         {
-            return Vector_Helper<int32_t,3>::Equal(v1,v2);
+            return XMVectorAdapter<int32_t,3>::Equal(v1,v2);
         }
 
         static __forceinline bool NotEqual(const XMINT3 &v1, const XMINT3 &v2)
         {
-            return Vector_Helper<int32_t,3>::NotEqual(v1,v2);
+            return XMVectorAdapter<int32_t,3>::NotEqual(v1,v2);
         }
     };
 
@@ -2385,32 +2295,32 @@ namespace
     {
         static __forceinline bool Less(const XMINT4 &v1, const XMINT4 &v2)
         {
-            return Vector_Helper<int32_t,4>::Less(v1,v2);
+            return XMVectorAdapter<int32_t,4>::Less(v1,v2);
         }
 
         static __forceinline bool LessOrEqual(const XMINT4 &v1, const XMINT4 &v2)
         {
-            return Vector_Helper<int32_t,4>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,4>::LessOrEqual(v1,v2);
         }
 
         static __forceinline bool Greater(const XMINT4 &v1, const XMINT4 &v2)
         {
-            return Vector_Helper<int32_t,4>::Greater(v1,v2);
+            return XMVectorAdapter<int32_t,4>::Greater(v1,v2);
         }
 
         static __forceinline bool GreaterOrEqual(const XMINT4 &v1, const XMINT4 &v2)
         {
-            return Vector_Helper<int32_t,4>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,4>::GreaterOrEqual(v1,v2);
         }
 
         static __forceinline bool Equal(const XMINT4 &v1, const XMINT4 &v2)
         {
-            return Vector_Helper<int32_t,4>::Equal(v1,v2);
+            return XMVectorAdapter<int32_t,4>::Equal(v1,v2);
         }
 
         static __forceinline bool NotEqual(const XMINT4 &v1, const XMINT4 &v2)
         {
-            return Vector_Helper<int32_t,4>::NotEqual(v1,v2);
+            return XMVectorAdapter<int32_t,4>::NotEqual(v1,v2);
         }
     };
 
@@ -2419,32 +2329,32 @@ namespace
     {
         static __forceinline bool Less(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
-            return Vector_Helper<float_t,2>::Less(v1,v2);
+            return XMVectorAdapter<float_t,2>::Less(v1,v2);
         }
 
         static __forceinline bool LessOrEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
-            return Vector_Helper<float_t,2>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,2>::LessOrEqual(v1,v2);
         }
 
         static __forceinline bool Greater(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
-            return Vector_Helper<float_t,2>::Greater(v1,v2);
+            return XMVectorAdapter<float_t,2>::Greater(v1,v2);
         }
 
         static __forceinline bool GreaterOrEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
-            return Vector_Helper<float_t,2>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,2>::GreaterOrEqual(v1,v2);
         }
 
         static __forceinline bool Equal(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
-            return Vector_Helper<float_t,2>::Equal(v1,v2);
+            return XMVectorAdapter<float_t,2>::Equal(v1,v2);
         }
 
         static __forceinline bool NotEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
         {
-            return Vector_Helper<float_t,2>::NotEqual(v1,v2);
+            return XMVectorAdapter<float_t,2>::NotEqual(v1,v2);
         }
     };
 
@@ -2453,32 +2363,32 @@ namespace
     {
         static __forceinline bool Less(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
-            return Vector_Helper<float_t,3>::Less(v1,v2);
+            return XMVectorAdapter<float_t,3>::Less(v1,v2);
         }
 
         static __forceinline bool LessOrEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
-            return Vector_Helper<float_t,3>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,3>::LessOrEqual(v1,v2);
         }
 
         static __forceinline bool Greater(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
-            return Vector_Helper<float_t,3>::Greater(v1,v2);
+            return XMVectorAdapter<float_t,3>::Greater(v1,v2);
         }
 
         static __forceinline bool GreaterOrEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
-            return Vector_Helper<float_t,3>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,3>::GreaterOrEqual(v1,v2);
         }
 
         static __forceinline bool Equal(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
-            return Vector_Helper<float_t,3>::Equal(v1,v2);
+            return XMVectorAdapter<float_t,3>::Equal(v1,v2);
         }
 
         static __forceinline bool NotEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
         {
-            return Vector_Helper<float_t,3>::NotEqual(v1,v2);
+            return XMVectorAdapter<float_t,3>::NotEqual(v1,v2);
         }
     };
 
@@ -2487,32 +2397,32 @@ namespace
     {
         static __forceinline bool Less(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
-            return Vector_Helper<float_t,4>::Less(v1,v2);
+            return XMVectorAdapter<float_t,4>::Less(v1,v2);
         }
 
         static __forceinline bool LessOrEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
-            return Vector_Helper<float_t,4>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,4>::LessOrEqual(v1,v2);
         }
 
         static __forceinline bool Greater(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
-            return Vector_Helper<float_t,4>::Greater(v1,v2);
+            return XMVectorAdapter<float_t,4>::Greater(v1,v2);
         }
 
         static __forceinline bool GreaterOrEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
-            return Vector_Helper<float_t,4>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,4>::GreaterOrEqual(v1,v2);
         }
 
         static __forceinline bool Equal(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
-            return Vector_Helper<float_t,4>::Equal(v1,v2);
+            return XMVectorAdapter<float_t,4>::Equal(v1,v2);
         }
 
         static __forceinline bool NotEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
         {
-            return Vector_Helper<float_t,4>::NotEqual(v1,v2);
+            return XMVectorAdapter<float_t,4>::NotEqual(v1,v2);
         }
     };
 
@@ -2521,32 +2431,32 @@ namespace
     {
         static __forceinline bool Less(const XMUINT2 &v1, const XMUINT2 &v2)
         {
-            return Vector_Helper<uint32_t,2>::Less(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::Less(v1,v2);
         }
 
         static __forceinline bool LessOrEqual(const XMUINT2 &v1, const XMUINT2 &v2)
         {
-            return Vector_Helper<uint32_t,2>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::LessOrEqual(v1,v2);
         }
 
         static __forceinline bool Greater(const XMUINT2 &v1, const XMUINT2 &v2)
         {
-            return Vector_Helper<uint32_t,2>::Greater(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::Greater(v1,v2);
         }
 
         static __forceinline bool GreaterOrEqual(const XMUINT2 &v1, const XMUINT2 &v2)
         {
-            return Vector_Helper<uint32_t,2>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::GreaterOrEqual(v1,v2);
         }
 
         static __forceinline bool Equal(const XMUINT2 &v1, const XMUINT2 &v2)
         {
-            return Vector_Helper<uint32_t,2>::Equal(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::Equal(v1,v2);
         }
 
         static __forceinline bool NotEqual(const XMUINT2 &v1, const XMUINT2 &v2)
         {
-            return Vector_Helper<uint32_t,2>::NotEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::NotEqual(v1,v2);
         }
     };
 
@@ -2555,32 +2465,32 @@ namespace
     {
         static __forceinline bool Less(const XMUINT3 &v1, const XMUINT3 &v2)
         {
-            return Vector_Helper<uint32_t,3>::Less(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::Less(v1,v2);
         }
 
         static __forceinline bool LessOrEqual(const XMUINT3 &v1, const XMUINT3 &v2)
         {
-            return Vector_Helper<uint32_t,3>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::LessOrEqual(v1,v2);
         }
 
         static __forceinline bool Greater(const XMUINT3 &v1, const XMUINT3 &v2)
         {
-            return Vector_Helper<uint32_t,3>::Greater(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::Greater(v1,v2);
         }
 
         static __forceinline bool GreaterOrEqual(const XMUINT3 &v1, const XMUINT3 &v2)
         {
-            return Vector_Helper<uint32_t,3>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::GreaterOrEqual(v1,v2);
         }
 
         static __forceinline bool Equal(const XMUINT3 &v1, const XMUINT3 &v2)
         {
-            return Vector_Helper<uint32_t,3>::Equal(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::Equal(v1,v2);
         }
 
         static __forceinline bool NotEqual(const XMUINT3 &v1, const XMUINT3 &v2)
         {
-            return Vector_Helper<uint32_t,3>::NotEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::NotEqual(v1,v2);
         }
     };
 
@@ -2589,32 +2499,32 @@ namespace
     {
         static __forceinline bool Less(const XMUINT4 &v1, const XMUINT4 &v2)
         {
-            return Vector_Helper<uint32_t,4>::Less(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::Less(v1,v2);
         }
 
         static __forceinline bool LessOrEqual(const XMUINT4 &v1, const XMUINT4 &v2)
         {
-            return Vector_Helper<uint32_t,4>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::LessOrEqual(v1,v2);
         }
 
         static __forceinline bool Greater(const XMUINT4 &v1, const XMUINT4 &v2)
         {
-            return Vector_Helper<uint32_t,4>::Greater(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::Greater(v1,v2);
         }
 
         static __forceinline bool GreaterOrEqual(const XMUINT4 &v1, const XMUINT4 &v2)
         {
-            return Vector_Helper<uint32_t,4>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::GreaterOrEqual(v1,v2);
         }
 
         static __forceinline bool Equal(const XMUINT4 &v1, const XMUINT4 &v2)
         {
-            return Vector_Helper<uint32_t,4>::Equal(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::Equal(v1,v2);
         }
 
         static __forceinline bool NotEqual(const XMUINT4 &v1, const XMUINT4 &v2)
         {
-            return Vector_Helper<uint32_t,4>::NotEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::NotEqual(v1,v2);
         }
     };
 }
@@ -2630,80 +2540,80 @@ namespace
         template <class V>
         static __forceinline XMVECTOR AngleBetweenNormals(const XMINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,2>::AngleBetweenNormals(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,2>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR AngleBetweenVectors(const XMINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,2>::AngleBetweenVectors(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,2>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR ClampLength(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<int32_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
         static __forceinline XMVECTOR CrossProduct(const XMINT2 &v1, V &&v2)
         {
-            return Vector_Helper<int32_t,2>::CrossProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,2>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR DotProduct(const XMINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,2>::DotProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,2>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline bool InBounds(const XMINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,2>::InBounds(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,2>::InBounds(v1, std::forward<V>(v2));
         }
 
         static __forceinline XMVECTOR Length(const XMINT2 &v) noexcept
         {
-            return Vector_Helper<int32_t,2>::Length(v);
+            return XMVectorAdapter<int32_t,2>::Length(v);
         }
 
         static __forceinline XMVECTOR LengthSq(const XMINT2 &v) noexcept
         {
-            return Vector_Helper<int32_t,2>::LengthSq(v);
+            return XMVectorAdapter<int32_t,2>::LengthSq(v);
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR LinePointDistance(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<int32_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static __forceinline XMVECTOR Normalize(const XMINT2 &v) noexcept
         {
-            return Vector_Helper<int32_t,2>::Normalize(v);
+            return XMVectorAdapter<int32_t,2>::Normalize(v);
         }
 
         static __forceinline XMVECTOR Orthogonal(const XMINT2 &v) noexcept
         {
-            return Vector_Helper<int32_t,2>::Orthogonal(v);
+            return XMVectorAdapter<int32_t,2>::Orthogonal(v);
         }
 
         static __forceinline XMVECTOR ReciprocalLength(const XMINT2 &v) noexcept
         {
-            return Vector_Helper<int32_t,2>::ReciprocalLength(v);
+            return XMVectorAdapter<int32_t,2>::ReciprocalLength(v);
         }
 
         template <class V>
         static __forceinline XMVECTOR Reflect(const XMINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,2>::Reflect(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,2>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR Refract(const XMINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<int32_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2713,80 +2623,80 @@ namespace
         template <class V>
         static __forceinline XMVECTOR AngleBetweenNormals(const XMINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,3>::AngleBetweenNormals(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,3>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR AngleBetweenVectors(const XMINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,3>::AngleBetweenVectors(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,3>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR ClampLength(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<int32_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
         static __forceinline XMVECTOR CrossProduct(const XMINT3 &v1, V &&v2)
         {
-            return Vector_Helper<int32_t,3>::CrossProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,3>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR DotProduct(const XMINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,3>::DotProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,3>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline bool InBounds(const XMINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,3>::InBounds(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,3>::InBounds(v1, std::forward<V>(v2));
         }
 
         static __forceinline XMVECTOR Length(const XMINT3 &v) noexcept
         {
-            return Vector_Helper<int32_t,3>::Length(v);
+            return XMVectorAdapter<int32_t,3>::Length(v);
         }
 
         static __forceinline XMVECTOR LengthSq(const XMINT3 &v) noexcept
         {
-            return Vector_Helper<int32_t,3>::LengthSq(v);
+            return XMVectorAdapter<int32_t,3>::LengthSq(v);
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR LinePointDistance(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<int32_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static __forceinline XMVECTOR Normalize(const XMINT3 &v) noexcept
         {
-            return Vector_Helper<int32_t,3>::Normalize(v);
+            return XMVectorAdapter<int32_t,3>::Normalize(v);
         }
 
         static __forceinline XMVECTOR Orthogonal(const XMINT3 &v) noexcept
         {
-            return Vector_Helper<int32_t,3>::Orthogonal(v);
+            return XMVectorAdapter<int32_t,3>::Orthogonal(v);
         }
 
         static __forceinline XMVECTOR ReciprocalLength(const XMINT3 &v) noexcept
         {
-            return Vector_Helper<int32_t,3>::ReciprocalLength(v);
+            return XMVectorAdapter<int32_t,3>::ReciprocalLength(v);
         }
 
         template <class V>
         static __forceinline XMVECTOR Reflect(const XMINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,3>::Reflect(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,3>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR Refract(const XMINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<int32_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2796,80 +2706,80 @@ namespace
         template <class V>
         static __forceinline XMVECTOR AngleBetweenNormals(const XMINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,4>::AngleBetweenNormals(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,4>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR AngleBetweenVectors(const XMINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,4>::AngleBetweenVectors(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,4>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR ClampLength(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<int32_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR CrossProduct(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<int32_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
         static __forceinline XMVECTOR DotProduct(const XMINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,4>::DotProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,4>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline bool InBounds(const XMINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,4>::InBounds(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,4>::InBounds(v1, std::forward<V>(v2));
         }
 
         static __forceinline XMVECTOR Length(const XMINT4 &v) noexcept
         {
-            return Vector_Helper<int32_t,4>::Length(v);
+            return XMVectorAdapter<int32_t,4>::Length(v);
         }
 
         static __forceinline XMVECTOR LengthSq(const XMINT4 &v) noexcept
         {
-            return Vector_Helper<int32_t,4>::LengthSq(v);
+            return XMVectorAdapter<int32_t,4>::LengthSq(v);
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR LinePointDistance(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<int32_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static __forceinline XMVECTOR Normalize(const XMINT4 &v) noexcept
         {
-            return Vector_Helper<int32_t,4>::Normalize(v);
+            return XMVectorAdapter<int32_t,4>::Normalize(v);
         }
 
         static __forceinline XMVECTOR Orthogonal(const XMINT4 &v) noexcept
         {
-            return Vector_Helper<int32_t,4>::Orthogonal(v);
+            return XMVectorAdapter<int32_t,4>::Orthogonal(v);
         }
 
         static __forceinline XMVECTOR ReciprocalLength(const XMINT4 &v) noexcept
         {
-            return Vector_Helper<int32_t,4>::ReciprocalLength(v);
+            return XMVectorAdapter<int32_t,4>::ReciprocalLength(v);
         }
 
         template <class V>
         static __forceinline XMVECTOR Reflect(const XMINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<int32_t,4>::Reflect(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,4>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR Refract(const XMINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<int32_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<int32_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2879,80 +2789,80 @@ namespace
         template <class V>
         static __forceinline XMVECTOR AngleBetweenNormals(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,2>::AngleBetweenNormals(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,2>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR AngleBetweenVectors(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,2>::AngleBetweenVectors(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,2>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR ClampLength(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<float_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
         static __forceinline XMVECTOR CrossProduct(const XMFLOAT2 &v1, V &&v2)
         {
-            return Vector_Helper<float_t,2>::CrossProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,2>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR DotProduct(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,2>::DotProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,2>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline bool InBounds(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,2>::InBounds(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,2>::InBounds(v1, std::forward<V>(v2));
         }
 
         static __forceinline XMVECTOR Length(const XMFLOAT2 &v) noexcept
         {
-            return Vector_Helper<float_t,2>::Length(v);
+            return XMVectorAdapter<float_t,2>::Length(v);
         }
 
         static __forceinline XMVECTOR LengthSq(const XMFLOAT2 &v) noexcept
         {
-            return Vector_Helper<float_t,2>::LengthSq(v);
+            return XMVectorAdapter<float_t,2>::LengthSq(v);
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR LinePointDistance(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<float_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static __forceinline XMVECTOR Normalize(const XMFLOAT2 &v) noexcept
         {
-            return Vector_Helper<float_t,2>::Normalize(v);
+            return XMVectorAdapter<float_t,2>::Normalize(v);
         }
 
         static __forceinline XMVECTOR Orthogonal(const XMFLOAT2 &v) noexcept
         {
-            return Vector_Helper<float_t,2>::Orthogonal(v);
+            return XMVectorAdapter<float_t,2>::Orthogonal(v);
         }
 
         static __forceinline XMVECTOR ReciprocalLength(const XMFLOAT2 &v) noexcept
         {
-            return Vector_Helper<float_t,2>::ReciprocalLength(v);
+            return XMVectorAdapter<float_t,2>::ReciprocalLength(v);
         }
 
         template <class V>
         static __forceinline XMVECTOR Reflect(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,2>::Reflect(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,2>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR Refract(const XMFLOAT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<float_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -2962,80 +2872,80 @@ namespace
         template <class V>
         static __forceinline XMVECTOR AngleBetweenNormals(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,3>::AngleBetweenNormals(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,3>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR AngleBetweenVectors(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,3>::AngleBetweenVectors(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,3>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR ClampLength(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<float_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
         static __forceinline XMVECTOR CrossProduct(const XMFLOAT3 &v1, V &&v2)
         {
-            return Vector_Helper<float_t,3>::CrossProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,3>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR DotProduct(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,3>::DotProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,3>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline bool InBounds(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,3>::InBounds(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,3>::InBounds(v1, std::forward<V>(v2));
         }
 
         static __forceinline XMVECTOR Length(const XMFLOAT3 &v) noexcept
         {
-            return Vector_Helper<float_t,3>::Length(v);
+            return XMVectorAdapter<float_t,3>::Length(v);
         }
 
         static __forceinline XMVECTOR LengthSq(const XMFLOAT3 &v) noexcept
         {
-            return Vector_Helper<float_t,3>::LengthSq(v);
+            return XMVectorAdapter<float_t,3>::LengthSq(v);
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR LinePointDistance(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<float_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static __forceinline XMVECTOR Normalize(const XMFLOAT3 &v) noexcept
         {
-            return Vector_Helper<float_t,3>::Normalize(v);
+            return XMVectorAdapter<float_t,3>::Normalize(v);
         }
 
         static __forceinline XMVECTOR Orthogonal(const XMFLOAT3 &v) noexcept
         {
-            return Vector_Helper<float_t,3>::Orthogonal(v);
+            return XMVectorAdapter<float_t,3>::Orthogonal(v);
         }
 
         static __forceinline XMVECTOR ReciprocalLength(const XMFLOAT3 &v) noexcept
         {
-            return Vector_Helper<float_t,3>::ReciprocalLength(v);
+            return XMVectorAdapter<float_t,3>::ReciprocalLength(v);
         }
 
         template <class V>
         static __forceinline XMVECTOR Reflect(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,3>::Reflect(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,3>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR Refract(const XMFLOAT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<float_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -3045,82 +2955,82 @@ namespace
         template <class V>
         static __forceinline XMVECTOR AngleBetweenNormals(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,4>::AngleBetweenNormals(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,4>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR AngleBetweenVectors(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,4>::AngleBetweenVectors(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,4>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR ClampLength(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<float_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR CrossProduct(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<float_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
         static __forceinline XMVECTOR DotProduct(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,4>::DotProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,4>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline bool InBounds(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,4>::InBounds(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,4>::InBounds(v1, std::forward<V>(v2));
         }
 
         static __forceinline XMVECTOR Length(const XMFLOAT4 &v) noexcept
         {
-            return Vector_Helper<float_t,4>::Length(v);
+            return XMVectorAdapter<float_t,4>::Length(v);
         }
 
         static __forceinline XMVECTOR LengthSq(const XMFLOAT4 &v) noexcept
         {
-            return Vector_Helper<float_t,4>::LengthSq(v);
+            return XMVectorAdapter<float_t,4>::LengthSq(v);
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR LinePointDistance(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<float_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
         static __forceinline XMVECTOR Normalize(const XMFLOAT4 &v) noexcept
         {
-            return Vector_Helper<float_t,4>::Normalize(v);
+            return XMVectorAdapter<float_t,4>::Normalize(v);
         }
 
         template <class V>
         static __forceinline XMVECTOR Orthogonal(const XMFLOAT4 &v) noexcept
         {
-            return Vector_Helper<float_t,4>::Orthogonal(v);
+            return XMVectorAdapter<float_t,4>::Orthogonal(v);
         }
 
         static __forceinline XMVECTOR ReciprocalLength(const XMFLOAT4 &v) noexcept
         {
-            return Vector_Helper<float_t,4>::ReciprocalLength(v);
+            return XMVectorAdapter<float_t,4>::ReciprocalLength(v);
         }
 
         template <class V>
         static __forceinline XMVECTOR Reflect(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<float_t,4>::Reflect(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,4>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR Refract(const XMFLOAT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<float_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<float_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -3130,80 +3040,80 @@ namespace
         template <class V>
         static __forceinline XMVECTOR AngleBetweenNormals(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,2>::AngleBetweenNormals(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,2>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR AngleBetweenVectors(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,2>::AngleBetweenVectors(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,2>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR ClampLength(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<uint32_t,2>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
         static __forceinline XMVECTOR CrossProduct(const XMUINT2 &v1, V &&v2)
         {
-            return Vector_Helper<uint32_t,2>::CrossProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,2>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR DotProduct(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,2>::DotProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,2>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline bool InBounds(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,2>::InBounds(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,2>::InBounds(v1, std::forward<V>(v2));
         }
 
         static __forceinline XMVECTOR Length(const XMUINT2 &v) noexcept
         {
-            return Vector_Helper<uint32_t,2>::Length(v);
+            return XMVectorAdapter<uint32_t,2>::Length(v);
         }
 
         static __forceinline XMVECTOR LengthSq(const XMUINT2 &v) noexcept
         {
-            return Vector_Helper<uint32_t,2>::LengthSq(v);
+            return XMVectorAdapter<uint32_t,2>::LengthSq(v);
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR LinePointDistance(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<uint32_t,2>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static __forceinline XMVECTOR Normalize(const XMUINT2 &v) noexcept
         {
-            return Vector_Helper<uint32_t,2>::Normalize(v);
+            return XMVectorAdapter<uint32_t,2>::Normalize(v);
         }
 
         static __forceinline XMVECTOR Orthogonal(const XMUINT2 &v) noexcept
         {
-            return Vector_Helper<uint32_t,2>::Orthogonal(v);
+            return XMVectorAdapter<uint32_t,2>::Orthogonal(v);
         }
 
         static __forceinline XMVECTOR ReciprocalLength(const XMUINT2 &v) noexcept
         {
-            return Vector_Helper<uint32_t,2>::ReciprocalLength(v);
+            return XMVectorAdapter<uint32_t,2>::ReciprocalLength(v);
         }
 
         template <class V>
         static __forceinline XMVECTOR Reflect(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,2>::Reflect(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,2>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR Refract(const XMUINT2 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<uint32_t,2>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -3213,80 +3123,80 @@ namespace
         template <class V>
         static __forceinline XMVECTOR AngleBetweenNormals(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,3>::AngleBetweenNormals(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,3>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR AngleBetweenVectors(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,3>::AngleBetweenVectors(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,3>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR ClampLength(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<uint32_t,3>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
         static __forceinline XMVECTOR CrossProduct(const XMUINT3 &v1, V &&v2)
         {
-            return Vector_Helper<uint32_t,3>::CrossProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,3>::CrossProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR DotProduct(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,3>::DotProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,3>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline bool InBounds(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,3>::InBounds(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,3>::InBounds(v1, std::forward<V>(v2));
         }
 
         static __forceinline XMVECTOR Length(const XMUINT3 &v) noexcept
         {
-            return Vector_Helper<uint32_t,3>::Length(v);
+            return XMVectorAdapter<uint32_t,3>::Length(v);
         }
 
         static __forceinline XMVECTOR LengthSq(const XMUINT3 &v) noexcept
         {
-            return Vector_Helper<uint32_t,3>::LengthSq(v);
+            return XMVectorAdapter<uint32_t,3>::LengthSq(v);
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR LinePointDistance(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<uint32_t,3>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static __forceinline XMVECTOR Normalize(const XMUINT3 &v) noexcept
         {
-            return Vector_Helper<uint32_t,3>::Normalize(v);
+            return XMVectorAdapter<uint32_t,3>::Normalize(v);
         }
 
         static __forceinline XMVECTOR Orthogonal(const XMUINT3 &v) noexcept
         {
-            return Vector_Helper<uint32_t,3>::Orthogonal(v);
+            return XMVectorAdapter<uint32_t,3>::Orthogonal(v);
         }
 
         static __forceinline XMVECTOR ReciprocalLength(const XMUINT3 &v) noexcept
         {
-            return Vector_Helper<uint32_t,3>::ReciprocalLength(v);
+            return XMVectorAdapter<uint32_t,3>::ReciprocalLength(v);
         }
 
         template <class V>
         static __forceinline XMVECTOR Reflect(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,3>::Reflect(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,3>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR Refract(const XMUINT3 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<uint32_t,3>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 
@@ -3296,80 +3206,80 @@ namespace
         template <class V>
         static __forceinline XMVECTOR AngleBetweenNormals(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,4>::AngleBetweenNormals(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,4>::AngleBetweenNormals(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline XMVECTOR AngleBetweenVectors(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,4>::AngleBetweenVectors(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,4>::AngleBetweenVectors(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR ClampLength(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<uint32_t,4>::ClampLength(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR CrossProduct(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<uint32_t,4>::CrossProduct(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         template <class V>
         static __forceinline XMVECTOR DotProduct(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,4>::DotProduct(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,4>::DotProduct(v1, std::forward<V>(v2));
         }
 
         template <class V>
         static __forceinline bool InBounds(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,4>::InBounds(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,4>::InBounds(v1, std::forward<V>(v2));
         }
 
         static __forceinline XMVECTOR Length(const XMUINT4 &v) noexcept
         {
-            return Vector_Helper<uint32_t,4>::Length(v);
+            return XMVectorAdapter<uint32_t,4>::Length(v);
         }
 
         static __forceinline XMVECTOR LengthSq(const XMUINT4 &v) noexcept
         {
-            return Vector_Helper<uint32_t,4>::LengthSq(v);
+            return XMVectorAdapter<uint32_t,4>::LengthSq(v);
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR LinePointDistance(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<uint32_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
         static __forceinline XMVECTOR Normalize(const XMUINT4 &v) noexcept
         {
-            return Vector_Helper<uint32_t,4>::Normalize(v);
+            return XMVectorAdapter<uint32_t,4>::Normalize(v);
         }
 
         static __forceinline XMVECTOR Orthogonal(const XMUINT4 &v) noexcept
         {
-            return Vector_Helper<uint32_t,4>::Orthogonal(v);
+            return XMVectorAdapter<uint32_t,4>::Orthogonal(v);
         }
 
         static __forceinline XMVECTOR ReciprocalLength(const XMUINT4 &v) noexcept
         {
-            return Vector_Helper<uint32_t,4>::ReciprocalLength(v);
+            return XMVectorAdapter<uint32_t,4>::ReciprocalLength(v);
         }
 
         template <class V>
         static __forceinline XMVECTOR Reflect(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return Vector_Helper<uint32_t,4>::Reflect(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,4>::Reflect(v1, std::forward<V>(v2));
         }
 
         template <class V2, class V3>
         static __forceinline XMVECTOR Refract(const XMUINT4 &v1, V2 &&v2, V3 &&v3) noexcept
         {
-            return Vector_Helper<uint32_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
+            return XMVectorAdapter<uint32_t,4>::Refract(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
     };
 }
@@ -3501,7 +3411,7 @@ inline XMVECTOR LinePointDistance(V1 &&linePoint1, V2 &&linePoint2, V3 &&point) 
 template <class V>
 inline XMVECTOR OrthogonalVector(V&& vector) noexcept
 {
-    return Vector_Geometry<std::decay_t<V>>::Orthogonal(std::forward<V>(v));
+    return Vector_Geometry<std::decay_t<V>>::Orthogonal(std::forward<V>(vector));
 }
 
 /// <summary>Computes the reciprocal of the length of a 2-, 3- or 4D vector.</summary>
