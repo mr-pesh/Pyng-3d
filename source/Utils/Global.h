@@ -30,17 +30,15 @@ public:                                    \
 #define FORCE_INLINE __FORCE_INLINE_EXP()
 #define FORCE_INLINE_STATIC __FORCE_INLINE_EXP(static)
 
-
 #define __FORWARD_DECLARE_EXP(name, ...) __VA_ARGS__ name;
 
-#define FORWARD_DECLARE_CLASS (name) __FORWARD_DECLARE_EXP(name, class)
+#define FORWARD_DECLARE_CLASS(name) __FORWARD_DECLARE_EXP(name, class)
 #define FORWARD_DECLARE_STRUCT(name) __FORWARD_DECLARE_EXP(name, struct)
 
-
 #ifdef __GNUC__
-#  define UNUSED      [[gnu::unused]]
-#  define NODISCARD   [[gnu::warn_unused_result]]
-#  define DEPRECATED  [[gnu::deprecated]]
+#  define UNUSED [[gnu::unused]]
+#  define NODISCARD [[gnu::warn_unused_result]]
+#  define DEPRECATED [[gnu::deprecated]]
 #else
 #  define UNUSED [[maybe_unused]]
 #  define NODISCARD [[nodiscard]]
@@ -62,11 +60,11 @@ public:                                    \
 #endif
 
 #ifdef _MSC_VER
-#    define PYNG_LIBRARY_EXPORT __LINK_LIBRARY_EXP(dllexport)
-#    define PYNG_LIBRARY_IMPORT __LINK_LIBRARY_EXP(dllimport)
+#  define PYNG_LIBRARY_EXPORT __LINK_LIBRARY_EXP(dllexport)
+#  define PYNG_LIBRARY_IMPORT __LINK_LIBRARY_EXP(dllimport)
 #else
-#    define PYNG_LIBRARY_EXPORT __LINK_LIBRARY_EXP(default)
-#    define PYNG_LIBRARY_IMPORT __LINK_LIBRARY_EXP(default)
+#  define PYNG_LIBRARY_EXPORT __LINK_LIBRARY_EXP(default)
+#  define PYNG_LIBRARY_IMPORT __LINK_LIBRARY_EXP(default)
 #endif
 
 #define UNUSED(v) (void)v;
