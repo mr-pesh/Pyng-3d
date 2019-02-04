@@ -2245,14 +2245,16 @@ namespace
             return XMVectorAdapter<int32_t,2>::GreaterOrEqual(v1,v2);
         }
 
-        static __forceinline bool Equal(const XMINT2 &v1, const XMINT2 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMINT2 &v1, V &&v2)
         {
-            return XMVectorAdapter<int32_t,2>::Equal(v1,v2);
+            return XMVectorAdapter<int32_t,2>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMINT2 &v1, const XMINT2 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMINT2 &v1, V &&v2)
         {
-            return XMVectorAdapter<int32_t,2>::NotEqual(v1,v2);
+            return XMVectorAdapter<int32_t,2>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
@@ -2279,14 +2281,16 @@ namespace
             return XMVectorAdapter<int32_t,3>::GreaterOrEqual(v1,v2);
         }
 
-        static __forceinline bool Equal(const XMINT3 &v1, const XMINT3 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMINT3 &v1, V &&v2)
         {
-            return XMVectorAdapter<int32_t,3>::Equal(v1,v2);
+            return XMVectorAdapter<int32_t,3>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMINT3 &v1, const XMINT3 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMINT3 &v1, V &&v2)
         {
-            return XMVectorAdapter<int32_t,3>::NotEqual(v1,v2);
+            return XMVectorAdapter<int32_t,3>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
@@ -2313,14 +2317,16 @@ namespace
             return XMVectorAdapter<int32_t,4>::GreaterOrEqual(v1,v2);
         }
 
-        static __forceinline bool Equal(const XMINT4 &v1, const XMINT4 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMINT4 &v1, V &&v2)
         {
-            return XMVectorAdapter<int32_t,4>::Equal(v1,v2);
+            return XMVectorAdapter<int32_t,4>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMINT4 &v1, const XMINT4 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMINT4 &v1, V &&v2)
         {
-            return XMVectorAdapter<int32_t,4>::NotEqual(v1,v2);
+            return XMVectorAdapter<int32_t,4>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
@@ -2347,14 +2353,16 @@ namespace
             return XMVectorAdapter<float_t,2>::GreaterOrEqual(v1,v2);
         }
 
-        static __forceinline bool Equal(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMFLOAT2 &v1, V &&v2)
         {
-            return XMVectorAdapter<float_t,2>::Equal(v1,v2);
+            return XMVectorAdapter<float_t,2>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMFLOAT2 &v1, V &&v2)
         {
-            return XMVectorAdapter<float_t,2>::NotEqual(v1,v2);
+            return XMVectorAdapter<float_t,2>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
@@ -2381,14 +2389,16 @@ namespace
             return XMVectorAdapter<float_t,3>::GreaterOrEqual(v1,v2);
         }
 
-        static __forceinline bool Equal(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMFLOAT3 &v1, V &&v2)
         {
-            return XMVectorAdapter<float_t,3>::Equal(v1,v2);
+            return XMVectorAdapter<float_t,3>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMFLOAT3 &v1, V &&v2)
         {
-            return XMVectorAdapter<float_t,3>::NotEqual(v1,v2);
+            return XMVectorAdapter<float_t,3>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
@@ -2415,14 +2425,16 @@ namespace
             return XMVectorAdapter<float_t,4>::GreaterOrEqual(v1,v2);
         }
 
-        static __forceinline bool Equal(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMFLOAT4 &v1, V &&v2)
         {
-            return XMVectorAdapter<float_t,4>::Equal(v1,v2);
+            return XMVectorAdapter<float_t,4>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMFLOAT4 &v1, V &&v2)
         {
-            return XMVectorAdapter<float_t,4>::NotEqual(v1,v2);
+            return XMVectorAdapter<float_t,4>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
@@ -2449,14 +2461,16 @@ namespace
             return XMVectorAdapter<uint32_t,2>::GreaterOrEqual(v1,v2);
         }
 
-        static __forceinline bool Equal(const XMUINT2 &v1, const XMUINT2 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMUINT2 &v1, V &&v2)
         {
-            return XMVectorAdapter<uint32_t,2>::Equal(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMUINT2 &v1, const XMUINT2 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMUINT2 &v1, V &&v2)
         {
-            return XMVectorAdapter<uint32_t,2>::NotEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
@@ -2483,14 +2497,16 @@ namespace
             return XMVectorAdapter<uint32_t,3>::GreaterOrEqual(v1,v2);
         }
 
-        static __forceinline bool Equal(const XMUINT3 &v1, const XMUINT3 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMUINT3 &v1, V &&v2)
         {
-            return XMVectorAdapter<uint32_t,3>::Equal(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMUINT3 &v1, const XMUINT3 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMUINT3 &v1, V &&v2)
         {
-            return XMVectorAdapter<uint32_t,3>::NotEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
@@ -2517,14 +2533,15 @@ namespace
             return XMVectorAdapter<uint32_t,4>::GreaterOrEqual(v1,v2);
         }
 
-        static __forceinline bool Equal(const XMUINT4 &v1, const XMUINT4 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMUINT4 &v1, V &&v2)
         {
-            return XMVectorAdapter<uint32_t,4>::Equal(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::Equal(v1, std::forward<V>(v2));
         }
-
-        static __forceinline bool NotEqual(const XMUINT4 &v1, const XMUINT4 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMUINT4 &v1, V &&v2)
         {
-            return XMVectorAdapter<uint32_t,4>::NotEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 }
@@ -3308,16 +3325,16 @@ inline bool operator>=(const V &vector1, const V &vector2)
     return Vector_Comparator<V>::GreaterOrEqual(vector1, vector2);
 }
 
-template <class V>
-inline bool operator==(const V &vector1, const V &vector2)
+template <class V1, class V2>
+inline bool operator==(V1 &&vector1, V2 &&vector2)
 {
-    return Vector_Comparator<V>::Equal(vector1, vector2);
+    return Vector_Comparator<std::decay_t<V1>>::Equal(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
-template <class V>
-inline bool operator!=(const V &vector1, const V &vector2)
+template <class V1, class V2>
+inline bool operator!=(V1 &&vector1, V2 &&vector2)
 {
-    return Vector_Comparator<V>::NotEqual(vector1, vector2);
+    return Vector_Comparator<std::decay_t<V1>>::NotEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 namespace VectorAngle
