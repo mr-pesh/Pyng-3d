@@ -7,6 +7,7 @@
     Class &operator=(const Class&) = delete;
 
 #define DECLARE_PYNG_SINGLETON(Type)       \
+    PYNG_DISABLE_COPY(Type)                \
 public:                                    \
     Type();                                \
     static Type *instance();               \
