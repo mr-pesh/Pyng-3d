@@ -60,7 +60,7 @@ namespace std
 }
 
 template <typename T, int length>
-using Vector = Vector_Helper_T <T, length>;
+using Vector = XMVectorAdapterT<T, length>;
 
 // Win SDK 8.1 style definitions
 

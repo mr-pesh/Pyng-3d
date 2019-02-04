@@ -29,7 +29,7 @@ namespace std
 #include "private/DXMapper.h"
 
 template <class T, int rows, int columns>
-using Matrix = Matrix_Helper_T <T, rows, columns>;
+using Matrix = XMMatrixAdapterT <T, rows, columns>;
 
 // Win SDK 8.1 style definitions
 
