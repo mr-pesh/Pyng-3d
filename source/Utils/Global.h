@@ -48,11 +48,11 @@ public:                                    \
 #endif
 
 #ifdef _MSC_VER
-#  define LIKELY(expr)
-#  define UNLIKELY(expr)
+#  define EXPECTED(expr) (expr)
+#  define UNLIKELY(expr) (expr)
 #elif defined (__GNUC__)
-#  define LIKELY(expr)    __builtin_expect(!!(expr), true)
-#  define UNLIKELY(expr)  __builtin_expect(!!(expr), false)
+#  define EXPECTED(expr) __builtin_expect(!!(expr), true)
+#  define UNLIKELY(expr) __builtin_expect(!!(expr), false)
 #endif
 
 #ifdef _MSC_VER
