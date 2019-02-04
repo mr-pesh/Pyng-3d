@@ -38,9 +38,9 @@ public:                                    \
 
 
 #ifdef __GNUC__
-#  define UNUSED      __attribute__((__unused__))
+#  define UNUSED      [[gnu::unused]]
 #  define NODISCARD   [[gnu::warn_unused_result]]
-#  define DEPRECATED  __attribute__((__deprecated__))
+#  define DEPRECATED  [[gnu::deprecated]]
 #else
 #  define UNUSED [[maybe_unused]]
 #  define NODISCARD [[nodiscard]]
