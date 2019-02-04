@@ -1,17 +1,23 @@
 #pragma once
 
-#define DISABLE_COPY(Class)                \
+#include <memory>
+
+#define PYNG_DISABLE_COPY(Class)           \
     Class (const Class&) = delete;         \
     Class &operator=(const Class&) = delete;
 
-#define DECLARE_SINGLETON_CLASS(Type) \
-    static Type *instance();
+#define DECLARE_PYNG_SINGLETON(Type)       \
+public:                                    \
+    Type();                                \
+    static Type *instance();               \
 
-#define DEFINE_SINGLETON_CLASS(Type) \
-    static Type *Type::instance()    \
-    {                                \
-        static Type p;               \
-        return &p;                   \
+#define DEFINE_PYNG_SINGLETON(Type)                  \
+    Type::Type()                                     \
+    {  }                                             \
+    static Type *Type::instance()                    \
+    {                                                \
+        static auto ptr = std::make_unique<Type>();  \
+        return ptr.get();                            \
     }
 
 #ifdef _MSC_VER
