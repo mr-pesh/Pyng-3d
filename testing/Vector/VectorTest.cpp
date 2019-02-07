@@ -75,7 +75,7 @@ TEST_F(VectorUnitTest, VectorCompareTest)
                 {
                     // Equal
                     ASSERT_TRUE(vec1 == vec1);
-                    ASSERT_FALSE(vec1 == OrthogonalVector(vec1));
+                    ASSERT_FALSE(vec1 == Normalize(vec1));
 
                     // NotEqual
                     ASSERT_TRUE(vec1 != Normalize(vec1));
@@ -84,6 +84,11 @@ TEST_F(VectorUnitTest, VectorCompareTest)
                     // GreaterOrEqual
                     ASSERT_TRUE(vec1 >= vec1);
                     ASSERT_TRUE(vec1 >= Normalize(vec1));
+
+                    // Greater
+                    // TODO: Replace Normalize function with devision by 2 
+                    //ASSERT_TRUE(vec1 > Normalize(vec1));
+                    ASSERT_FALSE(vec1 > vec1);
                 },
                 variant);
             }
