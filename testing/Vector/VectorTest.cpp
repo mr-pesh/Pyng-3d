@@ -3,18 +3,22 @@
 #include <Math/Matrix.h>
 #include <Math/Vector.h>
 
+#include <array>
 #include <numeric>
 #include <variant>
 
 template <size_t length>
-using VectorVariants = std::variant<Vector<int32_t, length>, Vector<float_t, length>, Vector<uint32_t, length>>;
+using VectorVariant = std::variant<Vector<int32_t, length>, Vector<float_t, length>, Vector<uint32_t, length>>;
+
+template <size_t length>
+using VariantsArray = std::array<VectorVariant<length>, 3>;
 
 class VectorUnitTest : public testing::Test {
 };
 
 TEST_F(VectorUnitTest, TransformTest)
 {
-    const VectorVariants<3> vectors[] = {
+    const VectorVariant<3> vectors[] = {
         Vector<int32_t,3>{ 7, 9, 5 },
         Vector<float_t,3>{ 1.f, 2.f, 3.f },
         Vector<uint32_t,3>{ 89u, 46u, 101u },
@@ -33,7 +37,7 @@ TEST_F(VectorUnitTest, TransformTest)
     #endif
     };
 
-    const VectorVariants<3> expected[] = {
+    const VectorVariant<3> expected[] = {
         Vector<int32_t,3>{ 611, -502, 243 },
         Vector<float_t,3>{ 30.f, 36.f, 42.f },
         Vector<uint32_t,3>{ 15417u, 5251u, 33119u }
@@ -49,6 +53,55 @@ TEST_F(VectorUnitTest, TransformTest)
         },
         vectors[i], matrices[i], expected[i]);
     };
+}
+
+TEST_F(VectorUnitTest, VectorCompareTest)
+{
+    using TestType = std::variant<VariantsArray<2>, VariantsArray<3>, VariantsArray<4>>;
+
+    const TestType variants[] = {
+        VariantsArray<2>{ iVec2{ 7, 9 }, dVec2{ 1.f, 2.f }, uVec2{ 89u, 46u } },
+        VariantsArray<3>{ iVec3{ 7, 9, 5 }, dVec3{ 1.f, 2.f, 3.f }, uVec3{ 89u, 46u, 101u } },
+        VariantsArray<4>{ iVec4{ 7, 9, 5, 0 }, dVec4{ 1.f, 2.f, 3.f, 0.f }, uVec4{ 89u, 46u, 101u, 0u } }
+    };
+
+    for (const auto &array : variants)
+    {
+        std::visit([](auto &&variantArray)
+        {
+            for (auto &&variant : variantArray)
+            {
+                std::visit([](auto &&vec1)
+                {
+                    // Equal
+                    ASSERT_TRUE(vec1 == vec1);
+                    ASSERT_FALSE(vec1 == Normalize(vec1));
+
+                    // NotEqual
+                    ASSERT_TRUE(vec1 != Normalize(vec1));
+                    ASSERT_FALSE(vec1 != vec1);
+                    
+                    // GreaterOrEqual
+                    ASSERT_TRUE(vec1 >= vec1);
+                    ASSERT_TRUE(vec1 >= Normalize(vec1));
+
+                    // Greater
+                    // TODO: Replace Normalize function with devision by 2 
+                    //ASSERT_TRUE(vec1 > Normalize(vec1));
+                    ASSERT_FALSE(vec1 > vec1);
+
+                    // LessOrEqual
+                    ASSERT_TRUE(vec1 <= vec1);
+                    ASSERT_FALSE(vec1 <= Normalize(vec1));
+
+                    // Less
+                    ASSERT_FALSE(vec1 < vec1);
+                    ASSERT_FALSE(vec1 < Normalize(vec1));
+                },
+                variant);
+            }
+        }, array);
+    }
 }
 
 TEST_F(VectorUnitTest, AngleFunctionsTest)
@@ -77,7 +130,7 @@ TEST_F(VectorUnitTest, AngleFunctionsTest)
 
 TEST_F(VectorUnitTest, VectorGeometryFunctions)
 {
-    const VectorVariants<3> args[] =
+    const VectorVariant<3> args[] =
     {
         Vector<int32_t,3>{ 4, 3, 5 }, Vector<float_t,3>{ 4.f, 3.f, 5.f }, // Vector<uint32_t,3>{ 4u, 3u, 5u }
     };

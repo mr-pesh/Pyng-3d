@@ -167,19 +167,43 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2EqualInt(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2EqualInt(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2EqualInt(XMLoadSInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Greater(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2Greater(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2Greater(XMLoadSInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2GreaterOrEqual(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2GreaterOrEqual(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2GreaterOrEqual(XMLoadSInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Length(const Type &vec) noexcept
@@ -192,14 +216,30 @@ namespace
             return XMVector2LengthSq(XMLoadSInt2(&vec));
         }
 
-        static __forceinline bool Less(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Less(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2Less(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2Less(XMLoadSInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2LessOrEqual(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2LessOrEqual(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2LessOrEqual(XMLoadSInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         template <class V>
@@ -215,9 +255,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2NotEqualInt(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2NotEqualInt(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2NotEqualInt(XMLoadSInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -396,19 +444,43 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3EqualInt(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3EqualInt(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3EqualInt(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3Greater(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3Greater(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3Greater(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3GreaterOrEqual(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3GreaterOrEqual(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3GreaterOrEqual(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Length(const Type &vec) noexcept
@@ -421,14 +493,30 @@ namespace
             return XMVector3LengthSq(XMLoadSInt3(&vec));
         }
 
-        static __forceinline bool Less(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3Less(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3Less(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3Less(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3LessOrEqual(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3LessOrEqual(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3LessOrEqual(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         template <class V>
@@ -444,9 +532,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3NotEqualInt(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3NotEqualInt(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3NotEqualInt(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -625,19 +721,43 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2EqualInt(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4EqualInt(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4EqualInt(XMLoadSInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Greater(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4Greater(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4Greater(XMLoadSInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4GreaterOrEqual(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4GreaterOrEqual(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4GreaterOrEqual(XMLoadSInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Length(const Type &vec) noexcept
@@ -650,14 +770,30 @@ namespace
             return XMVector4LengthSq(XMLoadSInt4(&vec));
         }
 
-        static __forceinline bool Less(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4Less(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4Less(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4Less(XMLoadSInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4LessOrEqual(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4LessOrEqual(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4LessOrEqual(XMLoadSInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         template <class V>
@@ -673,9 +809,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4NotEqualInt(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4NotEqualInt(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4NotEqualInt(XMLoadSInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -842,19 +986,43 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Equal(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2Equal(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2Equal(XMLoadFloat2(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Greater(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2Greater(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2Greater(XMLoadFloat2(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2GreaterOrEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2GreaterOrEqual(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2GreaterOrEqual(XMLoadFloat2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Length(const Type &vec) noexcept
@@ -867,14 +1035,30 @@ namespace
             return XMVector2LengthSq(XMLoadFloat2(&vec));
         }
 
-        static __forceinline bool Less(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Less(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2Less(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2Less(XMLoadFloat2(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2LessOrEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2LessOrEqual(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2LessOrEqual(XMLoadFloat2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         template <class V>
@@ -890,9 +1074,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2NotEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2NotEqual(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2NotEqual(XMLoadFloat2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -1071,19 +1263,43 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3Equal(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3Equal(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3Equal(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3Greater(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3Greater(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3Greater(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3GreaterOrEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3GreaterOrEqual(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3GreaterOrEqual(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Length(const Type &vec) noexcept
@@ -1096,14 +1312,30 @@ namespace
             return XMVector3LengthSq(XMLoadFloat3(&vec));
         }
 
-        static __forceinline bool Less(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3Less(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3Less(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3Less(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3LessOrEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3LessOrEqual(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3LessOrEqual(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         template <class V>
@@ -1119,9 +1351,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3NotEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3NotEqual(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3NotEqual(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -1300,19 +1540,43 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4Equal(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4Equal(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4Equal(XMLoadFloat4(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4Greater(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4Greater(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4Greater(XMLoadFloat4(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4GreaterOrEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4GreaterOrEqual(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4GreaterOrEqual(XMLoadFloat4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Length(const Type &vec) noexcept
@@ -1325,14 +1589,30 @@ namespace
             return XMVector4LengthSq(XMLoadFloat4(&vec));
         }
 
-        static __forceinline bool Less(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4Less(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4Less(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4Less(XMLoadFloat4(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4LessOrEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4LessOrEqual(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4LessOrEqual(XMLoadFloat4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         template <class V>
@@ -1348,9 +1628,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4NotEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4NotEqual(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4NotEqual(XMLoadFloat4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -1517,19 +1805,43 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2EqualInt(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2EqualInt(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2EqualInt(XMLoadUInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Greater(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2Greater(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2Greater(XMLoadUInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2GreaterOrEqual(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2GreaterOrEqual(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2GreaterOrEqual(XMLoadUInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Length(const Type &vec) noexcept
@@ -1542,14 +1854,30 @@ namespace
             return XMVector2LengthSq(XMLoadUInt2(&vec));
         }
 
-        static __forceinline bool Less(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Less(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2Less(XMLoadUInt2(&vec2), XMLoadUInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2Less(XMLoadUInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2LessOrEqual(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2LessOrEqual(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2LessOrEqual(XMLoadUInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         template <class V>
@@ -1565,9 +1893,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2NotEqualInt(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2NotEqualInt(XMLoadUInt2(&vec1), XMLoadUInt2(&vec1));
+            }
+            else if (isXMVector) {
+                return XMVector2NotEqualInt(XMLoadUInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -1746,19 +2082,43 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3EqualInt(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3EqualInt(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3EqualInt(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3Greater(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3Greater(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3Greater(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3GreaterOrEqual(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3GreaterOrEqual(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3GreaterOrEqual(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Length(const Type &vec) noexcept
@@ -1771,14 +2131,30 @@ namespace
             return XMVector3LengthSq(XMLoadUInt3(&vec));
         }
 
-        static __forceinline bool Less(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3Less(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3Less(XMLoadUInt3(&vec2), XMLoadUInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3Less(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3LessOrEqual(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3LessOrEqual(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3LessOrEqual(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         template <class V>
@@ -1794,9 +2170,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector3NotEqualInt(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3NotEqualInt(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3NotEqualInt(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -1975,19 +2359,43 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2EqualInt(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4EqualInt(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4EqualInt(XMLoadUInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool Greater(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector2Greater(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4Greater(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4Greater(XMLoadUInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4GreaterOrEqual(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4GreaterOrEqual(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4GreaterOrEqual(XMLoadUInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Length(const Type &vec) noexcept
@@ -2000,14 +2408,30 @@ namespace
             return XMVector4LengthSq(XMLoadUInt4(&vec));
         }
 
-        static __forceinline bool Less(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4Less(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4Less(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4Less(XMLoadUInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
-        static __forceinline bool LessOrEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4LessOrEqual(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4LessOrEqual(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4LessOrEqual(XMLoadUInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         template <class V>
@@ -2023,9 +2447,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
-            return XMVector4NotEqualInt(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4NotEqualInt(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4NotEqualInt(XMLoadUInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -2220,311 +2652,364 @@ namespace
     using namespace DirectX;
 
     template <class V>
-    struct Vector_Comparator;
+    struct XMVectorComparisonMapper;
 
     template <>
-    struct Vector_Comparator<XMINT2>
+    struct XMVectorComparisonMapper<XMINT2>
     {
-        static __forceinline bool Less(const XMINT2 &v1, const XMINT2 &v2)
+        template <class V>
+        static __forceinline bool Less(const XMINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,2>::Less(v1,v2);
+            return XMVectorAdapter<int32_t,2>::Less(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool LessOrEqual(const XMINT2 &v1, const XMINT2 &v2)
+        template <class V>
+        static __forceinline bool LessOrEqual(const XMINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,2>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,2>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Greater(const XMINT2 &v1, const XMINT2 &v2)
+        template <class V>
+        static __forceinline bool Greater(const XMINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,2>::Greater(v1,v2);
+            return XMVectorAdapter<int32_t,2>::Greater(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool GreaterOrEqual(const XMINT2 &v1, const XMINT2 &v2)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const XMINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,2>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,2>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Equal(const XMINT2 &v1, const XMINT2 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,2>::Equal(v1,v2);
+            return XMVectorAdapter<int32_t,2>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMINT2 &v1, const XMINT2 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,2>::NotEqual(v1,v2);
+            return XMVectorAdapter<int32_t,2>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
     template <>
-    struct Vector_Comparator<XMINT3>
+    struct XMVectorComparisonMapper<XMINT3>
     {
-        static __forceinline bool Less(const XMINT3 &v1, const XMINT3 &v2)
+        template <class V>
+        static __forceinline bool Less(const XMINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,3>::Less(v1,v2);
+            return XMVectorAdapter<int32_t,3>::Less(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool LessOrEqual(const XMINT3 &v1, const XMINT3 &v2)
+        template <class V>
+        static __forceinline bool LessOrEqual(const XMINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,3>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,3>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Greater(const XMINT3 &v1, const XMINT3 &v2)
+        template <class V>
+        static __forceinline bool Greater(const XMINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,3>::Greater(v1,v2);
+            return XMVectorAdapter<int32_t,3>::Greater(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool GreaterOrEqual(const XMINT3 &v1, const XMINT3 &v2)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const XMINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,3>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,3>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Equal(const XMINT3 &v1, const XMINT3 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,3>::Equal(v1,v2);
+            return XMVectorAdapter<int32_t,3>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMINT3 &v1, const XMINT3 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,3>::NotEqual(v1,v2);
+            return XMVectorAdapter<int32_t,3>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
     template <>
-    struct Vector_Comparator<XMINT4>
+    struct XMVectorComparisonMapper<XMINT4>
     {
-        static __forceinline bool Less(const XMINT4 &v1, const XMINT4 &v2)
+        template <class V>
+        static __forceinline bool Less(const XMINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,4>::Less(v1,v2);
+            return XMVectorAdapter<int32_t,4>::Less(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool LessOrEqual(const XMINT4 &v1, const XMINT4 &v2)
+        template <class V>
+        static __forceinline bool LessOrEqual(const XMINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,4>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,4>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Greater(const XMINT4 &v1, const XMINT4 &v2)
+        template <class V>
+        static __forceinline bool Greater(const XMINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,4>::Greater(v1,v2);
+            return XMVectorAdapter<int32_t,4>::Greater(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool GreaterOrEqual(const XMINT4 &v1, const XMINT4 &v2)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const XMINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,4>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<int32_t,4>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Equal(const XMINT4 &v1, const XMINT4 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,4>::Equal(v1,v2);
+            return XMVectorAdapter<int32_t,4>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMINT4 &v1, const XMINT4 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,4>::NotEqual(v1,v2);
+            return XMVectorAdapter<int32_t,4>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
     template <>
-    struct Vector_Comparator<XMFLOAT2>
+    struct XMVectorComparisonMapper<XMFLOAT2>
     {
-        static __forceinline bool Less(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        template <class V>
+        static __forceinline bool Less(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,2>::Less(v1,v2);
+            return XMVectorAdapter<float_t,2>::Less(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool LessOrEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        template <class V>
+        static __forceinline bool LessOrEqual(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,2>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,2>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Greater(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        template <class V>
+        static __forceinline bool Greater(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,2>::Greater(v1,v2);
+            return XMVectorAdapter<float_t,2>::Greater(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool GreaterOrEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,2>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,2>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Equal(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,2>::Equal(v1,v2);
+            return XMVectorAdapter<float_t,2>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMFLOAT2 &v1, const XMFLOAT2 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,2>::NotEqual(v1,v2);
+            return XMVectorAdapter<float_t,2>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
     template <>
-    struct Vector_Comparator<XMFLOAT3>
+    struct XMVectorComparisonMapper<XMFLOAT3>
     {
-        static __forceinline bool Less(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        template <class V>
+        static __forceinline bool Less(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,3>::Less(v1,v2);
+            return XMVectorAdapter<float_t,3>::Less(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool LessOrEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        template <class V>
+        static __forceinline bool LessOrEqual(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,3>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,3>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Greater(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        template <class V>
+        static __forceinline bool Greater(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,3>::Greater(v1,v2);
+            return XMVectorAdapter<float_t,3>::Greater(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool GreaterOrEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,3>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,3>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Equal(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,3>::Equal(v1,v2);
+            return XMVectorAdapter<float_t,3>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMFLOAT3 &v1, const XMFLOAT3 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,3>::NotEqual(v1,v2);
+            return XMVectorAdapter<float_t,3>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
     template <>
-    struct Vector_Comparator<XMFLOAT4>
+    struct XMVectorComparisonMapper<XMFLOAT4>
     {
-        static __forceinline bool Less(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        template <class V>
+        static __forceinline bool Less(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,4>::Less(v1,v2);
+            return XMVectorAdapter<float_t,4>::Less(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool LessOrEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        template <class V>
+        static __forceinline bool LessOrEqual(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,4>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,4>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Greater(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        template <class V>
+        static __forceinline bool Greater(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,4>::Greater(v1,v2);
+            return XMVectorAdapter<float_t,4>::Greater(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool GreaterOrEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,4>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<float_t,4>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Equal(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,4>::Equal(v1,v2);
+            return XMVectorAdapter<float_t,4>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMFLOAT4 &v1, const XMFLOAT4 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,4>::NotEqual(v1,v2);
+            return XMVectorAdapter<float_t,4>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
     template <>
-    struct Vector_Comparator<XMUINT2>
+    struct XMVectorComparisonMapper<XMUINT2>
     {
-        static __forceinline bool Less(const XMUINT2 &v1, const XMUINT2 &v2)
+        template <class V>
+        static __forceinline bool Less(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,2>::Less(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::Less(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool LessOrEqual(const XMUINT2 &v1, const XMUINT2 &v2)
+        template <class V>
+        static __forceinline bool LessOrEqual(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,2>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Greater(const XMUINT2 &v1, const XMUINT2 &v2)
+        template <class V>
+        static __forceinline bool Greater(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,2>::Greater(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::Greater(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool GreaterOrEqual(const XMUINT2 &v1, const XMUINT2 &v2)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,2>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Equal(const XMUINT2 &v1, const XMUINT2 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,2>::Equal(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool NotEqual(const XMUINT2 &v1, const XMUINT2 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,2>::NotEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,2>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
     template <>
-    struct Vector_Comparator<XMUINT3>
+    struct XMVectorComparisonMapper<XMUINT3>
     {
-        static __forceinline bool Less(const XMUINT3 &v1, const XMUINT3 &v2)
+        template <class V>
+        static __forceinline bool Less(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,3>::Less(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::Less(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool LessOrEqual(const XMUINT3 &v1, const XMUINT3 &v2)
+        template <class V>
+        static __forceinline bool LessOrEqual(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,3>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Greater(const XMUINT3 &v1, const XMUINT3 &v2)
+        template <class V>
+        static __forceinline bool Greater(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,3>::Greater(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::Greater(v1, std::forward<V>(v2));
+        }
+        
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const XMUINT3 &v1, V &&v2) noexcept
+        {
+            return XMVectorAdapter<uint32_t,3>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool GreaterOrEqual(const XMUINT3 &v1, const XMUINT3 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,3>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::Equal(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Equal(const XMUINT3 &v1, const XMUINT3 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,3>::Equal(v1,v2);
-        }
-
-        static __forceinline bool NotEqual(const XMUINT3 &v1, const XMUINT3 &v2)
-        {
-            return XMVectorAdapter<uint32_t,3>::NotEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,3>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 
     template <>
-    struct Vector_Comparator<XMUINT4>
+    struct XMVectorComparisonMapper<XMUINT4>
     {
-        static __forceinline bool Less(const XMUINT4 &v1, const XMUINT4 &v2)
+        template <class V>
+        static __forceinline bool Less(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,4>::Less(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::Less(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool LessOrEqual(const XMUINT4 &v1, const XMUINT4 &v2)
+        template <class V>
+        static __forceinline bool LessOrEqual(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,4>::LessOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Greater(const XMUINT4 &v1, const XMUINT4 &v2)
+        template <class V>
+        static __forceinline bool Greater(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,4>::Greater(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::Greater(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool GreaterOrEqual(const XMUINT4 &v1, const XMUINT4 &v2)
+        template <class V>
+        static __forceinline bool GreaterOrEqual(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,4>::GreaterOrEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
-        static __forceinline bool Equal(const XMUINT4 &v1, const XMUINT4 &v2)
+        template <class V>
+        static __forceinline bool Equal(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,4>::Equal(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::Equal(v1, std::forward<V>(v2));
         }
-
-        static __forceinline bool NotEqual(const XMUINT4 &v1, const XMUINT4 &v2)
+        template <class V>
+        static __forceinline bool NotEqual(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,4>::NotEqual(v1,v2);
+            return XMVectorAdapter<uint32_t,4>::NotEqual(v1, std::forward<V>(v2));
         }
     };
 }
@@ -3004,13 +3489,11 @@ namespace
             return XMVectorAdapter<float_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
-        template <class V>
         static __forceinline XMVECTOR Normalize(const XMFLOAT4 &v) noexcept
         {
             return XMVectorAdapter<float_t,4>::Normalize(v);
         }
 
-        template <class V>
         static __forceinline XMVECTOR Orthogonal(const XMFLOAT4 &v) noexcept
         {
             return XMVectorAdapter<float_t,4>::Orthogonal(v);
@@ -3284,40 +3767,40 @@ namespace
     };
 }
 
-template <class V>
-inline bool operator<(const V &vector1, const V &vector2)
+template <class V1, class V2>
+inline bool operator<(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<V>::Less(vector1, vector2);
+    return XMVectorComparisonMapper<std::decay_t<V1>>::Less(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
-template <class V>
-inline bool operator<=(const V &vector1, const V &vector2)
+template <class V1, class V2>
+inline bool operator<=(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<V>::LessOrEqual(vector1, vector2);
+    return XMVectorComparisonMapper<std::decay_t<V1>>::LessOrEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
-template <class V>
-inline bool operator>(const V &vector1, const V &vector2)
+template <class V1, class V2>
+inline bool operator>(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<V>::Greater(vector1, vector2);
+    return XMVectorComparisonMapper<std::decay_t<V1>>::Greater(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
-template <class V>
-inline bool operator>=(const V &vector1, const V &vector2)
+template <class V1, class V2>
+inline bool operator>=(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<V>::GreaterOrEqual(vector1, vector2);
+    return XMVectorComparisonMapper<std::decay_t<V1>>::GreaterOrEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
-template <class V>
-inline bool operator==(const V &vector1, const V &vector2)
+template <class V1, class V2>
+inline bool operator==(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<V>::Equal(vector1, vector2);
+    return XMVectorComparisonMapper<std::decay_t<V1>>::Equal(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
-template <class V>
-inline bool operator!=(const V &vector1, const V &vector2)
+template <class V1, class V2>
+inline bool operator!=(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<V>::NotEqual(vector1, vector2);
+    return XMVectorComparisonMapper<std::decay_t<V1>>::NotEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 namespace VectorAngle
