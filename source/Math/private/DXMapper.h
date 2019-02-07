@@ -167,9 +167,17 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2)
         {
-            return XMVector2EqualInt(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2EqualInt(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2EqualInt(XMLoadSInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline bool Greater(const Type &lhs, const Type &rhs)
@@ -215,9 +223,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
         {
-            return XMVector2NotEqualInt(XMLoadSInt2(&lhs), XMLoadSInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2NotEqualInt(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2NotEqualInt(XMLoadSInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -396,9 +412,17 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2)
         {
-            return XMVector3EqualInt(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3EqualInt(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3EqualInt(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline bool Greater(const Type &lhs, const Type &rhs)
@@ -444,9 +468,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
         {
-            return XMVector3NotEqualInt(XMLoadSInt3(&lhs), XMLoadSInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3NotEqualInt(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3NotEqualInt(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -625,14 +657,22 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2)
         {
-            return XMVector2EqualInt(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4EqualInt(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4EqualInt(XMLoadSInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
-            return XMVector2Greater(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+            return XMVector4Greater(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
         }
 
         static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
@@ -673,9 +713,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
         {
-            return XMVector4NotEqualInt(XMLoadSInt4(&lhs), XMLoadSInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4NotEqualInt(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4NotEqualInt(XMLoadSInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -842,9 +890,17 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2)
         {
-            return XMVector2Equal(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2Equal(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2Equal(XMLoadFloat2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline bool Greater(const Type &lhs, const Type &rhs)
@@ -890,9 +946,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
         {
-            return XMVector2NotEqual(XMLoadFloat2(&lhs), XMLoadFloat2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2NotEqual(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2NotEqual(XMLoadFloat2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -1071,9 +1135,17 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2)
         {
-            return XMVector3Equal(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3Equal(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3Equal(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline bool Greater(const Type &lhs, const Type &rhs)
@@ -1119,9 +1191,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
         {
-            return XMVector3NotEqual(XMLoadFloat3(&lhs), XMLoadFloat3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3NotEqual(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3NotEqual(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -1300,9 +1380,17 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2)
         {
-            return XMVector4Equal(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4Equal(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4Equal(XMLoadFloat4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline bool Greater(const Type &lhs, const Type &rhs)
@@ -1348,9 +1436,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
         {
-            return XMVector4NotEqual(XMLoadFloat4(&lhs), XMLoadFloat4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4NotEqual(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4NotEqual(XMLoadFloat4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -1517,9 +1613,17 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2)
         {
-            return XMVector2EqualInt(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2EqualInt(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector2EqualInt(XMLoadUInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline bool Greater(const Type &lhs, const Type &rhs)
@@ -1565,9 +1669,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
         {
-            return XMVector2NotEqualInt(XMLoadUInt2(&lhs), XMLoadUInt2(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector2NotEqualInt(XMLoadUInt2(&vec1), XMLoadUInt2(&vec1));
+            }
+            else if (isXMVector) {
+                return XMVector2NotEqualInt(XMLoadUInt2(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -1746,9 +1858,17 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2)
         {
-            return XMVector3EqualInt(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3EqualInt(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3EqualInt(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline bool Greater(const Type &lhs, const Type &rhs)
@@ -1794,9 +1914,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
         {
-            return XMVector3NotEqualInt(XMLoadUInt3(&lhs), XMLoadUInt3(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector3NotEqualInt(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector3NotEqualInt(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -1975,14 +2103,22 @@ namespace
             }
         }
 
-        static __forceinline bool Equal(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool Equal(const Type &vec1, V &&vec2)
         {
-            return XMVector2EqualInt(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4EqualInt(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4EqualInt(XMLoadUInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline bool Greater(const Type &lhs, const Type &rhs)
         {
-            return XMVector2Greater(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+            return XMVector4Greater(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
         }
 
         static __forceinline bool GreaterOrEqual(const Type &lhs, const Type &rhs)
@@ -2023,9 +2159,17 @@ namespace
             }
         }
 
-        static __forceinline bool NotEqual(const Type &lhs, const Type &rhs)
+        template <class V>
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
         {
-            return XMVector4NotEqualInt(XMLoadUInt4(&lhs), XMLoadUInt4(&rhs));
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVector4NotEqualInt(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVector4NotEqualInt(XMLoadUInt4(&vec1), std::forward<V>(vec2));
+            }
         }
 
         static __forceinline XMVECTOR Normalize(const Type &vec) noexcept
@@ -3021,13 +3165,11 @@ namespace
             return XMVectorAdapter<float_t,4>::LinePointDistance(v1, std::forward<V2>(v2), std::forward<V3>(v3));
         }
 
-        template <class V>
         static __forceinline XMVECTOR Normalize(const XMFLOAT4 &v) noexcept
         {
             return XMVectorAdapter<float_t,4>::Normalize(v);
         }
 
-        template <class V>
         static __forceinline XMVECTOR Orthogonal(const XMFLOAT4 &v) noexcept
         {
             return XMVectorAdapter<float_t,4>::Orthogonal(v);
