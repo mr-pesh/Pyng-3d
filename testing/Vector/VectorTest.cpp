@@ -93,6 +93,10 @@ TEST_F(VectorUnitTest, VectorCompareTest)
                     // LessOrEqual
                     ASSERT_TRUE(vec1 <= vec1);
                     ASSERT_FALSE(vec1 <= Normalize(vec1));
+
+                    // Less
+                    ASSERT_FALSE(vec1 < vec1);
+                    ASSERT_FALSE(vec1 < Normalize(vec1));
                 },
                 variant);
             }
