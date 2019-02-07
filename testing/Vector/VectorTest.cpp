@@ -73,10 +73,17 @@ TEST_F(VectorUnitTest, VectorCompareTest)
             {
                 std::visit([](auto &&vec1)
                 {
+                    // Equal
                     ASSERT_TRUE(vec1 == vec1);
+                    ASSERT_FALSE(vec1 == OrthogonalVector(vec1));
+
+                    // NotEqual
                     ASSERT_TRUE(vec1 != Normalize(vec1));
                     ASSERT_FALSE(vec1 != vec1);
-                    ASSERT_FALSE(vec1 == OrthogonalVector(vec1));
+                    
+                    // GreaterOrEqual
+                    ASSERT_TRUE(vec1 >= vec1);
+                    ASSERT_TRUE(vec1 >= Normalize(vec1));
                 },
                 variant);
             }
