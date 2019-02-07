@@ -89,6 +89,10 @@ TEST_F(VectorUnitTest, VectorCompareTest)
                     // TODO: Replace Normalize function with devision by 2 
                     //ASSERT_TRUE(vec1 > Normalize(vec1));
                     ASSERT_FALSE(vec1 > vec1);
+
+                    // LessOrEqual
+                    ASSERT_TRUE(vec1 <= vec1);
+                    ASSERT_FALSE(vec1 <= Normalize(vec1));
                 },
                 variant);
             }
