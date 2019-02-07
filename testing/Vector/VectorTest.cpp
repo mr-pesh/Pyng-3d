@@ -3,6 +3,7 @@
 #include <Math/Matrix.h>
 #include <Math/Vector.h>
 
+#include <array>
 #include <numeric>
 #include <variant>
 
@@ -52,6 +53,35 @@ TEST_F(VectorUnitTest, TransformTest)
         },
         vectors[i], matrices[i], expected[i]);
     };
+}
+
+TEST_F(VectorUnitTest, VectorCompareTest)
+{
+    using TestType = std::variant<VariantsArray<2>, VariantsArray<3>, VariantsArray<4>>;
+
+    const TestType variants[] = {
+        VariantsArray<2>{ iVec2{ 7, 9 }, dVec2{ 1.f, 2.f }, uVec2{ 89u, 46u } },
+        VariantsArray<3>{ iVec3{ 7, 9, 5 }, dVec3{ 1.f, 2.f, 3.f }, uVec3{ 89u, 46u, 101u } },
+        VariantsArray<4>{ iVec4{ 7, 9, 5, 0 }, dVec4{ 1.f, 2.f, 3.f, 0.f }, uVec4{ 89u, 46u, 101u, 0u } }
+    };
+
+    for (const auto &array : variants)
+    {
+        std::visit([](auto &&variantArray)
+        {
+            for (auto &&variant : variantArray)
+            {
+                std::visit([](auto &&vec1)
+                {
+                    ASSERT_TRUE(vec1 == vec1);
+                    ASSERT_TRUE(vec1 != Normalize(vec1));
+                    ASSERT_FALSE(vec1 != vec1);
+                    ASSERT_FALSE(vec1 == OrthogonalVector(vec1));
+                },
+                variant);
+            }
+        }, array);
+    }
 }
 
 TEST_F(VectorUnitTest, AngleFunctionsTest)
