@@ -7,14 +7,17 @@
 #include <variant>
 
 template <size_t length>
-using VectorVariants = std::variant<Vector<int32_t, length>, Vector<float_t, length>, Vector<uint32_t, length>>;
+using VectorVariant = std::variant<Vector<int32_t, length>, Vector<float_t, length>, Vector<uint32_t, length>>;
+
+template <size_t length>
+using VariantsArray = std::array<VectorVariant<length>, 3>;
 
 class VectorUnitTest : public testing::Test {
 };
 
 TEST_F(VectorUnitTest, TransformTest)
 {
-    const VectorVariants<3> vectors[] = {
+    const VectorVariant<3> vectors[] = {
         Vector<int32_t,3>{ 7, 9, 5 },
         Vector<float_t,3>{ 1.f, 2.f, 3.f },
         Vector<uint32_t,3>{ 89u, 46u, 101u },
@@ -33,7 +36,7 @@ TEST_F(VectorUnitTest, TransformTest)
     #endif
     };
 
-    const VectorVariants<3> expected[] = {
+    const VectorVariant<3> expected[] = {
         Vector<int32_t,3>{ 611, -502, 243 },
         Vector<float_t,3>{ 30.f, 36.f, 42.f },
         Vector<uint32_t,3>{ 15417u, 5251u, 33119u }
@@ -77,7 +80,7 @@ TEST_F(VectorUnitTest, AngleFunctionsTest)
 
 TEST_F(VectorUnitTest, VectorGeometryFunctions)
 {
-    const VectorVariants<3> args[] =
+    const VectorVariant<3> args[] =
     {
         Vector<int32_t,3>{ 4, 3, 5 }, Vector<float_t,3>{ 4.f, 3.f, 5.f }, // Vector<uint32_t,3>{ 4u, 3u, 5u }
     };
