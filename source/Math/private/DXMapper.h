@@ -168,7 +168,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Equal(const Type &vec1, V &&vec2)
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -181,7 +181,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Greater(const Type &vec1, V &&vec2)
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -194,7 +194,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -217,7 +217,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Less(const Type &vec1, V &&vec2)
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -230,7 +230,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -256,7 +256,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -445,7 +445,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Equal(const Type &vec1, V &&vec2)
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -458,7 +458,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Greater(const Type &vec1, V &&vec2)
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -471,7 +471,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -494,7 +494,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Less(const Type &vec1, V &&vec2)
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -507,7 +507,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -533,7 +533,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -722,7 +722,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Equal(const Type &vec1, V &&vec2)
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -735,7 +735,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Greater(const Type &vec1, V &&vec2)
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -748,7 +748,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -771,7 +771,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Less(const Type &vec1, V &&vec2)
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -784,7 +784,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -810,7 +810,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -987,7 +987,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Equal(const Type &vec1, V &&vec2)
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1000,7 +1000,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Greater(const Type &vec1, V &&vec2)
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1013,7 +1013,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1036,7 +1036,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Less(const Type &vec1, V &&vec2)
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1049,7 +1049,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1075,7 +1075,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1264,7 +1264,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Equal(const Type &vec1, V &&vec2)
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1277,7 +1277,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Greater(const Type &vec1, V &&vec2)
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1290,7 +1290,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1313,7 +1313,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Less(const Type &vec1, V &&vec2)
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1326,7 +1326,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1352,7 +1352,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1541,7 +1541,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Equal(const Type &vec1, V &&vec2)
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1554,7 +1554,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Greater(const Type &vec1, V &&vec2)
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1567,7 +1567,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1590,7 +1590,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Less(const Type &vec1, V &&vec2)
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1603,7 +1603,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1629,7 +1629,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1806,7 +1806,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Equal(const Type &vec1, V &&vec2)
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1819,7 +1819,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Greater(const Type &vec1, V &&vec2)
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1832,7 +1832,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1855,7 +1855,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Less(const Type &vec1, V &&vec2)
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1868,7 +1868,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1894,7 +1894,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2083,7 +2083,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Equal(const Type &vec1, V &&vec2)
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2096,7 +2096,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Greater(const Type &vec1, V &&vec2)
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2109,7 +2109,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2132,7 +2132,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Less(const Type &vec1, V &&vec2)
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2145,7 +2145,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2171,7 +2171,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2360,7 +2360,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Equal(const Type &vec1, V &&vec2)
+        static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2373,7 +2373,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Greater(const Type &vec1, V &&vec2)
+        static __forceinline bool Greater(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2386,7 +2386,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool GreaterOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2409,7 +2409,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool Less(const Type &vec1, V &&vec2)
+        static __forceinline bool Less(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2422,7 +2422,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool LessOrEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2448,7 +2448,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const Type &vec1, V &&vec2)
+        static __forceinline bool NotEqual(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2658,37 +2658,37 @@ namespace
     struct Vector_Comparator<XMINT2>
     {
         template <class V>
-        static __forceinline bool Less(const XMINT2 &v1, V &&v2)
+        static __forceinline bool Less(const XMINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,2>::Less(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const XMINT2 &v1, V &&v2)
+        static __forceinline bool LessOrEqual(const XMINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,2>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Greater(const XMINT2 &v1, V &&v2)
+        static __forceinline bool Greater(const XMINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,2>::Greater(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const XMINT2 &v1, V &&v2)
+        static __forceinline bool GreaterOrEqual(const XMINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,2>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Equal(const XMINT2 &v1, V &&v2)
+        static __forceinline bool Equal(const XMINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,2>::Equal(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const XMINT2 &v1, V &&v2)
+        static __forceinline bool NotEqual(const XMINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,2>::NotEqual(v1, std::forward<V>(v2));
         }
@@ -2698,37 +2698,37 @@ namespace
     struct Vector_Comparator<XMINT3>
     {
         template <class V>
-        static __forceinline bool Less(const XMINT3 &v1, V &&v2)
+        static __forceinline bool Less(const XMINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,3>::Less(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const XMINT3 &v1, V &&v2)
+        static __forceinline bool LessOrEqual(const XMINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,3>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Greater(const XMINT3 &v1, V &&v2)
+        static __forceinline bool Greater(const XMINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,3>::Greater(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const XMINT3 &v1, V &&v2)
+        static __forceinline bool GreaterOrEqual(const XMINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,3>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Equal(const XMINT3 &v1, V &&v2)
+        static __forceinline bool Equal(const XMINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,3>::Equal(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const XMINT3 &v1, V &&v2)
+        static __forceinline bool NotEqual(const XMINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,3>::NotEqual(v1, std::forward<V>(v2));
         }
@@ -2738,37 +2738,37 @@ namespace
     struct Vector_Comparator<XMINT4>
     {
         template <class V>
-        static __forceinline bool Less(const XMINT4 &v1, V &&v2)
+        static __forceinline bool Less(const XMINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,4>::Less(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const XMINT4 &v1, V &&v2)
+        static __forceinline bool LessOrEqual(const XMINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,4>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Greater(const XMINT4 &v1, V &&v2)
+        static __forceinline bool Greater(const XMINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,4>::Greater(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const XMINT4 &v1, V &&v2)
+        static __forceinline bool GreaterOrEqual(const XMINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,4>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Equal(const XMINT4 &v1, V &&v2)
+        static __forceinline bool Equal(const XMINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,4>::Equal(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const XMINT4 &v1, V &&v2)
+        static __forceinline bool NotEqual(const XMINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<int32_t,4>::NotEqual(v1, std::forward<V>(v2));
         }
@@ -2778,37 +2778,37 @@ namespace
     struct Vector_Comparator<XMFLOAT2>
     {
         template <class V>
-        static __forceinline bool Less(const XMFLOAT2 &v1, V &&v2)
+        static __forceinline bool Less(const XMFLOAT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,2>::Less(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const XMFLOAT2 &v1, V &&v2)
+        static __forceinline bool LessOrEqual(const XMFLOAT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,2>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Greater(const XMFLOAT2 &v1, V &&v2)
+        static __forceinline bool Greater(const XMFLOAT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,2>::Greater(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const XMFLOAT2 &v1, V &&v2)
+        static __forceinline bool GreaterOrEqual(const XMFLOAT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,2>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Equal(const XMFLOAT2 &v1, V &&v2)
+        static __forceinline bool Equal(const XMFLOAT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,2>::Equal(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const XMFLOAT2 &v1, V &&v2)
+        static __forceinline bool NotEqual(const XMFLOAT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,2>::NotEqual(v1, std::forward<V>(v2));
         }
@@ -2818,37 +2818,37 @@ namespace
     struct Vector_Comparator<XMFLOAT3>
     {
         template <class V>
-        static __forceinline bool Less(const XMFLOAT3 &v1, V &&v2)
+        static __forceinline bool Less(const XMFLOAT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,3>::Less(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const XMFLOAT3 &v1, V &&v2)
+        static __forceinline bool LessOrEqual(const XMFLOAT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,3>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Greater(const XMFLOAT3 &v1, V &&v2)
+        static __forceinline bool Greater(const XMFLOAT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,3>::Greater(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const XMFLOAT3 &v1, V &&v2)
+        static __forceinline bool GreaterOrEqual(const XMFLOAT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,3>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Equal(const XMFLOAT3 &v1, V &&v2)
+        static __forceinline bool Equal(const XMFLOAT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,3>::Equal(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const XMFLOAT3 &v1, V &&v2)
+        static __forceinline bool NotEqual(const XMFLOAT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,3>::NotEqual(v1, std::forward<V>(v2));
         }
@@ -2858,37 +2858,37 @@ namespace
     struct Vector_Comparator<XMFLOAT4>
     {
         template <class V>
-        static __forceinline bool Less(const XMFLOAT4 &v1, V &&v2)
+        static __forceinline bool Less(const XMFLOAT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,4>::Less(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const XMFLOAT4 &v1, V &&v2)
+        static __forceinline bool LessOrEqual(const XMFLOAT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,4>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Greater(const XMFLOAT4 &v1, V &&v2)
+        static __forceinline bool Greater(const XMFLOAT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,4>::Greater(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const XMFLOAT4 &v1, V &&v2)
+        static __forceinline bool GreaterOrEqual(const XMFLOAT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,4>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Equal(const XMFLOAT4 &v1, V &&v2)
+        static __forceinline bool Equal(const XMFLOAT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,4>::Equal(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const XMFLOAT4 &v1, V &&v2)
+        static __forceinline bool NotEqual(const XMFLOAT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<float_t,4>::NotEqual(v1, std::forward<V>(v2));
         }
@@ -2898,37 +2898,37 @@ namespace
     struct Vector_Comparator<XMUINT2>
     {
         template <class V>
-        static __forceinline bool Less(const XMUINT2 &v1, V &&v2)
+        static __forceinline bool Less(const XMUINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,2>::Less(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const XMUINT2 &v1, V &&v2)
+        static __forceinline bool LessOrEqual(const XMUINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,2>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Greater(const XMUINT2 &v1, V &&v2)
+        static __forceinline bool Greater(const XMUINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,2>::Greater(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const XMUINT2 &v1, V &&v2)
+        static __forceinline bool GreaterOrEqual(const XMUINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,2>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Equal(const XMUINT2 &v1, V &&v2)
+        static __forceinline bool Equal(const XMUINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,2>::Equal(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const XMUINT2 &v1, V &&v2)
+        static __forceinline bool NotEqual(const XMUINT2 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,2>::NotEqual(v1, std::forward<V>(v2));
         }
@@ -2938,37 +2938,37 @@ namespace
     struct Vector_Comparator<XMUINT3>
     {
         template <class V>
-        static __forceinline bool Less(const XMUINT3 &v1, V &&v2)
+        static __forceinline bool Less(const XMUINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,3>::Less(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const XMUINT3 &v1, V &&v2)
+        static __forceinline bool LessOrEqual(const XMUINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,3>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Greater(const XMUINT3 &v1, V &&v2)
+        static __forceinline bool Greater(const XMUINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,3>::Greater(v1, std::forward<V>(v2));
         }
         
         template <class V>
-        static __forceinline bool GreaterOrEqual(const XMUINT3 &v1, V &&v2)
+        static __forceinline bool GreaterOrEqual(const XMUINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,3>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Equal(const XMUINT3 &v1, V &&v2)
+        static __forceinline bool Equal(const XMUINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,3>::Equal(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool NotEqual(const XMUINT3 &v1, V &&v2)
+        static __forceinline bool NotEqual(const XMUINT3 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,3>::NotEqual(v1, std::forward<V>(v2));
         }
@@ -2978,36 +2978,36 @@ namespace
     struct Vector_Comparator<XMUINT4>
     {
         template <class V>
-        static __forceinline bool Less(const XMUINT4 &v1, V &&v2)
+        static __forceinline bool Less(const XMUINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,4>::Less(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool LessOrEqual(const XMUINT4 &v1, V &&v2)
+        static __forceinline bool LessOrEqual(const XMUINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,4>::LessOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Greater(const XMUINT4 &v1, V &&v2)
+        static __forceinline bool Greater(const XMUINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,4>::Greater(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool GreaterOrEqual(const XMUINT4 &v1, V &&v2)
+        static __forceinline bool GreaterOrEqual(const XMUINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,4>::GreaterOrEqual(v1, std::forward<V>(v2));
         }
 
         template <class V>
-        static __forceinline bool Equal(const XMUINT4 &v1, V &&v2)
+        static __forceinline bool Equal(const XMUINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,4>::Equal(v1, std::forward<V>(v2));
         }
         template <class V>
-        static __forceinline bool NotEqual(const XMUINT4 &v1, V &&v2)
+        static __forceinline bool NotEqual(const XMUINT4 &v1, V &&v2) noexcept
         {
             return XMVectorAdapter<uint32_t,4>::NotEqual(v1, std::forward<V>(v2));
         }
@@ -3768,37 +3768,37 @@ namespace
 }
 
 template <class V1, class V2>
-inline bool operator<(V1 &&vector1, V2 &&vector2)
+inline bool operator<(V1 &&vector1, V2 &&vector2) noexcept
 {
     return Vector_Comparator<std::decay_t<V1>>::Less(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 template <class V1, class V2>
-inline bool operator<=(V1 &&vector1, V2 &&vector2)
+inline bool operator<=(V1 &&vector1, V2 &&vector2) noexcept
 {
     return Vector_Comparator<std::decay_t<V1>>::LessOrEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 template <class V1, class V2>
-inline bool operator>(V1 &&vector1, V2 &&vector2)
+inline bool operator>(V1 &&vector1, V2 &&vector2) noexcept
 {
     return Vector_Comparator<std::decay_t<V1>>::Greater(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 template <class V1, class V2>
-inline bool operator>=(V1 &&vector1, V2 &&vector2)
+inline bool operator>=(V1 &&vector1, V2 &&vector2) noexcept
 {
     return Vector_Comparator<std::decay_t<V1>>::GreaterOrEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 template <class V1, class V2>
-inline bool operator==(V1 &&vector1, V2 &&vector2)
+inline bool operator==(V1 &&vector1, V2 &&vector2) noexcept
 {
     return Vector_Comparator<std::decay_t<V1>>::Equal(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 template <class V1, class V2>
-inline bool operator!=(V1 &&vector1, V2 &&vector2)
+inline bool operator!=(V1 &&vector1, V2 &&vector2) noexcept
 {
     return Vector_Comparator<std::decay_t<V1>>::NotEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
