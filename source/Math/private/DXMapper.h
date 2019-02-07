@@ -2652,10 +2652,10 @@ namespace
     using namespace DirectX;
 
     template <class V>
-    struct Vector_Comparator;
+    struct XMVectorComparisonMapper;
 
     template <>
-    struct Vector_Comparator<XMINT2>
+    struct XMVectorComparisonMapper<XMINT2>
     {
         template <class V>
         static __forceinline bool Less(const XMINT2 &v1, V &&v2) noexcept
@@ -2695,7 +2695,7 @@ namespace
     };
 
     template <>
-    struct Vector_Comparator<XMINT3>
+    struct XMVectorComparisonMapper<XMINT3>
     {
         template <class V>
         static __forceinline bool Less(const XMINT3 &v1, V &&v2) noexcept
@@ -2735,7 +2735,7 @@ namespace
     };
 
     template <>
-    struct Vector_Comparator<XMINT4>
+    struct XMVectorComparisonMapper<XMINT4>
     {
         template <class V>
         static __forceinline bool Less(const XMINT4 &v1, V &&v2) noexcept
@@ -2775,7 +2775,7 @@ namespace
     };
 
     template <>
-    struct Vector_Comparator<XMFLOAT2>
+    struct XMVectorComparisonMapper<XMFLOAT2>
     {
         template <class V>
         static __forceinline bool Less(const XMFLOAT2 &v1, V &&v2) noexcept
@@ -2815,7 +2815,7 @@ namespace
     };
 
     template <>
-    struct Vector_Comparator<XMFLOAT3>
+    struct XMVectorComparisonMapper<XMFLOAT3>
     {
         template <class V>
         static __forceinline bool Less(const XMFLOAT3 &v1, V &&v2) noexcept
@@ -2855,7 +2855,7 @@ namespace
     };
 
     template <>
-    struct Vector_Comparator<XMFLOAT4>
+    struct XMVectorComparisonMapper<XMFLOAT4>
     {
         template <class V>
         static __forceinline bool Less(const XMFLOAT4 &v1, V &&v2) noexcept
@@ -2895,7 +2895,7 @@ namespace
     };
 
     template <>
-    struct Vector_Comparator<XMUINT2>
+    struct XMVectorComparisonMapper<XMUINT2>
     {
         template <class V>
         static __forceinline bool Less(const XMUINT2 &v1, V &&v2) noexcept
@@ -2935,7 +2935,7 @@ namespace
     };
 
     template <>
-    struct Vector_Comparator<XMUINT3>
+    struct XMVectorComparisonMapper<XMUINT3>
     {
         template <class V>
         static __forceinline bool Less(const XMUINT3 &v1, V &&v2) noexcept
@@ -2975,7 +2975,7 @@ namespace
     };
 
     template <>
-    struct Vector_Comparator<XMUINT4>
+    struct XMVectorComparisonMapper<XMUINT4>
     {
         template <class V>
         static __forceinline bool Less(const XMUINT4 &v1, V &&v2) noexcept
@@ -3770,37 +3770,37 @@ namespace
 template <class V1, class V2>
 inline bool operator<(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<std::decay_t<V1>>::Less(std::forward<V1>(vector1), std::forward<V2>(vector2));
+    return XMVectorComparisonMapper<std::decay_t<V1>>::Less(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 template <class V1, class V2>
 inline bool operator<=(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<std::decay_t<V1>>::LessOrEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
+    return XMVectorComparisonMapper<std::decay_t<V1>>::LessOrEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 template <class V1, class V2>
 inline bool operator>(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<std::decay_t<V1>>::Greater(std::forward<V1>(vector1), std::forward<V2>(vector2));
+    return XMVectorComparisonMapper<std::decay_t<V1>>::Greater(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 template <class V1, class V2>
 inline bool operator>=(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<std::decay_t<V1>>::GreaterOrEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
+    return XMVectorComparisonMapper<std::decay_t<V1>>::GreaterOrEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 template <class V1, class V2>
 inline bool operator==(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<std::decay_t<V1>>::Equal(std::forward<V1>(vector1), std::forward<V2>(vector2));
+    return XMVectorComparisonMapper<std::decay_t<V1>>::Equal(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 template <class V1, class V2>
 inline bool operator!=(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return Vector_Comparator<std::decay_t<V1>>::NotEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
+    return XMVectorComparisonMapper<std::decay_t<V1>>::NotEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 namespace VectorAngle
