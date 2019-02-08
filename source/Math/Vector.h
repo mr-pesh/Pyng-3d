@@ -14,21 +14,53 @@ using Vector = glm::vec<length, T, precision>;
 
 namespace std
 {
-    template <class T, typename value_type = decltype(std::declval<T>().x)>
-    constexpr const value_type *begin(const T& dx_value)
+    template <class V>
+    constexpr auto begin(const V &vector) noexcept
     {
-        return reinterpret_cast<const value_type*>(&dx_value);
+        if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
+            return reinterpret_cast<const float*>(&vector);
+        }
+        else {
+            return reinterpret_cast<const decltype(vector.x)*>(&vector);
+        }
     }
 
-    template <class T, typename value_type = decltype(std::declval<T>().x)>
-    constexpr const value_type *end(const T& dx_value)
+    template <class V>
+    constexpr auto begin(V &&vector) noexcept
     {
-        return reinterpret_cast<const value_type*>(&dx_value + 1);
+        if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
+            return reinterpret_cast<float*>(&vector);
+        }
+        else {
+            return reinterpret_cast<decltype(vector.x)*>(&vector);
+        }
+    }
+
+    template <class V>
+    constexpr auto end(const V &vector) noexcept
+    {
+        if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
+            return reinterpret_cast<const float*>(&vector + 1);
+        }
+        else {
+            return reinterpret_cast<const decltype(vector.x)*>(&vector + 1);
+        }
+    }
+
+    template <class V>
+    constexpr auto end(V &&vector) noexcept
+    {
+        if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
+            return reinterpret_cast<float*>(&vector + 1);
+        }
+        else {
+            return reinterpret_cast<decltype(vector.x)*>(&vector + 1);
+        }
     }
 }
 
 template <typename T, int length>
-using Vector = Vector_Helper_T <T, length>;
+using Vector = XMVectorAdapterT<T, length>;
 
 // Win SDK 8.1 style definitions
 
