@@ -23,21 +23,78 @@
                                                                                                              \
     static_assert(std::_Is_any_of_v<BaseType, Type1, Type2, Type3>, "No matching overload for " __FUNCTION__ )
 
-#define IS_2D_VECTOR(T) std::_Is_any_of_v< T, Vector<int32_t,2>, Vector<float_t,2>, Vector<uint32_t,2> >
-#define IS_3D_VECTOR(T) std::_Is_any_of_v< T, Vector<int32_t,3>, Vector<float_t,3>, Vector<uint32_t,3> >
-#define IS_4D_VECTOR(T) std::_Is_any_of_v< T, Vector<int32_t,4>, Vector<float_t,4>, Vector<uint32_t,4> >
+template <typename T>
+struct _Is_2d_Vector
+{
+    static constexpr bool value = std::_Is_any_of_v< std::decay_t<T>, Vector<int32_t,2>, Vector<float_t,2>, Vector<uint32_t,2> >;
+};
+template<typename T>
+_INLINE_VAR constexpr bool is2dVector = _Is_2d_Vector<T>::value;
 
-#define IS_VECTOR_TYPE(T) IS_2D_VECTOR(T) || IS_3D_VECTOR(T) || IS_4D_VECTOR(T)
+template <typename T>
+struct _Is_3d_Vector
+{
+    static constexpr bool value = std::_Is_any_of_v< std::decay_t<T>, Vector<int32_t,3>, Vector<float_t,3>, Vector<uint32_t,3> >;
+};
+template <typename T>
+_INLINE_VAR constexpr bool is3dVector = _Is_3d_Vector<T>::value;
 
-#define IS_3X3_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,3,3>, Matrix<float_t,3,3>, Matrix<uint32_t,3,3> >
-#define IS_3X4_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,3,4>, Matrix<float_t,3,4>, Matrix<uint32_t,3,4> >
-#define IS_4X3_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,4,3>, Matrix<float_t,4,3>, Matrix<uint32_t,4,3> >
-#define IS_4X4_MATRIX(T) std::_Is_any_of_v< T, Matrix<int32_t,4,4>, Matrix<float_t,4,4>, Matrix<uint32_t,4,4> >
+template <typename T>
+struct _Is_4d_Vector
+{
+    static constexpr bool value = std::_Is_any_of_v< std::decay_t<T>, Vector<int32_t,4>, Vector<float_t,4>, Vector<uint32_t,4> >;
+};
+template <typename T>
+_INLINE_VAR constexpr bool is4dVector = _Is_4d_Vector<T>::value;
 
-#define IS_MATRIX_TYPE(T) IS_3X4_MATRIX(T) || IS_3X3_MATRIX(T) || IS_4X3_MATRIX(T) || IS_4X4_MATRIX(T)
+template <typename T>
+struct _Is_Vector_Type
+{
+    static constexpr bool value = is2dVector<T> || is3dVector<T> || is4dVector<T> || std::is_same_v<T,::DirectX::XMVECTOR>;
+};
+template <typename T>
+_INLINE_VAR constexpr bool isVectorType = _Is_Vector_Type<T>::value;
 
+template <typename T>
+struct _Is_3x3_Matrix
+{
+    static constexpr bool value = std::_Is_any_of_v< std::decay_t<T>, Matrix<int32_t,3,3>, Matrix<float_t,3,3>, Matrix<uint32_t,3,3> >;
+};
+template <typename T>
+_INLINE_VAR constexpr bool is3x3Matrix = _Is_3x3_Matrix<T>::value;
 
-typedef unsigned int uint;
+template <typename T>
+struct _Is_3x4_Matrix
+{
+    static constexpr bool value = std::_Is_any_of_v< std::decay_t<T>, Matrix<int32_t,3,4>, Matrix<float_t,3,4>, Matrix<uint32_t,3,4> >;
+};
+template <typename T>
+_INLINE_VAR constexpr bool is3x4Matrix = _Is_3x4_Matrix<T>::value;
+
+template <typename T>
+struct _Is_4x3_Matrix
+{
+    static constexpr bool value = std::_Is_any_of_v< std::decay_t<T>, Matrix<int32_t,4,3>, Matrix<float_t,4,3>, Matrix<uint32_t,4,3> >;
+};
+template <typename T>
+_INLINE_VAR constexpr bool is4x3Matrix = _Is_4x3_Matrix<T>::value;
+
+template <typename T>
+struct _Is_4x4_Matrix
+{
+    static constexpr bool value = std::_Is_any_of_v< std::decay_t<T>, Matrix<int32_t,4,4>, Matrix<float_t,4,4>, Matrix<uint32_t,4,4> >;
+};
+
+template <typename T>
+_INLINE_VAR constexpr bool is4x4Matrix = _Is_4x4_Matrix<T>::value;
+
+template <typename T>
+struct _Is_Matrix_Type
+{
+    static constexpr bool value = is3x3Matrix<T> || is3x4Matrix<T> || is4x3Matrix<T> || is4x4Matrix<T> || std::is_same_v<T,::DirectX::XMMATRIX>;
+};
+template <typename T>
+_INLINE_VAR constexpr bool isMatrixType = _Is_Matrix_Type<T>::value;
 
 namespace
 {
