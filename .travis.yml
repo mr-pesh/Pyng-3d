@@ -4,10 +4,13 @@ compiler: clang
 
 os:
 - windows
+- osx
+
+osx_image: xcode10.1
 
 before_script:
   - mkdir build
   - cd build
-  - cmake ..
+  - cmake .. -DINSTALL_GTEST=OFF
 
 script: cmake --build . && ctest .
