@@ -380,34 +380,38 @@ namespace
         }
 
         template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
-            return XMVector2Transform(XMLoadSInt2(&vec), mat);
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector2Transform(XMLoadSInt2(&vec), std::forward<M>(mat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat4x4(&mat));
         }
@@ -657,34 +661,38 @@ namespace
         }
 
         template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
-            return XMVector3Transform(XMLoadSInt3(&vec), mat);
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector3Transform(XMLoadSInt3(&vec), std::forward<M>(mat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat4x4(&mat));
         }
@@ -934,22 +942,26 @@ namespace
         }
 
         template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
-            return XMVector4Transform(XMLoadSInt4(&vec), mat);
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector4Transform(XMLoadSInt4(&vec), std::forward<M>(mat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadSInt4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadSInt4(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1199,34 +1211,38 @@ namespace
         }
 
         template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
-            return XMVector2Transform(XMLoadFloat2(&vec), mat);
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector2Transform(XMLoadFloat2(&vec), std::forward<M>(mat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1476,34 +1492,38 @@ namespace
         }
 
         template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
-            return XMVector3Transform(XMLoadFloat3(&vec), mat);
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector3Transform(XMLoadFloat3(&vec), std::forward<M>(mat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1753,22 +1773,26 @@ namespace
         }
 
         template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
-            return XMVector4Transform(XMLoadFloat4(&vec), mat);
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector4Transform(XMLoadFloat4(&vec), std::forward<M>(mat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadFloat4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadFloat4(&vec), XMLoadFloat4x4(&mat));
         }
@@ -2018,34 +2042,38 @@ namespace
         }
 
         template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
-            return XMVector2Transform(XMLoadUInt2(&vec), mat);
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector2Transform(XMLoadUInt2(&vec), std::forward<M>(mat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat4x4(&mat));
         }
@@ -2295,34 +2323,38 @@ namespace
         }
 
         template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
-            return XMVector3Transform(XMLoadUInt3(&vec), mat);
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector3Transform(XMLoadUInt3(&vec), std::forward<M>(mat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat4x4(&mat));
         }
@@ -2572,22 +2604,26 @@ namespace
         }
 
         template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
-            return XMVector4Transform(XMLoadUInt4(&vec), mat);
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector4Transform(XMLoadUInt4(&vec), std::forward<M>(mat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadUInt4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadUInt4(&vec), XMLoadFloat4x4(&mat));
         }
@@ -2602,104 +2638,86 @@ namespace
     using namespace DirectX;
 
     template <class Vector, class Matrix>
-    struct TransformMapper;
+    struct XMVectorTransformationMapper;
 
     template <class Matrix>
-    struct TransformMapper<XMINT2, Matrix>
+    struct XMVectorTransformationMapper<XMINT2, Matrix>
     {
-        static XMINT2 Transform(const XMINT2 &v, const Matrix &m)
+        static __forceinline XMVECTOR Transform(const XMINT2 &v, Matrix &&m) noexcept
         {
-            XMINT2 result;
-            XMStoreSInt2(&result, XMVectorAdapter<int32_t, 2>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<int32_t,2>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
     template <class Matrix>
-    struct TransformMapper<XMINT3, Matrix>
+    struct XMVectorTransformationMapper<XMINT3, Matrix>
     {
-        static XMINT3 Transform(const XMINT3 &v, const Matrix &m)
+        static __forceinline XMVECTOR Transform(const XMINT3 &v, Matrix &&m) noexcept
         {
-            XMINT3 result;
-            XMStoreSInt3(&result, XMVectorAdapter<int32_t, 3>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<int32_t,3>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
     template <class Matrix>
-    struct TransformMapper<XMINT4, Matrix>
+    struct XMVectorTransformationMapper<XMINT4, Matrix>
     {
-        static XMINT4 Transform(const XMINT4 &v, const Matrix &m)
+        static __forceinline XMVECTOR Transform(const XMINT4 &v, Matrix &&m) noexcept
         {
-            XMINT4 result;
-            XMStoreSInt4(&result, XMVectorAdapter<int32_t, 4>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<int32_t,4>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
     template <class Matrix>
-    struct TransformMapper<XMFLOAT2, Matrix>
+    struct XMVectorTransformationMapper<XMFLOAT2, Matrix>
     {
-        static XMFLOAT2 Transform(const XMFLOAT2 &v, const Matrix &m)
+        static __forceinline XMVECTOR Transform(const XMFLOAT2 &v, Matrix &&m) noexcept
         {
-            XMFLOAT2 result;
-            XMStoreFloat2(&result, XMVectorAdapter<float_t, 2>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<float_t,2>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
     template <class Matrix>
-    struct TransformMapper<XMFLOAT3, Matrix>
+    struct XMVectorTransformationMapper<XMFLOAT3, Matrix>
     {
-        static XMFLOAT3 Transform(const XMFLOAT3 &v, const Matrix &m)
+        static __forceinline XMVECTOR Transform(const XMFLOAT3 &v, Matrix &&m) noexcept
         {
-            XMFLOAT3 result;
-            XMStoreFloat3(&result, XMVectorAdapter<float_t, 3>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<float_t,3>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
     template <class Matrix>
-    struct TransformMapper<XMFLOAT4, Matrix>
+    struct XMVectorTransformationMapper<XMFLOAT4, Matrix>
     {
-        static XMFLOAT4 Transform(const XMFLOAT4 &v, const Matrix &m)
+        static __forceinline XMVECTOR Transform(const XMFLOAT4 &v, Matrix &&m) noexcept
         {
-            XMFLOAT4 result;
-            XMStoreFloat4(&result, XMVectorAdapter<float_t, 4>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<float_t,4>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
     template <class Matrix>
-    struct TransformMapper<XMUINT2, Matrix>
+    struct XMVectorTransformationMapper<XMUINT2, Matrix>
     {
-        static XMUINT2 Transform(const XMUINT2 &v, const Matrix &m)
+        static __forceinline XMVECTOR Transform(const XMUINT2 &v, Matrix &&m) noexcept
         {
-            XMUINT2 result;
-            XMStoreUInt2(&result, XMVectorAdapter<uint32_t, 2>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<uint32_t,2>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
     template <class Matrix>
-    struct TransformMapper<XMUINT3, Matrix>
+    struct XMVectorTransformationMapper<XMUINT3, Matrix>
     {
-        static XMUINT3 Transform(const XMUINT3 &v, const Matrix &m)
+        static __forceinline XMVECTOR Transform(const XMUINT3 &v, Matrix &&m) noexcept
         {
-            XMUINT3 result;
-            XMStoreUInt3(&result, XMVectorAdapter<uint32_t, 3>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<uint32_t,3>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
     template <class Matrix>
-    struct TransformMapper<XMUINT4, Matrix>
+    struct XMVectorTransformationMapper<XMUINT4, Matrix>
     {
-        static XMUINT4 Transform(const XMUINT4 &v, const Matrix &m)
+        static __forceinline XMVECTOR Transform(const XMUINT4 &v, Matrix &&m) noexcept
         {
-            XMUINT4 result;
-            XMStoreUInt4(&result, XMVectorAdapter<uint32_t, 4>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<uint32_t,4>::Transform(v, std::forward<Matrix>(m));
         }
     };
 }
@@ -3977,12 +3995,19 @@ inline XMVECTOR Refract(V1 &&vector, V2 &&normal, V3 &&refractionIndex) noexcept
     );
 }
 
+/// <summary> Transforms a 2-, 3- or 4D vector by a matrix.</summary>
 template <class V, class M>
-inline auto operator*(const V &vector, const M &matrix)
+inline XMVECTOR Transform(V &&vector, M &&matrix) noexcept
 {
-    if constexpr (sizeof(V) < sizeof(M)) {
-        return TransformMapper<V,M>::Transform(vector, matrix);
-    } else {
-        return TransformMapper<M,V>::Transform(matrix, vector);
+    return XMVectorTransformationMapper<std::decay_t<V>,M>::Transform(std::forward<V>(vector), std::forward<M>(matrix));
+}
+
+template <class V1, class V2>
+inline XMVECTOR operator*(V1 &&v1, V2 &&v2) noexcept
+{
+    if constexpr (isVectorType<V1>) {
+        return Transform(std::forward<V1>(v1), std::forward<V2>(v2));
+    } else if (isVectorType<V2>) {
+        return Transform(std::forward<V2>(v2), std::forward<V1>(v1));
     }
 }
