@@ -80,10 +80,25 @@ public:
 
     FORCE_INLINE UniquePointer(UniquePointer&&) noexcept = default;
 
-    Type *get() const noexcept { return data; }
-    Type &operator*() const noexcept { return *get(); }
-    Type *operator->() const noexcept { return get(); }
-    explicit operator bool() const noexcept { return data; }
+    explicit operator bool() const noexcept
+    {
+        return data;
+    }
+
+    NODISCARD std::add_pointer_t<Type> get() const noexcept
+    {
+        return data;
+    }
+
+    NODISCARD std::add_pointer_t<Type> operator->() const noexcept
+    {
+        return get();
+    }
+
+    NODISCARD std::add_lvalue_reference_t<Type> operator*() const noexcept
+    {
+        return *get();
+    }
 
     template <class _Ty = T, std::enable_if_t<std::is_array_v<_Ty>, int> = 0>
     NODISCARD Type& operator[](std::ptrdiff_t index) const noexcept
