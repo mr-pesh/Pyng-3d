@@ -67,47 +67,71 @@ class UniquePointer
     PYNG_DISABLE_COPY(UniquePointer)
 
 public:
-    using Type = std::remove_extent_t<T>;
+    typedef std::remove_extent_t<T> element_type;
+    typedef std::add_pointer_t<element_type> pointer;
+    typedef std::add_lvalue_reference_t<element_type> reference;
 
-    FORCE_INLINE UniquePointer(Type *ptr) noexcept (std::is_nothrow_constructible_v<Type>)
-        : data(ptr)
+    FORCE_INLINE UniquePointer(element_type *ptr) noexcept (std::is_nothrow_constructible_v<element_type>)
+        : data_(ptr)
     {  }
 
-    FORCE_INLINE ~UniquePointer() noexcept (std::is_nothrow_destructible_v<Type>)
+    FORCE_INLINE ~UniquePointer() noexcept (std::is_nothrow_destructible_v<element_type>)
     {
-        AllocationPolicy<T>::Destroy(data);
+        AllocationPolicy<T>::Destroy(data_);
     }
 
     FORCE_INLINE UniquePointer(UniquePointer&&) noexcept = default;
 
     explicit operator bool() const noexcept
     {
-        return data;
+        return data_;
     }
 
-    NODISCARD std::add_pointer_t<Type> get() const noexcept
+    NODISCARD pointer get() const noexcept
     {
-        return data;
+        return data_;
     }
 
-    NODISCARD std::add_pointer_t<Type> operator->() const noexcept
+    NODISCARD pointer operator->() const noexcept
     {
         return get();
     }
 
-    NODISCARD std::add_lvalue_reference_t<Type> operator*() const noexcept
+    NODISCARD reference operator*() const noexcept
     {
         return *get();
     }
 
-    template <class _Ty = T, std::enable_if_t<std::is_array_v<_Ty>, int> = 0>
-    NODISCARD Type& operator[](std::ptrdiff_t index) const noexcept
+    template <class Type = T, std::enable_if_t<std::is_array_v<Type>, int> = 0>
+    NODISCARD reference operator[](std::ptrdiff_t index) const noexcept
     {
         return get()[index];
     }
 
+    pointer release() noexcept
+    {
+        pointer temp = get();
+        data_ = pointer();
+        return temp;
+    }
+
+    void reset(pointer ptr = pointer()) noexcept
+    {
+        pointer old = get(); data_ = ptr;
+
+        if (old != pointer())
+        {
+            AllocationPolicy<T>::Destroy(data_);
+        }
+    }
+
+    void swap(UniquePointer& other) noexcept
+    {
+        std::swap(data_, other.data_);
+    }
+
 private:
-    Type *data;
+    pointer data_;
 };
 
 
