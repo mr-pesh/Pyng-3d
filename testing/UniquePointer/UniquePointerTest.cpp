@@ -20,21 +20,21 @@ void printF(const T &ptr)
 }
 
 TEST_F(UniquePointerUnitTest, ManageTest)
-{   
-    UniquePointer<HeapAllocationPolicy, A> ptr1[] = {
-        AllocateUnique<HeapAllocationPolicy, A>(1, 51),
-        AllocateUnique<HeapAllocationPolicy, A>(2, 52),
-        AllocateUnique<HeapAllocationPolicy, A>(3, 53),
-        AllocateUnique<HeapAllocationPolicy, A>(4, 54),
-        AllocateUnique<HeapAllocationPolicy, A>(5, 55),
+{
+    UniquePointer<A, HeapAllocationPolicy> ptr1[] = {
+        AllocateUnique<A, HeapAllocationPolicy>(1, 51),
+        AllocateUnique<A, HeapAllocationPolicy>(2, 52),
+        AllocateUnique<A, HeapAllocationPolicy>(3, 53),
+        AllocateUnique<A, HeapAllocationPolicy>(4, 54),
+        AllocateUnique<A, HeapAllocationPolicy>(5, 55),
     };
 
-    UniquePointer<StackAllocationPolicy, A> ptr2[] = {
-        AllocateUnique<StackAllocationPolicy, A>(6, 56),
-        AllocateUnique<StackAllocationPolicy, A>(7, 57),
-        AllocateUnique<StackAllocationPolicy, A>(8, 58),
-        AllocateUnique<StackAllocationPolicy, A>(9, 59),
-        AllocateUnique<StackAllocationPolicy, A>(10, 60),
+    UniquePointer<A, StackAllocationPolicy> ptr2[] = {
+        AllocateUnique<A, StackAllocationPolicy>(6, 56),
+        AllocateUnique<A, StackAllocationPolicy>(7, 57),
+        AllocateUnique<A, StackAllocationPolicy>(8, 58),
+        AllocateUnique<A, StackAllocationPolicy>(9, 59),
+        AllocateUnique<A, StackAllocationPolicy>(10, 60),
     };
 
     printF(ptr1);

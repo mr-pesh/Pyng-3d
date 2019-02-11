@@ -14,24 +14,42 @@
 template <class T>
 struct HeapAllocationPolicy
 {
-    template <class ...Args>
-    FORCE_INLINE_STATIC T *Create(Args ...args) noexcept (std::is_nothrow_constructible<T>::value)
+    template <class Type = T, class ...Args>
+    FORCE_INLINE_STATIC Type *Create(Args&& ...args) noexcept (std::is_nothrow_constructible_v<Type>)
     {
-        return new T(args...);
+        return new Type(std::forward<Args>(args)...);
     }
-    FORCE_INLINE_STATIC void Destroy(T *ptr) noexcept (std::is_nothrow_destructible<T>::value)
+
+    template <class Type = std::remove_extent_t<T>>
+    FORCE_INLINE_STATIC Type *Create(size_t size) noexcept (std::is_nothrow_constructible_v<Type>)
     {
-        delete ptr;
+        return new Type[size];
+    }
+
+    template <class Type = std::remove_extent_t<T>>
+    FORCE_INLINE_STATIC void Destroy(Type *ptr) noexcept (std::is_nothrow_destructible_v<Type>)
+    {
+        if constexpr (std::is_array_v<T>) {
+            delete [] ptr;
+        } else {
+            delete ptr;
+        }
     }
 };
 
 template <class T>
 struct StackAllocationPolicy
 {
-    template <class ...Args>
-    FORCE_INLINE_STATIC T *Create(Args ...args) noexcept (std::is_nothrow_constructible<T>::value)
+    template <class Type = T, class ...Args>
+    FORCE_INLINE_STATIC T *Create(Args&& ...args) noexcept (std::is_nothrow_constructible_v<T>)
     {
-        return new (alloca(sizeof(T))) T(args...);
+        return new (alloca(sizeof(Type))) Type(args...);
+    }
+
+    template <class Type = std::remove_extent_t<T>>
+    FORCE_INLINE_STATIC Type *Create(size_t size) noexcept (std::is_nothrow_constructible_v<T>)
+    {
+        return new (alloca(sizeof(Type) * size)) Type[size];
     }
 
     FORCE_INLINE_STATIC void Destroy(UNUSED T *ptr) noexcept
@@ -43,40 +61,61 @@ struct StackAllocationPolicy
 };
 
 
-template <template <class> class AllocationPolicy, class T>
+template <class T, template <class> class AllocationPolicy = HeapAllocationPolicy>
 class UniquePointer
 {
     PYNG_DISABLE_COPY(UniquePointer)
 
 public:
-    FORCE_INLINE UniquePointer(T *ptr) noexcept (std::is_nothrow_constructible<T>::value)
+    using Type = std::remove_extent_t<T>;
+
+    FORCE_INLINE UniquePointer(Type *ptr) noexcept (std::is_nothrow_constructible_v<Type>)
         : data(ptr)
     {  }
-    FORCE_INLINE ~UniquePointer() noexcept (std::is_nothrow_destructible<T>::value)
+
+    FORCE_INLINE ~UniquePointer() noexcept (std::is_nothrow_destructible_v<Type>)
     {
         AllocationPolicy<T>::Destroy(data);
     }
+
     FORCE_INLINE UniquePointer(UniquePointer&&) noexcept = default;
 
-    T *get() const noexcept { return data; }
-
-    T *operator->() const noexcept { return get(); }
-
-    std::add_lvalue_reference_t<T> operator*() const noexcept
-    {
-        return *get();
-    }
-
+    Type *get() const noexcept { return data; }
+    Type &operator*() const noexcept { return *get(); }
+    Type *operator->() const noexcept { return get(); }
     explicit operator bool() const noexcept { return data; }
 
+    template <class _Ty = T, std::enable_if_t<std::is_array_v<_Ty>, int> = 0>
+    NODISCARD Type& operator[](std::ptrdiff_t index) const noexcept
+    {
+        return get()[index];
+    }
+
 private:
-    T *data;
+    Type *data;
 };
 
 
-template <template <class>
-          class AllocationPolicy, class Type, class ...Args>
-FORCE_INLINE UniquePointer<AllocationPolicy, Type> AllocateUnique(Args ...args) noexcept (std::is_nothrow_constructible<Type>::value)
+template <class Type,
+          template <class> class AllocationPolicy = HeapAllocationPolicy,
+          class ...Args, std::enable_if_t<!std::is_array_v<Type>, int> = 0
+          >
+NODISCARD FORCE_INLINE UniquePointer<Type, AllocationPolicy> AllocateUnique(Args&& ...args) noexcept (std::is_nothrow_constructible_v<Type>)
 {
-    return UniquePointer<AllocationPolicy, Type>(AllocationPolicy<Type>::Create(args...));
+    return UniquePointer<Type, AllocationPolicy>(AllocationPolicy<Type>::Create(std::forward<Args>(args)...));
 }
+
+template <class Type,
+          template <class> class AllocationPolicy = HeapAllocationPolicy,
+          std::enable_if_t<std::is_array_v<Type> && std::extent_v<Type> == 0, int> = 0,
+          typename _Ty = std::remove_extent_t<Type>>
+NODISCARD FORCE_INLINE UniquePointer<Type, AllocationPolicy> AllocateUnique(size_t size) noexcept (std::is_nothrow_constructible_v<_Ty>)
+{
+    return UniquePointer<Type, AllocationPolicy>(AllocationPolicy<Type>::Create(size));
+}
+
+template<class Type,
+         template <class> class AllocationPolicy = HeapAllocationPolicy,
+         class... Args, std::enable_if_t<std::extent_v<Type> != 0, int> = 0
+         >
+UniquePointer<Type, AllocationPolicy> AllocateUnique(Args&&...) = delete;
