@@ -77,7 +77,7 @@ public:
         : data_(p)
     {  }
 
-    FORCE_INLINE ~UniquePointer() noexcept (std::is_nothrow_destructible_v<element_type>)
+    ~UniquePointer() noexcept (std::is_nothrow_destructible_v<element_type>)
     {
         AllocationPolicy<T>::Destroy(data_);
     }
