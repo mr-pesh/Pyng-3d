@@ -106,13 +106,17 @@ typedef Vector<int, 2> iVec2;
 typedef Vector<int, 3> iVec3;
 typedef Vector<int, 4> iVec4;
 
-typedef Vector<float, 2> Vec2;
-typedef Vector<float, 3> Vec3;
-typedef Vector<float, 4> Vec4;
+typedef Vector<float, 2> fVec2;
+typedef Vector<float, 3> fVec3;
+typedef Vector<float, 4> fVec4;
 
 typedef Vector<uint32_t, 2> uVec2;
 typedef Vector<uint32_t, 3> uVec3;
 typedef Vector<uint32_t, 4> uVec4;
+
+typedef fVec2 Vec2;
+typedef fVec3 Vec3;
+typedef fVec4 Vec4;
 
 #ifdef __DX_MATH_LIBRARY
 
