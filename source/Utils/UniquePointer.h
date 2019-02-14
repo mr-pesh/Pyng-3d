@@ -41,7 +41,7 @@ template <class T>
 struct StackAllocationPolicy
 {
     template <class Type = T, class ...Args>
-    FORCE_INLINE_STATIC T *Create(Args&& ...args) noexcept (std::is_nothrow_constructible_v<T>)
+    FORCE_INLINE_STATIC Type *Create(Args&& ...args) noexcept (std::is_nothrow_constructible_v<T>)
     {
         return new (alloca(sizeof(Type))) Type(args...);
     }
@@ -71,15 +71,34 @@ public:
     typedef std::add_pointer_t<element_type> pointer;
     typedef std::add_lvalue_reference_t<element_type> reference;
 
+    constexpr UniquePointer() noexcept
+        : data_() { }
+
+    constexpr UniquePointer(std::nullptr_t) noexcept
+        : data_() { }
+
     FORCE_INLINE UniquePointer(UniquePointer&&) noexcept = default;
 
-    FORCE_INLINE UniquePointer(pointer p = pointer()) noexcept (std::is_nothrow_constructible_v<element_type>)
-        : data_(p)
-    {  }
+    FORCE_INLINE explicit UniquePointer(pointer p) noexcept (std::is_nothrow_constructible_v<element_type>)
+        : data_(p) { }
 
     ~UniquePointer() noexcept (std::is_nothrow_destructible_v<element_type>)
     {
         AllocationPolicy<T>::Destroy(data_);
+    }
+
+    UniquePointer& operator=(UniquePointer&& other) noexcept = default;
+
+    UniquePointer& operator=(pointer p) noexcept
+    {
+        reset(p);
+        return *this;
+    }
+
+    UniquePointer& operator=(std::nullptr_t) noexcept
+    {
+        reset();
+        return *this;
     }
 
     explicit operator bool() const noexcept
@@ -130,12 +149,6 @@ public:
         std::swap(data_, other.data_);
     }
 
-    UniquePointer &operator=(UniquePointer&& other) noexcept = default;
-
-    UniquePointer &operator=(pointer p) noexcept { reset(p); return *this; }
-
-    UniquePointer &operator=(nullptr_t) noexcept { reset( ); return *this; }
-
 private:
     pointer data_;
 };
@@ -154,7 +167,7 @@ inline bool operator!=(const UniquePointer<T1, P1> &x, const UniquePointer<T2, P
 }
 
 template <class T1, template <class> class P1, class T2, template <class> class P2,
-          typename pointer = std::common_type_t<UniquePointer<T1,P1>::pointer, UniquePointer<T2,P2>::pointer>
+          class pointer = std::common_type_t<typename UniquePointer<T1,P1>::pointer, typename UniquePointer<T2,P2>::pointer>
           >
 inline bool operator<(const UniquePointer<T1, P1> &x, const UniquePointer<T2, P2> &y) noexcept
 {
@@ -180,77 +193,77 @@ inline bool operator>=(const UniquePointer<T1, P1> &x, const UniquePointer<T2, P
 }
 
 template <class T, template <class> class P>
-inline bool operator==(const UniquePointer<T,P> &x, nullptr_t) noexcept
+inline bool operator==(const UniquePointer<T,P> &x, std::nullptr_t) noexcept
 {
     return !x;
 }
 
 template <class T, template <class> class P>
-inline bool operator==(nullptr_t, const UniquePointer<T,P> &x) noexcept
+inline bool operator==(std::nullptr_t, const UniquePointer<T,P> &x) noexcept
 {
     return !x;
 }
 
 template <class T, template <class> class P>
-inline bool operator!=(const UniquePointer<T,P> &x, nullptr_t) noexcept
+inline bool operator!=(const UniquePointer<T,P> &x, std::nullptr_t) noexcept
 {
     return (bool)x;
 }
 
 template <class T, template <class> class P>
-inline bool operator!=(nullptr_t, const UniquePointer<T,P> &x) noexcept
+inline bool operator!=(std::nullptr_t, const UniquePointer<T,P> &x) noexcept
 {
     return (bool)x;
 }
 
 template <class T, template <class> class P,
-          typename pointer = UniquePointer<T, P>::pointer
+          class pointer = typename UniquePointer<T, P>::pointer
           >
-inline bool operator<(const UniquePointer<T,P> &x, nullptr_t) noexcept
+inline bool operator<(const UniquePointer<T,P> &x, std::nullptr_t) noexcept
 {
     return std::less<pointer>()(x.get(), nullptr);
 }
 
 template <class T, template <class> class P,
-          typename pointer = UniquePointer<T,P>::pointer
+          class pointer = typename UniquePointer<T,P>::pointer
           >
-inline bool operator<(nullptr_t, const UniquePointer<T,P> &y) noexcept
+inline bool operator<(std::nullptr_t, const UniquePointer<T,P> &y) noexcept
 {
     return std::less<pointer>()(nullptr, y.get());
 }
 
 template <class T, template <class> class P>
-inline bool operator<=(const UniquePointer<T,P> &x, nullptr_t) noexcept
+inline bool operator<=(const UniquePointer<T,P> &x, std::nullptr_t) noexcept
 {
     return !(nullptr < x);
 }
 
 template <class T, template <class> class P>
-inline bool operator<=(nullptr_t, const UniquePointer<T,P> &y) noexcept
+inline bool operator<=(std::nullptr_t, const UniquePointer<T,P> &y) noexcept
 {
     return !(y < nullptr);
 }
 
 template <class T, template <class> class P>
-inline bool operator>(const UniquePointer<T,P> &x, nullptr_t) noexcept
+inline bool operator>(const UniquePointer<T,P> &x, std::nullptr_t) noexcept
 {
     return (nullptr < x);
 }
 
 template <class T, template <class> class P>
-inline bool operator>(nullptr_t, const UniquePointer<T,P> &y) noexcept
+inline bool operator>(std::nullptr_t, const UniquePointer<T,P> &y) noexcept
 {
     return (y < nullptr);
 }
 
 template <class T, template <class> class P>
-inline bool operator>=(const UniquePointer<T,P> &x, nullptr_t) noexcept
+inline bool operator>=(const UniquePointer<T,P> &x, std::nullptr_t) noexcept
 {
     return !(x < nullptr);
 }
 
 template <class T, template <class> class P>
-inline bool operator>=(nullptr_t, const UniquePointer<T,P> &y) noexcept
+inline bool operator>=(std::nullptr_t, const UniquePointer<T,P> &y) noexcept
 {
     return !(nullptr < y);
 }
