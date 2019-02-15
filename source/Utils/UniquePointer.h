@@ -17,13 +17,13 @@ struct HeapAllocationPolicy
     template <class Type = T, class ...Args>
     FORCE_INLINE_STATIC Type *Create(Args&& ...args) noexcept (std::is_nothrow_constructible_v<Type>)
     {
-        return new Type(std::forward<Args>(args)...);
+        return new (std::nothrow) Type(std::forward<Args>(args)...);
     }
 
     template <class Type = std::remove_extent_t<T>>
     FORCE_INLINE_STATIC Type *Create(size_t size) noexcept (std::is_nothrow_constructible_v<Type>)
     {
-        return new Type[size];
+        return new (std::nothrow) Type[size];
     }
 
     template <class Type = std::remove_extent_t<T>>
