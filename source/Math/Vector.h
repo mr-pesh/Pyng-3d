@@ -2,7 +2,7 @@
 
 #ifdef __GL_MATH_LIBRARY
 
-#include <glm/matrix.hpp>
+#include "private/GLM_Mapper.h"
 
 template <typename T, int length, glm::qualifier precision = glm::mediump>
 using Vector = glm::vec<length, T, precision>;
