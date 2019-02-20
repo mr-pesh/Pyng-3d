@@ -22,18 +22,16 @@ public:                                    \
     }
 
 #ifdef _MSC_VER
-# define __FORCE_INLINE_EXP(...) __VA_ARGS__ __forceinline
+# define FORCE_INLINE __forceinline
 #else
-# define __FORCE_INLINE_EXP(...) [[gnu::always_inline]] __VA_ARGS__ inline
+# ifndef __always_inline
+# define __always_inline inline __attribute__ ((__always_inline__))
+# endif
+# define FORCE_INLINE __always_inline
 #endif
 
-#define FORCE_INLINE __FORCE_INLINE_EXP()
-#define FORCE_INLINE_STATIC __FORCE_INLINE_EXP(static)
-
-#define __FORWARD_DECLARE_EXP(name, ...) __VA_ARGS__ name;
-
-#define FORWARD_DECLARE_CLASS(name) __FORWARD_DECLARE_EXP(name, class)
-#define FORWARD_DECLARE_STRUCT(name) __FORWARD_DECLARE_EXP(name, struct)
+#define FORWARD_DECLARE_CLASS(name) class name;
+#define FORWARD_DECLARE_STRUCT(name) struct name;
 
 #ifdef __GNUC__
 #  define UNUSED [[gnu::unused]]
@@ -54,17 +52,11 @@ public:                                    \
 #endif
 
 #ifdef _MSC_VER
-#  define __LINK_LIBRARY_EXP(...) __declspec(__VA_ARGS__)
+#  define PYNG_LIBRARY_EXPORT __declspec(dllexport)
+#  define PYNG_LIBRARY_IMPORT __declspec(dllimport)
 #else
-#  define __LINK_LIBRARY_EXP(...) __attribute__((visibility(#__VA_ARGS__)))
-#endif
-
-#ifdef _MSC_VER
-#  define PYNG_LIBRARY_EXPORT __LINK_LIBRARY_EXP(dllexport)
-#  define PYNG_LIBRARY_IMPORT __LINK_LIBRARY_EXP(dllimport)
-#else
-#  define PYNG_LIBRARY_EXPORT __LINK_LIBRARY_EXP(default)
-#  define PYNG_LIBRARY_IMPORT __LINK_LIBRARY_EXP(default)
+#  define PYNG_LIBRARY_EXPORT __attribute__((visibility("default")))
+#  define PYNG_LIBRARY_IMPORT __attribute__((visibility("default")))
 #endif
 
 #define UNUSED(v) (void)v;

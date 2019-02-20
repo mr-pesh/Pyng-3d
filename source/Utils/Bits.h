@@ -19,7 +19,7 @@ template <typename T, typename Size,
           std::enable_if_t<std::is_integral_v<T>, int> = 0>
 constexpr T setBit(T value, Size index) noexcept
 {
-    return (value |  (1 << index));
+    return (value | (1 << index));
 }
 
 template <typename T, typename Size,

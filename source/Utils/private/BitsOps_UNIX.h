@@ -1,6 +1,6 @@
 #pragma once
 
-#include <sys/cdefs.h>
+#include <Utils/Global.h>
 
 #ifdef __GCC_ASM_FLAG_OUTPUTS__
 # define CC_SET(c) "\n\t/* output condition code " #c "*/\n"
@@ -11,9 +11,9 @@
 #endif
 
 #if __GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 1)
-#define BITOP_ADDR(x) "=m" (*(volatile long *) (x))
+# define BITOP_ADDR(x) "=m" (*(volatile long *) (x))
 #else
-#define BITOP_ADDR(x) "+m" (*(volatile long *) (x))
+# define BITOP_ADDR(x) "+m" (*(volatile long *) (x))
 #endif
 
 template <typename T>
@@ -22,14 +22,12 @@ __always_inline int popcount(T value) noexcept
     if constexpr (sizeof(T) <= sizeof(unsigned int)) {
         return __builtin_popcount(static_cast<unsigned int>(value));
     }
+    else if (std::is_same_v<T, unsigned long long> || std::is_same_v<T, long long>)) {
+        return __builtin_popcountll(static_cast<unsigned long long>(value));
+    }
     else if (sizeof(T) == sizeof(unsigned long)) {
         return __builtin_popcountl(static_cast<unsigned long>(value));
     }
-#if __SIZEOF_LONG_LONG__ > __SIZEOF_LONG__
-    else if (sizeof(T) == sizeof(unsigned long long)) {
-        return __builtin_popcountll(static_cast<unsigned long long>(value));
-    }
-#endif
 }
 
 template <typename T, typename Size>
