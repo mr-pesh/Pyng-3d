@@ -3803,21 +3803,18 @@ inline bool operator!=(V1 &&vector1, V2 &&vector2) noexcept
     return XMVectorComparisonMapper<std::decay_t<V1>>::NotEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
-namespace VectorAngle
+/// <summary>Computes the radian angle between two 2-, 3- or 4D vectors.</summary>
+template <class V1, class V2>
+inline XMVECTOR AngleBetweenVectors(V1 &&vector1, V2 &&vector2) noexcept
 {
-    /// <summary>Computes the radian angle between two 2-, 3- or 4D vectors.</summary>
-    template <class V1, class V2>
-    inline XMVECTOR AngleBetweenVectors(V1 &&vector1, V2 &&vector2) noexcept
-    {
-        return Vector_Geometry<std::decay_t<V1>>::AngleBetweenVectors(std::forward<V1>(vector1), std::forward<V2>(vector2));
-    }
+    return Vector_Geometry<std::decay_t<V1>>::AngleBetweenVectors(std::forward<V1>(vector1), std::forward<V2>(vector2));
+}
 
-    /// <summary>Computes the radian angle between two normalized 2-, 3- or 4D vectors.</summary>
-    template <class V1, class V2>
-    inline XMVECTOR AngleBetweenNormals(V1 &&vector1, V2 &&vector2) noexcept
-    {
-        return Vector_Geometry<std::decay_t<V1>>::AngleBetweenNormals(std::forward<V1>(vector1), std::forward<V2>(vector2));
-    }
+/// <summary>Computes the radian angle between two normalized 2-, 3- or 4D vectors.</summary>
+template <class V1, class V2>
+inline XMVECTOR AngleBetweenNormals(V1 &&vector1, V2 &&vector2) noexcept
+{
+    return Vector_Geometry<std::decay_t<V1>>::AngleBetweenNormals(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 /// <summary> Clamps the length of a 2-, 3- or 4D vector to a given range.</summary>
