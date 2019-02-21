@@ -7,6 +7,35 @@
 template <typename T, int rows, int columns, glm::qualifier precision = glm::mediump>
 using Matrix = glm::mat<columns, rows, T, precision>;
 
+#include <glm/gtc/type_ptr.hpp>
+
+namespace std
+{
+    template <glm::length_t L, typename T, glm::qualifier Q>
+    constexpr T *begin(glm::vec<L, T, Q> &vec) noexcept
+    {
+        return glm::value_ptr(vec);
+    }
+
+    template <glm::length_t L, typename T, glm::qualifier Q>
+    constexpr T const *begin(const glm::vec<L, T, Q> &vec) noexcept
+    {
+        return glm::value_ptr(vec);
+    }
+
+    template <glm::length_t L, typename T, glm::qualifier Q>
+    constexpr T *end(glm::vec<L, T, Q> &vec) noexcept
+    {
+        return glm::value_ptr(vec) + vec.length();
+    }
+
+    template <glm::length_t L, typename T, glm::qualifier Q>
+    constexpr T const *end(const glm::vec<L, T, Q> &vec) noexcept
+    {
+        return glm::value_ptr(vec) + vec.length();
+    }
+}
+
 #elif defined(__DX_MATH_LIBRARY)
 
 #include "private/DXMapper.h"
