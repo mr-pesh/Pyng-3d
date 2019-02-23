@@ -16,12 +16,22 @@ namespace
     struct GLMVectorGeometryMapper<true>
     {
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-        FORCE_INLINE_STATIC auto Angle(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
+        FORCE_INLINE_STATIC auto Angle(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vec<L, T1, Q>(glm::angle(vector1, vector2));
+                return glm::vec<L, T1, Q>(glm::angle(vec1, vec2));
             } else {
-                return glm::vec<L, T1, Q>(glm::angle(vector1, glm::vec<L, float_t, Q>(vector2)));
+                return glm::vec<L, T1, Q>(glm::angle(vec1, glm::vec<L, float_t, Q>(vec2)));
+            }
+        }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto DotProduct(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::vec<L, T1, Q>(glm::dot(vec1, vec2));
+            } else {
+                return glm::vec<L, T1, Q>(glm::dot(vec1, glm::vec<L, float_t, Q>(vec2)));
             }
         }
 
@@ -38,13 +48,19 @@ namespace
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-        FORCE_INLINE_STATIC auto CrossProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
+        FORCE_INLINE_STATIC auto CrossProduct(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::cross(vector1, vector2);
+                return glm::cross(vec1, vec2);
             } else {
-                return glm::cross(vector1, glm::vec<L, float_t, Q>(vector2));
+                return glm::cross(vec1, glm::vec<L, float_t, Q>(vec2));
             }
+        }
+
+        template <glm::length_t L, typename T, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto Length(const glm::vec<L, T, Q> &vec) noexcept
+        {
+            return glm::length(vec);
         }
     };
 
@@ -52,12 +68,22 @@ namespace
     struct GLMVectorGeometryMapper<false>
     {
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-        FORCE_INLINE_STATIC auto Angle(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
+        FORCE_INLINE_STATIC auto Angle(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vec<L, float_t, Q>(glm::angle(glm::vec<L, float_t, Q>(vector1), vector2));
+                return glm::vec<L, float_t, Q>(glm::angle(glm::vec<L, float_t, Q>(vec1), vec2));
             } else {
-                return glm::vec<L, float_t, Q>(glm::angle(glm::vec<L, float_t, Q>(vector1), glm::vec<L, float_t, Q>(vector2)));
+                return glm::vec<L, float_t, Q>(glm::angle(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)));
+            }
+        }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto DotProduct(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::vec<L, float_t, Q>(glm::dot(glm::vec<L, float_t, Q>(vec1), vec2));
+            } else {
+                return glm::vec<L, float_t, Q>(glm::dot(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)));
             }
         }
 
@@ -74,13 +100,19 @@ namespace
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-        FORCE_INLINE_STATIC auto CrossProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
+        FORCE_INLINE_STATIC auto CrossProduct(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::cross(glm::vec<L, float_t, Q>(vector1), vector2);
+                return glm::cross(glm::vec<L, float_t, Q>(vec1), vec2);
             } else {
-                return glm::cross(glm::vec<L, float_t, Q>(vector1), glm::vec<L, float_t, Q>(vector2));
+                return glm::cross(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2));
             }
+        }
+
+        template <glm::length_t L, typename T, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto Length(const glm::vec<L, T, Q> &vec) noexcept
+        {
+            return glm::length(glm::vec<L, float_t, Q>(vec));
         }
     };
 }
@@ -268,6 +300,15 @@ inline auto AngleBetweenVectors(const glm::vec<L, T1, Q> &vector1, const glm::ve
 }
 
 /**
+ * Computes the dot product between vectors.
+ */
+template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+inline auto DotProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
+{
+    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::DotProduct(vector1, vector2);
+}
+
+/**
  * Computes the cross product between two vectors.
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
@@ -276,6 +317,14 @@ inline auto CrossProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2
     return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::CrossProduct(vector1, vector2);
 }
 
+/**
+ * Computes the length of a vector.
+ */
+template <glm::length_t L, typename T, glm::qualifier Q>
+inline auto Length(const glm::vec<L, T, Q> &vector) noexcept
+{
+    return GLMVectorGeometryMapper<std::is_floating_point_v<T>>::Length(vector);
+}
 
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline bool operator==(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
