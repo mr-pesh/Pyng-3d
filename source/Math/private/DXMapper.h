@@ -354,6 +354,19 @@ namespace
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat4x4(&mat));
         }
+
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const Type &vec1, V &&vec2) noexcept
+        {
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVectorSubtract(XMLoadSInt2(&vec1), XMLoadSInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVectorSubtract(XMLoadSInt2(&vec1), std::forward<V>(vec2));
+            }
+        }
     };
 
     template <>
@@ -631,6 +644,19 @@ namespace
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat4x4(&mat));
         }
+
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const Type &vec1, V &&vec2) noexcept
+        {
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVectorSubtract(XMLoadSInt3(&vec1), XMLoadSInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVectorSubtract(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
+        }
     };
 
     template <>
@@ -895,6 +921,19 @@ namespace
         static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector4Transform(XMLoadSInt4(&vec), XMLoadFloat4x4(&mat));
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const Type &vec1, V &&vec2) noexcept
+        {
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVectorSubtract(XMLoadSInt4(&vec1), XMLoadSInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVectorSubtract(XMLoadSInt4(&vec1), std::forward<V>(vec2));
+            }
         }
     };
 
@@ -1173,6 +1212,19 @@ namespace
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat4x4(&mat));
         }
+
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const Type &vec1, V &&vec2) noexcept
+        {
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVectorSubtract(XMLoadFloat2(&vec1), XMLoadFloat2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVectorSubtract(XMLoadFloat2(&vec1), std::forward<V>(vec2));
+            }
+        }
     };
 
     template <>
@@ -1450,6 +1502,19 @@ namespace
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat4x4(&mat));
         }
+
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const Type &vec1, V &&vec2) noexcept
+        {
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVectorSubtract(XMLoadFloat3(&vec1), XMLoadFloat3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVectorSubtract(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
+        }
     };
 
     template <>
@@ -1714,6 +1779,19 @@ namespace
         static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector4Transform(XMLoadFloat4(&vec), XMLoadFloat4x4(&mat));
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const Type &vec1, V &&vec2) noexcept
+        {
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVectorSubtract(XMLoadFloat4(&vec1), XMLoadFloat4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVectorSubtract(XMLoadFloat4(&vec1), std::forward<V>(vec2));
+            }
         }
     };
 
@@ -1992,6 +2070,19 @@ namespace
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat4x4(&mat));
         }
+
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const Type &vec1, V &&vec2) noexcept
+        {
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVectorSubtract(XMLoadUInt2(&vec1), XMLoadUInt2(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVectorSubtract(XMLoadUInt2(&vec1), std::forward<V>(vec2));
+            }
+        }
     };
 
     template <>
@@ -2269,6 +2360,19 @@ namespace
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat4x4(&mat));
         }
+
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const Type &vec1, V &&vec2) noexcept
+        {
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVectorSubtract(XMLoadUInt3(&vec1), XMLoadUInt3(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVectorSubtract(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
+        }
     };
 
     template <>
@@ -2533,6 +2637,19 @@ namespace
         static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
         {
             return XMVector4Transform(XMLoadUInt4(&vec), XMLoadFloat4x4(&mat));
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const Type &vec1, V &&vec2) noexcept
+        {
+            MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
+
+            if constexpr (isSameType) {
+                return XMVectorSubtract(XMLoadUInt4(&vec1), XMLoadUInt4(&vec2));
+            }
+            else if (isXMVector) {
+                return XMVectorSubtract(XMLoadUInt4(&vec1), std::forward<V>(vec2));
+            }
         }
     };
 }
@@ -3767,6 +3884,104 @@ namespace
     };
 }
 
+namespace
+{
+    using namespace DirectX;
+
+    template <class V>
+    struct VectorArithmeticMapper;
+
+    template <>
+    struct VectorArithmeticMapper<XMINT2>
+    {
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const XMINT2 &v1, V &&v2) noexcept
+        {
+            return XMVectorAdapter<int32_t,2>::VectorSubstract(v1, std::forward<V>(v2));
+        }
+    };
+
+    template <>
+    struct VectorArithmeticMapper<XMINT3>
+    {
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const XMINT3 &v1, V &&v2) noexcept
+        {
+            return XMVectorAdapter<int32_t,3>::VectorSubstract(v1, std::forward<V>(v2));
+        }
+    };
+
+    template <>
+    struct VectorArithmeticMapper<XMINT4>
+    {
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const XMINT4 &v1, V &&v2) noexcept
+        {
+            return XMVectorAdapter<int32_t,4>::VectorSubstract(v1, std::forward<V>(v2));
+        }
+    };
+
+    template <>
+    struct VectorArithmeticMapper<XMFLOAT2>
+    {
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const XMFLOAT2 &v1, V &&v2) noexcept
+        {
+            return XMVectorAdapter<float_t,2>::VectorSubstract(v1, std::forward<V>(v2));
+        }
+    };
+
+    template <>
+    struct VectorArithmeticMapper<XMFLOAT3>
+    {
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const XMFLOAT3 &v1, V &&v2) noexcept
+        {
+            return XMVectorAdapter<float_t,3>::VectorSubstract(v1, std::forward<V>(v2));
+        }
+    };
+
+    template <>
+    struct VectorArithmeticMapper<XMFLOAT4>
+    {
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const XMFLOAT4 &v1, V &&v2) noexcept
+        {
+            return XMVectorAdapter<float_t,4>::VectorSubstract(v1, std::forward<V>(v2));
+        }
+    };
+
+    template <>
+    struct VectorArithmeticMapper<XMUINT2>
+    {
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const XMUINT2 &v1, V &&v2) noexcept
+        {
+            return XMVectorAdapter<uint32_t,2>::VectorSubstract(v1, std::forward<V>(v2));
+        }
+    };
+
+    template <>
+    struct VectorArithmeticMapper<XMUINT3>
+    {
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const XMUINT3 &v1, V &&v2) noexcept
+        {
+            return XMVectorAdapter<uint32_t,3>::VectorSubstract(v1, std::forward<V>(v2));
+        }
+    };
+
+    template <>
+    struct VectorArithmeticMapper<XMUINT4>
+    {
+        template <class V>
+        static __forceinline XMVECTOR VectorSubstract(const XMUINT4 &v1, V &&v2) noexcept
+        {
+            return XMVectorAdapter<uint32_t,4>::VectorSubstract(v1, std::forward<V>(v2));
+        }
+    };
+}
+
 template <class V1, class V2>
 inline bool operator<(V1 &&vector1, V2 &&vector2) noexcept
 {
@@ -3801,6 +4016,13 @@ template <class V1, class V2>
 inline bool operator!=(V1 &&vector1, V2 &&vector2) noexcept
 {
     return XMVectorComparisonMapper<std::decay_t<V1>>::NotEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
+}
+
+/// <summary>Computes the difference of two vectors.</summary>
+template <class V1, class V2>
+inline XMVECTOR operator-(V1 &&vector1, V2 &&vector2) noexcept
+{
+    return VectorArithmeticMapper<std::decay_t<V1>>::VectorSubstract(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 /// <summary>Computes the radian angle between two 2-, 3- or 4D vectors.</summary>
@@ -3915,6 +4137,13 @@ inline XMVECTOR Refract(V1 &&vector, V2 &&normal, V3 &&refractionIndex) noexcept
     return Vector_Geometry<std::decay_t<V1>>::Refract(
         std::forward<V1>(vector), std::forward<V2>(normal), std::forward<V3>(refractionIndex)
     );
+}
+
+/// <summary>Computes the distance between vector1 and vector2, i.e., Length(vector1 - vector2).</summary>
+template <class V1, class V2>
+inline XMVECTOR Distance(V1&& vector1, V2&& vector2) noexcept
+{
+    return Length(VectorArithmeticMapper<std::decay_t<V1>>::VectorSubstract(std::forward<V1>(vector1) - std::forward<V2>(vector2)));
 }
 
 template <class V, class M>

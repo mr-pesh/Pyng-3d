@@ -26,6 +26,17 @@ namespace
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto Distance(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::vec<L, T1, Q>(glm::distance(vec1, vec2));
+            }
+            else {
+                return glm::vec<L, T1, Q>(glm::distance(vec1, glm::vec<L, float_t, Q>(vec2)));
+            }
+        }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
         FORCE_INLINE_STATIC auto DotProduct(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
@@ -74,6 +85,17 @@ namespace
                 return glm::vec<L, float_t, Q>(glm::angle(glm::vec<L, float_t, Q>(vec1), vec2));
             } else {
                 return glm::vec<L, float_t, Q>(glm::angle(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)));
+            }
+        }
+        
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto Distance(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::vec<L, float_t, Q>(glm::distance(glm::vec<L, float_t, Q>(vec1), vec2));
+            }
+            else {
+                return glm::vec<L, float_t, Q>(glm::distance(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)));
             }
         }
 
@@ -297,6 +319,15 @@ inline auto AngleBetweenVectors(const glm::vec<L, T1, Q> &vector1, const glm::ve
             AngleBetweenNormals(Normalize(vector1), vector2);
     }
     return AngleBetweenNormals(Normalize(vector1), Normalize(vector2));
+}
+
+/**
+ * Computes the distance between vector1 and vector2, i.e., Length(vector1 - vector2).
+ */
+template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+inline auto Distance(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
+{
+    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Distance(vector1, vector2);
 }
 
 /**
