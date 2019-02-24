@@ -73,6 +73,28 @@ namespace
         {
             return glm::length(vec);
         }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto Reflect(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::reflect(vec1, vec2);
+            }
+            else {
+                return glm::reflect(vec1, glm::vec<L, float_t, Q>(vec2));
+            }
+        }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto Refract(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2, std::common_type_t<T1, T2> index) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::refract(vec1, vec2, index);
+            }
+            else {
+                return glm::refract(vec1, glm::vec<L, float_t, Q>(vec2), index);
+            }
+        }
     };
 
     template <>
@@ -135,6 +157,28 @@ namespace
         FORCE_INLINE_STATIC auto Length(const glm::vec<L, T, Q> &vec) noexcept
         {
             return glm::length(glm::vec<L, float_t, Q>(vec));
+        }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto Reflect(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::reflect(glm::vec<L, float_t, Q>(vec1), vec2);
+            }
+            else {
+                return glm::reflect(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2));
+            }
+        }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto Refract(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2, std::common_type_t<T1, T2, float_t> index) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::refract(glm::vec<L, float_t, Q>(vec1), vec2, index);
+            }
+            else {
+                return glm::refract(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2), index);
+            }
         }
     };
 }
@@ -355,6 +399,24 @@ template <glm::length_t L, typename T, glm::qualifier Q>
 inline auto Length(const glm::vec<L, T, Q> &vector) noexcept
 {
     return GLMVectorGeometryMapper<std::is_floating_point_v<T>>::Length(vector);
+}
+
+/**
+ * Reflects an incident vector across a normal vector.
+ */
+template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+inline auto Reflect(const glm::vec<L, T1, Q> &vector, const glm::vec<L, T2, Q> &normal) noexcept
+{
+    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Reflect(vector, normal);
+}
+
+/**
+ * Refracts an incident vector across a normal vector.
+ */
+template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+inline auto Refract(const glm::vec<L, T1, Q> &vector, const glm::vec<L, T2, Q> &normal, std::common_type_t<T1, T2, float_t> refractionIndex) noexcept
+{
+    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Refract(vector, normal, refractionIndex);
 }
 
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
