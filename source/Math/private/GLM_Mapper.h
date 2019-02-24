@@ -46,6 +46,17 @@ namespace
             }
         }
 
+        template <glm::length_t L, typename T1, typename T2, typename T3, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto Faceforward(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2, const glm::vec<L, T3, Q> &nref) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::faceforward(vec1, vec2, nref);
+            }
+            else {
+                return glm::faceforward(vec1, glm::vec<L, float_t, Q>(vec2), nref);
+            }
+        }
+
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto Normalize(const glm::vec<L, T, Q> &vec) noexcept
         {
@@ -85,8 +96,8 @@ namespace
             }
         }
 
-        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-        FORCE_INLINE_STATIC auto Refract(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2, std::common_type_t<T1, T2> index) noexcept
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q, typename Index>
+        FORCE_INLINE_STATIC auto Refract(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2, Index index) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
                 return glm::refract(vec1, vec2, index);
@@ -153,6 +164,17 @@ namespace
             }
         }
 
+        template <glm::length_t L, typename T1, typename T2, typename T3, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto Faceforward(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2, const glm::vec<L, T3, Q> &nref) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::faceforward(glm::vec<L, float_t, Q>(vec1), vec2, nref);
+            }
+            else {
+                return glm::faceforward(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2), nref);
+            }
+        }
+
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto Length(const glm::vec<L, T, Q> &vec) noexcept
         {
@@ -170,8 +192,8 @@ namespace
             }
         }
 
-        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-        FORCE_INLINE_STATIC auto Refract(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2, std::common_type_t<T1, T2, float_t> index) noexcept
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q, typename Index>
+        FORCE_INLINE_STATIC auto Refract(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2, Index index) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
                 return glm::refract(glm::vec<L, float_t, Q>(vec1), vec2, index);
@@ -390,6 +412,15 @@ template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline auto CrossProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
     return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::CrossProduct(vector1, vector2);
+}
+
+/**
+ * Flips the surface-normal (if needed) to face in a direction opposite to vector.
+ */
+template <glm::length_t L, typename T1, typename T2, typename T3 = std::common_type_t<T1, T2, float_t>, glm::qualifier Q>
+inline auto Faceforward(const glm::vec<L, T1, Q> &normal, const glm::vec<L, T2, Q> &vector, const glm::vec<L, T3, Q> &nref) noexcept
+{
+    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Faceforward(normal, vector);
 }
 
 /**
