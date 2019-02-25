@@ -256,12 +256,18 @@ namespace
         }
 
         template <class>
-        static __forceinline XMVECTOR NegateIf(const Type &v, bool condition) noexcept
+        static __forceinline XMVECTOR Negate(const Type &vec) noexcept
+        {
+            return XMVectorNegate(XMLoadSInt2(&vec));
+        }
+
+        template <class>
+        static __forceinline XMVECTOR NegateIf(const Type &vec, bool condition) noexcept
         {
             if (condition) {
-                return XMVectorNegate(XMLoadSInt2(&v));
+                return XMVectorNegate(XMLoadSInt2(&vec));
             }
-            return XMLoadSInt2(&v);
+            return XMLoadSInt2(&vec);
         }
 
         template <class V>
@@ -555,12 +561,18 @@ namespace
         }
 
         template <class>
-        static __forceinline XMVECTOR NegateIf(const Type &v, bool condition) noexcept
+        static __forceinline XMVECTOR Negate(const Type &vec) noexcept
+        {
+            return XMVectorNegate(XMLoadSInt3(&vec));
+        }
+
+        template <class>
+        static __forceinline XMVECTOR NegateIf(const Type &vec, bool condition) noexcept
         {
             if (condition) {
-                return XMVectorNegate(XMLoadSInt3(&v));
+                return XMVectorNegate(XMLoadSInt3(&vec));
             }
-            return XMLoadSInt3(&v);
+            return XMLoadSInt3(&vec);
         }
 
         template <class V>
@@ -854,12 +866,18 @@ namespace
         }
 
         template <class>
-        static __forceinline XMVECTOR NegateIf(const Type &v, bool condition) noexcept
+        static __forceinline XMVECTOR Negate(const Type &vec) noexcept
+        {
+            return XMVectorNegate(XMLoadSInt4(&vec));
+        }
+
+        template <class>
+        static __forceinline XMVECTOR NegateIf(const Type &vec, bool condition) noexcept
         {
             if (condition) {
-                return XMVectorNegate(XMLoadSInt4(&v));
+                return XMVectorNegate(XMLoadSInt4(&vec));
             }
-            return XMLoadSInt4(&v);
+            return XMLoadSInt4(&vec);
         }
 
         template <class V>
@@ -1141,12 +1159,18 @@ namespace
         }
 
         template <class>
-        static __forceinline XMVECTOR NegateIf(const Type &v, bool condition) noexcept
+        static __forceinline XMVECTOR Negate(const Type &vec) noexcept
+        {
+            return XMVectorNegate(XMLoadFloat2(&vec));
+        }
+
+        template <class>
+        static __forceinline XMVECTOR NegateIf(const Type &vec, bool condition) noexcept
         {
             if (condition) {
-                return XMVectorNegate(XMLoadFloat2(&v));
+                return XMVectorNegate(XMLoadFloat2(&vec));
             }
-            return XMLoadFloat2(&v);
+            return XMLoadFloat2(&vec);
         }
 
         template <class V>
@@ -1440,12 +1464,18 @@ namespace
         }
 
         template <class>
-        static __forceinline XMVECTOR NegateIf(const Type &v, bool condition) noexcept
+        static __forceinline XMVECTOR Negate(const Type &vec) noexcept
+        {
+            return XMVectorNegate(XMLoadFloat3(&vec));
+        }
+
+        template <class>
+        static __forceinline XMVECTOR NegateIf(const Type &vec, bool condition) noexcept
         {
             if (condition) {
-                return XMVectorNegate(XMLoadFloat3(&v));
+                return XMVectorNegate(XMLoadFloat3(&vec));
             }
-            return XMLoadFloat3(&v);
+            return XMLoadFloat3(&vec);
         }
 
         template <class V>
@@ -1739,12 +1769,18 @@ namespace
         }
 
         template <class>
-        static __forceinline XMVECTOR NegateIf(const Type &v, bool condition) noexcept
+        static __forceinline XMVECTOR Negate(const Type &vec) noexcept
+        {
+            return XMVectorNegate(XMLoadFloat4(&vec));
+        }
+
+        template <class>
+        static __forceinline XMVECTOR NegateIf(const Type &vec, bool condition) noexcept
         {
             if (condition) {
-                return XMVectorNegate(XMLoadFloat4(&v));
+                return XMVectorNegate(XMLoadFloat4(&vec));
             }
-            return XMLoadFloat4(&v);
+            return XMLoadFloat4(&vec);
         }
 
         template <class V>
@@ -2026,12 +2062,18 @@ namespace
         }
 
         template <class>
-        static __forceinline XMVECTOR NegateIf(const Type &v, bool condition) noexcept
+        static __forceinline XMVECTOR Negate(const Type &vec) noexcept
+        {
+            return XMVectorNegate(XMLoadUInt2(&vec));
+        }
+
+        template <class>
+        static __forceinline XMVECTOR NegateIf(const Type &vec, bool condition) noexcept
         {
             if (condition) {
-                return XMVectorNegate(XMLoadUInt2(&v));
+                return XMVectorNegate(XMLoadUInt2(&vec));
             }
-            return XMLoadUInt2(&v);
+            return XMLoadUInt2(&vec);
         }
 
         template <class V>
@@ -2325,12 +2367,18 @@ namespace
         }
 
         template <class>
-        static __forceinline XMVECTOR NegateIf(const Type &v, bool condition) noexcept
+        static __forceinline XMVECTOR Negate(const Type &vec) noexcept
+        {
+            return XMVectorNegate(XMLoadUInt3(&vec));
+        }
+
+        template <class>
+        static __forceinline XMVECTOR NegateIf(const Type &vec, bool condition) noexcept
         {
             if (condition) {
-                return XMVectorNegate(XMLoadUInt3(&v));
+                return XMVectorNegate(XMLoadUInt3(&vec));
             }
-            return XMLoadUInt3(&v);
+            return XMLoadUInt3(&vec);
         }
 
         template <class V>
@@ -2624,12 +2672,18 @@ namespace
         }
 
         template <class>
-        static __forceinline XMVECTOR NegateIf(const Type &v, bool condition) noexcept
+        static __forceinline XMVECTOR Negate(const Type &vec) noexcept
+        {
+            return XMVectorNegate(XMLoadUInt4(&vec));
+        }
+
+        template <class>
+        static __forceinline XMVECTOR NegateIf(const Type &vec, bool condition) noexcept
         {
             if (condition) {
-                return XMVectorNegate(XMLoadUInt4(&v));
+                return XMVectorNegate(XMLoadUInt4(&vec));
             }
-            return XMLoadUInt4(&v);
+            return XMLoadUInt4(&vec);
         }
 
         template <class V>
@@ -3970,11 +4024,17 @@ namespace
     using namespace DirectX;
 
     template <class V>
-    struct VectorArithmeticMapper;
+    struct XMVectorArithmeticMapper;
 
     template <>
-    struct VectorArithmeticMapper<XMINT2>
+    struct XMVectorArithmeticMapper<XMINT2>
     {
+        template <class>
+        static __forceinline XMVECTOR Negate(const XMINT2 &v) noexcept
+        {
+            return XMVectorAdapter<int32_t,2>::Negate(v);
+        }
+
         template <class>
         static __forceinline XMVECTOR NegateIf(const XMINT2 &v, bool condition) noexcept
         {
@@ -3989,8 +4049,14 @@ namespace
     };
 
     template <>
-    struct VectorArithmeticMapper<XMINT3>
+    struct XMVectorArithmeticMapper<XMINT3>
     {
+        template <class>
+        static __forceinline XMVECTOR Negate(const XMINT3 &v) noexcept
+        {
+            return XMVectorAdapter<int32_t,3>::Negate(v);
+        }
+
         template <class>
         static __forceinline XMVECTOR NegateIf(const XMINT3 &v, bool condition) noexcept
         {
@@ -4005,8 +4071,14 @@ namespace
     };
 
     template <>
-    struct VectorArithmeticMapper<XMINT4>
+    struct XMVectorArithmeticMapper<XMINT4>
     {
+        template <class>
+        static __forceinline XMVECTOR Negate(const XMINT4 &v) noexcept
+        {
+            return XMVectorAdapter<int32_t,4>::Negate(v);
+        }
+
         template <class>
         static __forceinline XMVECTOR NegateIf(const XMINT4 &v, bool condition) noexcept
         {
@@ -4021,8 +4093,14 @@ namespace
     };
 
     template <>
-    struct VectorArithmeticMapper<XMFLOAT2>
+    struct XMVectorArithmeticMapper<XMFLOAT2>
     {
+        template <class>
+        static __forceinline XMVECTOR Negate(const XMFLOAT3 &v) noexcept
+        {
+            return XMVectorAdapter<float_t,2>::Negate(v);
+        }
+
         template <class>
         static __forceinline XMVECTOR NegateIf(const XMFLOAT2 &v, bool condition) noexcept
         {
@@ -4037,8 +4115,14 @@ namespace
     };
 
     template <>
-    struct VectorArithmeticMapper<XMFLOAT3>
+    struct XMVectorArithmeticMapper<XMFLOAT3>
     {
+        template <class>
+        static __forceinline XMVECTOR Negate(const XMFLOAT3 &v) noexcept
+        {
+            return XMVectorAdapter<float_t,3>::Negate(v);
+        }
+
         template <class>
         static __forceinline XMVECTOR NegateIf(const XMFLOAT3 &v, bool condition) noexcept
         {
@@ -4053,8 +4137,14 @@ namespace
     };
 
     template <>
-    struct VectorArithmeticMapper<XMFLOAT4>
+    struct XMVectorArithmeticMapper<XMFLOAT4>
     {
+        template <class>
+        static __forceinline XMVECTOR Negate(const XMFLOAT4 &v) noexcept
+        {
+            return XMVectorAdapter<float_t,4>::Negate(v);
+        }
+
         template <class>
         static __forceinline XMVECTOR NegateIf(const XMFLOAT4 &v, bool condition) noexcept
         {
@@ -4069,8 +4159,14 @@ namespace
     };
 
     template <>
-    struct VectorArithmeticMapper<XMUINT2>
+    struct XMVectorArithmeticMapper<XMUINT2>
     {
+        template <class>
+        static __forceinline XMVECTOR Negate(const XMUINT2 &v) noexcept
+        {
+            return XMVectorAdapter<uint32_t,2>::Negate(v);
+        }
+
         template <class>
         static __forceinline XMVECTOR NegateIf(const XMUINT2 &v, bool condition) noexcept
         {
@@ -4085,8 +4181,14 @@ namespace
     };
 
     template <>
-    struct VectorArithmeticMapper<XMUINT3>
+    struct XMVectorArithmeticMapper<XMUINT3>
     {
+        template <class>
+        static __forceinline XMVECTOR Negate(const XMUINT3 &v) noexcept
+        {
+            return XMVectorAdapter<uint32_t,3>::Negate(v);
+        }
+
         template <class>
         static __forceinline XMVECTOR NegateIf(const XMUINT3 &v, bool condition) noexcept
         {
@@ -4101,8 +4203,14 @@ namespace
     };
 
     template <>
-    struct VectorArithmeticMapper<XMUINT4>
+    struct XMVectorArithmeticMapper<XMUINT4>
     {
+        template <class>
+        static __forceinline XMVECTOR Negate(const XMUINT4 &v) noexcept
+        {
+            return XMVectorAdapter<uint32_t,4>::Negate(v);
+        }
+
         template <class>
         static __forceinline XMVECTOR NegateIf(const XMUINT4 &v, bool condition) noexcept
         {
@@ -4153,11 +4261,17 @@ inline bool operator!=(V1 &&vector1, V2 &&vector2) noexcept
     return XMVectorComparisonMapper<std::decay_t<V1>>::NotEqual(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
+template <class V>
+inline XMVECTOR operator-(V &&vector) noexcept
+{
+    return XMVectorArithmeticMapper<std::decay_t<V>>::Negate(std::forward<V>(vector));
+}
+
 /// <summary>Computes the difference of two vectors.</summary>
 template <class V1, class V2>
 inline XMVECTOR operator-(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return VectorArithmeticMapper<std::decay_t<V1>>::Substract(std::forward<V1>(vector1), std::forward<V2>(vector2));
+    return XMVectorArithmeticMapper<std::decay_t<V1>>::Substract(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 /// <summary>Computes the radian angle between two 2-, 3- or 4D vectors.</summary>
@@ -4204,7 +4318,7 @@ inline XMVECTOR DotProduct(V1&& vector1, V2&& vector2) noexcept
 template <class V1, class V2, class V3>
 inline XMVECTOR Faceforward(V1&& normal, V2&& vector, V3&& nref)
 {
-    return VectorArithmeticMapper<std::decay_t<V1>>::NegateIf(normal, XMVectorGetX(DotProduct(std::forward<V3>(nref), std::forward<V2>(vector))) < 0.f);
+    return XMVectorArithmeticMapper<std::decay_t<V1>>::NegateIf(normal, XMVectorGetX(DotProduct(std::forward<V3>(nref), std::forward<V2>(vector))) < 0.f);
 }
 
 /// <summary>Tests whether the components of a 2-, 3- or 4D vector are within set bounds.</summary>
@@ -4285,7 +4399,7 @@ inline XMVECTOR Refract(V1 &&vector, V2 &&normal, V3 &&refractionIndex) noexcept
 template <class V1, class V2>
 inline XMVECTOR Distance(V1&& vector1, V2&& vector2) noexcept
 {
-    return Length(VectorArithmeticMapper<std::decay_t<V1>>::Substract(std::forward<V1>(vector1), std::forward<V2>(vector2)));
+    return Length(XMVectorArithmeticMapper<std::decay_t<V1>>::Substract(std::forward<V1>(vector1), std::forward<V2>(vector2)));
 }
 
 template <class V, class M>
