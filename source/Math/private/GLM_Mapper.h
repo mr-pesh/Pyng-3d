@@ -10,10 +10,10 @@
 namespace
 {
     template <bool isFloatingPoint>
-    struct GLMVectorGeometryMapper;
+    struct GLMVectorGeometryHelper;
 
     template <>
-    struct GLMVectorGeometryMapper<true>
+    struct GLMVectorGeometryHelper<true>
     {
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
         FORCE_INLINE_STATIC auto Angle(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
@@ -109,7 +109,7 @@ namespace
     };
 
     template <>
-    struct GLMVectorGeometryMapper<false>
+    struct GLMVectorGeometryHelper<false>
     {
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
         FORCE_INLINE_STATIC auto Angle(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
@@ -208,10 +208,10 @@ namespace
 namespace
 {
     template <bool isFloatingPoint>
-    struct GLMVectorComparisonMapper;
+    struct GLMVectorRelationalHelper;
 
     template <>
-    struct GLMVectorComparisonMapper<true>
+    struct GLMVectorRelationalHelper<true>
     {
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
         FORCE_INLINE_STATIC bool Greater(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
@@ -275,7 +275,7 @@ namespace
     };
 
     template <>
-    struct GLMVectorComparisonMapper<false>
+    struct GLMVectorRelationalHelper<false>
     {
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
         FORCE_INLINE_STATIC bool Greater(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
@@ -345,7 +345,7 @@ namespace
 template <glm::length_t L, typename T, glm::qualifier Q>
 inline auto Normalize(const glm::vec<L, T, Q> &vector) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T>>::Normalize(vector);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T>>::Normalize(vector);
 }
 
 /**
@@ -354,7 +354,7 @@ inline auto Normalize(const glm::vec<L, T, Q> &vector) noexcept
 template <glm::length_t L, typename T, glm::qualifier Q>
 inline bool IsNormalized(const glm::vec<L, T, Q> &vector) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T>>::IsNormalized(vector);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T>>::IsNormalized(vector);
 }
 
 /**
@@ -363,7 +363,7 @@ inline bool IsNormalized(const glm::vec<L, T, Q> &vector) noexcept
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline auto AngleBetweenNormals(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Angle(vector1, vector2);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::Angle(vector1, vector2);
 }
 
 /**
@@ -393,7 +393,7 @@ inline auto AngleBetweenVectors(const glm::vec<L, T1, Q> &vector1, const glm::ve
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline auto Distance(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Distance(vector1, vector2);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::Distance(vector1, vector2);
 }
 
 /**
@@ -402,7 +402,7 @@ inline auto Distance(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q>
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline auto DotProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::DotProduct(vector1, vector2);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::DotProduct(vector1, vector2);
 }
 
 /**
@@ -411,7 +411,7 @@ inline auto DotProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, 
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline auto CrossProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::CrossProduct(vector1, vector2);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::CrossProduct(vector1, vector2);
 }
 
 /**
@@ -420,7 +420,7 @@ inline auto CrossProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2
 template <glm::length_t L, typename T1, typename T2, typename T3 = std::common_type_t<T1, T2, float_t>, glm::qualifier Q>
 inline auto Faceforward(const glm::vec<L, T1, Q> &normal, const glm::vec<L, T2, Q> &vector, const glm::vec<L, T3, Q> &nref) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Faceforward(normal, vector, nref);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::Faceforward(normal, vector, nref);
 }
 
 /**
@@ -429,7 +429,7 @@ inline auto Faceforward(const glm::vec<L, T1, Q> &normal, const glm::vec<L, T2, 
 template <glm::length_t L, typename T, glm::qualifier Q>
 inline auto Length(const glm::vec<L, T, Q> &vector) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T>>::Length(vector);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T>>::Length(vector);
 }
 
 /**
@@ -438,7 +438,7 @@ inline auto Length(const glm::vec<L, T, Q> &vector) noexcept
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline auto Reflect(const glm::vec<L, T1, Q> &vector, const glm::vec<L, T2, Q> &normal) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Reflect(vector, normal);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::Reflect(vector, normal);
 }
 
 /**
@@ -447,41 +447,41 @@ inline auto Reflect(const glm::vec<L, T1, Q> &vector, const glm::vec<L, T2, Q> &
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline auto Refract(const glm::vec<L, T1, Q> &vector, const glm::vec<L, T2, Q> &normal, std::common_type_t<T1, T2, float_t> refractionIndex) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Refract(vector, normal, refractionIndex);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::Refract(vector, normal, refractionIndex);
 }
 
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline bool operator==(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorComparisonMapper<std::is_floating_point_v<T1>>::Equal(vector1, vector2);
+    return GLMVectorRelationalHelper<std::is_floating_point_v<T1>>::Equal(vector1, vector2);
 }
 
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline bool operator!=(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorComparisonMapper<std::is_floating_point_v<T1>>::NotEqual(vector1, vector2);
+    return GLMVectorRelationalHelper<std::is_floating_point_v<T1>>::NotEqual(vector1, vector2);
 }
 
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline bool operator >(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorComparisonMapper<std::is_floating_point_v<T1>>::Greater(vector1, vector2);
+    return GLMVectorRelationalHelper<std::is_floating_point_v<T1>>::Greater(vector1, vector2);
 }
 
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline bool operator>=(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorComparisonMapper<std::is_floating_point_v<T1>>::GreaterOrEqual(vector1, vector2);
+    return GLMVectorRelationalHelper<std::is_floating_point_v<T1>>::GreaterOrEqual(vector1, vector2);
 }
 
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline bool operator <(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorComparisonMapper<std::is_floating_point_v<T1>>::Less(vector1, vector2);
+    return GLMVectorRelationalHelper<std::is_floating_point_v<T1>>::Less(vector1, vector2);
 }
 
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 inline bool operator<=(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorComparisonMapper<std::is_floating_point_v<T1>>::LessOrEqual(vector1, vector2);
+    return GLMVectorRelationalHelper<std::is_floating_point_v<T1>>::LessOrEqual(vector1, vector2);
 }
