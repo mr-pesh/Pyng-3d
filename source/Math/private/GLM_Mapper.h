@@ -420,7 +420,7 @@ inline auto CrossProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2
 template <glm::length_t L, typename T1, typename T2, typename T3 = std::common_type_t<T1, T2, float_t>, glm::qualifier Q>
 inline auto Faceforward(const glm::vec<L, T1, Q> &normal, const glm::vec<L, T2, Q> &vector, const glm::vec<L, T3, Q> &nref) noexcept
 {
-    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Faceforward(normal, vector);
+    return GLMVectorGeometryMapper<std::is_floating_point_v<T1>>::Faceforward(normal, vector, nref);
 }
 
 /**
