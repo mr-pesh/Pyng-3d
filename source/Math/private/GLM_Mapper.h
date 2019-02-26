@@ -2,10 +2,9 @@
 
 #include <Utils/Global.h>
 
-#include <glm/gtx/vector_angle.hpp>
-#include <glm/gtx/vector_query.hpp>
-
 #include <limits>
+
+#include "GLM_ext.inl"
 
 namespace
 {
@@ -63,6 +62,18 @@ namespace
             return glm::normalize(vec);
         }
 
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC bool InBounds(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return (vec1 <= vec2) && (vec1 >= -vec2);
+            }
+            else {
+                const glm::vec<L, float_t, Q> bounds(vec2);
+                return (vec1 <= bounds) && (vec1 >= -bounds);
+            }
+        }
+
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC bool IsNormalized(const glm::vec<L, T, Q> &vec) noexcept
         {
@@ -82,7 +93,37 @@ namespace
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto Length(const glm::vec<L, T, Q> &vec) noexcept
         {
-            return glm::length(vec);
+            return glm::vec<L, T, Q>(glm::length(vec));
+        }
+
+        template <glm::length_t L, typename T, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto LengthSq(const glm::vec<L, T, Q> &vec) noexcept
+        {
+            return glm::vec<L, T, Q>(glm::length2(vec));
+        }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto LinePointDistance(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T1, Q> &vec2, const glm::vec<L, T2, Q> &vec3) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::vec<L, T1, Q>(glm::distance(glm::closestPointOnLine(vec3, vec1, vec2), vec3));
+            }
+            else {
+                const glm::vec<L, float_t, Q> point(vec3);
+                return glm::vec<L, T1, Q>(glm::distance(glm::closestPointOnLine(point, vec1, vec2), point));
+            }
+        }
+
+        template <glm::length_t L, typename T, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto OrthogonalVector(const glm::vec<L, T, Q> &vector) noexcept
+        {
+            return OrthogonalImpl<L>::Orthogonal(vector);
+        }
+
+        template <glm::length_t L, typename T, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto ReciprocalLength(const glm::vec<L, T, Q> &vec) noexcept
+        {
+            return glm::vec<L, T, Q>(1.f / glm::length(vec));
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
@@ -175,10 +216,54 @@ namespace
             }
         }
 
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC bool InBounds(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        {
+            const glm::vec<L, float_t, Q> vector(vec1);
+
+            if constexpr (std::is_floating_point_v<T2>) {
+                return (vector <= vec2) && (vector >= -vec2);
+            }
+            else {
+                const glm::vec<L, float_t, Q> bounds(vec2);
+                return (vector <= bounds) && (vector >= -bounds);
+            }
+        }
+
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto Length(const glm::vec<L, T, Q> &vec) noexcept
         {
-            return glm::length(glm::vec<L, float_t, Q>(vec));
+            return glm::vec<L, float_t, Q>(glm::length(glm::vec<L, float_t, Q>(vec)));
+        }
+
+        template <glm::length_t L, typename T, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto LengthSq(const glm::vec<L, T, Q> &vec) noexcept
+        {
+            return glm::vec<L, float_t, Q>(glm::length2(glm::vec<L, float_t, Q>(vec)));
+        }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto LinePointDistance(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T1, Q> &vec2, const glm::vec<L, T2, Q> &vec3) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::vec<L, float_t, Q>(glm::distance(glm::closestPointOnLine(vec3, glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)), vec3));
+            }
+            else {
+                const glm::vec<L, float_t, Q> point(vec3);
+                return glm::vec<L, float_t, Q>(glm::distance(glm::closestPointOnLine(point, glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)), point));
+            }
+        }
+
+        template <glm::length_t L, typename T, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto OrthogonalVector(const glm::vec<L, T, Q> &vector) noexcept
+        {
+            return OrthogonalImpl<L>::Orthogonal(glm::vec<L, float_t, Q>(vector));
+        }
+
+        template <glm::length_t L, typename T, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto ReciprocalLength(const glm::vec<L, T, Q> &vec) noexcept
+        {
+            return glm::vec<L, float_t, Q>(1.f / glm::length(glm::vec<L, float_t, Q>(vec)));
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
@@ -237,7 +322,7 @@ namespace
         FORCE_INLINE_STATIC bool Equal(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (!std::is_floating_point_v<T2>) {
-                return vec1 == GLMStoreInt(vec2);
+                return vec1 == glm::vec<L, float_t, Q>(vec2);
             } else {
                 return vec1 == vec2;
             }
@@ -424,12 +509,56 @@ inline auto Faceforward(const glm::vec<L, T1, Q> &normal, const glm::vec<L, T2, 
 }
 
 /**
+ * Flips the surface-normal (if needed) to face in a direction opposite to vector.
+ */
+template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+inline bool InBounds(const glm::vec<L, T1, Q> &vector, const glm::vec<L, T2, Q> &bounds) noexcept
+{
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::InBounds(vector, bounds);
+}
+/**
  * Computes the length of a vector.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 inline auto Length(const glm::vec<L, T, Q> &vector) noexcept
 {
     return GLMVectorGeometryHelper<std::is_floating_point_v<T>>::Length(vector);
+}
+
+/**
+ * Computes the square length of a vector.
+ */
+template <glm::length_t L, typename T, glm::qualifier Q>
+inline auto LengthSq(const glm::vec<L, T, Q> &vector) noexcept
+{
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T>>::LengthSq(vector);
+}
+
+/**
+ * Computes the minimum distance between a line and a point.
+ */
+template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+inline auto LinePointDistance(const glm::vec<L, T1, Q> &linePoint1, const glm::vec<L, T1, Q> &linePoint2, const glm::vec<L, T2, Q> &point) noexcept
+{
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::LinePointDistance(linePoint1, linePoint2, point);
+}
+
+/**
+ * Computes a vector perpendicular to a given vector.
+ */
+template <glm::length_t L, typename T, glm::qualifier Q>
+inline auto OrthogonalVector(const glm::vec<L, T, Q> &vector) noexcept
+{
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T>>::OrthogonalVector(vector);
+}
+
+/**
+ * Computes the reciprocal of the length of a vector.
+ */
+template <glm::length_t L, typename T, glm::qualifier Q>
+inline auto ReciprocalLength(const glm::vec<L, T, Q> &vector) noexcept
+{
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T>>::ReciprocalLength(vector);
 }
 
 /**

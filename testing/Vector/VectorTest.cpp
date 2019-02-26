@@ -134,8 +134,6 @@ TEST_F(VectorUnitTest, AngleFunctionsTest)
     }
 }
 
-#if defined(_MSC_VER) && !defined(__GL_MATH_LIBRARY)
-
 TEST_F(VectorUnitTest, VectorGeometryFunctions)
 {
     const VectorVariant<3> args[] =
@@ -149,6 +147,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
         {
             using VectorType = std::decay_t<decltype(vec1)>;
 
+#if defined(_MSC_VER) && !defined(__GL_MATH_LIBRARY)
             // ClampLength
             {
                 auto result = ClampLength(vec1, 1.f, 10.f);
@@ -185,6 +184,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
                     })
                 );
             }
+#endif
             // DotProduct
             {
                 ASSERT_FLOAT_EQ(*std::begin(DotProduct(vec1, OrthogonalVector(vec1))), 0.f);
@@ -216,11 +216,6 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             }
             // Normalize
             {
-                VectorType zeroVector;
-                std::fill(std::begin(zeroVector), std::end(zeroVector), std::decay_t<decltype(*std::end(zeroVector))>(0));
-
-                ASSERT_FLOAT_EQ(*std::begin(Normalize(zeroVector)), 0);
-
                 const auto result = Normalize(vec1);
                 const auto length = Length(vec1);
 
@@ -288,8 +283,6 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
         variant);
     }
 }
-
-#endif
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
