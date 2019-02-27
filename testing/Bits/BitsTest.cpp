@@ -78,7 +78,7 @@ TEST_F(BitOperationsUnitTest, PopcountTest)
         })
     );
 
-    unsigned long ul[5] = { 0, 0xFF, 0xFFFF, 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF }, ul_r[5] = { 0, 8, 16, 32, 64 };
+    unsigned long long ul[5] = { 0, 0xFF, 0xFFFF, 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF }, ul_r[5] = { 0, 8, 16, 32, 64 };
 
     ASSERT_TRUE(
         std::equal(std::begin(ul), std::end(ul), std::begin(ul_r), [](auto &&value, auto &&count) {

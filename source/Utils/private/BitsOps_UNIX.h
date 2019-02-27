@@ -19,14 +19,15 @@
 template <typename T>
 __always_inline int popcount(T value) noexcept
 {
-    if constexpr (sizeof(T) <= sizeof(unsigned int)) {
+    if constexpr (std::_Is_any_of_v<T, int, unsigned int>
+                  || sizeof(T) < sizeof(unsigned int)) {
         return __builtin_popcount(static_cast<unsigned int>(value));
     }
-    else if (std::is_same_v<T, unsigned long long> || std::is_same_v<T, long long>)) {
-        return __builtin_popcountll(static_cast<unsigned long long>(value));
-    }
-    else if (sizeof(T) == sizeof(unsigned long)) {
+    else if (std::_Is_any_of_v<T, long, unsigned long>) {
         return __builtin_popcountl(static_cast<unsigned long>(value));
+    }
+    else if (std::_Is_any_of_v<T, long long, unsigned long long>) {
+        return __builtin_popcountll(static_cast<unsigned long long>(value));
     }
 }
 

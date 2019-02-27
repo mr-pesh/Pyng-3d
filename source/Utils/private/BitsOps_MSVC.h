@@ -2,93 +2,73 @@
 
 #include <intrin.h>
 
-# pragma intrinsic(__popcnt16, __popcnt)
-#ifdef _M_AMD64
-# pragma intrinsic(__popcnt64)
-#endif
-template <typename T>
-__forceinline auto popcount(T value) noexcept
-{
-    if constexpr (sizeof(T) == sizeof(unsigned short)) {
-        return __popcnt16((unsigned short)value);
-    }
-    else if (sizeof(T) == sizeof(unsigned int)) {
-        return __popcnt((unsigned int)value);
-    }
-#ifdef _M_AMD64
-    else if (sizeof(T) == sizeof(unsigned __int64)) {
-        return __popcnt64((unsigned __int64)value);
-    }
-#endif
-}
-
 # pragma intrinsic(_bittest)
-#ifdef _M_AMD64
-# pragma intrinsic(_bittest64)
-#endif
-template <typename T, typename Size>
+template <typename T, typename Size,
+          std::enable_if_t<sizeof(T) <= sizeof(__int32), int> = 0>
 __forceinline bool bittest(T const *array, Size bit) noexcept
 {
-    if constexpr (sizeof(T) < sizeof(__int64)) {
-        return _bittest((long const *)array, (long)bit);
-    }
-#ifdef _M_AMD64
-    else if (sizeof(T) == sizeof(__int64)) {
-        return _bittest64((__int64 const *)array, (__int64)bit);
-    }
-#endif
+    return _bittest(static_cast<long const *>(array), static_cast<long>(bit));
 }
 
 # pragma intrinsic(_bittestandset)
-#ifdef _M_AMD64
-# pragma intrinsic(_bittestandset64)
-#endif
-template <typename T, typename Size>
+template <typename T, typename Size,
+          std::enable_if_t<sizeof(T) <= sizeof(__int32), int> = 0>
 __forceinline bool bittestandset(T *array, Size bit) noexcept
 {
-    if constexpr (sizeof(T) < sizeof(__int64)) {
-        return _bittestandset((long *)array, (long)bit);
-    }
-#ifdef _M_AMD64
-    else if (sizeof(T) == sizeof(__int64)) {
-        return _bittestandset64((__int64 *)array, (__int64)bit);
-    }
-#endif
+    return _bittestandset(static_cast<long *>(array), static_cast<long>(bit));
 }
 
 # pragma intrinsic(_bittestandreset)
-#ifdef _M_AMD64
-# pragma intrinsic(_bittestandreset64)
-#endif
-template <typename T, typename Size>
+template <typename T, typename Size,
+          std::enable_if_t<sizeof(T) <= sizeof(__int32), int> = 0>
 __forceinline bool bittestandreset(T *array, Size bit) noexcept
 {
-    if constexpr (sizeof(T) < sizeof(__int64)) {
-        return _bittestandreset((long *)array, (long)bit);
-    }
-#ifdef _M_AMD64
-    else if (sizeof(T) == sizeof(__int64)) {
-        return _bittestandreset64((__int64 *)array, (__int64)bit);
-    }
-#endif
+    return _bittestandreset(static_cast<long *>(array), static_cast<long>(bit));
 }
 
 # pragma intrinsic(_bittestandcomplement)
-#ifdef _M_AMD64
-# pragma intrinsic(_bittestandcomplement64)
-#endif
-template <typename T, typename Size>
+template <typename T, typename Size,
+          std::enable_if_t<sizeof(T) <= sizeof(__int32), int> = 0>
 __forceinline bool bittestandchange(T *array, Size bit) noexcept
 {
-    if constexpr (sizeof(T) < sizeof(__int64)) {
-        return _bittestandcomplement((long *)array, (long)bit);
-    }
-#ifdef _M_AMD64
-    else if (sizeof(T) == sizeof(__int64)) {
-        return _bittestandcomplement64((__int64 *)array, (__int64)bit);
-    }
-#endif
+    return _bittestandcomplement(static_cast<long *>(array), static_cast<long>(bit));
 }
+
+#ifdef _M_AMD64
+
+# pragma intrinsic(_bittest64)
+template <typename T, typename Size,
+          std::enable_if_t<sizeof(T) == sizeof(__int64), int> = 0>
+__forceinline bool bittest(T const *array, Size bit) noexcept
+{
+    return _bittest64(static_cast<__int64 const *>(array), static_cast<__int64>(bit));
+}
+
+# pragma intrinsic(_bittestandset64)
+template <typename T, typename Size,
+          std::enable_if_t<sizeof(T) == sizeof(__int64), int> = 0>
+__forceinline bool bittestandset(T *array, Size bit) noexcept
+{
+    return _bittestandset64(static_cast<__int64 *>(array), static_cast<__int64>(bit));
+}
+
+# pragma intrinsic(_bittestandreset64)
+template <typename T, typename Size,
+          std::enable_if_t<sizeof(T) == sizeof(__int64), int> = 0>
+__forceinline bool bittestandreset(T *array, Size bit) noexcept
+{
+    return _bittestandreset64(static_cast<__int64 *>(array), static_cast<__int64>(bit));
+}
+
+# pragma intrinsic(_bittestandcomplement64)
+template <typename T, typename Size,
+          std::enable_if_t<sizeof(T) == sizeof(__int64), int> = 0>
+__forceinline bool bittestandchange(T *array, Size bit) noexcept
+{
+    return _bittestandcomplement64(static_cast<__int64 *>(array), static_cast<__int64>(bit));
+}
+
+#endif // _M_AMD64
 
 template <typename T, typename Size>
 __forceinline bool getBit(volatile T *value, Size index) noexcept
@@ -113,3 +93,29 @@ __forceinline void changeBit(volatile T *value, Size index) noexcept
 {
     bittestandchange(value, index);
 }
+
+# pragma intrinsic(__popcnt16)
+template <typename T, std::enable_if_t<sizeof(T) <= sizeof(__int16), int> = 0>
+__forceinline unsigned __int16 popcount(T value)
+{
+    return __popcnt16(static_cast<unsigned __int16>(value));
+}
+
+# pragma intrinsic(__popcnt)
+template <typename T, std::enable_if_t<sizeof(T) == sizeof(__int32), int> = 0>
+__forceinline unsigned __int32 popcount(T value)
+{
+    return __popcnt(static_cast<unsigned __int32>(value));
+}
+
+#ifdef _M_AMD64
+
+# pragma intrinsic(__popcnt64)
+template <typename T,
+          std::enable_if_t<sizeof(T) == sizeof(__int64), int> = 0>
+__forceinline unsigned __int64 popcount(T value)
+{
+    return __popcnt64(static_cast<unsigned __int64>(value));
+}
+
+#endif // _M_AMD64

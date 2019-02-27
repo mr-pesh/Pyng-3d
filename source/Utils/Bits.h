@@ -1,12 +1,12 @@
 #pragma once
 
+#include <type_traits>
+
 #ifndef _MSC_VER
 # include "private/BitsOps_UNIX.h"
 #else
 # include "private/BitsOps_MSVC.h"
 #endif
-
-#include <type_traits>
 
 template <typename T, typename Size,
           std::enable_if_t<std::is_integral_v<T>, int> = 0>
