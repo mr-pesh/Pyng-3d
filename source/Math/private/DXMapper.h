@@ -4225,6 +4225,301 @@ namespace
     };
 }
 
+namespace
+{
+    template <class V>
+    struct XMVectorAccessorHelper;
+
+    template <>
+    struct XMVectorAccessorHelper<XMINT2>
+    {
+        static __forceinline int32_t Get(const XMINT2 &v, size_t i) noexcept
+        {
+            assert((i >= 0 && i <= 1) && "Index for XMINT2 should be in range [0..1]");
+
+            switch (i) {
+            case 0: return v.x;
+            case 1: return v.y;
+            default:
+                __assume(0);
+            }
+        }
+
+        static __forceinline int32_t GetX(const XMINT2 &v) noexcept
+        {
+            return v.x;
+        }
+
+        static __forceinline int32_t GetY(const XMINT2 &v) noexcept
+        {
+            return v.y;
+        }
+    };
+
+    template <>
+    struct XMVectorAccessorHelper<XMINT3>
+    {
+        static __forceinline int32_t Get(const XMINT3 &v, size_t i) noexcept
+        {
+            assert((i >= 0 && i <= 2) && "Index for XMINT3 should be in range [0..2]");
+
+            switch (i) {
+            case 0: return v.x;
+            case 1: return v.y;
+            case 2: return v.z;
+            default:
+                __assume(0);
+            }
+        }
+
+        static __forceinline int32_t GetX(const XMINT3 &v) noexcept
+        {
+            return v.x;
+        }
+
+        static __forceinline int32_t GetY(const XMINT3 &v) noexcept
+        {
+            return v.y;
+        }
+
+        static __forceinline int32_t GetZ(const XMINT3 &v) noexcept
+        {
+            return v.z;
+        }
+    };
+
+    template <>
+    struct XMVectorAccessorHelper<XMINT4>
+    {
+        static __forceinline int32_t Get(const XMINT4 &v, size_t i) noexcept
+        {
+            assert((i >= 0 && i <= 3) && "Index for XMINT4 should be in range [0..3]");
+
+            switch (i) {
+            case 0: return v.x;
+            case 1: return v.y;
+            case 2: return v.z;
+            case 3: return v.w;
+            default:
+                __assume(0);
+            }
+        }
+
+        static __forceinline int32_t GetX(const XMINT4 &v) noexcept
+        {
+            return v.x;
+        }
+
+        static __forceinline int32_t GetY(const XMINT4 &v) noexcept
+        {
+            return v.y;
+        }
+
+        static __forceinline int32_t GetZ(const XMINT4 &v) noexcept
+        {
+            return v.z;
+        }
+
+        static __forceinline int32_t GetW(const XMINT4 &v) noexcept
+        {
+            return v.w;
+        }
+    };
+
+    template <>
+    struct XMVectorAccessorHelper<XMFLOAT2>
+    {
+        static __forceinline float_t Get(const XMFLOAT2 &v, size_t i) noexcept
+        {
+            assert((i >= 0 && i <= 1) && "Index for XMFLOAT2 should be in range [0..1]");
+
+            switch (i) {
+            case 0: return v.x;
+            case 1: return v.y;
+            default:
+                __assume(0);
+            }
+        }
+
+        static __forceinline float_t GetX(const XMFLOAT2 &v) noexcept
+        {
+            return v.x;
+        }
+
+        static __forceinline float_t GetY(const XMFLOAT2 &v) noexcept
+        {
+            return v.y;
+        }
+    };
+
+    template <>
+    struct XMVectorAccessorHelper<XMFLOAT3>
+    {
+        static __forceinline float_t Get(const XMFLOAT3 &v, size_t i) noexcept
+        {
+            assert((i >= 0 && i <= 2) && "Index for XMFLOAT3 should be in range [0..2]");
+
+            switch (i) {
+            case 0: return v.x;
+            case 1: return v.y;
+            case 2: return v.z;
+            default:
+                __assume(0);
+            }
+        }
+
+        static __forceinline float_t GetX(const XMFLOAT3 &v) noexcept
+        {
+            return v.x;
+        }
+
+        static __forceinline float_t GetY(const XMFLOAT3 &v) noexcept
+        {
+            return v.y;
+        }
+
+        static __forceinline float_t GetZ(const XMFLOAT3 &v) noexcept
+        {
+            return v.z;
+        }
+    };
+
+    template <>
+    struct XMVectorAccessorHelper<XMFLOAT4>
+    {
+        static __forceinline float_t Get(const XMFLOAT4 &v, size_t i) noexcept
+        {
+            assert((i >= 0 && i <= 3) && "Index for XMFLOAT4 should be in range [0..3]");
+
+            switch (i) {
+            case 0: return v.x;
+            case 1: return v.y;
+            case 2: return v.z;
+            case 3: return v.w;
+            default:
+                __assume(0);
+            }
+        }
+
+        static __forceinline float_t GetX(const XMFLOAT4 &v) noexcept
+        {
+            return v.x;
+        }
+
+        template <class>
+        static __forceinline float_t GetY(const XMFLOAT4 &v) noexcept
+        {
+            return v.y;
+        }
+
+        static __forceinline float_t GetZ(const XMFLOAT4 &v) noexcept
+        {
+            return v.z;
+        }
+
+        static __forceinline float_t GetW(const XMFLOAT4 &v) noexcept
+        {
+            return v.w;
+        }
+    };
+
+    template <>
+    struct XMVectorAccessorHelper<XMUINT2>
+    {
+        static __forceinline uint32_t Get(const XMUINT2 &v, size_t i) noexcept
+        {
+            assert((i >= 0 && i <= 1) && "Index for XMUINT2 should be in range [0..1]");
+
+            switch (i) {
+            case 0: return v.x;
+            case 1: return v.y;
+            default:
+                __assume(0);
+            }
+        }
+
+        static __forceinline uint32_t GetX(const XMUINT2 &v) noexcept
+        {
+            return v.x;
+        }
+
+        static __forceinline uint32_t GetY(const XMUINT2 &v) noexcept
+        {
+            return v.y;
+        }
+    };
+
+    template <>
+    struct XMVectorAccessorHelper<XMUINT3>
+    {
+        static __forceinline uint32_t Get(const XMUINT3 &v, size_t i) noexcept
+        {
+            assert((i >= 0 && i <= 2) && "Index for XMUINT3 should be in range [0..2]");
+
+            switch (i) {
+            case 0: return v.x;
+            case 1: return v.y;
+            case 2: return v.z;
+            default:
+                __assume(0);
+            }
+        }
+
+        static __forceinline uint32_t GetX(const XMUINT3 &v) noexcept
+        {
+            return v.x;
+        }
+
+        static __forceinline uint32_t GetY(const XMUINT3 &v) noexcept
+        {
+            return v.y;
+        }
+
+        static __forceinline uint32_t GetZ(const XMUINT3 &v) noexcept
+        {
+            return v.z;
+        }
+    };
+
+    template <>
+    struct XMVectorAccessorHelper<XMUINT4>
+    {
+        static __forceinline uint32_t Get(const XMUINT4 &v, size_t i) noexcept
+        {
+            assert((i >= 0 && i <= 3) && "Index for XMUINT4 should be in range [0..3]");
+
+            switch (i) {
+            case 0: return v.x;
+            case 1: return v.y;
+            case 2: return v.z;
+            case 3: return v.w;
+            default:
+                __assume(0);
+            }
+        }
+
+        static __forceinline uint32_t GetX(const XMUINT4 &v) noexcept
+        {
+            return v.x;
+        }
+
+        static __forceinline uint32_t GetY(const XMUINT4 &v) noexcept
+        {
+            return v.y;
+        }
+
+        static __forceinline uint32_t GetZ(const XMUINT4 &v) noexcept
+        {
+            return v.z;
+        }
+
+        static __forceinline uint32_t GetW(const XMUINT4 &v) noexcept
+        {
+            return v.w;
+        }
+    };
+}
+
 template <class V1, class V2>
 inline bool operator<(V1 &&vector1, V2 &&vector2) noexcept
 {
@@ -4400,6 +4695,68 @@ template <class V1, class V2>
 inline XMVECTOR Distance(V1&& vector1, V2&& vector2) noexcept
 {
     return Length(XMVectorArithmeticHelper<std::decay_t<V1>>::Substract(std::forward<V1>(vector1), std::forward<V2>(vector2)));
+}
+
+/// <summary>Retrieve the X component of a Vector.</summary>
+template <class V>
+inline auto VectorGetX(V&& vector) noexcept
+{
+    if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
+        return XMVectorGetX(std::forward<V>(vector));
+    }
+    else {
+        return XMVectorAccessorHelper<std::decay_t<V>>::GetX(vector);
+    }
+}
+
+/// <summary>Retrieve the Y component of a Vector</summary>
+template <class V>
+inline auto VectorGetY(V&& vector) noexcept
+{
+    if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
+        return XMVectorGetY(std::forward<V>(vector), index);
+    }
+    else {
+        return XMVectorAccessorHelper<std::decay_t<V>>::GetY(vector);
+    }
+}
+
+/// <summary>Retrieve the Z component of a Vector.</summary>
+template <class V>
+inline auto VectorGetZ(V&& vector) noexcept
+{
+    if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
+        return XMVectorGetZ(std::forward<V>(vector));
+    }
+    else {
+        return XMVectorAccessorHelper<std::decay_t<V>>::GetZ(vector);
+    }
+}
+
+/// <summary>Retrieve the W component of a Vector.</summary>
+template <class V>
+inline auto VectorGetW(V&& vector) noexcept
+{
+    if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
+        return XMVectorGetW(std::forward<V>(vector));
+    }
+    else {
+        return XMVectorAccessorHelper<std::decay_t<V>>::GetW(vector);
+    }
+}
+
+/// <summary>Retrieve the value of one of the four components of a Vector by index.
+/// <para/>It's not recommended for use due to performance loss
+/// </summary>
+template <class V>
+inline auto VectorGetByIndex(V&& vector, size_t index) noexcept
+{
+    if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
+        return XMVectorGetByIndex(std::forward<V>(vector), index);
+    }
+    else {
+        return XMVectorAccessorHelper<std::decay_t<V>>::Get(vector, index);
+    }
 }
 
 template <class V, class M>

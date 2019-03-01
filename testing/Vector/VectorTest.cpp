@@ -119,8 +119,8 @@ TEST_F(VectorUnitTest, AngleFunctionsTest)
         const auto angle = AngleBetweenVectors(vec1, vec2);
         const auto pi_2_ = AngleBetweenVectors(vec1, CrossProduct(vec1, vec2));
 
-        ASSERT_NEAR(*std::begin(angle), 0.53811252, 0.0001);
-        ASSERT_NEAR(*std::begin(pi_2_), 1.57079625, 0.0001);
+        ASSERT_NEAR(VectorGetX(angle), 0.53811252, 0.0001);
+        ASSERT_NEAR(VectorGetX(pi_2_), 1.57079625, 0.0001);
     }
     {
         const auto vec1 = Vector<float_t, 3>{ 0.7f, 0.9f, 0.5f };
@@ -129,8 +129,8 @@ TEST_F(VectorUnitTest, AngleFunctionsTest)
         const auto angle = AngleBetweenNormals(vec1, vec2);
         const auto pi_2_ = AngleBetweenNormals(vec1, CrossProduct(vec1, vec2));
 
-        ASSERT_NEAR(*std::begin(angle), 1.15927947, 0.0001);
-        ASSERT_NEAR(*std::begin(pi_2_), 1.57079625, 0.0001);
+        ASSERT_NEAR(VectorGetX(angle), 1.15927947, 0.0001);
+        ASSERT_NEAR(VectorGetX(pi_2_), 1.57079625, 0.0001);
     }
 }
 
@@ -161,7 +161,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             // CrossProduct
             {
                 VectorType vec2;
-                std::iota(std::begin(vec2), std::end(vec2), std::decay_t<decltype(*std::end(vec2))>(0));
+                std::iota(std::begin(vec2), std::end(vec2), decltype(VectorGetX(vec2))(0));
 
                 auto result = CrossProduct(vec1, vec2);
                 
@@ -187,7 +187,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
 #endif
             // DotProduct
             {
-                ASSERT_FLOAT_EQ(*std::begin(DotProduct(vec1, OrthogonalVector(vec1))), 0.f);
+                ASSERT_FLOAT_EQ(VectorGetX(DotProduct(vec1, OrthogonalVector(vec1))), 0.f);
             }
             // InBounds
             {
@@ -196,7 +196,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             }
             // Length
             {
-                ASSERT_NEAR(*std::begin(Length(vec1)),
+                ASSERT_NEAR(VectorGetX(Length(vec1)),
                     // manually count the square root of a sum of each component of the vector in power of 2
                     std::sqrt(std::accumulate(std::begin(vec1), std::end(vec1), 0., [](auto &&acc, auto &&value) {
                         return acc + std::pow(value, 2);
@@ -205,14 +205,14 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             }
             // LengthSq
             {
-                ASSERT_NEAR(*std::begin(LengthSq(vec1)),
+                ASSERT_NEAR(VectorGetX(LengthSq(vec1)),
                     // manually count the sum of all component of the vector in power of 2
                     std::accumulate(std::begin(vec1), std::end(vec1), 0., [](auto &&acc, auto &&value) {
                         return acc + std::pow(value, 2);
                     })
                 , 0.00001);
 
-                ASSERT_FLOAT_EQ(std::pow(*std::begin(Length(vec1)), 2), *std::begin(LengthSq(vec1)));
+                ASSERT_FLOAT_EQ(std::pow(VectorGetX(Length(vec1)), 2), VectorGetX(LengthSq(vec1)));
             }
             // Normalize
             {
@@ -221,7 +221,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
 
                 float expect[sizeof(VectorType) / sizeof(float_t)];
 
-                std::transform(std::begin(vec1), std::end(vec1), std::begin(expect), [vLength = *std::begin(length)](auto &&comp) {
+                std::transform(std::begin(vec1), std::end(vec1), std::begin(expect), [vLength = VectorGetX(length)](auto &&comp) {
                     return comp / vLength;
                 });
 
@@ -234,25 +234,25 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             // LinePointDistance
             {
                 VectorType vec2, vec3;
-                std::fill(std::begin(vec2), std::end(vec2), std::decay_t<decltype(*std::end(vec2))>(0));
-                std::fill(std::begin(vec3), std::end(vec3), std::decay_t<decltype(*std::end(vec3))>(1));
+                std::fill(std::begin(vec2), std::end(vec2), decltype(VectorGetX(vec2))(0));
+                std::fill(std::begin(vec3), std::end(vec3), decltype(VectorGetX(vec3))(1));
 
-                ASSERT_FLOAT_EQ(*std::begin(LinePointDistance(vec1, vec2, vec3)), 0.346410155f);
+                ASSERT_FLOAT_EQ(VectorGetX(LinePointDistance(vec1, vec2, vec3)), 0.346410155f);
             }
             // OrthogonalVector
             {
-                ASSERT_FLOAT_EQ(*std::begin(DotProduct(vec1, OrthogonalVector(vec1))), 0);
+                ASSERT_FLOAT_EQ(VectorGetX(DotProduct(vec1, OrthogonalVector(vec1))), 0);
             }
             // ReciprocalLength
             {
                 ASSERT_NEAR(
-                    *std::begin(ReciprocalLength(vec1)), 1.f / *std::begin(Length(vec1))
+                    VectorGetX(ReciprocalLength(vec1)), 1.f / VectorGetX(Length(vec1))
                 , 0.00001);
             }
             // Reflect
             {
                 VectorType vec2;
-                std::fill(std::begin(vec2), std::end(vec2), std::decay_t<decltype(*std::end(vec2))>(1));
+                std::fill(std::begin(vec2), std::end(vec2), decltype(VectorGetX(vec2))(1));
 
                 auto result = Reflect(vec1, VectorType{ 1, 1, 1 });
                 
@@ -267,7 +267,7 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
             // Refract
             {
                 VectorType vec2;
-                std::fill(std::begin(vec2), std::end(vec2), std::decay_t<decltype(*std::end(vec2))>(1));
+                std::fill(std::begin(vec2), std::end(vec2), decltype(VectorGetX(vec2))(1));
 
                 auto result = Refract(vec1, vec2, 0.5f);
 

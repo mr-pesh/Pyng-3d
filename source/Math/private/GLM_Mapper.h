@@ -579,6 +579,51 @@ GLM_FUNC_QUALIFIER auto Refract(const glm::vec<L, T1, Q> &vector, const glm::vec
     return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::Refract(vector, normal, refractionIndex);
 }
 
+/**
+ * Retrieve the X component of a Vector.
+ */
+template <glm::length_t L, typename T, glm::qualifier Q>
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR T VectorGetX(const glm::vec<L, T, Q> &vector) noexcept
+{
+    return vector.x;
+}
+
+/**
+ * Retrieve the Y component of a Vector.
+ */
+template <glm::length_t L, typename T, glm::qualifier Q>
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR T VectorGetY(const glm::vec<L, T, Q> &vector) noexcept
+{
+    return vector.y;
+}
+
+/**
+ * Retrieve the Z component of a Vector.
+ */
+template <glm::length_t L, typename T, glm::qualifier Q>
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR T VectorGetZ(const glm::vec<L, T, Q> &vector) noexcept
+{
+    return vector.z;
+}
+
+/**
+ * Retrieve the W component of a Vector.
+ */
+template <glm::length_t L, typename T, glm::qualifier Q>
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR T VectorGetW(const glm::vec<L, T, Q> &vector) noexcept
+{
+    return vector.w;
+}
+
+/**
+ * Retrieve the value of one of the four components of a Vector by index.
+ */
+template <glm::length_t L, typename T, glm::qualifier Q>
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR T VectorGetByIndex(const glm::vec<L, T, Q> &vector, glm::length_t index) noexcept
+{
+    return vector[index];
+}
+
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator==(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
