@@ -147,7 +147,6 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
         {
             using VectorType = std::decay_t<decltype(vec1)>;
 
-#if defined(_MSC_VER) && !defined(__GL_MATH_LIBRARY)
             // ClampLength
             {
                 auto result = ClampLength(vec1, 1.f, 10.f);
@@ -184,7 +183,6 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
                     })
                 );
             }
-#endif
             // DotProduct
             {
                 ASSERT_FLOAT_EQ(VectorGetX(DotProduct(vec1, OrthogonalVector(vec1))), 0.f);

@@ -9,6 +9,8 @@ using Matrix = glm::mat<columns, rows, T, precision>;
 
 #include <glm/gtc/type_ptr.hpp>
 
+#ifdef PYNG_ENABLE_TESTING
+
 namespace std
 {
     template <glm::length_t L, typename T, glm::qualifier Q>
@@ -34,6 +36,28 @@ namespace std
     {
         return glm::value_ptr(vec) + vec.length();
     }
+# ifndef GLM_FORCE_PURE
+    float_t *begin(glm_vec4 &vec) noexcept
+    {
+        return reinterpret_cast<float*>(&vec);
+    }
+
+    float_t const *begin(const glm_vec4 &vec) noexcept
+    {
+        return reinterpret_cast<const float*>(&vec);
+    }
+
+    float_t *end(glm_vec4 &vec) noexcept
+    {
+        return reinterpret_cast<float*>(&vec + 1);
+    }
+
+    float_t const *end(const glm_vec4 &vec) noexcept
+    {
+        return reinterpret_cast<const float*>(&vec + 1);
+    }
+# endif
+#endif // PYNG_ENABLE_TESTING
 }
 
 #elif defined(__DX_MATH_LIBRARY)

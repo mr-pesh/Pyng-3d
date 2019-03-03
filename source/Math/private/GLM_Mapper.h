@@ -4,7 +4,7 @@
 
 #include <limits>
 
-#include "GLM_ext.inl"
+#include "GLM_Extensions.h"
 
 namespace
 {
@@ -22,6 +22,12 @@ namespace
             } else {
                 return glm::vec<L, T1, Q>(glm::angle(vec1, glm::vec<L, float_t, Q>(vec2)));
             }
+        }
+
+        template <glm::length_t L, typename T, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto ClampLength(const glm::vec<L, T, Q> &vector, float min, float max) noexcept
+        {
+            return glm::clampLength(vector, min, max);
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
@@ -117,7 +123,7 @@ namespace
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto OrthogonalVector(const glm::vec<L, T, Q> &vector) noexcept
         {
-            return OrthogonalImpl<L>::Orthogonal(vector);
+            return glm::orthogonal(vector);
         }
 
         template <glm::length_t L, typename T, glm::qualifier Q>
@@ -160,6 +166,12 @@ namespace
             } else {
                 return glm::vec<L, float_t, Q>(glm::angle(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)));
             }
+        }
+
+        template <glm::length_t L, typename T, glm::qualifier Q>
+        FORCE_INLINE_STATIC auto ClampLength(const glm::vec<L, T, Q> &vector, float min, float max) noexcept
+        {
+            return glm::clampLength(glm::vec<L, float_t, Q>(vector), min, max);
         }
         
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
@@ -257,7 +269,7 @@ namespace
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto OrthogonalVector(const glm::vec<L, T, Q> &vector) noexcept
         {
-            return OrthogonalImpl<L>::Orthogonal(glm::vec<L, float_t, Q>(vector));
+            return glm::orthogonal(glm::vec<L, float_t, Q>(vector));
         }
 
         template <glm::length_t L, typename T, glm::qualifier Q>
@@ -488,6 +500,15 @@ template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto DotProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
     return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::DotProduct(vector1, vector2);
+}
+
+/**
+ * Clamps the length of a vector to a given range.
+ */
+template <glm::length_t L, typename T, glm::qualifier Q>
+GLM_FUNC_QUALIFIER auto ClampLength(const glm::vec<L, T, Q> &vector, float min, float max) noexcept
+{
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T>>::ClampLength(vector, min, max);
 }
 
 /**
