@@ -4,9 +4,9 @@ namespace glm
     GLM_FUNC_QUALIFIER glm_vec4 dot<2>(glm_vec4 vec1, glm_vec4 vec2) noexcept
     {
         glm_vec4 mul0 = _mm_mul_ps(vec1, vec2);
-        glm_vec4 swp0 = _mm_shuffle_ps(mul0, mul0, _MM_SHUFFLE(1, 1, 1, 1));
+        glm_vec4 swp0 = _MM_PERMUTE_PS(mul0, _MM_SHUFFLE(1, 1, 1, 1));
         mul0 = _mm_add_ss(mul0, swp0);
-        mul0 = _mm_shuffle_ps(mul0, mul0, _MM_SHUFFLE(0, 0, 0, 0));
+        mul0 = _MM_PERMUTE_PS(mul0, _MM_SHUFFLE(0, 0, 0, 0));
         return mul0;
     }
 
@@ -14,11 +14,11 @@ namespace glm
     GLM_FUNC_QUALIFIER glm_vec4 dot<3>(glm_vec4 vec1, glm_vec4 vec2) noexcept
     {
         glm_vec4 mul0 = _mm_mul_ps(vec1, vec2);
-        glm_vec4 swp0 = _mm_shuffle_ps(mul0, mul0, _MM_SHUFFLE(2, 1, 2, 1));
+        glm_vec4 swp0 = _MM_PERMUTE_PS(mul0, _MM_SHUFFLE(2, 1, 2, 1));
         mul0 = _mm_add_ss(mul0, swp0);
-        swp0 = _mm_shuffle_ps(swp0, swp0, _MM_SHUFFLE(1, 1, 1, 1));
+        swp0 = _MM_PERMUTE_PS(swp0, _MM_SHUFFLE(1, 1, 1, 1));
         mul0 = _mm_add_ss(mul0, swp0);
-        return _mm_shuffle_ps(mul0, mul0, _MM_SHUFFLE(0, 0, 0, 0));
+        return _MM_PERMUTE_PS(mul0, _MM_SHUFFLE(0, 0, 0, 0));
     }
 
     template <>
@@ -93,9 +93,9 @@ namespace glm
     GLM_FUNC_QUALIFIER glm_vec4 clampLength<2>(glm_vec4 source, glm_vec4 min, glm_vec4 max) noexcept
     {
         glm_vec4 mul0 = _mm_mul_ps(source, source);
-        glm_vec4 swp0 = _mm_shuffle_ps(mul0, mul0, _MM_SHUFFLE(1, 1, 1, 1));
+        glm_vec4 swp0 = _MM_PERMUTE_PS(mul0, _MM_SHUFFLE(1, 1, 1, 1));
         mul0 = _mm_div_ss(_mm_set1_ps(1.f), _mm_sqrt_ss(_mm_add_ss(mul0, swp0)));
-        return _mm_shuffle_ps(mul0, mul0, _MM_SHUFFLE(0, 0, 0, 0));
+        return _MM_PERMUTE_PS(mul0, _MM_SHUFFLE(0, 0, 0, 0));
     }
 
     template <>

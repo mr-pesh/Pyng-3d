@@ -1,18 +1,20 @@
 #pragma once
 
-#include <glm/gtx/closest_point.hpp>
+#include <glm/simd/platform.h>
 
-#include <glm/gtx/vector_angle.hpp>
-#include <glm/gtx/vector_query.hpp>
-
-#include <glm/gtx/vec_swizzle.hpp>
-
-#if (GLM_ARCH & GLM_ARCH_SSE2_BIT)
-
-#include <glm/simd/geometric.h>
+#if (GLM_ARCH & GLM_ARCH_SIMD_BIT)
+# include "GLM_simd_accessors.h"
+# include <glm/simd/geometric.h>
+#else
+# include <glm/gtx/closest_point.hpp>
+# include <glm/gtx/vector_angle.hpp>
+# include <glm/gtx/vector_query.hpp>
+# include <glm/gtx/vec_swizzle.hpp>
+#endif
 
 namespace glm
 {
+#if (GLM_ARCH & GLM_ARCH_SSE2_BIT)
     /**
      * \brief Clamps the length of a vector to a given range.
      * \param source A vector to clamp.
@@ -83,14 +85,11 @@ namespace glm
      */
     GLM_FUNC_QUALIFIER glm_vec4 mix(glm_vec4 left, glm_vec4 right, glm_vec4 control) noexcept;
 }
-#include "GLM_simd_accessors.inl"
-#include "GLM_simd_constants.inl"
-#include "GLM_simd_extension.inl"
+#include "GLM_SSE2_constants.inl"
+#include "GLM_SSE2_converter.inl"
+#include "GLM_SSE2_extension.inl"
 
 #else
-
-namespace glm
-{
     /**
      * \brief Clamps the length of a vector to a given range.
      * \param source A vector to clamp.
@@ -121,4 +120,4 @@ namespace glm
 }
 #include "GLM_pure_extension.inl"
 
-#endif // !GLM_ARCH_SSE2
+#endif // GLM_ARCH_SSE2

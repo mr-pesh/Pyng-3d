@@ -37,4 +37,6 @@ struct alignas(16) GLM_VECI32
 
 extern const WEAK GLM_VECI32 SSE2_INFINITY = { { { 0x7F800000, 0x7F800000, 0x7F800000, 0x7F800000 } } };
 extern const WEAK GLM_VECU32 SSE2_NEG_ZERO = { { { 0x80000000, 0x80000000, 0x80000000, 0x80000000 } } };
-extern const WEAK GLM_VECF32 SSE2_FIX_UINT = { { { 32768.0f*65536.0f, 32768.0f*65536.0f, 32768.0f*65536.0f, 32768.0f*65536.0f } } };
+extern const WEAK GLM_VECF32 SSE2_FIX_UINT = { { { 2.14748365e+09, 2.14748365e+09, 2.14748365e+09, 2.14748365e+09 } } };
+extern const WEAK GLM_VECF32 SSE2_NEG_ONE  = { { { -1.0f, -1.0f, -1.0f, -1.0f } } };
+extern const WEAK GLM_VECF32 SSE2_POS_ONE  = { { {  1.0f,  1.0f,  1.0f,  1.0f } } };
