@@ -87,6 +87,12 @@ GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_load(const glm::vec<4, uint32_t, Q> &vec) n
 namespace glm
 {
     template <length_t L, typename T, qualifier Q>
+    GLM_FUNC_QUALIFIER glm_vec4 angle(const vec<L, T, Q> &v1, const vec<L, T, Q> &v2) noexcept
+    {
+        return angle<L>(glm_vec4_load(v1), glm_vec4_load(v2));
+    }
+
+    template <length_t L, typename T, qualifier Q>
     GLM_FUNC_QUALIFIER glm_vec4 clampLength(const vec<L, T, Q> &v, float min, float max) noexcept
     {
         return clampLength<L>(glm_vec4_load(v), min, max);

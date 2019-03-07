@@ -1,13 +1,43 @@
 namespace glm
 {
+    GLM_FUNC_QUALIFIER glm_vec4 acos(glm_vec4 vec) noexcept
+    {
+        glm_vec4 xx = _mm_max_ps(vec, _mm_sub_ps(SSE2_ZERO_VEC, vec));
+        glm_vec4 nn = _mm_cmpge_ps(vec, SSE2_ZERO_VEC);
+
+        glm_vec4 sqrt =
+                _mm_sqrt_ps(
+                    _mm_max_ps(SSE2_ZERO_VEC, _mm_sub_ps(SSE2_POS_ONE, xx)));
+
+        const glm_vec4 arcc0 = _mm_set_ps(-0.0012624911f, 0.0066700901f, -0.0170881256f, 0.0308918810f);
+
+        glm_vec4 mul0 = _mm_mul_ps(_MM_PERMUTE_PS(arcc0, _MM_SHUFFLE(3, 3, 3, 3)), xx);
+        mul0 = _mm_mul_ps(_mm_add_ps(mul0, _MM_PERMUTE_PS(arcc0, _MM_SHUFFLE(2, 2, 2, 2))), xx);
+        mul0 = _mm_mul_ps(_mm_add_ps(mul0, _MM_PERMUTE_PS(arcc0, _MM_SHUFFLE(1, 1, 1, 1))), xx);
+        mul0 = _mm_mul_ps(_mm_add_ps(mul0, _MM_PERMUTE_PS(arcc0, _MM_SHUFFLE(0, 0, 0, 0))), xx);
+
+        const glm_vec4 arcc1 = _mm_set_ps(-0.0501743046f, 0.0889789874f, -0.2145988016f, 1.5707963050f);
+
+        mul0 = _mm_mul_ps(_mm_add_ps(mul0, _MM_PERMUTE_PS(arcc1, _MM_SHUFFLE(3, 3, 3, 3))), xx);
+        mul0 = _mm_mul_ps(_mm_add_ps(mul0, _MM_PERMUTE_PS(arcc1, _MM_SHUFFLE(2, 2, 2, 2))), xx);
+        mul0 = _mm_mul_ps(_mm_add_ps(mul0, _MM_PERMUTE_PS(arcc1, _MM_SHUFFLE(1, 1, 1, 1))), xx);
+        mul0 = _mm_mul_ps(_mm_add_ps(mul0, _MM_PERMUTE_PS(arcc1, _MM_SHUFFLE(0, 0, 0, 0))), sqrt);
+
+        return _mm_or_ps(_mm_and_ps(nn, mul0), _mm_andnot_ps(nn, _mm_sub_ps(SSE2_PI_VEC, mul0)));
+    }
+
+    template <length_t L>
+    GLM_FUNC_QUALIFIER glm_vec4 angle(glm_vec4 vec1, glm_vec4 vec2) noexcept
+    {
+        return acos(glm_vec4_clamp(dot<L>(vec1, vec2), SSE2_NEG_ONE, SSE2_POS_ONE));
+    }
+
     template <>
     GLM_FUNC_QUALIFIER glm_vec4 dot<2>(glm_vec4 vec1, glm_vec4 vec2) noexcept
     {
         glm_vec4 mul0 = _mm_mul_ps(vec1, vec2);
         glm_vec4 swp0 = _MM_PERMUTE_PS(mul0, _MM_SHUFFLE(1, 1, 1, 1));
-        mul0 = _mm_add_ss(mul0, swp0);
-        mul0 = _MM_PERMUTE_PS(mul0, _MM_SHUFFLE(0, 0, 0, 0));
-        return mul0;
+        return _MM_PERMUTE_PS(_mm_add_ss(mul0, swp0), _MM_SHUFFLE(0, 0, 0, 0));
     }
 
     template <>
@@ -17,14 +47,17 @@ namespace glm
         glm_vec4 swp0 = _MM_PERMUTE_PS(mul0, _MM_SHUFFLE(2, 1, 2, 1));
         mul0 = _mm_add_ss(mul0, swp0);
         swp0 = _MM_PERMUTE_PS(swp0, _MM_SHUFFLE(1, 1, 1, 1));
-        mul0 = _mm_add_ss(mul0, swp0);
-        return _MM_PERMUTE_PS(mul0, _MM_SHUFFLE(0, 0, 0, 0));
+        return _MM_PERMUTE_PS(_mm_add_ss(mul0, swp0), _MM_SHUFFLE(0, 0, 0, 0));
     }
 
     template <>
     GLM_FUNC_QUALIFIER glm_vec4 dot<4>(glm_vec4 vec1, glm_vec4 vec2) noexcept
     {
-        return glm_vec4_dot(vec1, vec2);
+        glm_vec4 mul0 = _mm_mul_ps(vec1, vec2);
+        glm_vec4 add0 = _mm_add_ps(_mm_shuffle_ps(vec2, mul0, _MM_SHUFFLE(1,0,0,0)), mul0);
+        return _MM_PERMUTE_PS(
+                    _mm_add_ps(
+                        _mm_shuffle_ps(mul0, add0, _MM_SHUFFLE(0,3,0,0)), add0), _MM_SHUFFLE(2,2,2,2));
     }
 
     template <>
@@ -53,7 +86,7 @@ namespace glm
     template <glm::length_t L>
     GLM_FUNC_QUALIFIER glm_vec4 length2(glm_vec4 vec) noexcept
     {
-        return ::glm::dot<L>(vec, vec);
+        return dot<L>(vec, vec);
     }
 
     template <>

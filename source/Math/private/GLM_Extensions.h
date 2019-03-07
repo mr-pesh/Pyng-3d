@@ -15,6 +15,21 @@
 namespace glm
 {
 #if (GLM_ARCH & GLM_ARCH_SSE2_BIT)
+
+    /**
+     * @brief acos Computes the arccosine of each component of a vec
+     * @param vec Vector for which the arccosine to be computed. Each component should be between -1.0f and 1.0f.
+     * @return Vector with components equal to arccosine of the corresponding components of vec
+     */
+    GLM_FUNC_QUALIFIER glm_vec4 acos(glm_vec4 vec) noexcept;
+    /**
+     * \brief Computes the angle between two normalized vectors.
+     * \param vec1 Normalized n-dimensional vector packed in <a href="https://docs.microsoft.com/en-us/cpp/cpp/m128">__m128</a> struct
+     * \param vec2 Normalized n-dimensional vector packed in <a href="https://docs.microsoft.com/en-us/cpp/cpp/m128">__m128</a> struct
+     * \return The radian angle between vec1 and vec2 which is replicated to each of the components of glm_vec4
+     */
+    template <glm::length_t>
+    GLM_FUNC_QUALIFIER glm_vec4 angle(glm_vec4 vec1, glm_vec4 vec2) noexcept;
     /**
      * \brief Clamps the length of a vector to a given range.
      * \param source A vector to clamp.
@@ -116,7 +131,7 @@ namespace glm
      * \return Returns a vector orthogonal to source.
      */
     template <length_t L, typename T, qualifier Q>
-    static GLM_FUNC_QUALIFIER glm::vec<L, T, Q> orthogonal(const glm::vec<L, T, Q> &source) noexcept;
+    GLM_FUNC_QUALIFIER glm::vec<L, T, Q> orthogonal(const glm::vec<L, T, Q> &source) noexcept;
 }
 #include "GLM_pure_extension.inl"
 
