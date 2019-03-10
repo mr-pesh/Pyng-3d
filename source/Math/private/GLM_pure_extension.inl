@@ -47,7 +47,7 @@ namespace glm
         glm_vec3 len2(length2(source));
         glm_vec3 invLen = inversesqrt(len2);
 
-        auto sMask = glm::equal(isinf(len2), equal(len2, glm_vec3(0)));
+        auto sMask = equal(isinf(len2), equal(len2, glm_vec3(0)));
         glm_vec3 length = mix(len2, (len2 * invLen), sMask);
 
         auto cMin = lessThan(length, min);
@@ -84,37 +84,34 @@ namespace glm
         return mix(result, source, equal(cMax, cMin));
     }
 
-    template <typename T, glm::qualifier Q>
-    GLM_FUNC_QUALIFIER glm::vec<2, T, Q> orthogonal(const glm::vec<2, T, Q> &source) noexcept
+    template <typename T, qualifier Q>
+    GLM_FUNC_QUALIFIER vec<2, T, Q> orthogonal(const vec<2, T, Q> &source) noexcept
     {
-        return glm::vec<2, T, Q>(-source.y, source.x);
+        return vec<2, T, Q>(-source.y, source.x);
     }
 
-    template <typename T, glm::qualifier Q>
-    GLM_FUNC_QUALIFIER glm::vec<3, T, Q> orthogonal(const glm::vec<3, T, Q> &source) noexcept
+    template <typename T, qualifier Q>
+    GLM_FUNC_QUALIFIER vec<3, T, Q> orthogonal(const vec<3, T, Q> &source) noexcept
     {
-        using glm_vec3 = std::decay_t<decltype(source)>;
+        using glm_vec3 = ::glm::vec<3, T, Q>;
 
-        glm_vec3 zero(0);
+        const glm_vec3 zero(0);
 
-        auto ZZZ = glm::zzz(source);
-        auto YZY = glm::yzy(source);
-        auto nSource = -source;
+        glm_vec3 ZZZ = ::glm::zzz(source);
+        glm_vec3 YZY = ::glm::yzy(source);
+        glm_vec3 nSource = -source;
 
-        auto Is_nZZZ = glm::lessThan(ZZZ, zero);
-        auto Is_nYZY = glm::lessThan(YZY, zero);
+        glm_vec3 S = YZY + ZZZ;
+        glm_vec3 D = YZY - ZZZ;
 
-        auto S = YZY + ZZZ;
-        auto D = YZY - ZZZ;
+        auto sMask = equal(lessThan(ZZZ, zero), lessThan(YZY, zero));
 
-        auto sMask = glm::equal(Is_nZZZ, Is_nYZY);
-
-        return glm::mix(glm_vec3(D.x, source.x, source.x), glm_vec3(S.x, nSource.x, nSource.x), sMask);
+        return mix(glm_vec3(D.x, source.x, source.x), glm_vec3(S.x, nSource.x, nSource.x), sMask);
     }
 
-    template <typename T, glm::qualifier Q>
-    GLM_FUNC_QUALIFIER glm::vec<4, T, Q> orthogonal(const glm::vec<4, T, Q> &source) noexcept
+    template <typename T, qualifier Q>
+    GLM_FUNC_QUALIFIER vec<4, T, Q> orthogonal(const vec<4, T, Q> &source) noexcept
     {
-        return glm::vec<4, T, Q>(source.z, source.w, -source.x, -source.y);
+        return vec<4, T, Q>(source.z, source.w, -source.x, -source.y);
     }
 }

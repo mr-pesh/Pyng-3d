@@ -1,10 +1,10 @@
 #define GLM_ENABLE_EXPERIMENTAL
 
+#include "GLM_Extensions.h"
+
 #include <Utils/Global.h>
 
 #include <limits>
-
-#include "GLM_Extensions.h"
 
 namespace
 {
@@ -18,26 +18,26 @@ namespace
         FORCE_INLINE_STATIC auto Angle(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vec<L, T1, Q>(glm::angle(vec1, vec2));
+                return glm::extensions::angle(vec1, vec2);
             } else {
-                return glm::vec<L, T1, Q>(glm::angle(vec1, glm::vec<L, float_t, Q>(vec2)));
+                return glm::extensions::angle(vec1, glm::vec<L, float_t, Q>(vec2));
             }
         }
 
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto ClampLength(const glm::vec<L, T, Q> &vector, float min, float max) noexcept
         {
-            return glm::clampLength(vector, min, max);
+            return glm::extensions::clampLength(vector, min, max);
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
         FORCE_INLINE_STATIC auto Distance(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vec<L, T1, Q>(glm::distance(vec1, vec2));
+                return glm::extensions::distance(vec1, vec2);
             }
             else {
-                return glm::vec<L, T1, Q>(glm::distance(vec1, glm::vec<L, float_t, Q>(vec2)));
+                return glm::extensions::distance(vec1, glm::vec<L, float_t, Q>(vec2));
             }
         }
 
@@ -45,9 +45,9 @@ namespace
         FORCE_INLINE_STATIC auto DotProduct(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vec<L, T1, Q>(glm::dot(vec1, vec2));
+                return glm::extensions::dot(vec1, vec2);
             } else {
-                return glm::vec<L, T1, Q>(glm::dot(vec1, glm::vec<L, float_t, Q>(vec2)));
+                return glm::extensions::dot(vec1, glm::vec<L, float_t, Q>(vec2));
             }
         }
 
@@ -72,11 +72,10 @@ namespace
         FORCE_INLINE_STATIC bool InBounds(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return (vec1 <= vec2) && (vec1 >= -vec2);
+                return glm::extensions::inBounds(vec1, vec2);
             }
             else {
-                const glm::vec<L, float_t, Q> bounds(vec2);
-                return (vec1 <= bounds) && (vec1 >= -bounds);
+                return glm::extensions::inBounds(vec1, glm::vec<L, float_t, Q>(vec2));
             }
         }
 
@@ -99,24 +98,23 @@ namespace
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto Length(const glm::vec<L, T, Q> &vec) noexcept
         {
-            return glm::vec<L, T, Q>(glm::length(vec));
+            return glm::extensions::length(vec);
         }
 
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto LengthSq(const glm::vec<L, T, Q> &vec) noexcept
         {
-            return glm::vec<L, T, Q>(glm::length2(vec));
+            return glm::extensions::length2(vec);
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
         FORCE_INLINE_STATIC auto LinePointDistance(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T1, Q> &vec2, const glm::vec<L, T2, Q> &vec3) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vec<L, T1, Q>(glm::distance(glm::closestPointOnLine(vec3, vec1, vec2), vec3));
+                return glm::extensions::linePointDistance(vec1, vec2, vec3);
             }
             else {
-                const glm::vec<L, float_t, Q> point(vec3);
-                return glm::vec<L, T1, Q>(glm::distance(glm::closestPointOnLine(point, vec1, vec2), point));
+                return glm::extensions::linePointDistance(vec1, vec2, glm::vec<L, float_t, Q>(vec3));
             }
         }
 
@@ -129,7 +127,7 @@ namespace
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto ReciprocalLength(const glm::vec<L, T, Q> &vec) noexcept
         {
-            return glm::vec<L, T, Q>(1.f / glm::length(vec));
+            return glm::extensions::reciprocalLength(vec);
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
@@ -162,9 +160,9 @@ namespace
         FORCE_INLINE_STATIC auto Angle(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vec<L, float_t, Q>(glm::angle(glm::vec<L, float_t, Q>(vec1), vec2));
+                return glm::extensions::angle(glm::vec<L, float_t, Q>(vec1), vec2);
             } else {
-                return glm::vec<L, float_t, Q>(glm::angle(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)));
+                return glm::extensions::angle(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2));
             }
         }
 
@@ -178,10 +176,10 @@ namespace
         FORCE_INLINE_STATIC auto Distance(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vec<L, float_t, Q>(glm::distance(glm::vec<L, float_t, Q>(vec1), vec2));
+                return glm::extensions::distance(glm::vec<L, float_t, Q>(vec1), vec2);
             }
             else {
-                return glm::vec<L, float_t, Q>(glm::distance(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)));
+                return glm::extensions::distance(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2));
             }
         }
 
@@ -189,9 +187,9 @@ namespace
         FORCE_INLINE_STATIC auto DotProduct(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vec<L, float_t, Q>(glm::dot(glm::vec<L, float_t, Q>(vec1), vec2));
+                return glm::extensions::dot(glm::vec<L, float_t, Q>(vec1), vec2);
             } else {
-                return glm::vec<L, float_t, Q>(glm::dot(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)));
+                return glm::extensions::dot(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2));
             }
         }
 
@@ -231,38 +229,34 @@ namespace
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
         FORCE_INLINE_STATIC bool InBounds(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
-            const glm::vec<L, float_t, Q> vector(vec1);
-
             if constexpr (std::is_floating_point_v<T2>) {
-                return (vector <= vec2) && (vector >= -vec2);
+                return glm::extensions::inBounds(glm::vec<L, float_t, Q>(vec1), vec2);
             }
             else {
-                const glm::vec<L, float_t, Q> bounds(vec2);
-                return (vector <= bounds) && (vector >= -bounds);
+                return glm::extensions::inBounds(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2));
             }
         }
 
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto Length(const glm::vec<L, T, Q> &vec) noexcept
         {
-            return glm::vec<L, float_t, Q>(glm::length(glm::vec<L, float_t, Q>(vec)));
+            return glm::extensions::length(glm::vec<L, float_t, Q>(vec));
         }
 
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto LengthSq(const glm::vec<L, T, Q> &vec) noexcept
         {
-            return glm::vec<L, float_t, Q>(glm::length2(glm::vec<L, float_t, Q>(vec)));
+            return glm::extensions::length2(glm::vec<L, float_t, Q>(vec));
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
         FORCE_INLINE_STATIC auto LinePointDistance(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T1, Q> &vec2, const glm::vec<L, T2, Q> &vec3) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vec<L, float_t, Q>(glm::distance(glm::closestPointOnLine(vec3, glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)), vec3));
+                return glm::extensions::linePointDistance(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2), vec3);
             }
             else {
-                const glm::vec<L, float_t, Q> point(vec3);
-                return glm::vec<L, float_t, Q>(glm::distance(glm::closestPointOnLine(point, glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2)), point));
+                return glm::extensions::linePointDistance(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2), glm::vec<L, float_t, Q>(vec3));
             }
         }
 
@@ -275,7 +269,7 @@ namespace
         template <glm::length_t L, typename T, glm::qualifier Q>
         FORCE_INLINE_STATIC auto ReciprocalLength(const glm::vec<L, T, Q> &vec) noexcept
         {
-            return glm::vec<L, float_t, Q>(1.f / glm::length(glm::vec<L, float_t, Q>(vec)));
+            return glm::extensions::reciprocalLength(glm::vec<L, float_t, Q>(vec));
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>

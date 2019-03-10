@@ -134,5 +134,6 @@ namespace glm
     GLM_FUNC_QUALIFIER glm::vec<L, T, Q> orthogonal(const glm::vec<L, T, Q> &source) noexcept;
 }
 #include "GLM_pure_extension.inl"
+#include "GLM_pure_converter.inl"
 
 #endif // GLM_ARCH_SSE2
