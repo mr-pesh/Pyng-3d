@@ -31,6 +31,8 @@ endif()
 
 if(USE_GL_MATH)
     add_definitions(-D__GL_MATH_LIBRARY)
+    # Enable GLM-GTX extensions
+    add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
 
     option(GLM_FORCE_PURE "Discard the use of SIMD optimizations based on compiler intrinsics" ON)
 

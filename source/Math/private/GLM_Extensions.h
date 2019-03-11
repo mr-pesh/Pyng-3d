@@ -113,7 +113,7 @@ namespace glm
      * \return A vector with length clamped to the specified minimum and maximum.
      */
     template <length_t L, typename T, qualifier Q>
-    GLM_FUNC_QUALIFIER vec<L, T, Q> clampLength(const vec<L, T, Q> &source, float &min, float &max) noexcept;
+    GLM_FUNC_QUALIFIER vec<L, T, Q> clampLength(const vec<L, T, Q> &source, float min, float max) noexcept;
 
     /**
      * \brief Clamps the length of a vector to a given range.
