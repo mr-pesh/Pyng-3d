@@ -1,185 +1,201 @@
 #pragma once
 
 #include "GLM_Extensions.h"
-
 #include <limits>
 
-
 /**
- * Tests wether two vectors are equal. The result of the function can be expressed with following code:
- * <code>(vector1.x == vector2.x) && (vector1.y == vector2.y) [&& (vector1.z == vector2.z) [&& (vector1.w == vector2.w)]]</code>
+ * @brief Tests wether two vectors are equal.
+ * @remark The result of the function can be expressed with following code: @code
+ * (left.x == right.x) && (left.y == right.y) [&& (left.z == right.z) [&& (left.w == right.w)]] @endcode
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator==(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator==(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 /**
- * Tests wether two vectors are not equal. The result of the function can be expressed with following code:
- * <code>(vector1.x != vector2.x) || (vector1.y != vector2.y) [|| (vector1.z != vector2.z) [|| (vector1.w != vector2.w)]]</code>
+ * @brief Tests wether two vectors are not equal.
+ * @remark The result of the function can be expressed with following code: @code
+ * (left.x != right.x) || (left.y != right.y) [|| (left.z != right.z) [|| (left.w != right.w)]] @endcode
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator!=(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator!=(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 /**
- * Tests wether one vector is greater than another vector. The result of the function can be expressed with following code:
- * <code>(vector1.x > vector2.x) && (vector1.y > vector2.y) [&& (vector1.z > vector2.z) [&& (vector1.w > vector2.w)]]</code>
+ * @brief Tests wether one vector is greater than another vector.
+ * @remark The result of the function can be expressed with following code: @code
+ * (left.x > right.x) && (left.y > right.y) [&& (left.z > right.z) [&& (left.w > right.w)]] @endcode
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator>(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator>(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 /**
- * Tests wether one vector is greater-than- or equal-to another vector. The result of the function can be expressed with following code:
- * <code>(vector1.x >= vector2.x) && (vector1.y >= vector2.y) [&& (vector1.z >= vector2.z) [&& (vector1.w >= vector2.w)]]</code>
+ * @brief Tests wether one vector is greater-than- or equal-to another vector.
+ * @remark The result of the function can be expressed with following code: @code
+ * (left.x >= right.x) && (left.y >= right.y) [&& (left.z >= right.z) [&& (left.w >= right.w)]] @endcode
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator>=(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator>=(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 /**
- * Tests wether one vector is less than another vector. The result of the function can be expressed with following code:
- * <code>(vector1.x < vector2.x) && (vector1.y < vector2.y) [&& (vector1.z < vector2.z) [&& (vector1.w < vector2.w)]]</code>
+ * @brief Tests wether one vector is less than another vector.
+ * @remark The result of the function can be expressed with following code: @code
+ * (left.x < right.x) && (left.y < right.y) [&& (left.z < right.z) [&& (left.w < right.w)]] @endcode
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator<(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator<(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 /**
- * Tests wether one vector is less-than- or equal-to another vector. The result of the function can be expressed with following code:
- * <code>(vector1.x <= vector2.x) && (vector1.y <= vector2.y) [&& (vector1.z <= vector2.z) [&& (vector1.w <= vector2.w)]]</code>
+ * @brief Tests wether one vector is less-than- or equal-to another vector.
+ * @remark The result of the function can be expressed with following code: @code
+ * (left.x <= right.x) && (left.y <= right.y) [&& (left.z <= right.z) [&& (left.w <= right.w)]] @endcode
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator<=(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
-
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR bool operator<=(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 #include "GLM_vector_relational.inl"
 
 
 /**
- * Computes the radian angle between two normalized vectors.
+ * @brief Computes an angle between two normalized vectors.
+ * @param left Normalized vector
+ * @param right Normalized vector
+ * @return The radian angle between \p left and \p right which is replicated into each of the components of a vector
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER auto AngleBetweenNormals(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
+GLM_FUNC_QUALIFIER auto AngleBetweenNormals(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 /**
- * Computes the radian angle between two vectors.
- * If vector1 and vector2 are normalized vectors, it is faster to use AngleBetweenNormals.
+ * @brief Computes an angle between two vectors.
+ * @param left Vector
+ * @param right Vector
+ * @return The radian angle between \p left and \p right which is replicated into each of the components of a vector
+ * @remark If \p left and \p right are normalized vectors, it is faster to use AngleBetweenNormals.
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER auto AngleBetweenVectors(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
+GLM_FUNC_QUALIFIER auto AngleBetweenVectors(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 /**
- * Clamps the length of a vector to a given range.
+ * @brief Clamps the length of a \p vector to a given range.
+ * @param vector Vector
+ * @param min Minimum clamp length
+ * @param max Maximum clamp length
+ * @return A vector with length that is clamped to the specified minimum and maximum.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto ClampLength(const glm::vec<L, T, Q> &vector, float min, float max) noexcept;
 
 /**
- * Computes the cross product between two vectors.
+ * @brief Computes the cross product between two vectors.
+ * @param left Vector
+ * @param right Vector
+ * @return
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER auto CrossProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
+GLM_FUNC_QUALIFIER auto CrossProduct(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 /**
- * Computes the distance between vector1 and vector2, i.e., Length(vector1 - vector2).
+ * @brief Computes the distance between \p left and \p right, i.e., \ref Length(\p left - \p right).
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER auto Distance(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
+GLM_FUNC_QUALIFIER auto Distance(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 /**
- * Computes the dot product between vectors.
+ * @brief Computes the dot product between vectors.
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-GLM_FUNC_QUALIFIER auto DotProduct(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept;
+GLM_FUNC_QUALIFIER auto DotProduct(const glm::vec<L, T1, Q> &left, const glm::vec<L, T2, Q> &right) noexcept;
 
 /**
- * Flips the surface-normal (if needed) to face in a direction opposite to vector.
+ * @brief Flips the surface-normal (if needed) to face in a direction opposite to vector.
  */
 template <glm::length_t L, typename T1, typename T2, typename T3 = std::common_type_t<T1, T2, float_t>, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto Faceforward(const glm::vec<L, T1, Q> &normal, const glm::vec<L, T2, Q> &vector, const glm::vec<L, T3, Q> &nref) noexcept;
 
 /**
- * Check if a vector is normalized.
+ * @brief Check if a vector is normalized.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER bool IsNormalized(const glm::vec<L, T, Q> &vector) noexcept;
 
 /**
- * Flips the surface-normal (if needed) to face in a direction opposite to vector.
+ * @brief Tests whether the components of a given vector are within the specified bounds.
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 GLM_FUNC_QUALIFIER bool InBounds(const glm::vec<L, T1, Q> &vector, const glm::vec<L, T2, Q> &bounds) noexcept;
 
 /**
- * Computes the length of a vector.
+ * @brief Computes the length of a vector.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto Length(const glm::vec<L, T, Q> &vector) noexcept;
 
 /**
- * Computes the square length of a vector.
+ * @brief Computes the square length of a vector.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto LengthSq(const glm::vec<L, T, Q> &vector) noexcept;
 
 /**
- * Computes the minimum distance between a line and a point.
+ * @brief Computes the minimum distance between a line and a point.
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto LinePointDistance(const glm::vec<L, T1, Q> &linePoint1, const glm::vec<L, T1, Q> &linePoint2, const glm::vec<L, T2, Q> &point) noexcept;
 
 /**
- * Returns the normalized version of a vector.
+ * @brief Returns the normalized version of a vector.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto Normalize(const glm::vec<L, T, Q> &vector) noexcept;
 
 /**
- * Computes a vector perpendicular to a given vector.
+ * @brief Computes a vector perpendicular to a given vector.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto OrthogonalVector(const glm::vec<L, T, Q> &vector) noexcept;
 
 /**
- * Computes the reciprocal of the length of a vector.
+ * @brief Computes the reciprocal of the length of a vector.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto ReciprocalLength(const glm::vec<L, T, Q> &vector) noexcept;
 
 /**
- * Reflects an incident vector across a normal vector.
+ * @brief Reflects an incident vector across a normal vector.
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto Reflect(const glm::vec<L, T1, Q> &vector, const glm::vec<L, T2, Q> &normal) noexcept;
 
 /**
- * Refracts an incident vector across a normal vector.
+ * @brief Refracts an incident vector across a normal vector.
  */
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto Refract(const glm::vec<L, T1, Q> &vector, const glm::vec<L, T2, Q> &normal, std::common_type_t<T1, T2, float_t> refractionIndex) noexcept;
 
 /**
- * Retrieve the X component of a Vector.
+ * @brief Retrieve the X component of a Vector.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR T VectorGetX(const glm::vec<L, T, Q> &vector) noexcept;
 
 /**
- * Retrieve the Y component of a Vector.
+ * @brief Retrieve the Y component of a Vector.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR T VectorGetY(const glm::vec<L, T, Q> &vector) noexcept;
 
 /**
- * Retrieve the Z component of a Vector.
+ * @brief Retrieve the Z component of a Vector.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR T VectorGetZ(const glm::vec<L, T, Q> &vector) noexcept;
 
 /**
- * Retrieve the W component of a Vector.
+ * @brief Retrieve the W component of a Vector.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR T VectorGetW(const glm::vec<L, T, Q> &vector) noexcept;
 
 /**
- * Retrieve the value of one of the four components of a Vector by index.
+ * @brief Retrieve the value of one of the four components of a Vector by index.
  */
 template <glm::length_t L, typename T, glm::qualifier Q>
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR T VectorGetByIndex(const glm::vec<L, T, Q> &vector, glm::length_t index) noexcept;
