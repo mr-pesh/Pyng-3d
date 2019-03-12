@@ -1,6 +1,13 @@
 namespace glm
 {
     template <length_t L, typename T, qualifier Q>
+    GLM_FUNC_QUALIFIER auto vectorAngle(const vec<L, T, Q> &vec1, const vec<L, T, Q> &vec2) noexcept
+    {
+        using glm_vec = ::glm::vec<L, T, Q>;
+        return acos(clamp(extensions::dot(vec1, vec2) * (extensions::reciprocalLength(vec1) * extensions::reciprocalLength(vec2)), glm_vec(-1), glm_vec(1)));
+    }
+
+    template <length_t L, typename T, qualifier Q>
     GLM_FUNC_QUALIFIER vec<L, T, Q> clampLength(const vec<L, T, Q> &source, float min, float max) noexcept
     {
         return clampLength(source, vec<L, T, Q>(min), vec<L, T, Q>(max));

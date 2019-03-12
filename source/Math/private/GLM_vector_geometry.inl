@@ -7,12 +7,22 @@ namespace
     struct GLMVectorGeometryHelper<true>
     {
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-        static GLM_FUNC_QUALIFIER auto Angle(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        static GLM_FUNC_QUALIFIER auto AngleBetweenNormals(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
                 return glm::extensions::angle(vec1, vec2);
             } else {
                 return glm::extensions::angle(vec1, glm::vec<L, float_t, Q>(vec2));
+            }
+        }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        static GLM_FUNC_QUALIFIER auto AngleBetweenVectors(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::vectorAngle(vec1, vec2);
+            } else {
+                return glm::vectorAngle(vec1, glm::vec<L, float_t, Q>(vec2));
             }
         }
 
@@ -149,12 +159,22 @@ namespace
     struct GLMVectorGeometryHelper<false>
     {
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
-        static GLM_FUNC_QUALIFIER auto Angle(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        static GLM_FUNC_QUALIFIER auto AngleBetweenNormals(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
                 return glm::extensions::angle(glm::vec<L, float_t, Q>(vec1), vec2);
             } else {
                 return glm::extensions::angle(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2));
+            }
+        }
+
+        template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
+        static GLM_FUNC_QUALIFIER auto AngleBetweenVectors(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
+        {
+            if constexpr (std::is_floating_point_v<T2>) {
+                return glm::vectorAngle(glm::vec<L, float_t, Q>(vec1), vec2);
+            } else {
+                return glm::vectorAngle(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2));
             }
         }
 
@@ -291,24 +311,13 @@ namespace
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto AngleBetweenNormals(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::Angle(vector1, vector2);
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::AngleBetweenNormals(vector1, vector2);
 }
 
 template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
 GLM_FUNC_QUALIFIER auto AngleBetweenVectors(const glm::vec<L, T1, Q> &vector1, const glm::vec<L, T2, Q> &vector2) noexcept
 {
-    const bool v1 = IsNormalized(vector1);
-    const bool v2 = IsNormalized(vector2);
-
-    if (v1 && v2) {
-        return AngleBetweenNormals(vector1, vector2);
-    }
-    if (v1 || v2) {
-        return v1 ?
-            AngleBetweenNormals(vector1, Normalize(vector2)):
-            AngleBetweenNormals(Normalize(vector1), vector2);
-    }
-    return AngleBetweenNormals(Normalize(vector1), Normalize(vector2));
+    return GLMVectorGeometryHelper<std::is_floating_point_v<T1>>::AngleBetweenVectors(vector1, vector2);
 }
 
 template <glm::length_t L, typename T, glm::qualifier Q>
