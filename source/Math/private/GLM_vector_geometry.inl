@@ -20,9 +20,9 @@ namespace
         static GLM_FUNC_QUALIFIER auto AngleBetweenVectors(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vectorAngle(vec1, vec2);
+                return glm::extensions::vectorAngle(vec1, vec2);
             } else {
-                return glm::vectorAngle(vec1, glm::vec<L, float_t, Q>(vec2));
+                return glm::extensions::vectorAngle(vec1, glm::vec<L, float_t, Q>(vec2));
             }
         }
 
@@ -123,7 +123,7 @@ namespace
         template <glm::length_t L, typename T, glm::qualifier Q>
         static GLM_FUNC_QUALIFIER auto OrthogonalVector(const glm::vec<L, T, Q> &vector) noexcept
         {
-            return glm::orthogonal(vector);
+            return glm::extensions::orthogonal(vector);
         }
 
         template <glm::length_t L, typename T, glm::qualifier Q>
@@ -172,16 +172,16 @@ namespace
         static GLM_FUNC_QUALIFIER auto AngleBetweenVectors(const glm::vec<L, T1, Q> &vec1, const glm::vec<L, T2, Q> &vec2) noexcept
         {
             if constexpr (std::is_floating_point_v<T2>) {
-                return glm::vectorAngle(glm::vec<L, float_t, Q>(vec1), vec2);
+                return glm::extensions::vectorAngle(glm::vec<L, float_t, Q>(vec1), vec2);
             } else {
-                return glm::vectorAngle(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2));
+                return glm::extensions::vectorAngle(glm::vec<L, float_t, Q>(vec1), glm::vec<L, float_t, Q>(vec2));
             }
         }
 
         template <glm::length_t L, typename T, glm::qualifier Q>
         static GLM_FUNC_QUALIFIER auto ClampLength(const glm::vec<L, T, Q> &vector, float min, float max) noexcept
         {
-            return glm::clampLength(glm::vec<L, float_t, Q>(vector), min, max);
+            return glm::extensions::clampLength(glm::vec<L, float_t, Q>(vector), min, max);
         }
 
         template <glm::length_t L, typename T1, typename T2, glm::qualifier Q>
@@ -275,7 +275,7 @@ namespace
         template <glm::length_t L, typename T, glm::qualifier Q>
         static GLM_FUNC_QUALIFIER auto OrthogonalVector(const glm::vec<L, T, Q> &vector) noexcept
         {
-            return glm::orthogonal(glm::vec<L, float_t, Q>(vector));
+            return glm::extensions::orthogonal(glm::vec<L, float_t, Q>(vector));
         }
 
         template <glm::length_t L, typename T, glm::qualifier Q>

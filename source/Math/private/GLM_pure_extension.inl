@@ -1,10 +1,12 @@
-namespace glm
+namespace glm::extensions
 {
+    using ::glm::vec;
+
     template <length_t L, typename T, qualifier Q>
     GLM_FUNC_QUALIFIER auto vectorAngle(const vec<L, T, Q> &vec1, const vec<L, T, Q> &vec2) noexcept
     {
-        using glm_vec = ::glm::vec<L, T, Q>;
-        return acos(clamp(extensions::dot(vec1, vec2) * (extensions::reciprocalLength(vec1) * extensions::reciprocalLength(vec2)), glm_vec(-1), glm_vec(1)));
+        using glm_vec = vec<L, T, Q>;
+        return acos(clamp(dot(vec1, vec2) * (reciprocalLength(vec1) * reciprocalLength(vec2)), glm_vec(-1), glm_vec(1)));
     }
 
     template <length_t L, typename T, qualifier Q>
@@ -16,9 +18,9 @@ namespace glm
     template <length_t L, typename T, qualifier Q>
     GLM_FUNC_QUALIFIER vec<L, T, Q> clampLength(const vec<L, T, Q> &source, const vec<L, T, Q> &min, const vec<L, T, Q> &max) noexcept
     {
-        using glm_vec = ::glm::vec<L, T, Q>;
+        using glm_vec = vec<L, T, Q>;
 
-        glm_vec len2(length2(source));
+        glm_vec len2(::glm::length2(source));
         glm_vec invLen = inversesqrt(len2);
 
         auto sMask = equal(isinf(len2), equal(len2, glm_vec(0)));
@@ -41,18 +43,18 @@ namespace glm
     template <typename T, qualifier Q>
     GLM_FUNC_QUALIFIER vec<3, T, Q> orthogonal(const vec<3, T, Q> &source) noexcept
     {
-        using glm_vec = ::glm::vec<3, T, Q>;
+        using glm_vec = vec<3, T, Q>;
 
         const glm_vec zero(0);
 
-        glm_vec ZZZ = ::glm::zzz(source);
-        glm_vec YZY = ::glm::yzy(source);
+        glm_vec zzz = ::glm::zzz(source);
+        glm_vec yzy = ::glm::yzy(source);
         glm_vec nSource = -source;
 
-        glm_vec S = YZY + ZZZ;
-        glm_vec D = YZY - ZZZ;
+        glm_vec S = yzy + zzz;
+        glm_vec D = yzy - zzz;
 
-        auto sMask = equal(lessThan(ZZZ, zero), lessThan(YZY, zero));
+        auto sMask = equal(lessThan(zzz, zero), lessThan(yzy, zero));
 
         return mix(glm_vec(D.x, source.x, source.x), glm_vec(S.x, nSource.x, nSource.x), sMask);
     }

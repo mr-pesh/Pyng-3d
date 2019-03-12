@@ -12,7 +12,7 @@
 # include <glm/gtx/vec_swizzle.hpp>
 #endif
 
-namespace glm
+namespace glm::extensions
 {
 #if (GLM_ARCH & GLM_ARCH_SSE2_BIT)
 
@@ -133,7 +133,7 @@ namespace glm
     template <length_t L, typename T, qualifier Q>
     GLM_FUNC_QUALIFIER glm::vec<L, T, Q> orthogonal(const glm::vec<L, T, Q> &source) noexcept;
 }
-#include "GLM_pure_extension.inl"
 #include "GLM_pure_converter.inl"
+#include "GLM_pure_extension.inl"
 
 #endif // GLM_ARCH_SSE2
