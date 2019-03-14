@@ -87,9 +87,9 @@ typedef Mat4x3 dMat4x4;
 
 #else
 
-typedef Matrix<double, 3, 3> dMat3x3;
+typedef Matrix<double, 3, 3> dMat3x4;
 typedef Matrix<double, 3, 4> dMat3x4;
 typedef Matrix<double, 4, 3> dMat4x3;
-typedef Matrix<double, 4, 4> dMat4x4;
+typedef Matrix<double, 4, 4> dMat4x3;
 
 #endif
