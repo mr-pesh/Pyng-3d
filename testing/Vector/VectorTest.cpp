@@ -55,6 +55,8 @@ TEST_F(VectorUnitTest, TransformTest)
     };
 }
 
+#ifdef _MSC_VER
+
 TEST_F(VectorUnitTest, VectorCompareTest)
 {
     using TestType = std::variant<VariantsArray<2>, VariantsArray<3>, VariantsArray<4>>;
@@ -103,8 +105,6 @@ TEST_F(VectorUnitTest, VectorCompareTest)
         }, array);
     }
 }
-
-#ifdef _MSC_VER
 
 TEST_F(VectorUnitTest, AngleFunctionsTest)
 {
