@@ -61,7 +61,6 @@ GLM_FUNC_QUALIFIER float glm_vec4_getW(glm_vec4 vec) noexcept
  */
 GLM_FUNC_QUALIFIER void glm_vec4_getX(float *x, glm_vec4 vec) noexcept
 {
-    assert(x);
 #if (GLM_ARCH & GLM_ARCH_NEON_BIT)
     vst1q_lane_f32(x, vec, 0);
 #elif (GLM_ARCH & GLM_ARCH_SSE2_BIT)
@@ -74,7 +73,6 @@ GLM_FUNC_QUALIFIER void glm_vec4_getX(float *x, glm_vec4 vec) noexcept
  */
 GLM_FUNC_QUALIFIER void glm_vec4_getY(float *y, glm_vec4 vec) noexcept
 {
-    assert(y);
 #if (GLM_ARCH & GLM_ARCH_NEON_BIT)
     vst1q_lane_f32(y, vec, 1);
 #elif (GLM_ARCH & GLM_ARCH_AVX_BIT)
@@ -89,7 +87,6 @@ GLM_FUNC_QUALIFIER void glm_vec4_getY(float *y, glm_vec4 vec) noexcept
  */
 GLM_FUNC_QUALIFIER void glm_vec4_getZ(float *z, glm_vec4 vec) noexcept
 {
-    assert(z);
 #if (GLM_ARCH & GLM_ARCH_NEON_BIT)
     vst1q_lane_f32(z, vec, 2);
 #elif (GLM_ARCH & GLM_ARCH_AVX_BIT)
@@ -104,7 +101,6 @@ GLM_FUNC_QUALIFIER void glm_vec4_getZ(float *z, glm_vec4 vec) noexcept
  */
 GLM_FUNC_QUALIFIER void glm_vec4_getW(float *w, glm_vec4 vec) noexcept
 {
-    assert(w);
 #if (GLM_ARCH & GLM_ARCH_NEON_BIT)
     vst1q_lane_f32(w, vec, 3);
 #elif (GLM_ARCH & GLM_ARCH_AVX_BIT)
@@ -173,7 +169,6 @@ GLM_FUNC_QUALIFIER uint32_t glm_vec4_getIntW(glm_vec4 vec) noexcept
  */
 GLM_FUNC_QUALIFIER void glm_vec4_getIntX(uint32_t *x, glm_vec4 vec) noexcept
 {
-    assert(x);
 #if (GLM_ARCH & GLM_ARCH_NEON_BIT)
     vst1q_lane_u32(x, *reinterpret_cast<const uint32x4_t*>(&vec), 0);
 #elif (GLM_ARCH & GLM_ARCH_SSE2_BIT)
@@ -186,7 +181,6 @@ GLM_FUNC_QUALIFIER void glm_vec4_getIntX(uint32_t *x, glm_vec4 vec) noexcept
  */
 GLM_FUNC_QUALIFIER void glm_vec4_getIntY(uint32_t *y, glm_vec4 vec) noexcept
 {
-    assert(y);
 #if (GLM_ARCH & GLM_ARCH_NEON_BIT)
     vst1q_lane_u32(y, *reinterpret_cast<const uint32x4_t*>(&vec), 1);
 #elif (GLM_ARCH & GLM_ARCH_AVX_BIT)
@@ -201,7 +195,6 @@ GLM_FUNC_QUALIFIER void glm_vec4_getIntY(uint32_t *y, glm_vec4 vec) noexcept
  */
 GLM_FUNC_QUALIFIER void glm_vec4_getIntZ(uint32_t *z, glm_vec4 vec) noexcept
 {
-    assert(z);
 #if (GLM_ARCH & GLM_ARCH_NEON_BIT)
     vst1q_lane_u32(z, *reinterpret_cast<const uint32x4_t*>(&vec), 2);
 #elif (GLM_ARCH & GLM_ARCH_AVX_BIT)
@@ -216,7 +209,6 @@ GLM_FUNC_QUALIFIER void glm_vec4_getIntZ(uint32_t *z, glm_vec4 vec) noexcept
  */
 GLM_FUNC_QUALIFIER void glm_vec4_getIntW(uint32_t *w, glm_vec4 vec) noexcept
 {
-    assert(w);
 #if (GLM_ARCH & GLM_ARCH_NEON_BIT)
     vst1q_lane_u32(w, *reinterpret_cast<const uint32x4_t*>(&vec), 3);
 #elif (GLM_ARCH & GLM_ARCH_AVX_BIT)
