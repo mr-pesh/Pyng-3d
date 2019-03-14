@@ -1,3 +1,5 @@
+#include <limits>
+
 namespace
 {
     template <bool isFloatingPoint>

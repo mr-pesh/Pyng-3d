@@ -1,7 +1,6 @@
 #pragma once
 
 #include "GLM_Extensions.h"
-#include <limits>
 
 /**
  * @brief Tests wether two vectors are equal.
