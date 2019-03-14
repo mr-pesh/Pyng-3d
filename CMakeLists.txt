@@ -31,6 +31,14 @@ endif()
 
 if(USE_GL_MATH)
     add_definitions(-D__GL_MATH_LIBRARY)
+    # Enable GLM-GTX extensions
+    add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
+    # TODO: set this option to OFF by default
+    option(GLM_FORCE_PURE "Disable the use of SIMD optimizations based on compiler intrinsics" ON)
+
+    if (GLM_FORCE_PURE)
+        add_definitions(-DGLM_FORCE_PURE)
+    endif()
 endif()
 
 # Check to enable unit tests
@@ -42,5 +50,6 @@ add_subdirectory(source)
 
 if(BUILD_TESTS)
     enable_testing()
+    add_definitions(-DPYNG_ENABLE_TESTING)
     add_subdirectory(testing)
 endif()
