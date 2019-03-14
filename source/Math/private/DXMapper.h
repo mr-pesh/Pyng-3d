@@ -371,7 +371,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR Subtract(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -676,7 +676,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR Subtract(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -969,7 +969,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR Subtract(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1274,7 +1274,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR Subtract(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1579,7 +1579,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR Subtract(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -1872,7 +1872,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR Subtract(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2177,7 +2177,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR Subtract(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2482,7 +2482,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR Subtract(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -2775,7 +2775,7 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const Type &vec1, V &&vec2) noexcept
+        static __forceinline XMVECTOR Subtract(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
 
@@ -4042,9 +4042,9 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const XMINT2 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR Subtract(const XMINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,2>::Substract(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,2>::Subtract(v1, std::forward<V>(v2));
         }
     };
 
@@ -4064,9 +4064,9 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const XMINT3 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR Subtract(const XMINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,3>::Substract(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,3>::Subtract(v1, std::forward<V>(v2));
         }
     };
 
@@ -4086,9 +4086,9 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const XMINT4 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR Subtract(const XMINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<int32_t,4>::Substract(v1, std::forward<V>(v2));
+            return XMVectorAdapter<int32_t,4>::Subtract(v1, std::forward<V>(v2));
         }
     };
 
@@ -4108,9 +4108,9 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const XMFLOAT2 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR Subtract(const XMFLOAT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,2>::Substract(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,2>::Subtract(v1, std::forward<V>(v2));
         }
     };
 
@@ -4130,9 +4130,9 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const XMFLOAT3 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR Subtract(const XMFLOAT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,3>::Substract(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,3>::Subtract(v1, std::forward<V>(v2));
         }
     };
 
@@ -4152,9 +4152,9 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const XMFLOAT4 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR Subtract(const XMFLOAT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<float_t,4>::Substract(v1, std::forward<V>(v2));
+            return XMVectorAdapter<float_t,4>::Subtract(v1, std::forward<V>(v2));
         }
     };
 
@@ -4174,9 +4174,9 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const XMUINT2 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR Subtract(const XMUINT2 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,2>::Substract(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,2>::Subtract(v1, std::forward<V>(v2));
         }
     };
 
@@ -4196,9 +4196,9 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const XMUINT3 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR Subtract(const XMUINT3 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,3>::Substract(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,3>::Subtract(v1, std::forward<V>(v2));
         }
     };
 
@@ -4218,9 +4218,9 @@ namespace
         }
 
         template <class V>
-        static __forceinline XMVECTOR Substract(const XMUINT4 &v1, V &&v2) noexcept
+        static __forceinline XMVECTOR Subtract(const XMUINT4 &v1, V &&v2) noexcept
         {
-            return XMVectorAdapter<uint32_t,4>::Substract(v1, std::forward<V>(v2));
+            return XMVectorAdapter<uint32_t,4>::Subtract(v1, std::forward<V>(v2));
         }
     };
 }
@@ -4566,7 +4566,7 @@ inline XMVECTOR operator-(V &&vector) noexcept
 template <class V1, class V2>
 inline XMVECTOR operator-(V1 &&vector1, V2 &&vector2) noexcept
 {
-    return XMVectorArithmeticHelper<std::decay_t<V1>>::Substract(std::forward<V1>(vector1), std::forward<V2>(vector2));
+    return XMVectorArithmeticHelper<std::decay_t<V1>>::Subtract(std::forward<V1>(vector1), std::forward<V2>(vector2));
 }
 
 /// <summary>Computes the radian angle between two 2-, 3- or 4D vectors.</summary>
@@ -4694,7 +4694,7 @@ inline XMVECTOR Refract(V1 &&vector, V2 &&normal, V3 &&refractionIndex) noexcept
 template <class V1, class V2>
 inline XMVECTOR Distance(V1&& vector1, V2&& vector2) noexcept
 {
-    return Length(XMVectorArithmeticHelper<std::decay_t<V1>>::Substract(std::forward<V1>(vector1), std::forward<V2>(vector2)));
+    return Length(XMVectorArithmeticHelper<std::decay_t<V1>>::Subtract(std::forward<V1>(vector1), std::forward<V2>(vector2)));
 }
 
 /// <summary>Retrieve the X component of a Vector.</summary>
