@@ -1,6 +1,6 @@
 namespace glm::extensions
 {
-    using namespace ::glm;
+    using ::glm::vec;
 
     template <length_t L, typename T1, typename T2, qualifier Q>
     GLM_FUNC_QUALIFIER auto angle(const vec<L, T1, Q> &vec1, const vec<L, T2, Q> &vec2) noexcept
@@ -41,7 +41,7 @@ namespace glm::extensions
     template <length_t L, typename T1, typename T2, qualifier Q>
     GLM_FUNC_QUALIFIER auto linePointDistance(const vec<L, T1, Q> &vec1, const vec<L, T1, Q> &vec2, const vec<L, T2, Q> &vec3) noexcept
     {
-        return vec<L, std::common_type_t<T1, T2>, Q>(::glm::distance(::glm::closestPointOnLine(vec3, vec1, vec2), vec3));
+        return vec<L, std::common_type_t<T1, T2>, Q>(::glm::distance(closestPointOnLine(vec3, vec1, vec2), vec3));
     }
 
     template <length_t L, typename T, qualifier Q>
