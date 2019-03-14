@@ -113,7 +113,7 @@ namespace glm::extensions
      * @return A vector with length clamped to the specified minimum and maximum.
      */
     template <length_t L, typename T, qualifier Q>
-    GLM_FUNC_QUALIFIER vec<L, T, Q> clampLength(const vec<L, T, Q> &source, float min, float max) noexcept;
+    GLM_FUNC_QUALIFIER vec<L, T, Q> clampLength(const vec<L, T, Q> &source, T min, T max) noexcept;
 
     /**
      * @brief Clamps the length of a vector to a given range.
@@ -122,8 +122,8 @@ namespace glm::extensions
      * @param max Vector with all components equal to the maximum clamp length. The components must be greater-than-or-equal to zero.
      * @return A vector with length clamped to the specified minimum and maximum.
      */
-    template <length_t L, typename T, qualifier Q>
-    GLM_FUNC_QUALIFIER vec<L, T, Q> clampLength(const vec<L, T, Q> &source, const vec<L, T, Q> &min, const vec<L, T, Q> &max) noexcept;
+    template <length_t L, typename T1, typename T2, typename T3, typename T4 = std::common_type_t<T1, T2, T3>, qualifier Q>
+    GLM_FUNC_QUALIFIER vec<L, T4, Q> clampLength(const vec<L, T1, Q> &source, const vec<L, T2, Q> &min, const vec<L, T3, Q> &max) noexcept;
 
     /**
      * @brief Computes a vector perpendicular to a given \p source.
@@ -131,7 +131,30 @@ namespace glm::extensions
      * @return Returns a vector orthogonal to \p source.
      */
     template <length_t L, typename T, qualifier Q>
-    GLM_FUNC_QUALIFIER glm::vec<L, T, Q> orthogonal(const glm::vec<L, T, Q> &source) noexcept;
+    GLM_FUNC_QUALIFIER vec<L, T, Q> orthogonal(const vec<L, T, Q> &source) noexcept;
+
+    /**
+     * @brief Tests whether the components of a vector are within specified bounds.
+     * @param vec1 Vector to test.
+     * @param vec2 Vector that determines the bounds.
+     * @remark The result of the function can be expressed with following code: @code
+     * (vec1.x <= vec2.x && vec1.x >= -vec2.x) &&
+     * (vec1.y <= vec2.y && vec1.y >= -vec2.y) [ &&
+     * (vec1.z <= vec2.z && vec1.z >= -vec2.z) [ &&
+     * (vec1.w <= vec2.w && vec1.w >= -vec2.w) ]] @endcode
+     * @return Returns true if all components of \p vec1 are within the bounds specified by \p vec2.
+     */
+    template <length_t L, typename T1, typename T2, qualifier Q>
+    GLM_FUNC_QUALIFIER bool inBounds(const vec<L, T1, Q> &vec1, const vec<L, T2, Q> &vec2) noexcept;
+
+    /**
+     * @brief Computes the radian angle between two vectors.
+     * @param vec1 Vector
+     * @param vec2 Vector
+     * @return The radian angle between \p vec1 and \p vec2 which is replicated into each component of return vector.
+     */
+    template <length_t L, typename T1, typename T2, typename T3 = std::common_type_t<T1, T2>, qualifier Q>
+    GLM_FUNC_QUALIFIER vec<L, T3, Q> vectorAngle(const vec<L, T1, Q> &vec1, const vec<L, T2, Q> &vec2) noexcept;
 }
 #include "GLM_pure_converter.inl"
 #include "GLM_pure_extension.inl"

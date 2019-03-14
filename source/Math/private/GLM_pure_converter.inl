@@ -20,12 +20,6 @@ namespace glm::extensions
         return vec<L, std::common_type_t<T1, T2>, Q>(::glm::dot(vec1, vec2));
     }
 
-    template <length_t L, typename T1, typename T2, qualifier Q>
-    GLM_FUNC_QUALIFIER bool inBounds(const vec<L, T1, Q> &vec1, const vec<L, T2, Q> &vec2) noexcept
-    {
-        return all(lessThanEqual(vec1, vec2)) && all(greaterThanEqual(vec1, -vec2));
-    }
-
     template <length_t L, typename T, qualifier Q>
     GLM_FUNC_QUALIFIER auto length(const vec<L, T, Q> &vec1) noexcept
     {
