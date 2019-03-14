@@ -1,0 +1,231 @@
+/*! \file Vector.h
+
+    Provides all required definitions and functions to perform operations on vectors.
+*/
+
+/*! \class Vector
+    \brief Basic vector class.
+
+    Vector is a generalized alias to one of
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#gabe65c061834f61b4f7cb6037b19006a4">vec2</a>,
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga9c3019b13faf179e4ad3626ea66df334">vec3</a>,
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#gac215a35481a6597d1bf622a382e9d6e2">vec4</a>,
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga6f9269106d91b2d2b91bcf27cd5f5560">ivec2</a>,
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#gad0d784d8eee201aca362484d2daee46c">ivec3</a>,
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga5abb4603dae0ce58c595e66d9123d812">ivec4</a>,
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga2f6d9ec3ae14813ade37d6aee3715fdb">uvec2</a>,
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga3d3e55874babd4bf93baa7bbc83ae418">uvec3</a>,
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#gaa57e96bb337867329d5f43bcc27c1095">uvec4</a> (OpenGL)
+    or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmint2">XMINT2</a>,
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmint3">XMINT3</a>,
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmint4">XMINT4</a>,
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmuint2">XMUINT2</a>,
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmuint3">XMUINT3</a>,
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmuint4">XMUINT4</a>,
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmfloat2">XMFLOAT2</a>,
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmfloat3">XMFLOAT3</a>,
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmfloat4">XMFLOAT4</a> (DirectX)
+    depending on template parameters and platform configuration.
+
+    \remark It's not recommended to reference this class directly in your code. Use \ref ivec2, \ref ivec3, \ref ivec4, \ref fvec2, \ref fvec3, \ref fvec4, \ref uvec2, \ref uvec3, \ref uvec4 aliases instead.
+*/
+
+/*! \class ivec2
+
+    ivec2 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga6f9269106d91b2d2b91bcf27cd5f5560">glm::ivec2</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmint2">DirectX::XMINT2</a>
+    depending on a platform configuration.
+
+    \sa Vector
+*/
+
+/*! \class ivec3
+
+    ivec3 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#gad0d784d8eee201aca362484d2daee46c">glm::ivec3</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmint3">DirectX::XMINT3</a>
+    depending on a platform configuration.
+
+    \sa Vector
+*/
+
+/*! \class ivec4
+
+    ivec4 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga5abb4603dae0ce58c595e66d9123d812">glm::ivec4</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmint4">DirectX::XMINT4</a>
+    depending on a platform configuration.
+
+    \sa Vector
+*/
+
+/*! \class fvec2
+
+    fvec2 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#gabe65c061834f61b4f7cb6037b19006a4">glm::vec2</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmfloat2">DirectX::XMFLOAT2</a>
+    depending on a platform configuration.
+
+    \sa Vector
+*/
+
+/*! \class fvec3
+
+    fvec3 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga9c3019b13faf179e4ad3626ea66df334">glm::vec3</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmfloat3">DirectX::XMFLOAT3</a>
+    depending on a platform configuration.
+
+    \sa Vector
+*/
+
+
+/*! \class fvec4
+
+    fvec4 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#gac215a35481a6597d1bf622a382e9d6e2">glm::vec4</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmfloat4">DirectX::XMFLOAT4</a>
+    depending on a platform configuration.
+
+    \sa Vector
+*/
+
+/*! \class uvec2
+
+    uvec2 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga2f6d9ec3ae14813ade37d6aee3715fdb">glm::uvec2</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmuint2">DirectX::XMUINT2</a>
+    depending on a platform configuration.
+
+    \sa Vector
+*/
+
+/*! \class uvec3
+
+    uvec3 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga3d3e55874babd4bf93baa7bbc83ae418">glm::uvec3</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmuint3">DirectX::XMUINT3</a>
+    depending on a platform configuration.
+
+    \sa Vector
+*/
+
+/*! \class uvec4
+
+    uvec4 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#gaa57e96bb337867329d5f43bcc27c1095">glm::uvec4</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmuint4">DirectX::XMUINT4</a>
+    depending on a platform configuration.
+
+    \sa Vector
+*/
+
+/*! \class dvec2
+
+    dvec2 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga8b09c71aaac7da7867ae58377fe219a8">glm::dvec2</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmfloat2">DirectX::XMFLOAT2</a>
+    depending on a platform configuration.
+
+    \remark Note that <a href="https://docs.microsoft.com/en-us/windows/desktop/dxmath">DirectXMath</a> has no support for double-precision floating point vectors, therefore this class is not recommended to use for compatibility reasons.
+    \sa Vector
+*/
+
+/*! \class dvec3
+
+    dvec3 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga5b83ae3d0fdec519c038e4d2cf967cf0">glm::dvec3</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmfloat3">DirectX::XMFLOAT3</a>
+    depending on a platform configuration.
+
+    \remark Note that <a href="https://docs.microsoft.com/en-us/windows/desktop/dxmath">DirectXMath</a> has no support for double-precision floating point vectors, therefore this class is not recommended to use for compatibility reasons.
+    \sa Vector
+*/
+
+/*! \class dvec4
+
+    dvec4 is an alias to
+    <a href="https://glm.g-truc.net/0.9.9/api/a00699.html#ga57debab5d98ce618f7b2a97fe26eb3ac">glm::dvec4</a> or
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/directxmath/ns-directxmath-xmfloat4">DirectX::XMFLOAT4</a>
+    depending on a platform configuration.
+
+    \remark Note that <a href="https://docs.microsoft.com/en-us/windows/desktop/dxmath">DirectXMath</a> has no support for double-precision floating point vectors, therefore this class is not recommended to use for compatibility reasons.
+    \sa Vector
+*/
+
+/*! \typedef vec2
+
+    An alias to \ref fvec2
+*/
+
+/*! \typedef vec3
+
+    An alias to \ref fvec3
+*/
+
+/*! \typedef vec4
+
+    An alias to \ref fvec4
+*/
+
+/*! \typedef int1
+
+    An alias to **int**
+*/
+
+/*! \typedef int2
+
+    An alias to \ref ivec2
+*/
+
+/*! \typedef int3
+
+    An alias to \ref ivec3
+*/
+
+/*! \typedef int4
+
+    An alias to \ref ivec4
+*/
+
+/*! \typedef uint1
+
+    An alias to **unsigned int**
+*/
+
+/*! \typedef uint2
+
+    An alias to \ref uvec2
+*/
+
+/*! \typedef uint3
+
+    An alias to \ref uvec3
+*/
+
+/*! \typedef uint4
+
+    An alias to \ref uvec4
+*/
+
+/*! \typedef float1
+
+    An alias to **float**
+*/
+
+/*! \typedef float2
+
+    An alias to \ref fvec2
+*/
+
+/*! \typedef float3
+
+    An alias to \ref fvec3
+*/
+
+/*! \typedef float4
+
+    An alias to \ref fvec4
+*/
