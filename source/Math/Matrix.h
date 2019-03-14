@@ -9,19 +9,55 @@ using Matrix = glm::mat<columns, rows, T, precision>;
 
 #include <glm/gtc/type_ptr.hpp>
 
+#ifdef PYNG_ENABLE_TESTING
+
 namespace std
 {
-    template <typename T>
-    constexpr auto begin(const T& glm_type) noexcept
+    template <glm::length_t L, typename T, glm::qualifier Q>
+    constexpr T *begin(glm::vec<L, T, Q> &vec) noexcept
     {
-        return glm::value_ptr(glm_type);
+        return glm::value_ptr(vec);
     }
 
-    template <typename T>
-    constexpr auto end(const T& glm_type) noexcept
+    template <glm::length_t L, typename T, glm::qualifier Q>
+    constexpr T const *begin(const glm::vec<L, T, Q> &vec) noexcept
     {
-        return glm::value_ptr(glm_type) + glm_type.length();
+        return glm::value_ptr(vec);
     }
+
+    template <glm::length_t L, typename T, glm::qualifier Q>
+    constexpr T *end(glm::vec<L, T, Q> &vec) noexcept
+    {
+        return glm::value_ptr(vec) + vec.length();
+    }
+
+    template <glm::length_t L, typename T, glm::qualifier Q>
+    constexpr T const *end(const glm::vec<L, T, Q> &vec) noexcept
+    {
+        return glm::value_ptr(vec) + vec.length();
+    }
+# ifndef GLM_FORCE_PURE
+    float_t *begin(glm_vec4 &vec) noexcept
+    {
+        return reinterpret_cast<float*>(&vec);
+    }
+
+    float_t const *begin(const glm_vec4 &vec) noexcept
+    {
+        return reinterpret_cast<const float*>(&vec);
+    }
+
+    float_t *end(glm_vec4 &vec) noexcept
+    {
+        return reinterpret_cast<float*>(&vec + 1);
+    }
+
+    float_t const *end(const glm_vec4 &vec) noexcept
+    {
+        return reinterpret_cast<const float*>(&vec + 1);
+    }
+# endif
+#endif // PYNG_ENABLE_TESTING
 }
 
 #elif defined(__DX_MATH_LIBRARY)
@@ -89,9 +125,9 @@ typedef Mat4x3 dMat4x4;
 
 #else
 
-typedef Matrix<double, 3, 3> dMat3x4;
+typedef Matrix<double, 3, 3> dMat3x3;
 typedef Matrix<double, 3, 4> dMat3x4;
 typedef Matrix<double, 4, 3> dMat4x3;
-typedef Matrix<double, 4, 4> dMat4x3;
+typedef Matrix<double, 4, 4> dMat4x4;
 
 #endif
