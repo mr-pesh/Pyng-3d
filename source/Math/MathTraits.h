@@ -1,18 +1,11 @@
 #pragma once
 
-#include <DirectXMath.h>
-
-#ifndef _MSC_VER
-
-namespace std
-{
-    template<class T, class... Types>
-    inline constexpr bool _Is_any_of_v = ::std::disjunction_v<::std::is_same<T, Types>...>;
-}
-
-#endif // _MSC_VER
+#include <Utils/TypeTraits.h>
 
 /*-------------------------- Vector traits --------------------------*/
+
+template <typename T, int length, glm::qualifier precision>
+using Vector = glm::vec<length, T, precision>;
 
 template <typename T>
 struct _Is_2d_Vector
