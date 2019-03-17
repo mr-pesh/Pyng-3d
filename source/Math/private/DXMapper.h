@@ -2889,84 +2889,147 @@ namespace
 {
     using namespace DirectX;
 
-    template <class Vector, class Matrix>
-    struct XMVectorTransformationMapper;
+    template <class Vector>
+    struct XMVectorTransformationHelper;
 
-    template <class Matrix>
-    struct XMVectorTransformationMapper<XMINT2, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMINT2>
     {
+        template <class Quaterion>
+        static __forceinline XMVECTOR InverseRotate(const XMINT2 &v, Quaterion &&q) noexcept
+        {
+            return XMVectorAdapter<int32_t,2>::InverseRotate(v, std::forward<Quaterion>(q));
+        }
+
+        template <class Matrix>
         static __forceinline XMVECTOR Transform(const XMINT2 &v, Matrix &&m) noexcept
         {
             return XMVectorAdapter<int32_t,2>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
-    template <class Matrix>
-    struct XMVectorTransformationMapper<XMINT3, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMINT3>
     {
+        template <class Quaterion>
+        static __forceinline XMVECTOR InverseRotate(const XMINT3 &v, Quaterion &&q) noexcept
+        {
+            return XMVectorAdapter<int32_t,3>::InverseRotate(v, std::forward<Quaterion>(q));
+        }
+
+        template <class Matrix>
         static __forceinline XMVECTOR Transform(const XMINT3 &v, Matrix &&m) noexcept
         {
             return XMVectorAdapter<int32_t,3>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
-    template <class Matrix>
-    struct XMVectorTransformationMapper<XMINT4, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMINT4>
     {
+        template <class Quaterion>
+        static __forceinline XMVECTOR InverseRotate(const XMINT4 &v, Quaterion &&q) noexcept
+        {
+            return XMVectorAdapter<int32_t,4>::InverseRotate(v, std::forward<Quaterion>(q));
+        }
+
+        template <class Matrix>
         static __forceinline XMVECTOR Transform(const XMINT4 &v, Matrix &&m) noexcept
         {
             return XMVectorAdapter<int32_t,4>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
-    template <class Matrix>
-    struct XMVectorTransformationMapper<XMFLOAT2, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMFLOAT2>
     {
+        template <class Quaterion>
+        static __forceinline XMVECTOR InverseRotate(const XMFLOAT2 &v, Quaterion &&q) noexcept
+        {
+            return XMVectorAdapter<float_t,2>::InverseRotate(v, std::forward<Quaterion>(q));
+        }
+
+        template <class Matrix>
         static __forceinline XMVECTOR Transform(const XMFLOAT2 &v, Matrix &&m) noexcept
         {
             return XMVectorAdapter<float_t,2>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
-    template <class Matrix>
-    struct XMVectorTransformationMapper<XMFLOAT3, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMFLOAT3>
     {
+        template <class Quaterion>
+        static __forceinline XMVECTOR InverseRotate(const XMFLOAT3 &v, Quaterion &&q) noexcept
+        {
+            return XMVectorAdapter<float_t,3>::InverseRotate(v, std::forward<Quaterion>(q));
+        }
+
+        template <class Matrix>
         static __forceinline XMVECTOR Transform(const XMFLOAT3 &v, Matrix &&m) noexcept
         {
             return XMVectorAdapter<float_t,3>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
-    template <class Matrix>
-    struct XMVectorTransformationMapper<XMFLOAT4, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMFLOAT4>
     {
+        template <class Quaterion>
+        static __forceinline XMVECTOR InverseRotate(const XMFLOAT4 &v, Quaterion &&q) noexcept
+        {
+            return XMVectorAdapter<float_t,4>::InverseRotate(v, std::forward<Quaterion>(q));
+        }
+
+        template <class Matrix>
         static __forceinline XMVECTOR Transform(const XMFLOAT4 &v, Matrix &&m) noexcept
         {
             return XMVectorAdapter<float_t,4>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
-    template <class Matrix>
-    struct XMVectorTransformationMapper<XMUINT2, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMUINT2>
     {
+        template <class Quaterion>
+        static __forceinline XMVECTOR InverseRotate(const XMUINT2 &v, Quaterion &&q) noexcept
+        {
+            return XMVectorAdapter<uint32_t,2>::InverseRotate(v, std::forward<Quaterion>(q));
+        }
+
+        template <class Matrix>
         static __forceinline XMVECTOR Transform(const XMUINT2 &v, Matrix &&m) noexcept
         {
             return XMVectorAdapter<uint32_t,2>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
-    template <class Matrix>
-    struct XMVectorTransformationMapper<XMUINT3, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMUINT3>
     {
+        template <class Quaterion>
+        static __forceinline XMVECTOR InverseRotate(const XMUINT3 &v, Quaterion &&q) noexcept
+        {
+            return XMVectorAdapter<uint32_t,3>::InverseRotate(v, std::forward<Quaterion>(q));
+        }
+
+        template <class Matrix>
         static __forceinline XMVECTOR Transform(const XMUINT3 &v, Matrix &&m) noexcept
         {
             return XMVectorAdapter<uint32_t,3>::Transform(v, std::forward<Matrix>(m));
         }
     };
 
-    template <class Matrix>
-    struct XMVectorTransformationMapper<XMUINT4, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMUINT4>
     {
+        template <class Quaterion>
+        static __forceinline XMVECTOR InverseRotate(const XMUINT4 &v, Quaterion &&q) noexcept
+        {
+            return XMVectorAdapter<uint32_t,4>::InverseRotate(v, std::forward<Quaterion>(q));
+        }
+
+        template <class Matrix>
         static __forceinline XMVECTOR Transform(const XMUINT4 &v, Matrix &&m) noexcept
         {
             return XMVectorAdapter<uint32_t,4>::Transform(v, std::forward<Matrix>(m));
@@ -4776,7 +4839,7 @@ inline XMVECTOR Refract(V1 &&vector, V2 &&normal, V3 &&refractionIndex) noexcept
 template <class V, class M>
 inline XMVECTOR Transform(V &&vector, M &&matrix) noexcept
 {
-    return XMVectorTransformationMapper<std::decay_t<V>,M>::Transform(std::forward<V>(vector), std::forward<M>(matrix));
+    return XMVectorTransformationHelper<std::decay_t<V>>::Transform(std::forward<V>(vector), std::forward<M>(matrix));
 }
 
 template <class V1, class V2>
@@ -4791,7 +4854,7 @@ inline XMVECTOR operator*(V1 &&v1, V2 &&v2) noexcept
 
 /// <summary>Retrieve the X component of a Vector.</summary>
 template <class V>
-inline auto VectorGetX(V&& vector) noexcept
+inline auto VectorGetX(V &&vector) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
         return XMVectorGetX(std::forward<V>(vector));
@@ -4803,7 +4866,7 @@ inline auto VectorGetX(V&& vector) noexcept
 
 /// <summary>Retrieve the Y component of a Vector</summary>
 template <class V>
-inline auto VectorGetY(V&& vector) noexcept
+inline auto VectorGetY(V &&vector) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
         return XMVectorGetY(std::forward<V>(vector));
@@ -4815,7 +4878,7 @@ inline auto VectorGetY(V&& vector) noexcept
 
 /// <summary>Retrieve the Z component of a Vector.</summary>
 template <class V>
-inline auto VectorGetZ(V&& vector) noexcept
+inline auto VectorGetZ(V &&vector) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
         return XMVectorGetZ(std::forward<V>(vector));
@@ -4827,7 +4890,7 @@ inline auto VectorGetZ(V&& vector) noexcept
 
 /// <summary>Retrieve the W component of a Vector.</summary>
 template <class V>
-inline auto VectorGetW(V&& vector) noexcept
+inline auto VectorGetW(V &&vector) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
         return XMVectorGetW(std::forward<V>(vector));
@@ -4841,7 +4904,7 @@ inline auto VectorGetW(V&& vector) noexcept
 /// <para/>It's not recommended for use due to performance loss
 /// </summary>
 template <class V>
-inline auto VectorGetByIndex(V&& vector, size_t index) noexcept
+inline auto VectorGetByIndex(V &&vector, size_t index) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
         return XMVectorGetByIndex(std::forward<V>(vector), index);
@@ -4849,4 +4912,11 @@ inline auto VectorGetByIndex(V&& vector, size_t index) noexcept
     else {
         return XMVectorAccessorHelper<std::decay_t<V>>::Get(vector, index);
     }
+}
+
+/// Rotates a vector using the inverse of a quaternion.
+template <class V1, class V2>
+inline XMVECTOR InverseRotate(V1 &&vector, V2 &&quaterion) noexcept
+{
+    return XMVectorTransformationHelper<std::decay_t<V1>>::InverseRotate(std::forward<V1>(vector), std::forward<V2>(quaterion));
 }
