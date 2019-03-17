@@ -48,6 +48,10 @@ TEST_F(VectorUnitTest, TransformTest)
         std::visit([](auto &&vector, auto &&matrix, auto &&expect)
         {
             const auto result = vector * matrix;
+            const auto rotated = Rotate(vector, vec4{0.f, 0.f, 0.f, 1.f});
+            const auto rotated2 = Rotate(vector, XMQuaternionIdentity());
+            const auto rotated3 = InverseRotate(vector, vec4{ 0.f, 0.f, 0.f, 1.f });
+            const auto rotated4 = InverseRotate(vector, XMQuaternionIdentity());
 
             ASSERT_TRUE(std::equal(std::begin(expect), std::end(expect), std::begin(result)));
         },

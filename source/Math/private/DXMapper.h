@@ -225,6 +225,12 @@ namespace
         }
 
         template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaternion is not supported");
+        }
+
+        template <class V>
         static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
@@ -394,6 +400,12 @@ namespace
             }
         }
 
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaternion is not supported");
+        }
+
         template <class M>
         static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
@@ -530,6 +542,19 @@ namespace
             }
             else if (isXMVector) {
                 return XMVector3InBounds(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3InverseRotate(XMLoadSInt3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3InverseRotate(XMLoadSInt3(&vec), std::forward<V>(quat));
             }
         }
 
@@ -713,6 +738,19 @@ namespace
             }
         }
 
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
+        {
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3Rotate(XMLoadSInt3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3Rotate(XMLoadSInt3(&vec), std::forward<V>(quat));
+            }
+        }
+
         template <class M>
         static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
 
@@ -840,6 +878,12 @@ namespace
             else if (isXMVector) {
                 return XMVector4InBounds(XMLoadSInt4(&vec1), std::forward<V>(vec2));
             }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
         }
 
         template <class V>
@@ -1012,6 +1056,12 @@ namespace
             }
         }
 
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
+        }
+
         template <class M>
         static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
@@ -1137,6 +1187,12 @@ namespace
             else if (isXMVector) {
                 return XMVector2InBounds(XMLoadFloat2(&vec1), std::forward<V>(vec2));
             }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaternion is not supported");
         }
 
         template <class V>
@@ -1309,6 +1365,12 @@ namespace
             }
         }
 
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaternion is not supported");
+        }
+
         template <class M>
         static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
@@ -1445,6 +1507,19 @@ namespace
             }
             else if (isXMVector) {
                 return XMVector3InBounds(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3InverseRotate(XMLoadFloat3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3InverseRotate(XMLoadFloat3(&vec), std::forward<V>(quat));
             }
         }
 
@@ -1618,6 +1693,19 @@ namespace
             }
         }
 
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
+        {
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3Rotate(XMLoadFloat3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3Rotate(XMLoadFloat3(&vec), std::forward<V>(quat));
+            }
+        }
+
         template <class M>
         static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
@@ -1755,6 +1843,12 @@ namespace
             else if (isXMVector) {
                 return XMVector4InBounds(XMLoadFloat4(&vec1), std::forward<V>(vec2));
             }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
         }
 
         template <class V>
@@ -1927,6 +2021,12 @@ namespace
             }
         }
 
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
+        }
+
         template <class M>
         static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
@@ -2052,6 +2152,12 @@ namespace
             else if (isXMVector) {
                 return XMVector2InBounds(XMLoadUInt2(&vec1), std::forward<V>(vec2));
             }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaternion is not supported");
         }
 
         template <class V>
@@ -2224,6 +2330,12 @@ namespace
             }
         }
 
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaterion is not supported");
+        }
+
         template <class M>
         static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
@@ -2360,6 +2472,19 @@ namespace
             }
             else if (isXMVector) {
                 return XMVector3InBounds(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3InverseRotate(XMLoadUInt3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3InverseRotate(XMLoadUInt3(&vec), std::forward<V>(quat));
             }
         }
 
@@ -2533,6 +2658,19 @@ namespace
             }
         }
 
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
+        {
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3Rotate(XMLoadUInt3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3Rotate(XMLoadUInt3(&vec), std::forward<V>(quat));
+            }
+        }
+
         template <class M>
         static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
@@ -2670,6 +2808,12 @@ namespace
             else if (isXMVector) {
                 return XMVector4InBounds(XMLoadUInt4(&vec1), std::forward<V>(vec2));
             }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
         }
 
         template <class V>
@@ -2842,6 +2986,12 @@ namespace
             }
         }
 
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
+        }
+
         template <class M>
         static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
@@ -2895,144 +3045,198 @@ namespace
     template <>
     struct XMVectorTransformationHelper<XMINT2>
     {
-        template <class Quaterion>
-        static __forceinline XMVECTOR InverseRotate(const XMINT2 &v, Quaterion &&q) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMINT2 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<int32_t,2>::InverseRotate(v, std::forward<Quaterion>(q));
+            return XMVectorAdapter<int32_t,2>::InverseRotate(v, std::forward<Q>(quat));
         }
 
-        template <class Matrix>
-        static __forceinline XMVECTOR Transform(const XMINT2 &v, Matrix &&m) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMINT2 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<int32_t,2>::Transform(v, std::forward<Matrix>(m));
+            return XMVectorAdapter<int32_t,2>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMINT2 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<int32_t,2>::Transform(v, std::forward<M>(mat));
         }
     };
 
     template <>
     struct XMVectorTransformationHelper<XMINT3>
     {
-        template <class Quaterion>
-        static __forceinline XMVECTOR InverseRotate(const XMINT3 &v, Quaterion &&q) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMINT3 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<int32_t,3>::InverseRotate(v, std::forward<Quaterion>(q));
+            return XMVectorAdapter<int32_t,3>::InverseRotate(v, std::forward<Q>(quat));
         }
 
-        template <class Matrix>
-        static __forceinline XMVECTOR Transform(const XMINT3 &v, Matrix &&m) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMINT3 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<int32_t,3>::Transform(v, std::forward<Matrix>(m));
+            return XMVectorAdapter<int32_t,3>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMINT3 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<int32_t,3>::Transform(v, std::forward<M>(mat));
         }
     };
 
     template <>
     struct XMVectorTransformationHelper<XMINT4>
     {
-        template <class Quaterion>
-        static __forceinline XMVECTOR InverseRotate(const XMINT4 &v, Quaterion &&q) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMINT4 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<int32_t,4>::InverseRotate(v, std::forward<Quaterion>(q));
+            return XMVectorAdapter<int32_t,4>::InverseRotate(v, std::forward<Q>(quat));
         }
 
-        template <class Matrix>
-        static __forceinline XMVECTOR Transform(const XMINT4 &v, Matrix &&m) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMINT4 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<int32_t,4>::Transform(v, std::forward<Matrix>(m));
+            return XMVectorAdapter<int32_t,4>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMINT4 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<int32_t,4>::Transform(v, std::forward<M>(mat));
         }
     };
 
     template <>
     struct XMVectorTransformationHelper<XMFLOAT2>
     {
-        template <class Quaterion>
-        static __forceinline XMVECTOR InverseRotate(const XMFLOAT2 &v, Quaterion &&q) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMFLOAT2 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<float_t,2>::InverseRotate(v, std::forward<Quaterion>(q));
+            return XMVectorAdapter<float_t,2>::InverseRotate(v, std::forward<Q>(quat));
         }
 
-        template <class Matrix>
-        static __forceinline XMVECTOR Transform(const XMFLOAT2 &v, Matrix &&m) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMFLOAT2 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<float_t,2>::Transform(v, std::forward<Matrix>(m));
+            return XMVectorAdapter<float_t,2>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMFLOAT2 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<float_t,2>::Transform(v, std::forward<M>(mat));
         }
     };
 
     template <>
     struct XMVectorTransformationHelper<XMFLOAT3>
     {
-        template <class Quaterion>
-        static __forceinline XMVECTOR InverseRotate(const XMFLOAT3 &v, Quaterion &&q) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMFLOAT3 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<float_t,3>::InverseRotate(v, std::forward<Quaterion>(q));
+            return XMVectorAdapter<float_t,3>::InverseRotate(v, std::forward<Q>(quat));
         }
 
-        template <class Matrix>
-        static __forceinline XMVECTOR Transform(const XMFLOAT3 &v, Matrix &&m) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMFLOAT3 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<float_t,3>::Transform(v, std::forward<Matrix>(m));
+            return XMVectorAdapter<float_t,3>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMFLOAT3 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<float_t,3>::Transform(v, std::forward<M>(mat));
         }
     };
 
     template <>
     struct XMVectorTransformationHelper<XMFLOAT4>
     {
-        template <class Quaterion>
-        static __forceinline XMVECTOR InverseRotate(const XMFLOAT4 &v, Quaterion &&q) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMFLOAT4 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<float_t,4>::InverseRotate(v, std::forward<Quaterion>(q));
+            return XMVectorAdapter<float_t,4>::InverseRotate(v, std::forward<Q>(quat));
         }
 
-        template <class Matrix>
-        static __forceinline XMVECTOR Transform(const XMFLOAT4 &v, Matrix &&m) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMFLOAT4 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<float_t,4>::Transform(v, std::forward<Matrix>(m));
+            return XMVectorAdapter<float_t,4>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMFLOAT4 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<float_t,4>::Transform(v, std::forward<M>(mat));
         }
     };
 
     template <>
     struct XMVectorTransformationHelper<XMUINT2>
     {
-        template <class Quaterion>
-        static __forceinline XMVECTOR InverseRotate(const XMUINT2 &v, Quaterion &&q) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMUINT2 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<uint32_t,2>::InverseRotate(v, std::forward<Quaterion>(q));
+            return XMVectorAdapter<uint32_t,2>::InverseRotate(v, std::forward<Q>(quat));
         }
 
-        template <class Matrix>
-        static __forceinline XMVECTOR Transform(const XMUINT2 &v, Matrix &&m) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMUINT2 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<uint32_t,2>::Transform(v, std::forward<Matrix>(m));
+            return XMVectorAdapter<uint32_t,2>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMUINT2 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,2>::Transform(v, std::forward<M>(mat));
         }
     };
 
     template <>
     struct XMVectorTransformationHelper<XMUINT3>
     {
-        template <class Quaterion>
-        static __forceinline XMVECTOR InverseRotate(const XMUINT3 &v, Quaterion &&q) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMUINT3 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<uint32_t,3>::InverseRotate(v, std::forward<Quaterion>(q));
+            return XMVectorAdapter<uint32_t,3>::InverseRotate(v, std::forward<Q>(quat));
         }
 
-        template <class Matrix>
-        static __forceinline XMVECTOR Transform(const XMUINT3 &v, Matrix &&m) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMUINT3 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<uint32_t,3>::Transform(v, std::forward<Matrix>(m));
+            return XMVectorAdapter<uint32_t,3>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMUINT3 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,3>::Transform(v, std::forward<M>(mat));
         }
     };
 
     template <>
     struct XMVectorTransformationHelper<XMUINT4>
     {
-        template <class Quaterion>
-        static __forceinline XMVECTOR InverseRotate(const XMUINT4 &v, Quaterion &&q) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMUINT4 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<uint32_t,4>::InverseRotate(v, std::forward<Quaterion>(q));
+            return XMVectorAdapter<uint32_t,4>::InverseRotate(v, std::forward<Q>(quat));
         }
 
-        template <class Matrix>
-        static __forceinline XMVECTOR Transform(const XMUINT4 &v, Matrix &&m) noexcept
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMUINT4 &v, Q &&quat) noexcept
         {
-            return XMVectorAdapter<uint32_t,4>::Transform(v, std::forward<Matrix>(m));
+            return XMVectorAdapter<uint32_t,4>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMUINT4 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,4>::Transform(v, std::forward<M>(mat));
         }
     };
 }
@@ -4914,9 +5118,16 @@ inline auto VectorGetByIndex(V &&vector, size_t index) noexcept
     }
 }
 
-/// Rotates a vector using the inverse of a quaternion.
-template <class V1, class V2>
-inline XMVECTOR InverseRotate(V1 &&vector, V2 &&quaterion) noexcept
+/// Rotates a vector using a quaternion.
+template <class V, class Q>
+inline XMVECTOR Rotate(V &&vector, Q &&quaternion) noexcept
 {
-    return XMVectorTransformationHelper<std::decay_t<V1>>::InverseRotate(std::forward<V1>(vector), std::forward<V2>(quaterion));
+    return XMVectorTransformationHelper<std::decay_t<V>>::Rotate(std::forward<V>(vector), std::forward<Q>(quaternion));
+}
+
+/// Rotates a vector using the inverse of a quaternion.
+template <class V, class Q>
+inline XMVECTOR InverseRotate(V &&vector, Q &&quaternion) noexcept
+{
+    return XMVectorTransformationHelper<std::decay_t<V>>::InverseRotate(std::forward<V>(vector), std::forward<Q>(quaternion));
 }
