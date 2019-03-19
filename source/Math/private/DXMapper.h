@@ -4709,7 +4709,7 @@ template <class V>
 inline auto VectorGetY(V&& vector) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
-        return XMVectorGetY(std::forward<V>(vector));
+        return XMVectorGetY(std::forward<V>(vector), index);
     }
     else {
         return XMVectorAccessorHelper<std::decay_t<V>>::GetY(vector);
