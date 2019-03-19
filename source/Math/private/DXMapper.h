@@ -1,5 +1,6 @@
 #pragma once
 
+#include <DirectXMath.h>
 #include <Math/MathTraits.h>
 
 #define MATCH_TYPE(CompType, Result, Type)                                                    \

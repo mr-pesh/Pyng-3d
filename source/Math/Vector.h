@@ -58,7 +58,7 @@ using Vector = XMVectorAdapterT<T, length>;
 
 #include "private/GLM_Mapper.h"
 
-template <typename T, int length, glm::qualifier precision = glm::mediump>
+template <typename T, int length, glm::qualifier precision = glm::defaultp>
 using Vector = glm::vec<length, T, precision>;
 
 #endif
