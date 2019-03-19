@@ -4587,13 +4587,6 @@ inline XMVECTOR CrossProduct(V1&& vector1, V2&& ...vector2) noexcept
     return XMVectorGeometryHelper<std::decay_t<V1>>::CrossProduct(std::forward<V1>(vector1), std::forward<V2>(vector2)...);
 }
 
-/// <summary>Computes the distance between vector1 and vector2, i.e., Length(vector1 - vector2).</summary>
-template <class V1, class V2>
-inline XMVECTOR Distance(V1&& vector1, V2&& vector2) noexcept
-{
-    return Length(XMVectorArithmeticHelper<std::decay_t<V1>>::Subtract(std::forward<V1>(vector1), std::forward<V2>(vector2)));
-}
-
 /// <summary>Computes the dot product between two vectors.</summary>
 template <class V1, class V2>
 inline XMVECTOR DotProduct(V1&& vector1, V2&& vector2) noexcept
@@ -4682,14 +4675,11 @@ inline XMVECTOR Refract(V1 &&vector, V2 &&normal, V3 &&refractionIndex) noexcept
     );
 }
 
-template <class V, class M>
-inline auto operator*(const V &vector, const M &matrix)
+/// <summary>Computes the distance between vector1 and vector2, i.e., Length(vector1 - vector2).</summary>
+template <class V1, class V2>
+inline XMVECTOR Distance(V1&& vector1, V2&& vector2) noexcept
 {
-    if constexpr (sizeof(V) < sizeof(M)) {
-        return TransformMapper<V,M>::Transform(vector, matrix);
-    } else {
-        return TransformMapper<M,V>::Transform(matrix, vector);
-    }
+    return Length(XMVectorArithmeticHelper<std::decay_t<V1>>::Subtract(std::forward<V1>(vector1), std::forward<V2>(vector2)));
 }
 
 /// <summary>Retrieve the X component of a Vector.</summary>
@@ -4751,5 +4741,15 @@ inline auto VectorGetByIndex(V&& vector, size_t index) noexcept
     }
     else {
         return XMVectorAccessorHelper<std::decay_t<V>>::Get(vector, index);
+    }
+}
+
+template <class V, class M>
+inline auto operator*(const V &vector, const M &matrix)
+{
+    if constexpr (sizeof(V) < sizeof(M)) {
+        return TransformMapper<V,M>::Transform(vector, matrix);
+    } else {
+        return TransformMapper<M,V>::Transform(matrix, vector);
     }
 }
