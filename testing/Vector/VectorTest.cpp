@@ -161,11 +161,11 @@ TEST_F(VectorUnitTest, VectorGeometryFunctions)
                 // manually calculate the cross-product of two vectors
                 VectorType expect = [](auto &&v1, auto &&v2)
                 {
-                    if constexpr (IS_2D_VECTOR(VectorType))
+                    if constexpr (is2dVector<VectorType>)
                     {
                         return VectorType{ (v1.x * v2.y) - (v1.y * v2.x), (v1.x * v2.y) - (v1.y * v2.x) };
                     }
-                    else if (IS_3D_VECTOR(VectorType))
+                    else if (is3dVector<VectorType>)
                     {
                         return VectorType{ (v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.z), (v1.x * v2.y) - (v1.y * v2.x) };
                     }
