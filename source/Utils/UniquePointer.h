@@ -301,7 +301,7 @@ namespace std
     }
 
     template <class Type, template <class> class AllocationPolicy>
-    struct hash< UniquePointer<Type, AllocationPolicy> >
+    struct hash<UniquePointer<Type, AllocationPolicy>>
     {
         NODISCARD size_t operator()(const UniquePointer<Type, AllocationPolicy> &ptr) const noexcept
         {
