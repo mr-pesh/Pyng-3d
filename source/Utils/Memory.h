@@ -4,7 +4,8 @@
 # include <malloc.h>
 #else
 
-#include <alloca.h>
+#include <cassert>
+#include <cstdlib>
 
 #if defined (__GNUC__)
 # ifndef alloca
@@ -12,13 +13,13 @@
 # endif
 #endif
 
-#ifdef _M_AMD64
-# define ALLOCA_MARKER_SIZE 16
+#if defined(__x86_64__) || defined(__amd64__) || defined(__aarch64__) || defined(__ia64__) || defined(__powerpc64__)
+# define _ALLOCA_MARKER_SIZE 16
 #else
-# define ALLOCA_MARKER_SIZE 8
+# define _ALLOCA_MARKER_SIZE 8
 #endif
 
-#define ALLOCA_THRESHOLD 1024
+#define _ALLOCA_THRESHOLD 1024
 
 static constexpr unsigned int _ALLOCA_HEAP_MARKER = 0xDDDD;
 static constexpr unsigned int _ALLOCA_STACK_MARKER = 0xCCCC;
@@ -28,14 +29,14 @@ inline void* __markAlloca(void *ptr, unsigned int allocaMarker)
     if (ptr)
     {
         *reinterpret_cast<unsigned int*>(ptr) = allocaMarker;
-        ptr = reinterpret_cast<char*>(ptr) + ALLOCA_MARKER_SIZE;
+        ptr = reinterpret_cast<char*>(ptr) + _ALLOCA_MARKER_SIZE;
     }
     return ptr;
 }
 
 inline size_t __allocaComputeSize(size_t size)
 {
-    size_t markedSize = size + ALLOCA_MARKER_SIZE;
+    size_t markedSize = size + _ALLOCA_MARKER_SIZE;
     return markedSize > size ? markedSize : 0;
 }
 
@@ -51,7 +52,7 @@ inline size_t __allocaComputeSize(size_t size)
 
 #define _malloca(size)                                                                 \
     (__allocaComputeSize(size) != 0                                                    \
-        ? (((__allocaComputeSize(size) <= (ALLOCA_THRESHOLD + ALLOCA_MARKER_SIZE))     \
+        ? (((__allocaComputeSize(size) <= (_ALLOCA_THRESHOLD + _ALLOCA_MARKER_SIZE))   \
             ? __markAlloca(alloca(__allocaComputeSize(size)), _ALLOCA_STACK_MARKER)    \
             : __markAlloca(malloc(__allocaComputeSize(size)), _ALLOCA_HEAP_MARKER)))   \
         : reinterpret_cast<void*>(NULL))
@@ -62,7 +63,7 @@ inline void _freea(void *ptr)
 {
     if (ptr)
     {
-        ptr = reinterpret_cast<char*>(ptr) - ALLOCA_MARKER_SIZE;
+        ptr = reinterpret_cast<char*>(ptr) - _ALLOCA_MARKER_SIZE;
         unsigned int allocaMarker = *reinterpret_cast<unsigned int*>(ptr);
         if (allocaMarker == _ALLOCA_HEAP_MARKER)
         {
@@ -70,7 +71,7 @@ inline void _freea(void *ptr)
         }
         else
         {
-            assert((allocaMarker == _ALLOCA_STACK_MARKER) && "Corrupted pointer passed to "__FUNCTION__);
+            assert((allocaMarker == _ALLOCA_STACK_MARKER) && "Corrupted pointer passed to _freea()");
         }
     }
 }
