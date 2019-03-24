@@ -1,15 +1,7 @@
 #pragma once
 
 #include <Utils/Global.h>
-
-#ifdef _MSC_VER
-# pragma warning(suppress: 4005)
-# define alloca(size)  _malloca(size)
-#elif defined (__GNUC__)
-# ifndef alloca
-# define alloca(size) __builtin_alloca(size)
-# endif
-#endif
+#include <Utils/Memory.h>
 
 template <class T>
 struct HeapAllocationPolicy
@@ -43,23 +35,21 @@ struct StackAllocationPolicy
     template <class Type = T, class ...Args>
     FORCE_INLINE_STATIC Type *Create(Args&& ...args) noexcept (std::is_nothrow_constructible_v<T>)
     {
-        return new (alloca(sizeof(Type))) Type(args...);
+        return new (_malloca(sizeof(Type))) Type(args...);
     }
 
     template <class Type = std::remove_extent_t<T>>
     FORCE_INLINE_STATIC Type *Create(size_t size) noexcept (std::is_nothrow_constructible_v<T>)
     {
-        return new (alloca(sizeof(Type) * size)) Type[size];
+        return new (_malloca(sizeof(Type) * size)) Type[size];
     }
 
-    FORCE_INLINE_STATIC void Destroy(UNUSED T *ptr) noexcept
+    template <class Type = std::remove_extent_t<T>>
+    FORCE_INLINE_STATIC void Destroy(Type *ptr) noexcept
     {
-    #ifdef _MSC_VER
         _freea((void*)ptr);
-    #endif
     }
 };
-
 
 template <class T, template <class> class AllocationPolicy = HeapAllocationPolicy>
 class UniquePointer
