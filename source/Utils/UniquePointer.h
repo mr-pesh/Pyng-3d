@@ -6,7 +6,8 @@
 template <class T>
 struct HeapAllocationPolicy
 {
-    template <class Type = T, class ...Args>
+    template <class Type = T, class ...Args,
+        std::enable_if_t<!std::is_array_v<T>, int> = 0>
     FORCE_INLINE_STATIC Type *Create(Args&& ...args) noexcept (std::is_nothrow_constructible_v<Type>)
     {
         return new (std::nothrow) Type(std::forward<Args>(args)...);
@@ -32,13 +33,15 @@ struct HeapAllocationPolicy
 template <class T>
 struct StackAllocationPolicy
 {
-    template <class Type = T, class ...Args>
+    template <class Type = T, class ...Args,
+        std::enable_if_t<std::is_trivially_destructible_v<Type> && !std::is_array_v<T>, int> = 0>
     FORCE_INLINE_STATIC Type *Create(Args&& ...args) noexcept (std::is_nothrow_constructible_v<T>)
     {
         return new (_malloca(sizeof(Type))) Type(args...);
     }
 
-    template <class Type = std::remove_extent_t<T>>
+    template <class Type = std::remove_extent_t<T>,
+        std::enable_if_t<std::is_trivially_destructible_v<Type> && std::is_array_v<T>, int> = 0>
     FORCE_INLINE_STATIC Type *Create(size_t size) noexcept (std::is_nothrow_constructible_v<T>)
     {
         return new (_malloca(sizeof(Type) * size)) Type[size];
@@ -99,6 +102,11 @@ public:
     NODISCARD pointer get() const noexcept
     {
         return data_;
+    }
+
+    NODISCARD auto operator&() const noexcept
+    {
+        return &data_;
     }
 
     NODISCARD pointer operator->() const noexcept
