@@ -41,7 +41,7 @@ inline size_t __allocaComputeSize(size_t size)
 }
 
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 
 #define _malloca(size)                                                           \
     (__allocaComputeSize(size) != 0                                              \
