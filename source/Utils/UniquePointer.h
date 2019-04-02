@@ -104,8 +104,14 @@ public:
         return data_;
     }
 
-    NODISCARD auto operator&() const noexcept
+    NODISCARD const pointer *operator&() const noexcept
     {
+        return &data_;
+    }
+
+    NODISCARD auto operator&() noexcept
+    {
+        reset();
         return &data_;
     }
 
@@ -138,7 +144,7 @@ public:
 
         if (old != pointer())
         {
-            AllocationPolicy<T>::Destroy(data_);
+            AllocationPolicy<T>::Destroy(old);
         }
     }
 

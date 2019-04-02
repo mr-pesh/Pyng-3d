@@ -7,8 +7,8 @@ class UniquePointerUnitTest : public testing::Test {
 };
 
 class Foo {
-    PROPERTY(uint32_t, A);
-    PROPERTY(uint32_t, B);
+    PROPERTY(uint32_t, A)
+    PROPERTY(uint32_t, B)
 
 public:
     Foo() = default;
@@ -16,7 +16,7 @@ public:
 };
 
 template <class T>
-void printF(const T &ptr)
+void printF(T &&ptr)
 {
     for (auto&& p : ptr)
     {
