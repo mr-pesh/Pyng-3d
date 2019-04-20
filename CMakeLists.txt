@@ -10,6 +10,13 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 endif()
 
+# Enable some optimizations
+if(MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Qpar")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+endif()
+
 if(WIN32)
     # Check to select OpenGL backend for graphics acceleration
     option(USE_GL_MATH "Use OpenGL backend for hardware acceleration" OFF)
