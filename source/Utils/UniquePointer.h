@@ -106,13 +106,13 @@ public:
 
     NODISCARD const pointer *operator&() const noexcept
     {
-        return &data_;
+        return std::addressof(data_);
     }
 
     NODISCARD auto operator&() noexcept
     {
         reset();
-        return &data_;
+        return std::addressof(data_);
     }
 
     NODISCARD pointer operator->() const noexcept
