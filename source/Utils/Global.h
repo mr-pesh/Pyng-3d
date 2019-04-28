@@ -67,4 +67,4 @@ public:                                    \
 #  define PYNG_LIBRARY_IMPORT __LINK_LIBRARY_EXP(default)
 #endif
 
-#define UNUSED(v) (void)v;
+#define UNUSED_ARG(v) (void)v;
