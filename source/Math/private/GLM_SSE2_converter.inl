@@ -3,8 +3,8 @@ GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_load(const glm::vec<2, int32_t, Q> &vec) no
 {
     return _mm_cvtepi32_ps(_mm_castps_si128(
                                _mm_unpacklo_ps(
-                                   _mm_load_ss((const float*)(&vec.x)),
-                                   _mm_load_ss((const float*)(&vec.y))
+                                   _mm_load_ss(reinterpret_cast<const float*>(&vec.x)),
+                                   _mm_load_ss(reinterpret_cast<const float*>(&vec.y))
                                )));
 }
 
@@ -14,16 +14,16 @@ GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_load(const glm::vec<3, int32_t, Q> &vec) no
     return _mm_cvtepi32_ps(
                 _mm_castps_si128(
                     _mm_movelh_ps(
-                        _mm_unpacklo_ps(_mm_load_ss((const float*)(&vec.x)),
-                                        _mm_load_ss((const float*)(&vec.y))),
-                                        _mm_load_ss((const float*)(&vec.z)))
+                        _mm_unpacklo_ps(_mm_load_ss(reinterpret_cast<const float*>(&vec.x)),
+                                        _mm_load_ss(reinterpret_cast<const float*>(&vec.y))),
+                                        _mm_load_ss(reinterpret_cast<const float*>(&vec.z)))
                     ));
 }
 
 template <glm::qualifier Q>
 GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_load(const glm::vec<4, int32_t, Q> &vec) noexcept
 {
-    return _mm_cvtepi32_ps(_mm_loadu_si128((const glm_ivec4*)(&vec)));
+    return _mm_cvtepi32_ps(_mm_loadu_si128(reinterpret_cast<const glm_ivec4*>(&vec)));
 }
 
 template <glm::qualifier Q>
@@ -49,10 +49,14 @@ GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_load(const glm::vec<4, float_t, Q> &vec) no
 template <glm::qualifier Q>
 GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_load(const glm::vec<2, uint32_t, Q> &vec) noexcept
 {
-    glm_vec4 val = _mm_unpacklo_ps(_mm_load_ss((const float*)(&vec.x)), _mm_load_ss((const float*)(&vec.y)));
+    glm_vec4 val =
+            _mm_unpacklo_ps(
+                _mm_load_ss(reinterpret_cast<const float*>(&vec.x)),
+                _mm_load_ss(reinterpret_cast<const float*>(&vec.y)));
+
     glm_vec4 vMask = _mm_and_ps(val, SSE2_NEG_ZERO);
     glm_vec4 result = _mm_cvtepi32_ps(_mm_castps_si128(_mm_xor_ps(val, vMask)));
-    glm_ivec4 iMask = _mm_srai_epi32(_mm_castps_si128(vMask),31);
+    glm_ivec4 iMask = _mm_srai_epi32(_mm_castps_si128(vMask), 31);
 
     return _mm_add_ps(result, _mm_and_ps(_mm_castsi128_ps(iMask), SSE2_FIX_UINT));
 }
@@ -62,13 +66,13 @@ GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_load(const glm::vec<3, uint32_t, Q> &vec) n
 {
     glm_vec4 val =
             _mm_movelh_ps(
-                _mm_unpacklo_ps(_mm_load_ss((const float*)(&vec.x)),
-                                _mm_load_ss((const float*)(&vec.y))),
-                                _mm_load_ss((const float*)(&vec.z)));
+                _mm_unpacklo_ps(_mm_load_ss(reinterpret_cast<const float*>(&vec.x)),
+                                _mm_load_ss(reinterpret_cast<const float*>(&vec.y))),
+                                _mm_load_ss(reinterpret_cast<const float*>(&vec.z)));
 
     glm_vec4 vMask = _mm_and_ps(val, SSE2_NEG_ZERO);
     glm_vec4 result = _mm_xor_ps(val, vMask);
-    glm_ivec4 iMask = _mm_srai_epi32(_mm_castps_si128(vMask),31);
+    glm_ivec4 iMask = _mm_srai_epi32(_mm_castps_si128(vMask), 31);
 
     return _mm_add_ps(_mm_cvtepi32_ps(_mm_castps_si128(result)), _mm_and_ps(_mm_castsi128_ps(iMask), SSE2_FIX_UINT));
 }
@@ -76,7 +80,7 @@ GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_load(const glm::vec<3, uint32_t, Q> &vec) n
 template <glm::qualifier Q>
 GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_load(const glm::vec<4, uint32_t, Q> &vec) noexcept
 {
-    glm_ivec4 val = _mm_loadu_si128((const glm_ivec4*)(&vec));
+    glm_ivec4 val = _mm_loadu_si128(reinterpret_cast<const glm_ivec4*>(&vec));
     glm_vec4 vMask = _mm_and_ps(_mm_castsi128_ps(val), SSE2_NEG_ZERO);
     glm_vec4 result = _mm_xor_ps(_mm_castsi128_ps(val), vMask);
     glm_ivec4 iMask = _mm_srai_epi32(_mm_castps_si128(vMask), 31);
@@ -93,7 +97,7 @@ namespace glm
     }
 
     template <length_t L, typename T, qualifier Q>
-    GLM_FUNC_QUALIFIER glm_vec4 clampLength(const vec<L, T, Q> &v, float min, float max) noexcept
+    GLM_FUNC_QUALIFIER glm_vec4 clampLength(const vec<L, T, Q> &v, float_t min, float_t max) noexcept
     {
         return clampLength<L>(glm_vec4_load(v), min, max);
     }
