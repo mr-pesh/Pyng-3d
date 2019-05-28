@@ -7,7 +7,7 @@
 #elif __has_include(<execution>)
 #  include <execution>
 #  ifndef __cpp_lib_execution
-#    define __cpp_lib_execution
+#  define __cpp_lib_execution
 #  endif
 #endif
 
@@ -76,7 +76,7 @@ public:
         return result;
     }
 
-    template <typename Number, typename = typename std::enable_if_t< std::is_arithmetic<Number>::value >>
+    template <typename Number, typename std::enable_if_t<std::is_arithmetic_v<Number>, int> = 0>
     auto operator*(const Number scalar) const
     {
         using ResultType = Matrix_Base<decltype(Base::front() * scalar), rows, columns>;
@@ -109,7 +109,7 @@ public:
         return result;
     }
 
-    template <class Multiplier, class = typename std::enable_if_t< std::is_class<Multiplier>::value >>
+    template <class Multiplier, typename std::enable_if_t<std::is_class_v<Multiplier>, int> = 0>
     auto operator*(const Multiplier &other)
     {
         static_assert(Type::columns == Multiplier::rows, "Two matrices are not consistant for multiplying");
@@ -151,8 +151,8 @@ public:
         return result;
     }
 
-    template <typename Number, typename = typename std::enable_if_t< std::is_arithmetic<Number>::value >>
-    Type& operator*=(const Number scalar)
+    template <typename Number, typename std::enable_if_t<std::is_arithmetic_v<Number>, int> = 0>
+    Type& operator*=(const Number scalar) noexcept
     {
     #ifdef __CPP_AMP_ACCELERATION
         concurrency::array_view<Type::value_type, 1> source_v(*this);
@@ -175,7 +175,7 @@ public:
         return *this;
     }
 
-    Type& operator+=(const Type &other)
+    Type& operator+=(const Type &other) noexcept
     {
     #ifdef __CPP_AMP_ACCELERATION
         concurrency::array_view<Type::value_type, 1> add_v(

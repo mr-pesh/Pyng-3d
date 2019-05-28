@@ -6,53 +6,37 @@
 
 namespace std
 {
-    template <class V>
-    constexpr auto begin(const V &vector) noexcept
-    {
-        if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
-            return reinterpret_cast<const float*>(&vector);
-        }
-        else {
-            return reinterpret_cast<const decltype(vector.x)*>(&vector);
-        }
-    }
-
-    template <class V>
+    template <class V, typename std::enable_if_t<isVectorType<V>, int> = 0>
     constexpr auto begin(V &&vector) noexcept
     {
-        if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
-            return reinterpret_cast<float*>(&vector);
-        }
-        else {
-            return reinterpret_cast<decltype(vector.x)*>(&vector);
-        }
-    }
-
-    template <class V>
-    constexpr auto end(const V &vector) noexcept
-    {
-        if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
-            return reinterpret_cast<const float*>(&vector + 1);
-        }
-        else {
-            return reinterpret_cast<const decltype(vector.x)*>(&vector + 1);
+        if constexpr (std::is_same_v<std::decay_t<V>, __m128>) {
+            if constexpr (std::is_const_v<V>) {
+                return (const float*)(&vector);
+            } else {
+                return (float*)(&vector);
+            }
+        } else {
+            return (decltype(vector.x)*)(&vector);
         }
     }
 
-    template <class V>
+    template <class V, typename std::enable_if_t<isVectorType<V>, int> = 0>
     constexpr auto end(V &&vector) noexcept
     {
-        if constexpr (std::is_same_v<std::remove_reference_t<V>, XMVECTOR>) {
-            return reinterpret_cast<float*>(&vector + 1);
-        }
-        else {
-            return reinterpret_cast<decltype(vector.x)*>(&vector + 1);
+        if constexpr (std::is_same_v<std::decay_t<V>, __m128>) {
+            if constexpr (std::is_const_v<V>) {
+                return (const float*)(&vector + 1);
+            } else {
+                return (float*)(&vector + 1);
+            }
+        } else {
+            return (decltype(vector.x)*)(&vector + 1);
         }
     }
 }
 
 template <typename T, int length>
-using Vector = XMVectorAdapterT<T, length>;
+using Vector = XMVectorAdapterT<T,length>;
 
 #else
 
@@ -65,13 +49,13 @@ using Vector = glm::vec<length, T, precision>;
 
 // GLSL-compatible vector typedefs
 
-typedef Vector<int, 2> ivec2;
-typedef Vector<int, 3> ivec3;
-typedef Vector<int, 4> ivec4;
+typedef Vector<int32_t, 2> ivec2;
+typedef Vector<int32_t, 3> ivec3;
+typedef Vector<int32_t, 4> ivec4;
 
-typedef Vector<float, 2> fvec2;
-typedef Vector<float, 3> fvec3;
-typedef Vector<float, 4> fvec4;
+typedef Vector<float_t, 2> fvec2;
+typedef Vector<float_t, 3> fvec3;
+typedef Vector<float_t, 4> fvec4;
 
 typedef Vector<uint32_t, 2> uvec2;
 typedef Vector<uint32_t, 3> uvec3;
@@ -110,9 +94,9 @@ using Vector4 = Vector<T, 4>;
 
 typedef int32_t int1;
 
-typedef Vector2<int> int2;
-typedef Vector3<int> int3;
-typedef Vector4<int> int4;
+typedef Vector2<int32_t> int2;
+typedef Vector3<int32_t> int3;
+typedef Vector4<int32_t> int4;
 
 typedef uint32_t uint1;
 

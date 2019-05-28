@@ -43,7 +43,7 @@ TEST_F(VectorUnitTest, TransformTest)
         Vector<uint32_t,3>{ 15417u, 5251u, 33119u }
     };
 
-    for (unsigned i = 0; i < std::size(vectors); ++i)
+    for (uint32_t i = 0; i < std::size(vectors); ++i)
     {
         std::visit([](auto &&vector, auto &&matrix, auto &&expect)
         {

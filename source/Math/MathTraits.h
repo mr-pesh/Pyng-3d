@@ -39,56 +39,56 @@ namespace
 {
 #ifdef __DX_MATH_LIBRARY
 
-    using sint2_t = DirectX::XMINT2;
-    using sint3_t = DirectX::XMINT3;
-    using sint4_t = DirectX::XMINT4;
+    using int2_t = ::DirectX::XMINT2;
+    using int3_t = ::DirectX::XMINT3;
+    using int4_t = ::DirectX::XMINT4;
 
-    using uint2_t = DirectX::XMUINT2;
-    using uint3_t = DirectX::XMUINT3;
-    using uint4_t = DirectX::XMUINT4;
+    using uint2_t = ::DirectX::XMUINT2;
+    using uint3_t = ::DirectX::XMUINT3;
+    using uint4_t = ::DirectX::XMUINT4;
 
-    using float2_t = DirectX::XMFLOAT2;
-    using float3_t = DirectX::XMFLOAT3;
-    using float4_t = DirectX::XMFLOAT4;
+    using float2_t = ::DirectX::XMFLOAT2;
+    using float3_t = ::DirectX::XMFLOAT3;
+    using float4_t = ::DirectX::XMFLOAT4;
 
 #else
 
-    using sint2_t = glm::ivec2;
-    using sint3_t = glm::ivec3;
-    using sint4_t = glm::ivec4;
+    using int2_t = ::glm::ivec2;
+    using int3_t = ::glm::ivec3;
+    using int4_t = ::glm::ivec4;
 
-    using uint2_t = glm::uvec2;
-    using uint3_t = glm::uvec3;
-    using uint4_t = glm::uvec4;
+    using uint2_t = ::glm::uvec2;
+    using uint3_t = ::glm::uvec3;
+    using uint4_t = ::glm::uvec4;
 
-    using float2_t = glm::vec2;
-    using float3_t = glm::vec3;
-    using float4_t = glm::vec4;
+    using float2_t = ::glm::vec2;
+    using float3_t = ::glm::vec3;
+    using float4_t = ::glm::vec4;
 
 #endif
 
     template <typename T>
     struct _Is_2d_Vector
     {
-        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, sint2_t, uint2_t, float2_t>;
+        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, int2_t, uint2_t, float2_t>;
     };
 
     template <typename T>
     struct _Is_3d_Vector
     {
-        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, sint3_t, uint3_t, float3_t>;
+        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, int3_t, uint3_t, float3_t>;
     };
 
     template <typename T>
     struct _Is_4d_Vector
     {
-        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, sint4_t, uint4_t, float4_t>;
+        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, int4_t, uint4_t, float4_t>;
     };
 
     template <typename T>
     struct _Is_Vector_Type
     {
-        static constexpr bool value = std::disjunction_v<_Is_2d_Vector<T>, _Is_3d_Vector<T>, _Is_4d_Vector<T>, std::is_same<T, __m128>>;
+        static constexpr bool value = std::disjunction_v<_Is_2d_Vector<T>, _Is_3d_Vector<T>, _Is_4d_Vector<T>, std::is_same<std::decay_t<T>, __m128>>;
     };
 }
 
@@ -124,62 +124,62 @@ namespace
 {
 #ifdef __DX_MATH_LIBRARY
 
-    using sint3x3_t = DirectX::XMFLOAT3X3;
-    using sint3x4_t = DirectX::XMFLOAT3X4;
-    using sint4x3_t = DirectX::XMFLOAT4X3;
-    using sint4x4_t = DirectX::XMFLOAT4X4;
+    using int3x3_t = ::DirectX::XMFLOAT3X3;
+    using int3x4_t = ::DirectX::XMFLOAT3X4;
+    using int4x3_t = ::DirectX::XMFLOAT4X3;
+    using int4x4_t = ::DirectX::XMFLOAT4X4;
 
-    using uint3x3_t = DirectX::XMFLOAT3X3;
-    using uint3x4_t = DirectX::XMFLOAT3X4;
-    using uint4x3_t = DirectX::XMFLOAT4X3;
-    using uint4x4_t = DirectX::XMFLOAT4X4;
+    using uint3x3_t = ::DirectX::XMFLOAT3X3;
+    using uint3x4_t = ::DirectX::XMFLOAT3X4;
+    using uint4x3_t = ::DirectX::XMFLOAT4X3;
+    using uint4x4_t = ::DirectX::XMFLOAT4X4;
 
-    using float3x3_t = DirectX::XMFLOAT3X3;
-    using float3x4_t = DirectX::XMFLOAT3X4;
-    using float4x3_t = DirectX::XMFLOAT4X3;
-    using float4x4_t = DirectX::XMFLOAT4X4;
+    using float3x3_t = ::DirectX::XMFLOAT3X3;
+    using float3x4_t = ::DirectX::XMFLOAT3X4;
+    using float4x3_t = ::DirectX::XMFLOAT4X3;
+    using float4x4_t = ::DirectX::XMFLOAT4X4;
 
 #else
 
-    using sint3x3_t = glm::mat<3, 3, glm::i32, glm::defaultp>;
-    using sint3x4_t = glm::mat<3, 4, glm::i32, glm::defaultp>;
-    using sint4x3_t = glm::mat<4, 3, glm::i32, glm::defaultp>;
-    using sint4x4_t = glm::mat<4, 4, glm::i32, glm::defaultp>;
+    using int3x3_t = ::glm::mat<3, 3, glm::i32, glm::defaultp>;
+    using int3x4_t = ::glm::mat<3, 4, glm::i32, glm::defaultp>;
+    using int4x3_t = ::glm::mat<4, 3, glm::i32, glm::defaultp>;
+    using int4x4_t = ::glm::mat<4, 4, glm::i32, glm::defaultp>;
 
-    using uint3x3_t = glm::mat<3, 3, glm::u32, glm::defaultp>;
-    using uint3x4_t = glm::mat<3, 4, glm::u32, glm::defaultp>;
-    using uint4x3_t = glm::mat<4, 3, glm::u32, glm::defaultp>;
-    using uint4x4_t = glm::mat<4, 4, glm::u32, glm::defaultp>;
+    using uint3x3_t = ::glm::mat<3, 3, glm::u32, glm::defaultp>;
+    using uint3x4_t = ::glm::mat<3, 4, glm::u32, glm::defaultp>;
+    using uint4x3_t = ::glm::mat<4, 3, glm::u32, glm::defaultp>;
+    using uint4x4_t = ::glm::mat<4, 4, glm::u32, glm::defaultp>;
 
-    using float3x3_t = glm::mat<3, 3, glm::f32, glm::defaultp>;
-    using float3x4_t = glm::mat<3, 4, glm::f32, glm::defaultp>;
-    using float4x3_t = glm::mat<4, 3, glm::f32, glm::defaultp>;
-    using float4x4_t = glm::mat<4, 4, glm::f32, glm::defaultp>;
+    using float3x3_t = ::glm::mat<3, 3, glm::f32, glm::defaultp>;
+    using float3x4_t = ::glm::mat<3, 4, glm::f32, glm::defaultp>;
+    using float4x3_t = ::glm::mat<4, 3, glm::f32, glm::defaultp>;
+    using float4x4_t = ::glm::mat<4, 4, glm::f32, glm::defaultp>;
 
 #endif
 
     template <typename T>
     struct _Is_3x3_Matrix
     {
-        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, sint3x3_t, uint3x3_t, float3x3_t>;
+        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, int3x3_t, uint3x3_t, float3x3_t>;
     };
 
     template <typename T>
     struct _Is_3x4_Matrix
     {
-        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, sint3x4_t, uint3x4_t, float3x4_t>;
+        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, int3x4_t, uint3x4_t, float3x4_t>;
     };
 
     template <typename T>
     struct _Is_4x3_Matrix
     {
-        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, sint4x3_t, uint4x3_t, float4x3_t>;
+        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, int4x3_t, uint4x3_t, float4x3_t>;
     };
 
     template <typename T>
     struct _Is_4x4_Matrix
     {
-        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, sint4x4_t, uint4x4_t, float4x4_t>;
+        static constexpr bool value = std::_Is_any_of_v<std::decay_t<T>, int4x4_t, uint4x4_t, float4x4_t>;
     };
 
     template <typename T>
@@ -187,7 +187,7 @@ namespace
     {
         static constexpr bool value = std::disjunction_v<_Is_3x3_Matrix<T>, _Is_3x4_Matrix<T>, _Is_4x3_Matrix<T>, _Is_4x4_Matrix<T>>
     #ifdef __DX_MATH_LIBRARY
-        || std::is_same_v<T, XMMATRIX>
+        || std::is_same_v<std::decay_t<T>, XMMATRIX>
     #endif
         ;
     };

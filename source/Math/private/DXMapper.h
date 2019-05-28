@@ -1,6 +1,5 @@
 #pragma once
 
-#include <DirectXMath.h>
 #include <Math/MathTraits.h>
 
 #define MATCH_TYPE(CompType, Result, Type)                                                    \
@@ -23,6 +22,8 @@
     constexpr bool Result3 = std::is_same_v<BaseType, ##Type3>;                                              \
                                                                                                              \
     static_assert(std::_Is_any_of_v<BaseType, Type1, Type2, Type3>, "No matching overload for " __FUNCTION__ )
+
+#include <DirectXMath.h>
 
 namespace
 {
@@ -4223,8 +4224,8 @@ namespace
             assert((i >= 0 && i <= 1) && "Index for XMINT2 should be in range [0..1]");
 
             switch (i) {
-            case 0: return v.x;
-            case 1: return v.y;
+            case 0: return GetX(v);
+            case 1: return GetY(v);
             default:
                 __assume(0);
             }
@@ -4249,9 +4250,9 @@ namespace
             assert((i >= 0 && i <= 2) && "Index for XMINT3 should be in range [0..2]");
 
             switch (i) {
-            case 0: return v.x;
-            case 1: return v.y;
-            case 2: return v.z;
+            case 0: return GetX(v);
+            case 1: return GetY(v);
+            case 2: return GetZ(v);
             default:
                 __assume(0);
             }
@@ -4281,10 +4282,10 @@ namespace
             assert((i >= 0 && i <= 3) && "Index for XMINT4 should be in range [0..3]");
 
             switch (i) {
-            case 0: return v.x;
-            case 1: return v.y;
-            case 2: return v.z;
-            case 3: return v.w;
+            case 0: return GetX(v);
+            case 1: return GetY(v);
+            case 2: return GetZ(v);
+            case 3: return GetW(v);
             default:
                 __assume(0);
             }
@@ -4319,8 +4320,8 @@ namespace
             assert((i >= 0 && i <= 1) && "Index for XMFLOAT2 should be in range [0..1]");
 
             switch (i) {
-            case 0: return v.x;
-            case 1: return v.y;
+            case 0: return GetX(v);
+            case 1: return GetY(v);
             default:
                 __assume(0);
             }
@@ -4345,9 +4346,9 @@ namespace
             assert((i >= 0 && i <= 2) && "Index for XMFLOAT3 should be in range [0..2]");
 
             switch (i) {
-            case 0: return v.x;
-            case 1: return v.y;
-            case 2: return v.z;
+            case 0: return GetX(v);
+            case 1: return GetY(v);
+            case 2: return GetZ(v);
             default:
                 __assume(0);
             }
@@ -4377,10 +4378,10 @@ namespace
             assert((i >= 0 && i <= 3) && "Index for XMFLOAT4 should be in range [0..3]");
 
             switch (i) {
-            case 0: return v.x;
-            case 1: return v.y;
-            case 2: return v.z;
-            case 3: return v.w;
+            case 0: return GetX(v);
+            case 1: return GetY(v);
+            case 2: return GetZ(v);
+            case 3: return GetW(v);
             default:
                 __assume(0);
             }
@@ -4391,7 +4392,6 @@ namespace
             return v.x;
         }
 
-        template <class>
         static __forceinline float_t GetY(const XMFLOAT4 &v) noexcept
         {
             return v.y;
@@ -4416,8 +4416,8 @@ namespace
             assert((i >= 0 && i <= 1) && "Index for XMUINT2 should be in range [0..1]");
 
             switch (i) {
-            case 0: return v.x;
-            case 1: return v.y;
+            case 0: return GetX(v);
+            case 1: return GetY(v);
             default:
                 __assume(0);
             }
@@ -4442,9 +4442,9 @@ namespace
             assert((i >= 0 && i <= 2) && "Index for XMUINT3 should be in range [0..2]");
 
             switch (i) {
-            case 0: return v.x;
-            case 1: return v.y;
-            case 2: return v.z;
+            case 0: return GetX(v);
+            case 1: return GetY(v);
+            case 2: return GetZ(v);
             default:
                 __assume(0);
             }
@@ -4474,10 +4474,10 @@ namespace
             assert((i >= 0 && i <= 3) && "Index for XMUINT4 should be in range [0..3]");
 
             switch (i) {
-            case 0: return v.x;
-            case 1: return v.y;
-            case 2: return v.z;
-            case 3: return v.w;
+            case 0: return GetX(v);
+            case 1: return GetY(v);
+            case 2: return GetZ(v);
+            case 3: return GetW(v);
             default:
                 __assume(0);
             }

@@ -80,20 +80,20 @@ using Matrix4x4 = Matrix<T, 4, 4>;
 
 // Common HLSL-compatible matrix typedefs
 
-typedef Matrix3x3<int> int3x3;
-typedef Matrix3x4<int> int3x4;
-typedef Matrix4x3<int> int4x3;
-typedef Matrix4x4<int> int4x4;
+typedef Matrix3x3<int32_t> int3x3;
+typedef Matrix3x4<int32_t> int3x4;
+typedef Matrix4x3<int32_t> int4x3;
+typedef Matrix4x4<int32_t> int4x4;
 
-typedef Matrix3x3<uint> uint3x3;
-typedef Matrix3x4<uint> uint3x4;
-typedef Matrix4x3<uint> uint4x3;
-typedef Matrix4x4<uint> uint4x4;
+typedef Matrix3x3<float_t> float3x3;
+typedef Matrix3x4<float_t> float3x4;
+typedef Matrix4x3<float_t> float4x3;
+typedef Matrix4x4<float_t> float4x4;
 
-typedef Matrix3x3<float> float3x3;
-typedef Matrix3x4<float> float3x4;
-typedef Matrix4x3<float> float4x3;
-typedef Matrix4x4<float> float4x4;
+typedef Matrix3x3<uint32_t> uint3x3;
+typedef Matrix3x4<uint32_t> uint3x4;
+typedef Matrix4x3<uint32_t> uint4x3;
+typedef Matrix4x4<uint32_t> uint4x4;
 
 #elif defined(__CPP_AMP_ACCELERATION)
 
