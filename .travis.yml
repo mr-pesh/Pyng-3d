@@ -1,0 +1,16 @@
+language: cpp
+
+compiler: clang
+
+os:
+- windows
+- osx
+
+osx_image: xcode10.1
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake .. -DINSTALL_GTEST=OFF
+
+script: cmake --build . && ctest .
