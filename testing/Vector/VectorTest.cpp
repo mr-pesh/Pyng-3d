@@ -48,8 +48,35 @@ TEST_F(VectorUnitTest, TransformTest)
         std::visit([](auto &&vector, auto &&matrix, auto &&expect)
         {
             const auto result = vector * matrix;
+            const auto rotated = Rotate(vector, vec4{0.f, 0.f, 0.f, 1.f});
+            const auto rotated2 = Rotate(vector, IdentityQuaternion());
+            const auto rotated3 = InverseRotate(vector, vec4{ 0.f, 0.f, 0.f, 1.f });
+            const auto rotated4 = InverseRotate(vector, IdentityQuaternion());
 
             ASSERT_TRUE(std::equal(std::begin(expect), std::end(expect), std::begin(result)));
+
+            if constexpr (std::is_same_v<decltype(VectorGetX(vector)), float>) {
+                // A case when vector stream is a strongly typed array
+                {
+                    vec3 inputStream[13] = {};
+                    vec4 outputStream[13] = {};
+
+                    std::fill(std::begin(inputStream), std::end(inputStream), vector);
+                    TransformStream(outputStream, inputStream, 13, XMLoadFloat3x3(&matrix));
+
+                    ASSERT_TRUE(std::all_of(std::begin(outputStream), std::end(outputStream), [&](auto &&vec) { return vec == result; }));
+                }
+                // A case when vectors represented by a binary stream
+                {
+                    uint8_t inputStream[sizeof(vec3) * 16] = {};
+                    uint8_t outputStream[sizeof(vec4) * 16] = {};
+
+                    std::fill((vec3*)(std::begin(inputStream)), (vec3*)(std::end(inputStream)), vector);
+                    TransformStream(outputStream, sizeof(vec4), inputStream, sizeof(vec3), 16, XMLoadFloat3x3(&matrix));
+
+                    ASSERT_TRUE(std::all_of((vec4*)outputStream, (vec4*)(std::end(outputStream)), [&](auto &&vec) { return vec == result; }));
+                }
+            }
         },
         vectors[i], matrices[i], expected[i]);
     };

@@ -154,6 +154,12 @@ namespace
         }
 
         template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaternion is not supported");
+        }
+
+        template <class V>
         static __forceinline bool Equal(const Type &vec1, V &&vec2) noexcept
         {
             MATCH_TYPE_2(V, isSameType, Type, isXMVector, XMVECTOR);
@@ -323,37 +329,53 @@ namespace
             }
         }
 
-        template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
         {
-            return XMVector2Transform(XMLoadSInt2(&vec), mat);
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaternion is not supported");
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector2Transform(XMLoadSInt2(&vec), std::forward<M>(mat));
+            }
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadSInt2(&vec), XMLoadFloat4x4(&mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const Type *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            static_assert(std::false_type::value, "Transformation of XMINT2 stream is not supported");
         }
 
         template <class V>
@@ -455,6 +477,19 @@ namespace
             }
             else if (isXMVector) {
                 return XMVector3InBounds(XMLoadSInt3(&vec1), std::forward<V>(vec2));
+            }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3InverseRotate(XMLoadSInt3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3InverseRotate(XMLoadSInt3(&vec), std::forward<V>(quat));
             }
         }
 
@@ -629,36 +664,59 @@ namespace
         }
 
         template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
         {
-            return XMVector3Transform(XMLoadSInt3(&vec), mat);
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector3Transform(XMLoadSInt3(&vec), std::forward<M>(mat));
+            }
         }
 
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
+        {
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3Rotate(XMLoadSInt3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3Rotate(XMLoadSInt3(&vec), std::forward<V>(quat));
+            }
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadSInt3(&vec), XMLoadFloat4x4(&mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const Type *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            static_assert(std::false_type::value, "Transformation of XMINT3 stream is not supported");
         }
 
         template <class V>
@@ -761,6 +819,12 @@ namespace
             else if (isXMVector) {
                 return XMVector4InBounds(XMLoadSInt4(&vec1), std::forward<V>(vec2));
             }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
         }
 
         template <class V>
@@ -933,25 +997,41 @@ namespace
             }
         }
 
-        template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
         {
-            return XMVector4Transform(XMLoadSInt4(&vec), mat);
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector4Transform(XMLoadSInt4(&vec), std::forward<M>(mat));
+            }
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadSInt4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadSInt4(&vec), XMLoadFloat4x4(&mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const Type *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            static_assert(std::false_type::value, "Transformation of XMINT4 stream is not supported");
         }
 
         template <class V>
@@ -1054,6 +1134,12 @@ namespace
             else if (isXMVector) {
                 return XMVector2InBounds(XMLoadFloat2(&vec1), std::forward<V>(vec2));
             }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaternion is not supported");
         }
 
         template <class V>
@@ -1226,35 +1312,55 @@ namespace
             }
         }
 
-        template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
         {
-            return XMVector2Transform(XMLoadFloat2(&vec), mat);
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaternion is not supported");
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector2Transform(XMLoadFloat2(&vec), std::forward<M>(mat));
+            }
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const Type *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return reinterpret_cast<V*>(XMVector2TransformStream((XMFLOAT4*)out, ostride, in, instride, count, std::forward<M>(mat)));
+            }
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadFloat2(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1358,6 +1464,19 @@ namespace
             }
             else if (isXMVector) {
                 return XMVector3InBounds(XMLoadFloat3(&vec1), std::forward<V>(vec2));
+            }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3InverseRotate(XMLoadFloat3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3InverseRotate(XMLoadFloat3(&vec), std::forward<V>(quat));
             }
         }
 
@@ -1531,35 +1650,62 @@ namespace
             }
         }
 
-        template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
         {
-            return XMVector3Transform(XMLoadFloat3(&vec), mat);
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3Rotate(XMLoadFloat3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3Rotate(XMLoadFloat3(&vec), std::forward<V>(quat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector3Transform(XMLoadFloat3(&vec), std::forward<M>(mat));
+            }
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const Type *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return reinterpret_cast<V*>(XMVector3TransformStream((XMFLOAT4*)out, ostride, in, instride, count, std::forward<M>(mat)));
+            }
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadFloat3(&vec), XMLoadFloat4x4(&mat));
         }
@@ -1664,6 +1810,12 @@ namespace
             else if (isXMVector) {
                 return XMVector4InBounds(XMLoadFloat4(&vec1), std::forward<V>(vec2));
             }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
         }
 
         template <class V>
@@ -1836,25 +1988,45 @@ namespace
             }
         }
 
-        template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
         {
-            return XMVector4Transform(XMLoadFloat4(&vec), mat);
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector4Transform(XMLoadFloat4(&vec), std::forward<M>(mat));
+            }
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadFloat4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadFloat4(&vec), XMLoadFloat4x4(&mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const Type *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return reinterpret_cast<V*>(XMVector4TransformStream((XMFLOAT4*)out, ostride, in, instride, count, std::forward<M>(mat)));
+            }
         }
 
         template <class V>
@@ -1957,6 +2129,12 @@ namespace
             else if (isXMVector) {
                 return XMVector2InBounds(XMLoadUInt2(&vec1), std::forward<V>(vec2));
             }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaternion is not supported");
         }
 
         template <class V>
@@ -2129,37 +2307,53 @@ namespace
             }
         }
 
-        template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
         {
-            return XMVector2Transform(XMLoadUInt2(&vec), mat);
+            static_assert(std::false_type::value, "Rotation of 2D vectors with quaterion is not supported");
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector2Transform(XMLoadUInt2(&vec), std::forward<M>(mat));
+            }
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector2Transform(XMLoadUInt2(&vec), XMLoadFloat4x4(&mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const Type *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            static_assert(std::false_type::value, "Transformation of XMUINT2 stream is not supported");
         }
 
         template <class V>
@@ -2261,6 +2455,19 @@ namespace
             }
             else if (isXMVector) {
                 return XMVector3InBounds(XMLoadUInt3(&vec1), std::forward<V>(vec2));
+            }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3InverseRotate(XMLoadUInt3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3InverseRotate(XMLoadUInt3(&vec), std::forward<V>(quat));
             }
         }
 
@@ -2434,37 +2641,60 @@ namespace
             }
         }
 
-        template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
         {
-            return XMVector3Transform(XMLoadUInt3(&vec), mat);
+            MATCH_TYPE_2(V, isXMFloat4, XMFLOAT4, isXMVector, XMVECTOR);
+
+            if constexpr (isXMFloat4) {
+                return XMVector3Rotate(XMLoadUInt3(&vec), XMLoadFloat4(&quat));
+            }
+            else if (isXMVector) {
+                return XMVector3Rotate(XMLoadUInt3(&vec), std::forward<V>(quat));
+            }
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector3Transform(XMLoadUInt3(&vec), std::forward<M>(mat));
+            }
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X3>(const Type &vec, const XMFLOAT3X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat3x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X3>(const Type &vec, const XMFLOAT4X3 &mat) noexcept
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat4x3(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector3Transform(XMLoadUInt3(&vec), XMLoadFloat4x4(&mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const Type *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            static_assert(std::false_type::value, "Transformation of XMUINT3 stream is not supported");
         }
 
         template <class V>
@@ -2567,6 +2797,12 @@ namespace
             else if (isXMVector) {
                 return XMVector4InBounds(XMLoadUInt4(&vec1), std::forward<V>(vec2));
             }
+        }
+
+        template <class V>
+        static __forceinline XMVECTOR InverseRotate(const Type &vec, V &&quat) noexcept
+        {
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
         }
 
         template <class V>
@@ -2739,25 +2975,41 @@ namespace
             }
         }
 
-        template <class M>
-        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat);
-
-        template <>
-        static __forceinline XMVECTOR Transform<XMMATRIX>(const Type &vec, const XMMATRIX &mat)
+        template <class V>
+        static __forceinline XMVECTOR Rotate(const Type &vec, V &&quat) noexcept
         {
-            return XMVector4Transform(XMLoadUInt4(&vec), mat);
+            static_assert(std::false_type::value, "Rotation of 4D vectors with quaternion is not supported");
         }
 
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, M &&mat) noexcept
+        {
+            MATCH_TYPE(M, isXMMatrix, XMMATRIX);
+
+            if constexpr (isXMMatrix) {
+                return XMVector4Transform(XMLoadUInt4(&vec), std::forward<M>(mat));
+            }
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const Type &vec, const M &mat) noexcept;
+
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT3X4>(const Type &vec, const XMFLOAT3X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadUInt4(&vec), XMLoadFloat3x4(&mat));
         }
 
         template <>
-        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat)
+        static __forceinline XMVECTOR Transform<XMFLOAT4X4>(const Type &vec, const XMFLOAT4X4 &mat) noexcept
         {
             return XMVector4Transform(XMLoadUInt4(&vec), XMLoadFloat4x4(&mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const Type *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            static_assert(std::false_type::value, "Transformation of XMUINT4 stream is not supported");
         }
 
         template <class V>
@@ -2782,107 +3034,288 @@ namespace
 {
     using namespace DirectX;
 
-    template <class Vector, class Matrix>
-    struct TransformMapper;
+    template <class Vector>
+    struct XMVectorTransformationHelper;
 
-    template <class Matrix>
-    struct TransformMapper<XMINT2, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMINT2>
     {
-        static XMINT2 Transform(const XMINT2 &v, const Matrix &m)
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMINT2 &v, Q &&quat) noexcept
         {
-            XMINT2 result;
-            XMStoreSInt2(&result, XMVectorAdapter<int32_t, 2>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<int32_t,2>::InverseRotate(v, std::forward<Q>(quat));
+        }
+
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMINT2 &v, Q &&quat) noexcept
+        {
+            return XMVectorAdapter<int32_t,2>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMINT2 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<int32_t,2>::Transform(v, std::forward<M>(mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const XMINT2 *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            return XMVectorAdapter<int32_t,2>::TransformStream(out, ostride, in, instride, count, std::forward<M>(mat));
         }
     };
 
-    template <class Matrix>
-    struct TransformMapper<XMINT3, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMINT3>
     {
-        static XMINT3 Transform(const XMINT3 &v, const Matrix &m)
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMINT3 &v, Q &&quat) noexcept
         {
-            XMINT3 result;
-            XMStoreSInt3(&result, XMVectorAdapter<int32_t, 3>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<int32_t,3>::InverseRotate(v, std::forward<Q>(quat));
+        }
+
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMINT3 &v, Q &&quat) noexcept
+        {
+            return XMVectorAdapter<int32_t,3>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMINT3 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<int32_t,3>::Transform(v, std::forward<M>(mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const XMINT3 *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            return XMVectorAdapter<int32_t,3>::TransformStream(out, ostride, in, instride, count, std::forward<M>(mat));
         }
     };
 
-    template <class Matrix>
-    struct TransformMapper<XMINT4, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMINT4>
     {
-        static XMINT4 Transform(const XMINT4 &v, const Matrix &m)
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMINT4 &v, Q &&quat) noexcept
         {
-            XMINT4 result;
-            XMStoreSInt4(&result, XMVectorAdapter<int32_t, 4>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<int32_t,4>::InverseRotate(v, std::forward<Q>(quat));
+        }
+
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMINT4 &v, Q &&quat) noexcept
+        {
+            return XMVectorAdapter<int32_t,4>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMINT4 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<int32_t,4>::Transform(v, std::forward<M>(mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const XMINT4 *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            return XMVectorAdapter<int32_t,4>::TransformStream(out, ostride, in, instride, count, std::forward<M>(mat));
         }
     };
 
-    template <class Matrix>
-    struct TransformMapper<XMFLOAT2, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMFLOAT2>
     {
-        static XMFLOAT2 Transform(const XMFLOAT2 &v, const Matrix &m)
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMFLOAT2 &v, Q &&quat) noexcept
         {
-            XMFLOAT2 result;
-            XMStoreFloat2(&result, XMVectorAdapter<float_t, 2>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<float_t,2>::InverseRotate(v, std::forward<Q>(quat));
+        }
+
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMFLOAT2 &v, Q &&quat) noexcept
+        {
+            return XMVectorAdapter<float_t,2>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMFLOAT2 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<float_t,2>::Transform(v, std::forward<M>(mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const XMFLOAT2 *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            return XMVectorAdapter<float_t,2>::TransformStream(out, ostride, in, instride, count, std::forward<M>(mat));
         }
     };
 
-    template <class Matrix>
-    struct TransformMapper<XMFLOAT3, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMFLOAT3>
     {
-        static XMFLOAT3 Transform(const XMFLOAT3 &v, const Matrix &m)
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMFLOAT3 &v, Q &&quat) noexcept
         {
-            XMFLOAT3 result;
-            XMStoreFloat3(&result, XMVectorAdapter<float_t, 3>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<float_t,3>::InverseRotate(v, std::forward<Q>(quat));
+        }
+
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMFLOAT3 &v, Q &&quat) noexcept
+        {
+            return XMVectorAdapter<float_t,3>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMFLOAT3 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<float_t,3>::Transform(v, std::forward<M>(mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const XMFLOAT3 *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            return XMVectorAdapter<float_t,3>::TransformStream(out, ostride, in, instride, count, std::forward<M>(mat));
         }
     };
 
-    template <class Matrix>
-    struct TransformMapper<XMFLOAT4, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMFLOAT4>
     {
-        static XMFLOAT4 Transform(const XMFLOAT4 &v, const Matrix &m)
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMFLOAT4 &v, Q &&quat) noexcept
         {
-            XMFLOAT4 result;
-            XMStoreFloat4(&result, XMVectorAdapter<float_t, 4>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<float_t,4>::InverseRotate(v, std::forward<Q>(quat));
+        }
+
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMFLOAT4 &v, Q &&quat) noexcept
+        {
+            return XMVectorAdapter<float_t,4>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMFLOAT4 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<float_t,4>::Transform(v, std::forward<M>(mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const XMFLOAT4 *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            return XMVectorAdapter<float_t,4>::TransformStream(out, ostride, in, instride, count, std::forward<M>(mat));
         }
     };
 
-    template <class Matrix>
-    struct TransformMapper<XMUINT2, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMUINT2>
     {
-        static XMUINT2 Transform(const XMUINT2 &v, const Matrix &m)
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMUINT2 &v, Q &&quat) noexcept
         {
-            XMUINT2 result;
-            XMStoreUInt2(&result, XMVectorAdapter<uint32_t, 2>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<uint32_t,2>::InverseRotate(v, std::forward<Q>(quat));
+        }
+
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMUINT2 &v, Q &&quat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,2>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMUINT2 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,2>::Transform(v, std::forward<M>(mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const XMUINT2 *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,2>::TransformStream(out, ostride, in, instride, count, std::forward<M>(mat));
         }
     };
 
-    template <class Matrix>
-    struct TransformMapper<XMUINT3, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMUINT3>
     {
-        static XMUINT3 Transform(const XMUINT3 &v, const Matrix &m)
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMUINT3 &v, Q &&quat) noexcept
         {
-            XMUINT3 result;
-            XMStoreUInt3(&result, XMVectorAdapter<uint32_t, 3>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<uint32_t,3>::InverseRotate(v, std::forward<Q>(quat));
+        }
+
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMUINT3 &v, Q &&quat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,3>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMUINT3 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,3>::Transform(v, std::forward<M>(mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const XMUINT3 *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,3>::TransformStream(out, ostride, in, instride, count, std::forward<M>(mat));
         }
     };
 
-    template <class Matrix>
-    struct TransformMapper<XMUINT4, Matrix>
+    template <>
+    struct XMVectorTransformationHelper<XMUINT4>
     {
-        static XMUINT4 Transform(const XMUINT4 &v, const Matrix &m)
+        template <class Q>
+        static __forceinline XMVECTOR InverseRotate(const XMUINT4 &v, Q &&quat) noexcept
         {
-            XMUINT4 result;
-            XMStoreUInt4(&result, XMVectorAdapter<uint32_t, 4>::Transform(v,m));
-            return result;
+            return XMVectorAdapter<uint32_t,4>::InverseRotate(v, std::forward<Q>(quat));
+        }
+
+        template <class Q>
+        static __forceinline XMVECTOR Rotate(const XMUINT4 &v, Q &&quat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,4>::Rotate(v, std::forward<Q>(quat));
+        }
+
+        template <class M>
+        static __forceinline XMVECTOR Transform(const XMUINT4 &v, M &&mat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,4>::Transform(v, std::forward<M>(mat));
+        }
+
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const XMUINT4 *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            return XMVectorAdapter<uint32_t,4>::TransformStream(out, ostride, in, instride, count, std::forward<M>(mat));
         }
     };
+}
+
+namespace
+{
+    template <class In>
+    struct XMVectorTranformStreamBridge
+    {
+        template <class V, class M>
+        static __forceinline V *TransformStream(V *out, size_t ostride, const In *in, size_t instride, size_t count, M &&mat) noexcept
+        {
+            constexpr size_t vec2_s = sizeof(XMFLOAT2), vec3_s = sizeof(XMFLOAT3), vec4_s = sizeof(XMFLOAT4);
+
+            assert(instride == vec2_s || instride == vec3_s || instride == vec4_s);
+
+            switch (instride) {
+                case vec2_s:
+                    return XMVectorTransformationHelper<XMFLOAT2>::TransformStream(out, ostride, (XMFLOAT2*)in, instride, count, std::forward<M>(mat));
+                case vec3_s:
+                    return XMVectorTransformationHelper<XMFLOAT3>::TransformStream(out, ostride, (XMFLOAT3*)in, instride, count, std::forward<M>(mat));
+                case vec4_s:
+                    return XMVectorTransformationHelper<XMFLOAT4>::TransformStream(out, ostride, (XMFLOAT4*)in, instride, count, std::forward<M>(mat));
+                default:
+                    __assume(0);
+            }
+        }
+    };
+
+
 }
 
 namespace
@@ -4587,6 +5020,13 @@ inline XMVECTOR CrossProduct(V1&& vector1, V2&& ...vector2) noexcept
     return XMVectorGeometryHelper<std::decay_t<V1>>::CrossProduct(std::forward<V1>(vector1), std::forward<V2>(vector2)...);
 }
 
+/// <summary>Computes the distance between vector1 and vector2, i.e., Length(vector1 - vector2).</summary>
+template <class V1, class V2>
+inline XMVECTOR Distance(V1&& vector1, V2&& vector2) noexcept
+{
+    return Length(XMVectorArithmeticHelper<std::decay_t<V1>>::Subtract(std::forward<V1>(vector1), std::forward<V2>(vector2)));
+}
+
 /// <summary>Computes the dot product between two vectors.</summary>
 template <class V1, class V2>
 inline XMVECTOR DotProduct(V1&& vector1, V2&& vector2) noexcept
@@ -4675,16 +5115,9 @@ inline XMVECTOR Refract(V1 &&vector, V2 &&normal, V3 &&refractionIndex) noexcept
     );
 }
 
-/// <summary>Computes the distance between vector1 and vector2, i.e., Length(vector1 - vector2).</summary>
-template <class V1, class V2>
-inline XMVECTOR Distance(V1&& vector1, V2&& vector2) noexcept
-{
-    return Length(XMVectorArithmeticHelper<std::decay_t<V1>>::Subtract(std::forward<V1>(vector1), std::forward<V2>(vector2)));
-}
-
 /// <summary>Retrieve the X component of a Vector.</summary>
 template <class V>
-inline auto VectorGetX(V&& vector) noexcept
+inline auto VectorGetX(V &&vector) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
         return XMVectorGetX(std::forward<V>(vector));
@@ -4696,10 +5129,10 @@ inline auto VectorGetX(V&& vector) noexcept
 
 /// <summary>Retrieve the Y component of a Vector</summary>
 template <class V>
-inline auto VectorGetY(V&& vector) noexcept
+inline auto VectorGetY(V &&vector) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
-        return XMVectorGetY(std::forward<V>(vector), index);
+        return XMVectorGetY(std::forward<V>(vector));
     }
     else {
         return XMVectorAccessorHelper<std::decay_t<V>>::GetY(vector);
@@ -4708,7 +5141,7 @@ inline auto VectorGetY(V&& vector) noexcept
 
 /// <summary>Retrieve the Z component of a Vector.</summary>
 template <class V>
-inline auto VectorGetZ(V&& vector) noexcept
+inline auto VectorGetZ(V &&vector) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
         return XMVectorGetZ(std::forward<V>(vector));
@@ -4720,7 +5153,7 @@ inline auto VectorGetZ(V&& vector) noexcept
 
 /// <summary>Retrieve the W component of a Vector.</summary>
 template <class V>
-inline auto VectorGetW(V&& vector) noexcept
+inline auto VectorGetW(V &&vector) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
         return XMVectorGetW(std::forward<V>(vector));
@@ -4734,7 +5167,7 @@ inline auto VectorGetW(V&& vector) noexcept
 /// <para/>It's not recommended for use due to performance loss
 /// </summary>
 template <class V>
-inline auto VectorGetByIndex(V&& vector, size_t index) noexcept
+inline auto VectorGetByIndex(V &&vector, size_t index) noexcept
 {
     if constexpr (std::is_same_v<std::decay_t<V>, DirectX::XMVECTOR>) {
         return XMVectorGetByIndex(std::forward<V>(vector), index);
@@ -4744,12 +5177,59 @@ inline auto VectorGetByIndex(V&& vector, size_t index) noexcept
     }
 }
 
-template <class V, class M>
-inline auto operator*(const V &vector, const M &matrix)
+/// Rotates a vector using a quaternion.
+template <class V, class Q>
+inline auto Rotate(V &&vector, Q &&quaternion) noexcept
 {
-    if constexpr (sizeof(V) < sizeof(M)) {
-        return TransformMapper<V,M>::Transform(vector, matrix);
-    } else {
-        return TransformMapper<M,V>::Transform(matrix, vector);
+    return XMVectorTransformationHelper<std::decay_t<V>>::Rotate(std::forward<V>(vector), std::forward<Q>(quaternion));
+}
+
+/// Rotates a vector using the inverse of a quaternion.
+template <class V, class Q>
+inline auto InverseRotate(V &&vector, Q &&quaternion) noexcept
+{
+    return XMVectorTransformationHelper<std::decay_t<V>>::InverseRotate(std::forward<V>(vector), std::forward<Q>(quaternion));
+}
+
+inline auto IdentityQuaternion() noexcept
+{
+    return XMQuaternionIdentity();
+}
+
+/// <summary> Transforms a 2-, 3- or 4D vector by a matrix.</summary>
+template <class V, class M>
+inline auto Transform(V &&vector, M &&matrix) noexcept
+{
+    return XMVectorTransformationHelper<std::decay_t<V>>::Transform(std::forward<V>(vector), std::forward<M>(matrix));
+}
+
+/// Transforms a stream of vectors by a given matrix.
+/// \warning The result of a transformation is always a 4D vector, which means it is a developer responsibility to allocate output buffer of the correct size
+template <class V1, class V2, class M>
+inline V1 *TransformStream(V1 *outputStream, size_t outputStride, const V2 *inputStream, size_t inputStride, size_t count, M &&matrix) noexcept
+{
+    if constexpr (isVectorType<V2>) {
+        return XMVectorTransformationHelper<V2>::TransformStream(outputStream, outputStride, inputStream, inputStride, count, std::forward<M>(matrix));
+    }
+    else {
+        return XMVectorTranformStreamBridge<V2>::TransformStream(outputStream, outputStride, inputStream, inputStride, count, std::forward<M>(matrix));
+    }
+}
+
+/// Transforms a stream of vectors by a given matrix.
+template <class V1, class V2, class M>
+inline V1 *TransformStream(V1 *outputStream, const V2 *inputStream, size_t count, M &&matrix) noexcept
+{
+    return XMVectorTransformationHelper<std::decay_t<V2>>::TransformStream(outputStream, sizeof(V1), inputStream, sizeof(V2), count, std::forward<M>(matrix));
+}
+
+template <class V1, class V2>
+inline auto operator*(V1 &&v1, V2 &&v2) noexcept
+{
+    if constexpr (isVectorType<V1> && isMatrixType<V2>) {
+        return Transform(std::forward<V1>(v1), std::forward<V2>(v2));
+    }
+    else if (isVectorType<V2> && isMatrixType<V1>) {
+        return Transform(std::forward<V2>(v2), std::forward<V1>(v1));
     }
 }
