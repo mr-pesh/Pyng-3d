@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Utils/Global.h>
 #include <type_traits>
+#include <Utils/Global.h>
 
 /**
  * @brief Count the number of 1 bits in 16-, 32- or 64-bit [unsigned] integer.

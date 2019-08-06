@@ -1,3 +1,9 @@
+namespace std
+{
+    template <class T, class ...Args>
+    inline constexpr bool _Is_any_of_v = disjunction_v<is_same<T, Args>...>;
+}
+
 template <typename T>
 __always_inline int popcnt(T value) noexcept
 {
