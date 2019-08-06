@@ -1,13 +1,14 @@
 #pragma once
 
 #include <Utils/Global.h>
+#include <type_traits>
 
 /**
  * @brief Count the number of 1 bits in 16-, 32- or 64-bit [unsigned] integer.
  * @remark The result of the function can be expressed with following code:
  * @code
  * int count = 0
- * for (; value > 0; value = (value >> 1)) {
+ * for (; value > 0; value >>= 1) {
  *     if (value & 1) {
  *         count++;
  *     }
@@ -31,7 +32,7 @@ FORCE_INLINE bool getBit(T const& value, Size index) noexcept;
 /**
  * @brief Set bit of \param value at \param index to 1.
  * @remark The result of the function can be expressed with following code: @code
- * value =| (1 << index);
+ * value |= (1 << index);
  * @endcode
  * @warning Garantees to generate X86 **BTS** instruction
  */
@@ -41,7 +42,7 @@ FORCE_INLINE void setBit(T& value, Size index) noexcept;
 /**
  * @brief Set bit of \param value at \param index to 0.
  * @remark The result of the function can be expressed with following code: @code
- * value =& ~(1 << index);
+ * value &= ~(1 << index);
  * @endcode
  * @warning Garantees to generate X86 **BTR** instruction
  */
