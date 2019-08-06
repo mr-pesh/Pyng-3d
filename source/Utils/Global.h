@@ -1,31 +1,15 @@
 #pragma once
 
-#include <memory>
-
-#define PYNG_DISABLE_COPY(Class)           \
-    Class (const Class&) = delete;         \
-    Class &operator=(const Class&) = delete;
-
-#define DECLARE_PYNG_SINGLETON(Type)       \
-    PYNG_DISABLE_COPY(Type)                \
-public:                                    \
-    Type();                                \
-    static Type *instance();               \
-
-#define DEFINE_PYNG_SINGLETON(Type)                  \
-    Type::Type()                                     \
-    {  }                                             \
-    static Type *Type::instance()                    \
-    {                                                \
-        static auto ptr = std::make_unique<Type>();  \
-        return ptr.get();                            \
-    }
-
 #ifdef _MSC_VER
 # define FORCE_INLINE __forceinline
 #else
+# include <sys/cdefs.h>
 # ifndef __always_inline
+# if defined(__GNUC__) && (defined(__APPLE__) || defined(__DARWIN_X11__) || defined(__MACOSX__) || defined(__xlC__) || defined(__xlc__))
+# define __always_inline __header_always_inline
+# else
 # define __always_inline inline __attribute__ ((__always_inline__))
+# endif
 # endif
 # define FORCE_INLINE __always_inline
 #endif

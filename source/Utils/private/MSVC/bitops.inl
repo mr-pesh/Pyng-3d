@@ -94,28 +94,10 @@ __forceinline void changeBit(volatile T *value, Size index) noexcept
     bittestandchange(value, index);
 }
 
-# pragma intrinsic(__popcnt16)
-template <typename T, std::enable_if_t<sizeof(T) <= sizeof(__int16), int> = 0>
-__forceinline unsigned __int16 popcount(T value)
+#include "popcnt.inl"
+
+template <typename T>
+__forceinline int popcount(T value) noexcept
 {
-    return __popcnt16(static_cast<unsigned __int16>(value));
+    return static_cast<int>(popcnt(value));
 }
-
-# pragma intrinsic(__popcnt)
-template <typename T, std::enable_if_t<sizeof(T) == sizeof(__int32), int> = 0>
-__forceinline unsigned __int32 popcount(T value)
-{
-    return __popcnt(static_cast<unsigned __int32>(value));
-}
-
-#ifdef _M_AMD64
-
-# pragma intrinsic(__popcnt64)
-template <typename T,
-          std::enable_if_t<sizeof(T) == sizeof(__int64), int> = 0>
-__forceinline unsigned __int64 popcount(T value)
-{
-    return __popcnt64(static_cast<unsigned __int64>(value));
-}
-
-#endif // _M_AMD64
