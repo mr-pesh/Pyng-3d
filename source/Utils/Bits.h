@@ -1,6 +1,5 @@
 #pragma once
 
-#include <type_traits>
 #include <Utils/Global.h>
 
 /**
@@ -60,6 +59,7 @@ template <typename T, typename Size>
 FORCE_INLINE void flipBit(T& value, Size index) noexcept;
 
 #ifdef _MSC_VER
+# include <intrin.h>
 # include "private/MSVC/bitops.inl"
 #else
 # include "private/UNIX/bitops.inl"

@@ -5,11 +5,11 @@
 #else
 # include <sys/cdefs.h>
 # ifndef __always_inline
-# if defined(__GNUC__) && (defined(__APPLE__) || defined(__DARWIN_X11__) || defined(__MACOSX__) || defined(__xlC__) || defined(__xlc__))
-# define __always_inline __header_always_inline
-# else
-# define __always_inline inline __attribute__ ((__always_inline__))
-# endif
+#  if defined(__GNUC__) && (defined(__APPLE__) || defined(__DARWIN_X11__) || defined(__MACOSX__) || defined(__xlC__) || defined(__xlc__))
+#   define __always_inline __header_always_inline
+#  else
+#   define __always_inline inline __attribute__ ((__always_inline__))
+#  endif
 # endif
 # define FORCE_INLINE __always_inline
 #endif
@@ -17,6 +17,7 @@
 #define FORWARD_DECLARE_CLASS(name) class name;
 #define FORWARD_DECLARE_STRUCT(name) struct name;
 
+/* Attributes macros */
 #ifdef __GNUC__
 #  define UNUSED [[gnu::unused]]
 #  define NODISCARD [[gnu::warn_unused_result]]
@@ -27,20 +28,22 @@
 #  define DEPRECATED [[deprecated]]
 #endif
 
+/* Compler hints (for highly predictable 'if' statements) */
 #ifdef _MSC_VER
 #  define EXPECTED(expr) (expr)
 #  define UNLIKELY(expr) (expr)
 #elif defined (__GNUC__)
-#  define EXPECTED(expr) __builtin_expect(!!(expr), true)
-#  define UNLIKELY(expr) __builtin_expect(!!(expr), false)
+#  define EXPECTED(expr) __builtin_expect(!!(expr), 1)
+#  define UNLIKELY(expr) __builtin_expect(!!(expr), 0)
 #endif
 
+/* Libraries import/export */
 #ifdef _MSC_VER
 #  define PYNG_LIBRARY_EXPORT __declspec(dllexport)
 #  define PYNG_LIBRARY_IMPORT __declspec(dllimport)
 #else
-#  define PYNG_LIBRARY_EXPORT __attribute__((visibility("default")))
-#  define PYNG_LIBRARY_IMPORT __attribute__((visibility("default")))
+#  define PYNG_LIBRARY_EXPORT __attribute__ ((visibility("default")))
+#  define PYNG_LIBRARY_IMPORT __attribute__ ((visibility("default")))
 #endif
 
-#define UNUSED(v) (void)v;
+#define UNUSED_VAR(v) (void)v;

@@ -1,5 +1,3 @@
-#include <intrin.h>
-
 #include "popcnt.inl"
 
 template <typename T>
