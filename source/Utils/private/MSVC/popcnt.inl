@@ -1,13 +1,5 @@
 namespace
 {
-    __forceinline unsigned __int16 __popcnt_proxy(unsigned __int16 x) noexcept
-    {
-        x = x - ((x >> 1) & UINT16_C(0x5555));
-        x = (x & UINT16_C(0x3333)) + ((x >> 2) & UINT16_C(0x3333));
-        x = (x + (x >> 4)) & UINT16_C(0x0F0F);
-        return ((x * UINT16_C(0x0101)) >> 8);
-    }
-
     __forceinline unsigned __int32 __popcnt_proxy(unsigned __int32 x) noexcept
     {
         x = x - ((x >> 1) & UINT32_C(0x55555555));
@@ -40,7 +32,7 @@ __forceinline unsigned __int16 popcnt(T value) noexcept
     if (__cpu_has_popcnt_support())
         return __popcnt16(static_cast<unsigned __int16>(value));
     else
-        return __popcnt_proxy(static_cast<unsigned __int16>(value));
+        return __popcnt_proxy(static_cast<unsigned __int32>(value));
 }
 
 #pragma intrinsic(__popcnt)
