@@ -62,29 +62,33 @@ TEST_F(BitOperationsUnitTest, BitTest)
 
 TEST_F(BitOperationsUnitTest, PopcountTest)
 {
-    unsigned short us[3] = { 0, 0xFF, 0xFFFF }, us_r[3] = { 0, 8, 16 };
+    {
+        unsigned short data[] = { 0, 0xFF, 0xFFFF }, result[] = { 0, 8, 16 };
 
-    ASSERT_TRUE(
-        std::equal(std::begin(us), std::end(us), std::begin(us_r), [](auto &&value, auto &&count) {
-            return popcount(value) == count;
-        })
-    );
+        ASSERT_TRUE(
+            std::equal(std::begin(data), std::end(data), std::begin(result), [](auto value, auto count) {
+                return popcount(value) == count;
+            })
+        );
+    }
+    {
+        unsigned int data[] = { 0, 0xFF, 0xFFFF, 0xFFFFFFFF }, result[] = { 0, 8, 16, 32 };
 
-    unsigned int ui[4] = { 0, 0xFF, 0xFFFF, 0xFFFFFFFF }, ui_r[4] = { 0, 8, 16, 32 };
+        ASSERT_TRUE(
+            std::equal(std::begin(data), std::end(data), std::begin(result), [](auto value, auto count) {
+                return popcount(value) == count;
+            })
+        );
+    }
+    {
+        unsigned long long data[] = { 0, 0xFF, 0xFFFF, 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF }, result[] = { 0, 8, 16, 32, 64 };
 
-    ASSERT_TRUE(
-        std::equal(std::begin(ui), std::end(ui), std::begin(ui_r), [](auto &&value, auto &&count) {
-            return popcount(value) == count;
-        })
-    );
-
-    unsigned long long ul[5] = { 0, 0xFF, 0xFFFF, 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF }, ul_r[5] = { 0, 8, 16, 32, 64 };
-
-    ASSERT_TRUE(
-        std::equal(std::begin(ul), std::end(ul), std::begin(ul_r), [](auto &&value, auto &&count) {
-            return popcount(value) == count;
-        })
-    );
+        ASSERT_TRUE(
+            std::equal(std::begin(data), std::end(data), std::begin(result), [](auto value, auto count) {
+                return popcount(value) == count;
+            })
+        );
+    }
 }
 
 
