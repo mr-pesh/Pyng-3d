@@ -60,6 +60,37 @@ TEST_F(BitOperationsUnitTest, BitTest)
     ASSERT_EQ(ss.str(), "0000000000000010011000010110010");
 }
 
+TEST_F(BitOperationsUnitTest, CountLeadingZerosTest)
+{
+    {
+        unsigned short data[] = { 0, 0xFF, 0xFFFF }, result[] = { 16, 8, 0 };
+
+        ASSERT_TRUE(
+            std::equal(std::begin(data), std::end(data), std::begin(result), [](auto &&value, auto &&count) {
+                return clz(value) == count;
+            })
+        );
+    }
+    {
+        unsigned int data[] = { 0, 0xFF, 0xFFFF, 0xFFFFFFFF }, result[] = { 32, 24, 16, 0 };
+
+        ASSERT_TRUE(
+            std::equal(std::begin(data), std::end(data), std::begin(result), [](auto &&value, auto &&count) {
+                return clz(value) == count;
+            })
+        );
+    }
+    {
+        unsigned long long data[] = { 0, 0xFF, 0xFFFF, 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF }, result[] = { 64, 56, 48, 32, 0 };
+
+        ASSERT_TRUE(
+            std::equal(std::begin(data), std::end(data), std::begin(result), [](auto &&value, auto &&count) {
+                return clz(value) == count;
+            })
+        );
+    }
+}
+
 TEST_F(BitOperationsUnitTest, PopcountTest)
 {
     {

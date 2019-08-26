@@ -14,6 +14,14 @@
 # define BITOP_ADDR(x) "+m" (*(volatile long *) (x))
 #endif
 
+#include "clz.inl"
+
+template <typename T>
+__always_inline int clz(T value) noexcept
+{
+    return _clz(value);
+}
+
 #include "popcnt.inl"
 
 template <typename T>

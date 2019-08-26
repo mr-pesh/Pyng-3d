@@ -1,3 +1,11 @@
+#include "clz.inl"
+
+template <typename T>
+__forceinline int clz(T value) noexcept
+{
+    return static_cast<int>(_clz(value));
+}
+
 #include "popcnt.inl"
 
 template <typename T>
