@@ -1,4 +1,5 @@
 #pragma intrinsic(_bittestandreset)
+
 template <typename T, typename Size,
     std::enable_if_t<sizeof(T) <= sizeof(long), int> = 0>
 __forceinline unsigned char bittestandreset(T* value, Size index) noexcept
@@ -9,6 +10,7 @@ __forceinline unsigned char bittestandreset(T* value, Size index) noexcept
 #ifdef _M_AMD64
 
 #pragma intrinsic(_bittestandreset64)
+
 template <typename T, typename Size,
     std::enable_if_t<sizeof(T) == sizeof(__int64), int> = 0>
 __forceinline unsigned char bittestandreset(T* value, Size index) noexcept
