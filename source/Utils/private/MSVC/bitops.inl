@@ -1,9 +1,18 @@
 #include "clz.inl"
 
+namespace
+{
+    template <bool cpu_has_lzcnt_support = false, typename T>
+    __forceinline int __clz(T value) noexcept
+    {
+        return static_cast<int>(_clz(value, std::bool_constant<cpu_has_lzcnt_support>()));
+    }
+}
+
 template <typename T>
 __forceinline int clz(T value) noexcept
 {
-    return static_cast<int>(_clz(value));
+    return __clz<false,T>(value);
 }
 
 #include "popcnt.inl"

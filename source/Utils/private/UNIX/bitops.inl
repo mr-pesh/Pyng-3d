@@ -16,10 +16,19 @@
 
 #include "clz.inl"
 
+namespace
+{
+    template <bool cpu_has_lzcnt_support = false, typename T>
+    __always_inline int __clz(T value) noexcept
+    {
+        return _clz(value, std::bool_constant<cpu_has_lzcnt_support>());
+    }
+}
+
 template <typename T>
 __always_inline int clz(T value) noexcept
 {
-    return _clz(value);
+    return __clz<false,T>(value);
 }
 
 #include "popcnt.inl"
