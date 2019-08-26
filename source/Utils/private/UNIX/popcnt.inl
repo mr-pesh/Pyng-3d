@@ -1,5 +1,14 @@
+#include <cpuid.h>
+
+__always_inline int __cpu_has_popcnt_support() noexcept
+{
+    int CPUInfo[4];
+    __cpuid(1, CPUInfo[0], CPUInfo[1], CPUInfo[2], CPUInfo[3]);
+    return CPUInfo[2] & 0x800000;
+}
+
 template <typename T>
-__always_inline int _popcnt(T value) noexcept
+__always_inline int _popcnt(T value, std::false_type) noexcept
 {
     using namespace __bitops_traits;
     return ({

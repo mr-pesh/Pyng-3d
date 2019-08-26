@@ -24,10 +24,19 @@ __always_inline int clz(T value) noexcept
 
 #include "popcnt.inl"
 
-template <typename T>
-__always_inline int popcount(T value) noexcept
+namespace
 {
-    return _popcnt(value);
+    template <bool cpu_has_popcnt_support = false, typename T>
+    __always_inline int __popcount(T value) noexcept
+    {
+        return _popcnt(value, std::bool_constant<cpu_has_popcnt_support>());
+    }
+}
+
+template <typename T>
+__always_inline int popcnt(T value) noexcept
+{
+    return __popcount<false,T>(value);
 }
 
 #include "bittest.inl"

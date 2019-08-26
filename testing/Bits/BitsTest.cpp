@@ -98,7 +98,7 @@ TEST_F(BitOperationsUnitTest, PopcountTest)
 
         ASSERT_TRUE(
             std::equal(std::begin(data), std::end(data), std::begin(result), [](auto value, auto count) {
-                return popcount(value) == count;
+                return popcnt(value) == count;
             })
         );
     }
@@ -107,7 +107,7 @@ TEST_F(BitOperationsUnitTest, PopcountTest)
 
         ASSERT_TRUE(
             std::equal(std::begin(data), std::end(data), std::begin(result), [](auto value, auto count) {
-                return popcount(value) == count;
+                return popcnt(value) == count;
             })
         );
     }
@@ -116,7 +116,7 @@ TEST_F(BitOperationsUnitTest, PopcountTest)
 
         ASSERT_TRUE(
             std::equal(std::begin(data), std::end(data), std::begin(result), [](auto value, auto count) {
-                return popcount(value) == count;
+                return popcnt(value) == count;
             })
         );
     }

@@ -8,10 +8,19 @@ __forceinline int clz(T value) noexcept
 
 #include "popcnt.inl"
 
-template <typename T>
-__forceinline int popcount(T value) noexcept
+namespace
 {
-    return static_cast<int>(popcnt(value));
+    template <bool cpu_has_popcnt_support = false, typename T>
+    __forceinline int __popcount(T value) noexcept
+    {
+        return static_cast<int>(_popcnt(value, std::bool_constant<cpu_has_popcnt_support>()));
+    }
+}
+
+template <typename T>
+__forceinline int popcnt(T value) noexcept
+{
+    return __popcount<false,T>(value);
 }
 
 #include "bittest.inl"
