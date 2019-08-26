@@ -1,3 +1,5 @@
+#include "bitops_traits.inl"
+
 #ifdef __GCC_ASM_FLAG_OUTPUTS__
 # define CC_SET(c) "\n\t/* output condition code " #c "*/\n"
 # define CC_OUT(c) "=@cc" #c
@@ -17,7 +19,7 @@
 template <typename T>
 __always_inline int popcount(T value) noexcept
 {
-    return popcnt(value);
+    return _popcnt(value);
 }
 
 #include "bittest.inl"
